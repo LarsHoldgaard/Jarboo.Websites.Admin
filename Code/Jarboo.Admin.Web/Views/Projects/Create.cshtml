@@ -19,13 +19,12 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        @Html.ValidationSummary(true)
+        @Html.ValidationSummary(false)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder="Name" })
-                @Html.ValidationMessageFor(model => model.Name)
             </div>
         </div>
 
@@ -33,7 +32,6 @@
             @Html.LabelFor(model => model.CustomerId, "Customer", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("CustomerId", (SelectList)ViewBag.CustomerId, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CustomerId)
             </div>
         </div>
 
