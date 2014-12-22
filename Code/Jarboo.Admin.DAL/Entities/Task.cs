@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Jarboo.Admin.DAL.Entities
 {
-    using System.ComponentModel.DataAnnotations;
-
     public enum TaskType
     {
         Feature,
@@ -26,7 +20,7 @@ namespace Jarboo.Admin.DAL.Entities
 
     public class Task : BaseEntity
     {
-        public int TaskID { get; set; }
+        public int TaskId { get; set; }
         [Required]
         public string Title { get; set; }
         public TaskType Type { get; set; }

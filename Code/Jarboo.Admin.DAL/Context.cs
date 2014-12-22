@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Data.Entity;
+using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.DAL
 {
-    using System.Data.Entity;
-
-    using Jarboo.Admin.DAL.Entities;
-
     public class Context : DbContext, IUnitOfWork
     {
         public Context()

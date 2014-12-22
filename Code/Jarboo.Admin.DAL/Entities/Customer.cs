@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Jarboo.Admin.DAL.Entities
 {
-    using System.ComponentModel.DataAnnotations;
-
     public class Customer : BaseEntity
     {
         public Customer()
