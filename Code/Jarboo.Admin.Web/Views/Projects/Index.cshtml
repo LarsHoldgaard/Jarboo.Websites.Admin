@@ -1,0 +1,23 @@
+﻿@using Jarboo.Admin.Web.Models.Project
+@model List<Jarboo.Admin.DAL.Entities.Project>
+
+@{
+    ViewBag.Title = "Projects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs small">
+    <span class="item">Projects</span>
+</div>
+
+<a class="btn btn-success" href="@Url.Action(MVC.Projects.Create())">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add project
+</a>
+<br/>
+<br/>
+
+@Html.Partial(MVC.Projects.Views._List, new ProjectsListViewModel()
+                                            {
+                                                Projects = Model,
+                                                ShowCustomer =  true
+                                            })

@@ -21,13 +21,13 @@ namespace Jarboo.Admin.Web.Controllers
         [Inject]
         public ICustomerService CustomerService { get; set; }
 
-        // GET: /Customer/
+        // GET: /Customers/
         public virtual ActionResult Index()
         {
             return View(CustomerService.GetAll());
         }
 
-        // GET: /Customer/View/5
+        // GET: /Customers/View/5
         public virtual ActionResult View(int? id)
         {
             if (id == null)

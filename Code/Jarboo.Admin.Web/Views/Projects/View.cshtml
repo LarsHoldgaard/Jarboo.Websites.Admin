@@ -1,0 +1,33 @@
+﻿@model Jarboo.Admin.DAL.Entities.Project
+
+@{
+    ViewBag.Title = "Project - " + Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs small">
+    <span class="item">
+        <strong>
+            <a href="/Customers">Customers</a>
+        </strong>
+    </span>
+    <span class="item">
+        <strong>
+            <a href="/Customers/View/@Model.CustomerId">@Model.Customer.Name</a>
+        </strong>
+    </span>
+    <span class="item">@Model.Name</span>
+</div>
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Name)
+            </td>
+        </tr>
+    </tbody>
+</table>

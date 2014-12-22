@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 using Jarboo.Admin.BL.Models;
@@ -25,6 +26,11 @@ namespace Jarboo.Admin.BL.Services
         protected override System.Data.Entity.IDbSet<Customer> Table
         {
             get { return UnitOfWork.Customers; }
+        }
+
+        public override Customer GetById(int id)
+        {
+            return Table.Include(x => x.Projects).FirstOrDefault(x => x.CustomerId == id);
         }
 
         public List<Customer> GetAll()

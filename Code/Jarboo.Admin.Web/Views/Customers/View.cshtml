@@ -1,4 +1,6 @@
-﻿@model Jarboo.Admin.DAL.Entities.Customer
+﻿@using Jarboo.Admin.DAL.Entities
+@using Jarboo.Admin.Web.Models.Project
+@model Jarboo.Admin.DAL.Entities.Customer
 
 @{
     ViewBag.Title = "Customer - " + Model.Name;
@@ -14,36 +16,28 @@
     <span class="item">@Model.Name</span>
 </div>
 
-<div>
-    <table class="table table-striped">
-        <tbody>
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.Name)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.DateCreated)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.DateCreated)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.DateModified)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.DateModified)
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Name)
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Projects</h2>
+<hr/>
+
+<a class="btn btn-success" href="@Url.Action(MVC.Projects.Create(Model.CustomerId))">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add project
+</a>
+<br/>
+<br/>
+@Html.Partial(MVC.Projects.Views._List, new ProjectsListViewModel()
+                                            {
+                                                Projects = Model.Projects
+                                            })

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,9 +30,14 @@ namespace Jarboo.Admin.BL.Services
             get { return UnitOfWork.Projects; }
         }
 
+        public override Project GetById(int id)
+        {
+            return Table.Include(x => x.Customer).FirstOrDefault(x => x.ProjectId == id);
+        }
+
         public List<Project> GetAll()
         {
-            return Table
+            return Table.Include(x => x.Customer)
                 .AsEnumerable()
                 .ToList();
         }

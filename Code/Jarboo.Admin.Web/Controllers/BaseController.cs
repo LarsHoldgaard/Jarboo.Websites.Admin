@@ -16,23 +16,23 @@ namespace Jarboo.Admin.Web.Controllers
         private const string TempErrorsKey = "TempErrorsKey";
         private const string TempSuccessesKey = "TempSuccessesKey";
 
-        protected ActionResult Handle(Action<IBusinessErrorCollection> handler, ActionResult successResult, ActionResult failureResult, params string[] messages)
+        protected ActionResult Handle<TModel>(TModel model, Action<TModel, IBusinessErrorCollection> handler, ActionResult successResult, ActionResult failureResult, params string[] messages)
         {
-            return Handle(handler, () => successResult, () => failureResult, messages);
+            return Handle(model, handler, () => successResult, () => failureResult, messages);
         }
-        protected ActionResult Handle(Action<IBusinessErrorCollection> handler, ActionResult successResult, Func<ActionResult> failureResult, params string[] messages)
+        protected ActionResult Handle<TModel>(TModel model, Action<TModel, IBusinessErrorCollection> handler, ActionResult successResult, Func<ActionResult> failureResult, params string[] messages)
         {
-            return Handle(handler, () => successResult, failureResult, messages);
+            return Handle(model, handler, () => successResult, failureResult, messages);
         }
-        protected ActionResult Handle(Action<IBusinessErrorCollection> handler, Func<ActionResult> successResult, ActionResult failureResult, params string[] messages)
+        protected ActionResult Handle<TModel>(TModel model, Action<TModel, IBusinessErrorCollection> handler, Func<ActionResult> successResult, ActionResult failureResult, params string[] messages)
         {
-            return Handle(handler, successResult, () => failureResult, messages);
+            return Handle(model, handler, successResult, () => failureResult, messages);
         }
-        protected ActionResult Handle(Action<IBusinessErrorCollection> handler, Func<ActionResult> successResult, Func<ActionResult> failureResult, params string[] messages)
+        protected ActionResult Handle<TModel>(TModel model, Action<TModel, IBusinessErrorCollection> handler, Func<ActionResult> successResult, Func<ActionResult> failureResult, params string[] messages)
         {
             if (ModelState.IsValid)
             {
-                handler(ModelState.Wrap());
+                handler(model, ModelState.Wrap());
 
                 if (ModelState.IsValid)
                 {

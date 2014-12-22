@@ -1,0 +1,43 @@
+﻿@model Jarboo.Admin.Web.Models.Project.ProjectsListViewModel
+
+<table class="table table-striped">
+    <tr>
+        <th>Name
+        </th>
+        @if (Model.ShowCustomer)
+        {
+            <th>Customer name
+            </th>
+        }
+        <th></th>
+    </tr>
+
+    @foreach (var project in Model.Projects)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => project.Name)
+            </td>
+            @if (Model.ShowCustomer)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => project.Customer.Name)
+                </td>
+            }
+            <td>
+                @Html.ActionLink("View", MVC.Projects.View(project.ProjectId))
+            </td>
+        </tr>
+    }
+
+    @if (Model.Projects.Count == 0)
+    {
+        <tr>
+            <td colspan="3">
+                No project has been created.
+            </td>
+        </tr>
+    }
+
+</table>
+
