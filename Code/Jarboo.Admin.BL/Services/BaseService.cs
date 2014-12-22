@@ -4,6 +4,11 @@ namespace Jarboo.Admin.BL.Services
 {
     public abstract class BaseService
     {
-        public IUnitOfWork UnitOfWork { get; set; }
+        public BaseService(IUnitOfWork UnitOfWork)
+        {
+            this.UnitOfWork = UnitOfWork;
+        }
+
+        protected IUnitOfWork UnitOfWork { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Jarboo.Admin.BL.Models;
+using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Services
@@ -19,6 +20,10 @@ namespace Jarboo.Admin.BL.Services
 
     public class ProjectService : BaseEntityService<Project>, IProjectService
     {
+        public ProjectService(IUnitOfWork UnitOfWork)
+            : base(UnitOfWork)
+        { }
+
         protected override System.Data.Entity.IDbSet<Project> Table
         {
             get { return UnitOfWork.Projects; }

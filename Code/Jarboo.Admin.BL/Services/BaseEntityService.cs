@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Services
@@ -13,6 +14,10 @@ namespace Jarboo.Admin.BL.Services
     public abstract class BaseEntityService<T> : BaseService
         where T : BaseEntity, new()
     {
+        public BaseEntityService(IUnitOfWork UnitOfWork)
+            : base(UnitOfWork)
+        { }
+
         protected abstract IDbSet<T> Table { get; }
         //protected abstract IQueryable<T> All { get; }
 

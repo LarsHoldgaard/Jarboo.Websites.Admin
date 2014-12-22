@@ -1,3 +1,32 @@
 ﻿body .site-container {
-    padding-top: 40px;
+    padding-top: 60px;
 }
+
+.breadcrumbs {
+    color: #000000;
+    font-size: 22px;
+    line-height: 30px;
+    margin-bottom: 20px;
+    }
+.breadcrumbs.small {
+    font-size: 20px;
+    }
+    .breadcrumbs .item {
+        position:relative;
+        margin-left:21px;
+        }
+        .breadcrumbs .item:before {
+            content:'';
+            position: absolute;
+            top:5px;
+            left:-28px;
+            width:30px;
+            height:30px;
+            background:no-repeat center center;
+            background-image: url(data:image/gif;base64,R0lGODlhDQASALMAAP///wAAAOHh4R4eHn5+fvz8/MnJyQ8PD1paWvDw8CEhIYGBga6urktLS5OTkwAAACH5BAAAAAAALAAAAAANABIAAAQ+EEgnpL1gBVWxZEE4dFiBhMHoASaqeq1IXnE6W/VbNm7iGQcU4RcMDTFAIVGJLAaOl6RxJRhMV4AqFOvDRgAAOw==);              }
+        .breadcrumbs.small .item:before{
+            top: 0px;
+            }
+        .breadcrumbs .item:first-child        { margin-left:0; }            
+        .breadcrumbs .item:first-child:before { display:none; } 
+        .breadcrumbs .item strong             { font-family:'Open Sans', Arial, Helvetica, sans-serif; font-weight:600; }

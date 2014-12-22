@@ -25,6 +25,8 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
+    public static Jarboo.Admin.Web.Controllers.BaseController Base = new Jarboo.Admin.Web.Controllers.T4MVC_BaseController();
+    public static Jarboo.Admin.Web.Controllers.CustomersController Customers = new Jarboo.Admin.Web.Controllers.T4MVC_CustomersController();
     public static Jarboo.Admin.Web.Controllers.HomeController Home = new Jarboo.Admin.Web.Controllers.T4MVC_HomeController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }

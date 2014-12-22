@@ -1,0 +1,49 @@
+﻿@model Jarboo.Admin.DAL.Entities.Customer
+
+@{
+    ViewBag.Title = "Customer - " + Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs small">
+    <span class="item">
+        <strong>
+            <a href="/Customers">Customers</a>
+        </strong>
+    </span>
+    <span class="item">@Model.Name</span>
+</div>
+
+<div>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Name)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DateCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.DateCreated)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DateModified)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.DateModified)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

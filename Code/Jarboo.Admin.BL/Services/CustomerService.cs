@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Jarboo.Admin.BL.Models;
+using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Services
@@ -17,6 +18,10 @@ namespace Jarboo.Admin.BL.Services
 
     public class CustomerService : BaseEntityService<Customer>, ICustomerService
     {
+        public CustomerService(IUnitOfWork UnitOfWork)
+            : base(UnitOfWork)
+        { }
+
         protected override System.Data.Entity.IDbSet<Customer> Table
         {
             get { return UnitOfWork.Customers; }

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Jarboo.Admin.DAL.Entities.Customer>
+
+@{
+    ViewBag.Title = "Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs small">
+    <span class="item">Customers</span>
+</div>
+
+<!--<p>
+    @Html.ActionLink("Create New", "Create")
+</p>-->
+<table class="table table-striped ">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateModified)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var customer in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => customer.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => customer.DateCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => customer.DateModified)
+            </td>
+            <td>
+                @Html.ActionLink("View", MVC.Customers.View(customer.CustomerId))
+            </td>
+        </tr>
+    }
+
+</table>
