@@ -11,6 +11,8 @@ namespace Jarboo.Admin.DAL
         IDbSet<Documentation> Documentations { get; set; }
         IDbSet<Task> Tasks { get; set; }
 
+        DbContextTransaction BeginTransaction();
+
         int SaveChanges();
     }
 }

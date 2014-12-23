@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Jarboo.Admin.DAL.Entities
 {
@@ -33,5 +34,24 @@ namespace Jarboo.Admin.DAL.Entities
 
         public int ProjectId { get; set; }
         public virtual Project Project { get; set; }
+
+        public static string TaskFullTitle(string title, TaskType type)
+        {
+            return LetterForType(type) + "_" + title;
+        }
+        private static string LetterForType(TaskType type)
+        {
+            switch (type)
+            {
+                case TaskType.Bug:
+                    return "B";
+                case TaskType.Feature:
+                    return "F";
+                case TaskType.Project:
+                    return "P";
+                default:
+                    throw new Exception("Unnknown task type " + type);
+            }
+        }
     }
 }

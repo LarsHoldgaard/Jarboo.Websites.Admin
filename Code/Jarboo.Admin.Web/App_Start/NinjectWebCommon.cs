@@ -1,5 +1,7 @@
 using Jarboo.Admin.BL.Services;
+using Jarboo.Admin.BL.ThirdParty;
 using Jarboo.Admin.DAL;
+using Jarboo.Admin.Web.Infrastructure;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Jarboo.Admin.Web.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Jarboo.Admin.Web.App_Start.NinjectWebCommon), "Stop")]
@@ -64,6 +66,8 @@ namespace Jarboo.Admin.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<ITaskRegister>().To<TrelloTaskRegister>().InRequestScope();
+
             kernel.Bind<IUnitOfWork>().To<Context>().InRequestScope();
             kernel.Bind<ICustomerService>().To<CustomerService>().InRequestScope();
             kernel.Bind<IProjectService>().To<ProjectService>().InRequestScope();

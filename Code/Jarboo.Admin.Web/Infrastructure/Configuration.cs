@@ -20,5 +20,31 @@ namespace Jarboo.Admin.Web.Infrastructure
                 return predefinedCustomers;
             }
         }
+
+        private static string trelloApiKey;
+        public static string TrelloApiKey
+        {
+            get
+            {
+                if (trelloApiKey == null)
+                {
+                    trelloApiKey = ConfigurationManager.AppSettings["TrelloApiKey"];
+                }
+                return trelloApiKey;
+            }
+        }
+
+        private static string trelloToken;
+        public static string TrelloToken
+        {
+            get
+            {
+                if (trelloToken == null)
+                {
+                    trelloToken = ConfigurationManager.AppSettings["TrelloToken"];
+                }
+                return trelloToken;
+            }
+        }
     }
 }

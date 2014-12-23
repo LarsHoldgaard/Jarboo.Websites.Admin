@@ -65,6 +65,7 @@
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\TaskService.cs" />
+    <Compile Include="ThirdParty\ITaskRegister.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
