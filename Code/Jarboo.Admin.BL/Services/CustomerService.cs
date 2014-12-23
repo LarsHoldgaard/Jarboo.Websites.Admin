@@ -35,7 +35,7 @@ namespace Jarboo.Admin.BL.Services
 
         public List<Customer> GetAll()
         {
-            return Table
+            return Table.Include(x => x.Projects)
                 .AsEnumerable()
                 .ToList();
         }

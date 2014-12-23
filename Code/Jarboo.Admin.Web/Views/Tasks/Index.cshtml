@@ -1,0 +1,24 @@
+﻿@using Jarboo.Admin.Web.Models.Project
+@using Jarboo.Admin.Web.Models.Task
+@model List<Jarboo.Admin.DAL.Entities.Task>
+
+@{
+    ViewBag.Title = "Tasks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs small">
+    <span class="item">Tasks</span>
+</div>
+
+<a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create())">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
+</a>
+<br/>
+<br/>
+
+@Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
+                                            {
+                                                Tasks = Model,
+                                                ShowProject = true
+                                            })

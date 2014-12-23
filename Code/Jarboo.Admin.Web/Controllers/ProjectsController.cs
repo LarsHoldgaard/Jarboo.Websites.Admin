@@ -54,7 +54,7 @@ namespace Jarboo.Admin.Web.Controllers
                 project.CustomerId = customerId.Value;
             }
 
-            ViewBag.CustomerId = new SelectList(CustomerService.GetAll(), "CustomerId", "Name", project.CustomerId);
+            ViewBag.CustomersList = new SelectList(CustomerService.GetAll(), "CustomerId", "Name", project.CustomerId);
             return View(project);
         }
 

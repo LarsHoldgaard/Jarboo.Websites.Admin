@@ -15,7 +15,9 @@ namespace Jarboo.Admin.BL.Models
         [Required]
         public string Title { get; set; }
         public TaskType Type { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
         public int Size { get; set; }
         public TaskUrgency Urgency { get; set; }
+        public int ProjectId { get; set; }
     }
 }

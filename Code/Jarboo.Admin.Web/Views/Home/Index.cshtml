@@ -1,8 +1,26 @@
-﻿
+﻿@using Jarboo.Admin.DAL.Entities
+
 @{
     ViewBag.Title = "Jarboo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Hello!</h2>
-
+<div class="start-page">
+    @foreach (Customer customer in ViewBag.Customers)
+    {
+        <div>
+            <h2>@customer.Name</h2>
+            <h4>[<a href="@Url.Action(MVC.Projects.Create(customer.CustomerId))">Add project</a>]</h4>
+            
+            <ul>
+            @foreach (var project in customer.Projects)
+            {
+                <li>
+                    <span>@project.Name</span>
+                    <span>[<a href="@Url.Action(MVC.Projects.View(project.ProjectId))">View</a>]</span>
+                    <span>[<a href="@Url.Action(MVC.Tasks.Create(project.ProjectId))">Add Task</a>]</span>
+                </li>
+            }
+            </ul>
+        </div>
+    }
+</div>

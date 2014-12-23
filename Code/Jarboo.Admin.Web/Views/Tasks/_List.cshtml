@@ -1,0 +1,58 @@
+﻿@model Jarboo.Admin.Web.Models.Task.TasksListViewModel
+
+<table class="table table-striped">
+    <tr>
+        <th>Title
+        </th>
+        @if (Model.ShowProject)
+        {
+            <th>Project name
+            </th>
+        }
+        <th>Type
+        </th>
+        <th>Size
+        </th>
+        <th>Urgency
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var task in Model.Tasks)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => task.Title)
+            </td>
+            @if (Model.ShowProject)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => task.Project.Name)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(x => task.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(x => task.Size) hour(s)
+            </td>
+            <td>
+                @Html.DisplayFor(x => task.Urgency)
+            </td>
+            <td>
+                @Html.ActionLink("View", MVC.Tasks.View(task.TaskId))
+            </td>
+        </tr>
+    }
+
+    @if (Model.Tasks.Count == 0)
+    {
+        <tr>
+            <td colspan="6">
+                No task has been created.
+            </td>
+        </tr>
+    }
+
+</table>
+

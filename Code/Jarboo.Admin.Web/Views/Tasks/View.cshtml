@@ -1,0 +1,67 @@
+﻿@model Jarboo.Admin.DAL.Entities.Task
+
+@{
+    ViewBag.Title = "Task - " + Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs small">
+    <span class="item">
+        <strong>
+            <a href="/customers">Customers</a>
+        </strong>
+    </span>
+    <span class="item">
+        <strong>
+            <a href="/customers/view/@Model.Project.CustomerId">@Model.Project.Customer.Name</a>
+        </strong>
+    </span>
+    <span class="item">
+        <strong>
+            <a href="/projects">Projects</a>
+        </strong>
+    </span>
+    <span class="item">
+        <strong>
+            <a href="/projects/view/@Model.ProjectId">@Model.Project.Name</a>
+        </strong>
+    </span>
+    <span class="item">@Model.Title</span>
+</div>
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(x => x.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.Title)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(x => x.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.Type)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(x => x.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.Size) hour(s)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(x => x.Urgency)
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.Urgency)
+            </td>
+        </tr>
+    </tbody>
+</table>

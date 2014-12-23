@@ -32,7 +32,7 @@ namespace Jarboo.Admin.BL.Services
 
         public override Project GetById(int id)
         {
-            return Table.Include(x => x.Customer).FirstOrDefault(x => x.ProjectId == id);
+            return Table.Include(x => x.Customer).Include(x => x.Tasks).FirstOrDefault(x => x.ProjectId == id);
         }
 
         public List<Project> GetAll()
