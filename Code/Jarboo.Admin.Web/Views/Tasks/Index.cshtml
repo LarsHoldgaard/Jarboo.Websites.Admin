@@ -11,11 +11,11 @@
     <span class="item">Tasks</span>
 </div>
 
-<a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create())">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
-</a>
-<br/>
-<br/>
+<p>
+    <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create())">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add task
+    </a>
+</p>
 
 @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
                                             {

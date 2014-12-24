@@ -41,8 +41,8 @@ namespace GoogleDriveSamples
                 }
             }*/
 
-            
-            const string serviceAccountEmail = "552485355365-th8p5oh0id55lvf1u30iscdfu9ofihso.apps.googleusercontent.com";
+
+            const string serviceAccountEmail = "552485355365-th8p5oh0id55lvf1u30iscdfu9ofihso@developer.gserviceaccount.com";
             var certificate = new X509Certificate2(path, "notasecret", X509KeyStorageFlags.Exportable);
 
             var credential = new ServiceAccountCredential(

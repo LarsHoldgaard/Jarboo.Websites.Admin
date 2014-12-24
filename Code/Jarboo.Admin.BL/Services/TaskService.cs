@@ -68,7 +68,7 @@ namespace Jarboo.Admin.BL.Services
 
             try
             {
-                var entity = Table.Add(new Task());
+                var entity = new Task();
                 Add(entity, model);
             }
             catch (Exception ex)

@@ -18,6 +18,8 @@ namespace Jarboo.Admin.DAL
         public IDbSet<Project> Projects { get; set; }
         public IDbSet<Documentation> Documentations { get; set; }
         public IDbSet<Task> Tasks { get; set; }
+        public IDbSet<Employee> Employees { get; set; }
+        public IDbSet<EmployeePosition> EmployeePositions { get; set; }
 
 
         public DbContextTransaction BeginTransaction()

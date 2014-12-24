@@ -42,6 +42,7 @@ namespace Jarboo.Admin.BL.Services
             entity.DateCreated = DateTime.Now;
             entity.DateModified = entity.DateCreated;
 
+            Table.Add(entity);
             Save(entity, model);
         }
         protected void Edit<TM>(T entity, TM model)
@@ -49,9 +50,10 @@ namespace Jarboo.Admin.BL.Services
         {
             entity.DateModified = DateTime.Now;
 
+            Table.Attach(entity);
             Save(entity, model);
         }
-        protected void Save<TM>(T entity, TM model)
+        protected virtual void Save<TM>(T entity, TM model)
             where TM : class, new()
         {
             model.MapTo(entity);

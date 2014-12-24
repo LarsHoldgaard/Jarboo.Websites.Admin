@@ -14,7 +14,7 @@
     <span class="item">New task</span>
 </div>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
@@ -24,7 +24,7 @@
         <div class="form-group">
             @Html.LabelFor(x => x.Title, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(x => x.Title, new { @class = "form-control", placeholder="Name" })
+                @Html.TextBoxFor(x => x.Title, new { @class = "form-control", placeholder = "Name" })
             </div>
         </div>
 
@@ -43,9 +43,12 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(x => x.Size, "Size (hours)", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(x => x.Size, "Size", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(x => x.Size, new { @class = "form-control", type="number" })
+                <div class="input-group">
+                  @Html.TextBoxFor(x => x.Size, new { @class = "form-control", type = "number" })
+                  <div class="input-group-addon">hours</div>
+                </div>
             </div>
         </div>
 

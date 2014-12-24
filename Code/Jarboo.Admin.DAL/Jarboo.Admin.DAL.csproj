@@ -50,8 +50,10 @@
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Documentation.cs" />
+    <Compile Include="Entities\Position.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\Task.cs" />
+    <Compile Include="Entities\Employee.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

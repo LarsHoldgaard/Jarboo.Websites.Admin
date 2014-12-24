@@ -1,0 +1,17 @@
+﻿@model Jarboo.Admin.BL.Models.EmployeeEdit
+
+@{
+    ViewBag.Title = "New task";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs small">
+    <span class="item">
+        <strong>
+            <a href="/employees">Employees</a>
+        </strong>
+    </span>
+    <span class="item">New employee</span>
+</div>
+
+@Html.Partial(MVC.Employees.Views._Form, Model)

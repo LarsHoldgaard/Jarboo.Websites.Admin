@@ -49,7 +49,7 @@ namespace Jarboo.Admin.BL.Services
                 return;
             }
 
-            var entity = Table.Add(new Project());
+            var entity = new Project();
             Add(entity, model);
         }
     }

@@ -13,9 +13,13 @@ namespace Jarboo.Admin.Web.App_Start
     {
         public static void ConfigureDatabase()
         {
-            //Database.SetInitializer(new DropCreateDatabaseAlways<Context>());
-            Database.SetInitializer(new DataBaseInitializer());
+            /*Database.SetInitializer(new DropCreateDatabaseAlways<Context>());
+            using (var context = new Context())
+            {
+                context.Database.Initialize(true);
+            }*/
 
+            Database.SetInitializer(new DataBaseInitializer());
             using (var context = new Context())
             {
                 context.Database.Initialize(true);

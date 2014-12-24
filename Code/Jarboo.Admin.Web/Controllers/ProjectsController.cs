@@ -45,7 +45,7 @@ namespace Jarboo.Admin.Web.Controllers
             return View(project);
         }
 
-        // GET: /Project/Create
+        // GET: /Projects/Create
         public virtual ActionResult Create(int? customerId)
         {
             var project = new ProjectCreate();
@@ -58,6 +58,7 @@ namespace Jarboo.Admin.Web.Controllers
             return View(project);
         }
 
+        // POST: /Projects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Create(ProjectCreate model)

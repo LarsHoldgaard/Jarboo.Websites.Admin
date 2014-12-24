@@ -47,7 +47,7 @@ namespace Jarboo.Admin.BL.Services
                 return;
             }
 
-            var entity = Table.Add(new Customer());
+            var entity = new Customer();
             Add(entity, model);
         }
     }

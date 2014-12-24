@@ -10,14 +10,14 @@
     <span class="item">Projects</span>
 </div>
 
-<a class="btn btn-success" href="@Url.Action(MVC.Projects.Create())">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add project
-</a>
-<br/>
-<br/>
+<p>
+    <a class="btn btn-success" href="@Url.Action(MVC.Projects.Create())">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add project
+    </a>
+</p>
 
 @Html.Partial(MVC.Projects.Views._List, new ProjectsListViewModel()
                                             {
                                                 Projects = Model,
-                                                ShowCustomer =  true
+                                                ShowCustomer = true
                                             })

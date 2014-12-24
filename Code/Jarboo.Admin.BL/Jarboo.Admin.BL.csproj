@@ -56,6 +56,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="IBusinessErrorCollection.cs" />
     <Compile Include="Models\CustomerCreate.cs" />
+    <Compile Include="Models\EmployeeEdit.cs" />
     <Compile Include="Models\ProjectCreate.cs" />
     <Compile Include="Models\TaskCreate.cs" />
     <Compile Include="NotFoundException.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Services\BaseEntityService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\TaskService.cs" />
     <Compile Include="ThirdParty\ITaskRegister.cs" />

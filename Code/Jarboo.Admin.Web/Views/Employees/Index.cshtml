@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Jarboo.Admin.DAL.Entities.Employee>
+
+@{
+    ViewBag.Title = "Employees";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs small">
+    <span class="task">Employees</span>
+</div>
+
+<p>
+    <a class="btn btn-success" href="@Url.Action(MVC.Employees.Create())">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add employee
+    </a>
+</p>
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SkypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrelloId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HourlyPrice)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var employee in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => employee.FullName)
+            </td>
+            <td>
+                <a href="skype:@employee.SkypeName">@employee.SkypeName</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => employee.TrelloId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => employee.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => employee.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => employee.HourlyPrice)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", MVC.Employees.Edit(employee.EmployeeId)) |
+            @Html.ActionLink("View", MVC.Employees.View(employee.EmployeeId))
+            </td>
+        </tr>
+    }
+
+    @if (!Model.Any())
+    {
+        <tr>
+            <td colspan="7">No employee has been created.
+            </td>
+        </tr>
+    }
+
+</table>
+

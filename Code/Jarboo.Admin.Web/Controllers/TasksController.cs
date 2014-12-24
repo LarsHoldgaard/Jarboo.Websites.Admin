@@ -43,7 +43,7 @@ namespace Jarboo.Admin.Web.Controllers
             return View(task);
         }
 
-        // GET: /Task/Create
+        // GET: /Tasks/Create
         public virtual ActionResult Create(int? projectId)
         {
             var task = new TaskCreate();
@@ -56,6 +56,7 @@ namespace Jarboo.Admin.Web.Controllers
             return View(task);
         }
 
+        // POST: /Tasks/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Create(TaskCreate model)
