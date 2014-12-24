@@ -22,8 +22,8 @@ namespace Jarboo.Admin.Web.Infrastructure
 
             try
             {
-                trello = new Trello("46f467359a59f251c2e156457f85e31a");
-                trello.Authorize("824811c32225f61d7aaaa405fd7ee55ff53aac3c50b51c3f4cea099ffe0a52ef");
+                trello = new Trello(Configuration.TrelloApiKey);
+                trello.Authorize(Configuration.TrelloToken);
             }
             catch (Exception ex)
             {
