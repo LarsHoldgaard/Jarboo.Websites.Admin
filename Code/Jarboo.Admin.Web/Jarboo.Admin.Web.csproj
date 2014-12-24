@@ -244,6 +244,7 @@
     <Compile Include="Infrastructure\Configuration.cs" />
     <Compile Include="Infrastructure\DataBaseInitializer.cs" />
     <Compile Include="Infrastructure\Drive.cs" />
+    <Compile Include="Infrastructure\NoopTaskRegister.cs" />
     <Compile Include="Infrastructure\TrelloTaskRegister.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />

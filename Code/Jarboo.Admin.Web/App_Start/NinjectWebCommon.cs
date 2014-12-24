@@ -66,7 +66,14 @@ namespace Jarboo.Admin.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<ITaskRegister>().To<TrelloTaskRegister>().InRequestScope();
+            if (Configuration.UseTrello)
+            {
+                kernel.Bind<ITaskRegister>().To<TrelloTaskRegister>().InRequestScope();
+            }
+            else
+            {
+                kernel.Bind<ITaskRegister>().To<NoopTaskRegister>().InRequestScope();
+            }
 
             kernel.Bind<IUnitOfWork>().To<Context>().InRequestScope();
             kernel.Bind<ICustomerService>().To<CustomerService>().InRequestScope();

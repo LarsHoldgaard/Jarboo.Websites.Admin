@@ -46,5 +46,18 @@ namespace Jarboo.Admin.Web.Infrastructure
                 return trelloToken;
             }
         }
+
+        private static bool? useTrello;
+        public static bool UseTrello
+        {
+            get
+            {
+                if (useTrello == null)
+                {
+                    useTrello = bool.Parse(ConfigurationManager.AppSettings["UseTrello"]);
+                }
+                return useTrello.Value;
+            }
+        }
     }
 }
