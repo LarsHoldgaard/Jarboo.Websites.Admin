@@ -12,6 +12,9 @@ using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Drive.v2;
 using Google.Apis.Services;
 
+using Jarboo.Admin.Web.Infrastructure;
+using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
+
 using File = Google.Apis.Drive.v2.Data.File;
 
 namespace GoogleDriveSamples
@@ -74,15 +77,20 @@ namespace GoogleDriveSamples
 
         public static string Main()
         {
+            var tr = new Google.Apis.Auth.OAuth2.Responses.TokenResponse();
+            tr.RefreshToken = Configuration.GoogleRefreshToken;
+            MemoryDataStore.Instance.StoreAsync(AppFlowMetadata.UserId, tr);
+
             UserCredential credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                 new ClientSecrets
                 {
-                    ClientId = "552485355365-8go9lgc1se02mvjgjlfpsnr286ncr2qa.apps.googleusercontent.com",
-                    ClientSecret = "QHgTjyg82nCNzfmxI9IO4vBu",
+                    ClientId = Configuration.GoogleClientId,
+                    ClientSecret = Configuration.GoogleClientSecret,
                 },
                 new[] { DriveService.Scope.Drive },
-                "user",
-                CancellationToken.None).Result;
+                AppFlowMetadata.UserId,
+                CancellationToken.None,
+                MemoryDataStore.Instance).Result;
 
             // Create the service.
             var service = new DriveService(new BaseClientService.Initializer()
@@ -98,7 +106,7 @@ namespace GoogleDriveSamples
 
             var stream = GenerateStreamFromString("Hello!");
 
-            FilesResource.InsertMediaUpload request = service.Files.Insert(body, stream, "text/plain");
+            var request = service.Files.Insert(body, stream, "text/plain");
             request.Upload();
 
             File file = request.ResponseBody;

@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 using Jarboo.Admin.BL.ThirdParty;
 
 using TrelloNet;
 
-namespace Jarboo.Admin.Web.Infrastructure
+namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 {
     public class TrelloTaskRegister : ITaskRegister
     {
@@ -15,19 +13,19 @@ namespace Jarboo.Admin.Web.Infrastructure
 
         private void EnsureTrello()
         {
-            if (trello != null)
+            if (this.trello != null)
             {
                 return;
             }
 
             try
             {
-                trello = new Trello(Configuration.TrelloApiKey);
-                trello.Authorize(Configuration.TrelloToken);
+                this.trello = new Trello(Configuration.TrelloApiKey);
+                this.trello.Authorize(Configuration.TrelloToken);
             }
             catch (Exception ex)
             {
-                trello = null;
+                this.trello = null;
 
                 throw;
             }
@@ -35,11 +33,11 @@ namespace Jarboo.Admin.Web.Infrastructure
 
         private Board OpenBoard(string customerName)
         {
-            EnsureTrello();
+            this.EnsureTrello();
 
             var boardName = customerName + " tasks";
 
-            var boards = trello.Boards.Search(boardName);
+            var boards = this.trello.Boards.Search(boardName);
             var board = boards.FirstOrDefault();
             if (board == null)
             {
@@ -51,37 +49,37 @@ namespace Jarboo.Admin.Web.Infrastructure
 
         public void Register(string customerName, string taskTitle)
         {
-            EnsureTrello();
+            this.EnsureTrello();
 
             var board = this.OpenBoard(customerName);
 
-            var lists = trello.Lists.ForBoard(board);
+            var lists = this.trello.Lists.ForBoard(board);
             var list = lists.FirstOrDefault();
             if (list == null)
             {
-                list = trello.Lists.Add("Tasks", board);
+                list = this.trello.Lists.Add("Tasks", board);
             }
 
-            trello.Cards.Add(taskTitle, list);
+            this.trello.Cards.Add(taskTitle, list);
         }
 
         public void Unregister(string customerName, string taskTitle)
         {
-            EnsureTrello();
+            this.EnsureTrello();
 
             var board = this.OpenBoard(customerName);
 
-            var lists = trello.Lists.ForBoard(board);
+            var lists = this.trello.Lists.ForBoard(board);
             var list = lists.FirstOrDefault();
             if (list == null)
             {
                 return;
             }
 
-            var card = trello.Cards.ForList(list).FirstOrDefault(x => x.Name == taskTitle);
+            var card = this.trello.Cards.ForList(list).FirstOrDefault(x => x.Name == taskTitle);
             if (card != null)
             {
-                trello.Cards.Delete(card);
+                this.trello.Cards.Delete(card);
             }
         }
     }

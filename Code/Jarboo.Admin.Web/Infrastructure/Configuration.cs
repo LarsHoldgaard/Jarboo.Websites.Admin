@@ -59,5 +59,57 @@ namespace Jarboo.Admin.Web.Infrastructure
                 return useTrello.Value;
             }
         }
+
+        private static bool? useGoogle;
+        public static bool UseGoogle
+        {
+            get
+            {
+                if (useGoogle == null)
+                {
+                    useGoogle = bool.Parse(ConfigurationManager.AppSettings["UseGoogle"]);
+                }
+                return useGoogle.Value;
+            }
+        }
+
+        private static string googleClientId;
+        public static string GoogleClientId
+        {
+            get
+            {
+                if (googleClientId == null)
+                {
+                    googleClientId = ConfigurationManager.AppSettings["GoogleClientId"];
+                }
+                return googleClientId;
+            }
+        }
+
+        private static string googleClientSecret;
+        public static string GoogleClientSecret
+        {
+            get
+            {
+                if (googleClientSecret == null)
+                {
+                    googleClientSecret = ConfigurationManager.AppSettings["GoogleClientSecret"];
+                }
+                return googleClientSecret;
+            }
+        }
+
+        private static string googleRefreshToken;
+        public static string GoogleRefreshToken
+        {
+            get
+            {
+                if (googleRefreshToken == null)
+                {
+                    googleRefreshToken = ConfigurationManager.AppSettings["GoogleRefreshToken"];
+                }
+                return googleRefreshToken;
+            }
+        }
     }
 }

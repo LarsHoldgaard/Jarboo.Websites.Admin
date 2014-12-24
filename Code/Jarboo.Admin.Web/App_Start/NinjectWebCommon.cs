@@ -2,6 +2,7 @@ using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.BL.ThirdParty;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.Web.Infrastructure;
+using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Jarboo.Admin.Web.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Jarboo.Admin.Web.App_Start.NinjectWebCommon), "Stop")]

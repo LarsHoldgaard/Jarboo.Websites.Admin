@@ -65,6 +65,9 @@
     <Reference Include="Google.Apis.Auth">
       <HintPath>packages\Google.Apis.Auth.1.9.0\lib\net40\Google.Apis.Auth.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Apis.Auth.Mvc4">
+      <HintPath>packages\Google.Apis.Auth.Mvc.1.9.0\lib\net40\Google.Apis.Auth.Mvc4.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Apis.Auth.PlatformServices">
       <HintPath>packages\Google.Apis.Auth.1.9.0\lib\net40\Google.Apis.Auth.PlatformServices.dll</HintPath>
     </Reference>
@@ -163,8 +166,7 @@
     <Reference Include="T4MVCExtensions">
       <HintPath>packages\T4MVCExtensions.3.10.0\lib\net40\T4MVCExtensions.dll</HintPath>
     </Reference>
-    <Reference Include="TrelloNet, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="TrelloNet">
       <HintPath>packages\TrelloNet.Temp.Fork.0.6.2\lib\net40-Client\TrelloNet.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx">
@@ -217,15 +219,23 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DatabaseConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="AuthCallbackController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="BaseController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AuthCallbackController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
@@ -247,9 +257,11 @@
     <Compile Include="Infrastructure\BusinessErrorCollection.cs" />
     <Compile Include="Infrastructure\Configuration.cs" />
     <Compile Include="Infrastructure\DataBaseInitializer.cs" />
-    <Compile Include="Infrastructure\Drive.cs" />
-    <Compile Include="Infrastructure\NoopTaskRegister.cs" />
-    <Compile Include="Infrastructure\TrelloTaskRegister.cs" />
+    <Compile Include="Infrastructure\ThirdPartyIntegration\AppFlowMetadata.cs" />
+    <Compile Include="Infrastructure\ThirdPartyIntegration\Drive.cs" />
+    <Compile Include="Infrastructure\ThirdPartyIntegration\MemoryDataStore.cs" />
+    <Compile Include="Infrastructure\ThirdPartyIntegration\NoopTaskRegister.cs" />
+    <Compile Include="Infrastructure\ThirdPartyIntegration\TrelloTaskRegister.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
     <Compile Include="Models\Task\TasksListViewModel.cs" />
