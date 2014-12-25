@@ -21,6 +21,8 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
     public class GoogleFolderCreator : IFolderCreator
     {
         public const string FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
+        public const string DOC_MIME_TYPE = "application/vnd.google-apps.document";
+
         private DriveService driveService = null;
 
         private void EnsureService()
@@ -114,16 +116,25 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 parentFolder = new GoogleDriveFolderHierarchy.Folder(driveFile);
             }
 
+            CreateDoc(parentFolder.Title, parentFolder.Id);
             return parentFolder.File.AlternateLink;
         }
         private File CreateFolder(string title, string parentId)
+        {
+            return CreateFile(title, parentId, FOLDER_MIME_TYPE);
+        }
+        private File CreateDoc(string title, string parentId)
+        {
+            return CreateFile(title, parentId, DOC_MIME_TYPE);
+        }
+        private File CreateFile(string title, string parentId, string mimeType)
         {
             EnsureService();
 
             var body = new File
             {
                 Title = title,
-                MimeType = FOLDER_MIME_TYPE,
+                MimeType = mimeType,
                 Parents = new ParentReference[]
                               {
                                   new ParentReference()
