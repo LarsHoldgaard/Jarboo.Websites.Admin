@@ -5,29 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="breadcrumbs small">
-    <span class="item">
-        <strong>
-            <a href="/customers">Customers</a>
-        </strong>
-    </span>
-    <span class="item">
-        <strong>
-            <a href="/customers/view/@Model.Project.CustomerId">@Model.Project.Customer.Name</a>
-        </strong>
-    </span>
-    <span class="item">
-        <strong>
-            <a href="/projects">Projects</a>
-        </strong>
-    </span>
-    <span class="item">
-        <strong>
-            <a href="/projects/view/@Model.ProjectId">@Model.Project.Name</a>
-        </strong>
-    </span>
-    <span class="item">@Model.Title</span>
-</div>
+@(new BreadCrumbsBuilder()
+    .Add(Url.Action(MVC.Customers.Index()), "Customers")
+    .Add(Url.Action(MVC.Customers.View(Model.Project.CustomerId)), Model.Project.Customer.Name)
+    .Add(Url.Action(MVC.Projects.View(Model.ProjectId)), Model.Project.Name)
+    .Add(Model.Title)
+    .Done())
 
 <table class="table table-striped">
     <tbody>

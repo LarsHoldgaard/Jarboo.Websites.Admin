@@ -1,13 +1,14 @@
-﻿@model IEnumerable<Jarboo.Admin.DAL.Entities.Employee>
+﻿@using Jarboo.Admin.Web.Infrastructure
+@model System.Collections.Generic.IEnumerable<Jarboo.Admin.DAL.Entities.Employee>
 
 @{
     ViewBag.Title = "Employees";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="breadcrumbs small">
-    <span class="task">Employees</span>
-</div>
+@(new BreadCrumbsBuilder()
+    .Add("Employees")
+    .Done())
 
 <p>
     <a class="btn btn-success" href="@Url.Action(MVC.Employees.Create())">

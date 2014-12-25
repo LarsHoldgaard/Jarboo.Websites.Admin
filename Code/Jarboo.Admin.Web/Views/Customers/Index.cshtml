@@ -1,13 +1,13 @@
-﻿@model IEnumerable<Jarboo.Admin.DAL.Entities.Customer>
+﻿@model System.Collections.Generic.IEnumerable<Jarboo.Admin.DAL.Entities.Customer>
 
 @{
     ViewBag.Title = "Customers";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="breadcrumbs small">
-    <span class="item">Customers</span>
-</div>
+@(new BreadCrumbsBuilder()
+    .Add("Customers")
+    .Done())
 
 <!--<p>
     @Html.ActionLink("Create New", "Create")

@@ -1,14 +1,14 @@
 ﻿@using Jarboo.Admin.Web.Models.Project
-@model List<Jarboo.Admin.DAL.Entities.Project>
+@model System.Collections.Generic.List<Jarboo.Admin.DAL.Entities.Project>
 
 @{
     ViewBag.Title = "Projects";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="breadcrumbs small">
-    <span class="item">Projects</span>
-</div>
+@(new BreadCrumbsBuilder()
+    .Add("Projects")
+    .Done())
 
 <p>
     <a class="btn btn-success" href="@Url.Action(MVC.Projects.Create())">

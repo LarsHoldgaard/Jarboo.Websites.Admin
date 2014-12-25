@@ -5,13 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="breadcrumbs small">
-    <span class="item">
-        <strong>
-            <a href="/employees">Employees</a>
-        </strong>
-    </span>
-    <span class="item">New employee</span>
-</div>
+@(new BreadCrumbsBuilder()
+    .Add(Url.Action(MVC.Employees.Index()), "Employees")
+    .Add("New employee")
+    .Done())
 
 @Html.Partial(MVC.Employees.Views._Form, Model)

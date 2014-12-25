@@ -5,14 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="breadcrumbs small">
-    <span class="item">
-        <strong>
-            <a href="/tasks">Tasks</a>
-        </strong>
-    </span>
-    <span class="item">New task</span>
-</div>
+@(new BreadCrumbsBuilder()
+    .Add(Url.Action(MVC.Tasks.Index()), "Tasks")
+    .Add("New task")
+    .Done())
 
 @using (Html.BeginForm())
 {

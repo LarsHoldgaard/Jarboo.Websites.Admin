@@ -257,6 +257,7 @@
     </Compile>
     <Compile Include="Infrastructure\BLExternals\BusinessErrorCollection.cs" />
     <Compile Include="Infrastructure\BLExternals\RandomTaskStepEmployeeStrategy.cs" />
+    <Compile Include="Infrastructure\BreadCrumbsBuilder.cs" />
     <Compile Include="Infrastructure\Configuration.cs" />
     <Compile Include="Infrastructure\DataBaseInitializer.cs" />
     <Compile Include="Infrastructure\HtmlExtensions.cs" />
