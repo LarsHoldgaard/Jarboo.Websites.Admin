@@ -258,8 +258,10 @@
     <Compile Include="Infrastructure\Configuration.cs" />
     <Compile Include="Infrastructure\DataBaseInitializer.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\AppFlowMetadata.cs" />
-    <Compile Include="Infrastructure\ThirdPartyIntegration\Drive.cs" />
+    <Compile Include="Infrastructure\ThirdPartyIntegration\GoogleDriveFolderHierarchy.cs" />
+    <Compile Include="Infrastructure\ThirdPartyIntegration\GoogleFolderCreator.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\MemoryDataStore.cs" />
+    <Compile Include="Infrastructure\ThirdPartyIntegration\NoopFolderCrator.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\NoopTaskRegister.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\TrelloTaskRegister.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />

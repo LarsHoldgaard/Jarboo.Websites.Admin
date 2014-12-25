@@ -18,6 +18,11 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 return;
             }
 
+            if (string.IsNullOrEmpty(Configuration.TrelloApiKey) || string.IsNullOrEmpty(Configuration.TrelloToken))
+            {
+                throw new ApplicationException("Missing trello configuration");
+            }
+
             try
             {
                 this.trello = new Trello(Configuration.TrelloApiKey);

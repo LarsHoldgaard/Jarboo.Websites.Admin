@@ -25,11 +25,13 @@ namespace Jarboo.Admin.BL.Services
     public class TaskService : BaseEntityService<Task>, ITaskService
     {
         protected ITaskRegister TaskRegister { get; set; }
+        protected IFolderCreator FolderCreator { get; set; }
 
-        public TaskService(IUnitOfWork UnitOfWork, ITaskRegister taskRegister)
+        public TaskService(IUnitOfWork UnitOfWork, ITaskRegister taskRegister, IFolderCreator folderCreator)
             : base(UnitOfWork)
         {
             TaskRegister = taskRegister;
+            FolderCreator = folderCreator;
         }
 
         protected override System.Data.Entity.IDbSet<Task> Table
@@ -63,25 +65,41 @@ namespace Jarboo.Admin.BL.Services
             }
 
             var taskFullTitle = Task.TaskFullTitle(model.Title, model.Type);
-
-            RegisterTask(customer.Name, taskFullTitle);
+            var taskRegistered = false;
+            var folderCreated = false;
 
             try
             {
+                RegisterTask(customer.Name, taskFullTitle);
+                taskRegistered = true;
+
+                CreateFolder(customer.Name, taskFullTitle);
+                folderCreated = true;
+
                 var entity = new Task();
                 Add(entity, model);
             }
+            catch (ApplicationException ex)
+            {
+                this.Cleanup(customer, taskFullTitle, taskRegistered, folderCreated);
+                throw;
+            }
             catch (Exception ex)
             {
-                UnregisterTask(customer.Name, taskFullTitle);
-                throw new ApplicationException("Could not save task in the database", ex);
+                this.Cleanup(customer, taskFullTitle, taskRegistered, folderCreated);
+                throw new ApplicationException("Couldn't create task", ex);
             }
         }
+
         private void RegisterTask(string customerName, string taskTitle)
         {
             try
             {
                 TaskRegister.Register(customerName, taskTitle);
+            }
+            catch (ApplicationException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -94,9 +112,42 @@ namespace Jarboo.Admin.BL.Services
             {
                 TaskRegister.Unregister(customerName, taskTitle);
             }
+            catch
+            { }
+        }
+        private void CreateFolder(string customerName, string taskTitle)
+        {
+            try
+            {
+                FolderCreator.Create(customerName, taskTitle);
+            }
+            catch (ApplicationException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
-                throw new ApplicationException("Could not unregister task in third party service. Task should be removed by hand.", ex);
+                throw new ApplicationException("Could not create folder in third party service", ex);
+            }
+        }
+        private void DeleteFolder(string customerName, string taskTitle)
+        {
+            try
+            {
+                FolderCreator.Delete(customerName, taskTitle);
+            }
+            catch
+            { }
+        }
+        private void Cleanup(Customer customer, string taskFullTitle, bool taskRegistered, bool folderCreated)
+        {
+            if (taskRegistered)
+            {
+                this.UnregisterTask(customer.Name, taskFullTitle);
+            }
+            if (folderCreated)
+            {
+                this.DeleteFolder(customer.Name, taskFullTitle);
             }
         }
     }

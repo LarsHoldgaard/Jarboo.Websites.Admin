@@ -76,6 +76,15 @@ namespace Jarboo.Admin.Web.App_Start
                 kernel.Bind<ITaskRegister>().To<NoopTaskRegister>().InRequestScope();
             }
 
+            if (Configuration.UseGoogleDrive)
+            {
+                kernel.Bind<IFolderCreator>().To<GoogleFolderCreator>().InRequestScope();
+            }
+            else
+            {
+                kernel.Bind<IFolderCreator>().To<NoopFolderCrator>().InRequestScope();
+            }
+
             kernel.Bind<IUnitOfWork>().To<Context>().InRequestScope();
             kernel.Bind<ICustomerService>().To<CustomerService>().InRequestScope();
             kernel.Bind<IProjectService>().To<ProjectService>().InRequestScope();

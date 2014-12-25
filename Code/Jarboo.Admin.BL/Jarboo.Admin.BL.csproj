@@ -67,6 +67,7 @@
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\TaskService.cs" />
+    <Compile Include="ThirdParty\IFolderCreator.cs" />
     <Compile Include="ThirdParty\ITaskRegister.cs" />
   </ItemGroup>
   <ItemGroup>

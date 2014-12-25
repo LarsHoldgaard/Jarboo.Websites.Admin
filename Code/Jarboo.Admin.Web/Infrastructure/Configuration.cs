@@ -21,6 +21,19 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
+        private static bool? useTrello;
+        public static bool UseTrello
+        {
+            get
+            {
+                if (useTrello == null)
+                {
+                    useTrello = bool.Parse(ConfigurationManager.AppSettings["UseTrello"]);
+                }
+                return useTrello.Value;
+            }
+        }
+
         private static string trelloApiKey;
         public static string TrelloApiKey
         {
@@ -47,29 +60,29 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
-        private static bool? useTrello;
-        public static bool UseTrello
+        private static bool? useGoogleDrive;
+        public static bool UseGoogleDrive
         {
             get
             {
-                if (useTrello == null)
+                if (useGoogleDrive == null)
                 {
-                    useTrello = bool.Parse(ConfigurationManager.AppSettings["UseTrello"]);
+                    useGoogleDrive = bool.Parse(ConfigurationManager.AppSettings["UseGoogleDrive"]);
                 }
-                return useTrello.Value;
+                return useGoogleDrive.Value;
             }
         }
 
-        private static bool? useGoogle;
-        public static bool UseGoogle
+        private static string googleDrivePath;
+        public static string GoogleDrivePath
         {
             get
             {
-                if (useGoogle == null)
+                if (googleDrivePath == null)
                 {
-                    useGoogle = bool.Parse(ConfigurationManager.AppSettings["UseGoogle"]);
+                    googleDrivePath = ConfigurationManager.AppSettings["GoogleDrivePath"];
                 }
-                return useGoogle.Value;
+                return googleDrivePath;
             }
         }
 

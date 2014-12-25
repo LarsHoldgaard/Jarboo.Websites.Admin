@@ -15,5 +15,4 @@ namespace Jarboo.Admin.Web.Controllers
             get { return new AppFlowMetadata(); }
         }
     }
-
 }
