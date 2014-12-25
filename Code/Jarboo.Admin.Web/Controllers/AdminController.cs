@@ -14,7 +14,7 @@ namespace Jarboo.Admin.Web.Controllers
 {
     public partial class AdminController : BaseController
     {
-        public virtual ActionResult Index()
+        public virtual ActionResult RequestRefreshToken()
         {
             var result = new AuthorizationCodeMvcApp(this, new AppFlowMetadata()).
                 AuthorizeAsync(new CancellationTokenSource().Token).Result;

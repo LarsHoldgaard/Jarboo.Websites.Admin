@@ -73,13 +73,13 @@ namespace Jarboo.Admin.Web.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string Index = "Index";
+            public readonly string RequestRefreshToken = "RequestRefreshToken";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string Index = "Index";
+            public const string RequestRefreshToken = "RequestRefreshToken";
         }
 
 
@@ -103,13 +103,13 @@ namespace Jarboo.Admin.Web.Controllers
         public T4MVC_AdminController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void RequestRefreshTokenOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Index()
+        public override System.Web.Mvc.ActionResult RequestRefreshToken()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            IndexOverride(callInfo);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RequestRefreshToken);
+            RequestRefreshTokenOverride(callInfo);
             return callInfo;
         }
 
