@@ -75,6 +75,12 @@ namespace Jarboo.Admin.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Steps);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult NextStep()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NextStep);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public TasksController Actions { get { return MVC.Tasks; } }
@@ -95,6 +101,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string View = "View";
             public readonly string Create = "Create";
             public readonly string Steps = "Steps";
+            public readonly string NextStep = "NextStep";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -104,6 +111,7 @@ namespace Jarboo.Admin.Web.Controllers
             public const string View = "View";
             public const string Create = "Create";
             public const string Steps = "Steps";
+            public const string NextStep = "NextStep";
         }
 
 
@@ -132,6 +140,14 @@ namespace Jarboo.Admin.Web.Controllers
         {
             public readonly string id = "id";
         }
+        static readonly ActionParamsClass_NextStep s_params_NextStep = new ActionParamsClass_NextStep();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_NextStep NextStepParams { get { return s_params_NextStep; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_NextStep
+        {
+            public readonly string model = "model";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -143,12 +159,14 @@ namespace Jarboo.Admin.Web.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _List = "_List";
+                public readonly string _NextStep = "_NextStep";
                 public readonly string Create = "Create";
                 public readonly string Index = "Index";
                 public readonly string Steps = "Steps";
                 public readonly string View = "View";
             }
             public readonly string _List = "~/Views/Tasks/_List.cshtml";
+            public readonly string _NextStep = "~/Views/Tasks/_NextStep.cshtml";
             public readonly string Create = "~/Views/Tasks/Create.cshtml";
             public readonly string Index = "~/Views/Tasks/Index.cshtml";
             public readonly string Steps = "~/Views/Tasks/Steps.cshtml";
@@ -217,6 +235,18 @@ namespace Jarboo.Admin.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Steps);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             StepsOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void NextStepOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.TaskNextStep model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult NextStep(Jarboo.Admin.BL.Models.TaskNextStep model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NextStep);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            NextStepOverride(callInfo, model);
             return callInfo;
         }
 

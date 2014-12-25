@@ -70,6 +70,7 @@ namespace Jarboo.Admin.Web.Controllers
                 RedirectToAction(MVC.Tasks.Create()));
         }
 
+        // GET: /Tasks/Steps/5
         public virtual ActionResult Steps(int? id)
         {
             if (id == null)
@@ -82,7 +83,21 @@ namespace Jarboo.Admin.Web.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(), "EmployeeId", "FullName");
             return View(task);
+        }
+
+        // POST: /Tasks/NextStep
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult NextStep(TaskNextStep model)
+        {
+            return Handle(
+                model,
+                TaskService.NextStep,
+                () => RedirectToAction(MVC.Tasks.Steps(model.TaskId)),
+                RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
         }
     }
 }

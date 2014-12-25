@@ -34,7 +34,14 @@ namespace Jarboo.Admin.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                handler(model, ModelState.Wrap());
+                try
+                {
+                    handler(model, ModelState.Wrap());
+                }
+                catch (NotFoundException)
+                {
+                    return this.HttpNotFound();
+                }
 
                 if (ModelState.IsValid)
                 {

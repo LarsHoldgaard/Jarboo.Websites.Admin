@@ -315,6 +315,7 @@
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Employees\_Form.cshtml" />
     <Content Include="Views\Tasks\Steps.cshtml" />
+    <Content Include="Views\Tasks\_NextStep.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

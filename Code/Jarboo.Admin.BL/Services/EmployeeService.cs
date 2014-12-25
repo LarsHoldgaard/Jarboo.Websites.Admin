@@ -33,7 +33,7 @@ namespace Jarboo.Admin.BL.Services
 
         public override Employee GetById(int id)
         {
-            return Table.Include(x => x.Positions).FirstOrDefault(x => x.EmployeeId == id);
+            return Table.Include(x => x.Positions).Include(x => x.TaskSteps.Select(y => y.Task)).FirstOrDefault(x => x.EmployeeId == id);
         }
 
         public List<Employee> GetAll()

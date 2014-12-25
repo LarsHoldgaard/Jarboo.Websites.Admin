@@ -30,6 +30,11 @@ namespace Jarboo.Admin.DAL.Entities
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
         
+        public bool Done()
+        {
+            return DateEnd.HasValue;
+        }
+
         public static TaskStepEnum First()
         {
             return 0;

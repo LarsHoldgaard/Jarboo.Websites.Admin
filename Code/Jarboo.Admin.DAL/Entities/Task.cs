@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Jarboo.Admin.DAL.Entities
 {
@@ -34,6 +35,7 @@ namespace Jarboo.Admin.DAL.Entities
         [Range(0, int.MaxValue, ErrorMessage = "Size must be bigger than {1}")]
         public int Size { get; set; }
         public TaskUrgency Urgency { get; set; }
+        public bool Done { get; set; }
 
         public string FolderLink { get; set; }
         public string CardLink { get; set; }
@@ -42,6 +44,21 @@ namespace Jarboo.Admin.DAL.Entities
         public virtual Project Project { get; set; }
 
         public virtual List<TaskStep> Steps { get; set; }
+
+        public string Step()
+        {
+            if (Done)
+            {
+                return "Done";
+            }
+
+            if (Steps.Count == 0)
+            {
+                return "Unknown";
+            }
+
+            return Steps.Last().Step.ToString();
+        }
 
         public static string TaskFullTitle(string title, TaskType type)
         {

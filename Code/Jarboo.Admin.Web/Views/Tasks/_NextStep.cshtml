@@ -1,0 +1,14 @@
+﻿@model Jarboo.Admin.BL.Models.TaskNextStep
+
+@using (Html.BeginForm(MVC.Tasks.NextStep()))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.TaskId)
+    
+    <div class="input-group">
+        <span class="input-group-btn">
+            <button class="btn btn-success" type="submit">Next step</button>
+        </span>
+        @Html.DropDownListFor(x => x.EmployeeId, (SelectList)ViewBag.EmployeesList, "Select automatically", new { @class = "form-control" })
+    </div>
+}

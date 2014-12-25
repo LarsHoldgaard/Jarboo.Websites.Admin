@@ -21,6 +21,8 @@ namespace Jarboo.Admin.BL.Services
         List<Task> GetAll();
 
         void Create(TaskCreate model, IBusinessErrorCollection errors);
+
+        void NextStep(TaskNextStep model, IBusinessErrorCollection errors);
     }
 
     public class TaskService : BaseEntityService<Task>, ITaskService
@@ -80,12 +82,12 @@ namespace Jarboo.Admin.BL.Services
                 CreateFolder(customer.Name, taskFullTitle);
                 folderCreated = true;
 
-                var entity = new Task();
                 if (!model.EmployeeId.HasValue)
                 {
                     model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId);
                 }
 
+                var entity = new Task();
                 entity.Steps.Add(new TaskStep()
                 {
                     EmployeeId = model.EmployeeId.Value,
@@ -105,7 +107,6 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Couldn't create task", ex);
             }
         }
-
         private void RegisterTask(string customerName, string taskTitle)
         {
             try
@@ -164,6 +165,39 @@ namespace Jarboo.Admin.BL.Services
             {
                 this.DeleteFolder(customer.Name, taskFullTitle);
             }
+        }
+
+        public void NextStep(TaskNextStep model, IBusinessErrorCollection errors)
+        {
+            var now = DateTime.Now;
+
+            var entity = Table.Include(x => x.Steps).FirstOrDefault(x => x.TaskId == model.TaskId);
+            if (entity == null)
+            {
+                throw new NotFoundException();
+            }
+
+            entity.DateModified = now;
+
+            if (!model.EmployeeId.HasValue)
+            {
+                model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), entity.ProjectId);
+            }
+
+            var lastStep = entity.Steps.Last();
+            lastStep.DateModified = now;
+            lastStep.DateEnd = now;
+
+            var nextStep = TaskStep.Next(lastStep.Step);
+            if (nextStep.HasValue)
+            {
+                entity.Steps.Add(new TaskStep() { EmployeeId = model.EmployeeId.Value, Step = nextStep.Value});
+            }
+            else
+            {
+                entity.Done = true;
+            }
+            UnitOfWork.SaveChanges();
         }
     }
 }
