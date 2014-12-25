@@ -75,10 +75,12 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             }
             public Folder(File file) : this()
             {
+                File = file;
                 Id = file.Id;
                 Title = file.Title;
             }
 
+            public File File { get; set; }
             public string Id { get; set; }
             public string Title { get; set; }
             public List<Folder> Children { get; set; }

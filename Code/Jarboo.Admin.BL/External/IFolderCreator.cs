@@ -8,7 +8,7 @@ namespace Jarboo.Admin.BL.ThirdParty
 {
     public interface IFolderCreator
     {
-        void Create(string customerName, string taskTitle);
+        string Create(string customerName, string taskTitle);
         void Delete(string customerName, string taskTitle);
     }
 }

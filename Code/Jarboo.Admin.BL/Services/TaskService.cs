@@ -71,23 +71,25 @@ namespace Jarboo.Admin.BL.Services
             }
 
             var taskFullTitle = Task.TaskFullTitle(model.Title, model.Type);
-            var taskRegistered = false;
-            var folderCreated = false;
+            string taskLink = null;
+            string folderLink = null;
 
             try
             {
-                RegisterTask(customer.Name, taskFullTitle);
-                taskRegistered = true;
-
-                CreateFolder(customer.Name, taskFullTitle);
-                folderCreated = true;
+                taskLink = RegisterTask(customer.Name, taskFullTitle);
+                folderLink = CreateFolder(customer.Name, taskFullTitle);
 
                 if (!model.EmployeeId.HasValue)
                 {
                     model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId);
                 }
 
-                var entity = new Task();
+                var entity = new Task()
+                {
+                    FolderLink = folderLink,
+                    CardLink = taskLink
+                };
+
                 entity.Steps.Add(new TaskStep()
                 {
                     EmployeeId = model.EmployeeId.Value,
@@ -98,20 +100,20 @@ namespace Jarboo.Admin.BL.Services
             }
             catch (ApplicationException ex)
             {
-                this.Cleanup(customer, taskFullTitle, taskRegistered, folderCreated);
+                this.Cleanup(customer, taskFullTitle, taskLink, folderLink);
                 throw;
             }
             catch (Exception ex)
             {
-                this.Cleanup(customer, taskFullTitle, taskRegistered, folderCreated);
+                this.Cleanup(customer, taskFullTitle, taskLink, folderLink);
                 throw new ApplicationException("Couldn't create task", ex);
             }
         }
-        private void RegisterTask(string customerName, string taskTitle)
+        private string RegisterTask(string customerName, string taskTitle)
         {
             try
             {
-                TaskRegister.Register(customerName, taskTitle);
+                return TaskRegister.Register(customerName, taskTitle);
             }
             catch (ApplicationException)
             {
@@ -131,11 +133,11 @@ namespace Jarboo.Admin.BL.Services
             catch
             { }
         }
-        private void CreateFolder(string customerName, string taskTitle)
+        private string CreateFolder(string customerName, string taskTitle)
         {
             try
             {
-                FolderCreator.Create(customerName, taskTitle);
+                return FolderCreator.Create(customerName, taskTitle);
             }
             catch (ApplicationException)
             {
@@ -155,13 +157,13 @@ namespace Jarboo.Admin.BL.Services
             catch
             { }
         }
-        private void Cleanup(Customer customer, string taskFullTitle, bool taskRegistered, bool folderCreated)
+        private void Cleanup(Customer customer, string taskFullTitle, string taskLink, string folderLink)
         {
-            if (taskRegistered)
+            if (!string.IsNullOrEmpty(taskLink))
             {
                 this.UnregisterTask(customer.Name, taskFullTitle);
             }
-            if (folderCreated)
+            if (!string.IsNullOrEmpty(folderLink))
             {
                 this.DeleteFolder(customer.Name, taskFullTitle);
             }

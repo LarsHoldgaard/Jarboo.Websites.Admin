@@ -66,11 +66,11 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             }
         }
 
-        public void Create(string customerName, string taskTitle)
+        public string Create(string customerName, string taskTitle)
         {
             EnsureService();
 
-            CreateFolders(CreateFolderPath(customerName, taskTitle));
+            return CreateFolders(CreateFolderPath(customerName, taskTitle));
         }
         public void Delete(string customerName, string taskTitle)
         {
@@ -94,7 +94,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             return new GoogleDriveFolderHierarchy(driveFiles);
         }
 
-        private void CreateFolders(IEnumerable<string> folders)
+        private string CreateFolders(IEnumerable<string> folders)
         {
             EnsureService();
 
@@ -113,6 +113,8 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 var driveFile = this.CreateFolder(folderName, parentFolder.Id);
                 parentFolder = new GoogleDriveFolderHierarchy.Folder(driveFile);
             }
+
+            return parentFolder.File.AlternateLink;
         }
         private File CreateFolder(string title, string parentId)
         {

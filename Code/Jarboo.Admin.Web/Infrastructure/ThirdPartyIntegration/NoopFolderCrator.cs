@@ -9,8 +9,10 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 {
     public class NoopFolderCrator : IFolderCreator
     {
-        public void Create(string customerName, string taskTitle)
-        { }
+        public string Create(string customerName, string taskTitle)
+        {
+            return null;
+        }
 
         public void Delete(string customerName, string taskTitle)
         { }

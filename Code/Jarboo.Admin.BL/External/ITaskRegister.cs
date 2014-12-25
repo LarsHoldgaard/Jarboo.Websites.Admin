@@ -10,7 +10,7 @@ namespace Jarboo.Admin.BL.ThirdParty
 {
     public interface ITaskRegister
     {
-        void Register(string customerName, string taskTitle);
+        string Register(string customerName, string taskTitle);
         void Unregister(string customerName, string taskTitle);
     }
 }
