@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
+using Jarboo.Admin.BL.External;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.ThirdParty;
 using Jarboo.Admin.DAL;
@@ -26,12 +27,14 @@ namespace Jarboo.Admin.BL.Services
     {
         protected ITaskRegister TaskRegister { get; set; }
         protected IFolderCreator FolderCreator { get; set; }
+        protected ITaskStepEmployeeStrategy TaskStepEmployeeStrategy { get; set; }
 
-        public TaskService(IUnitOfWork UnitOfWork, ITaskRegister taskRegister, IFolderCreator folderCreator)
-            : base(UnitOfWork)
+        public TaskService(IUnitOfWork unitOfWork, ITaskRegister taskRegister, IFolderCreator folderCreator, ITaskStepEmployeeStrategy taskStepEmployeeStrategy)
+            : base(unitOfWork)
         {
             TaskRegister = taskRegister;
             FolderCreator = folderCreator;
+            TaskStepEmployeeStrategy = taskStepEmployeeStrategy;
         }
 
         protected override System.Data.Entity.IDbSet<Task> Table
@@ -77,6 +80,17 @@ namespace Jarboo.Admin.BL.Services
                 folderCreated = true;
 
                 var entity = new Task();
+                if (!model.EmployeeId.HasValue)
+                {
+                    model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId);
+                }
+
+                entity.Steps.Add(new TaskStep()
+                {
+                    EmployeeId = model.EmployeeId.Value,
+                    Step = TaskStep.First()
+                });
+
                 Add(entity, model);
             }
             catch (ApplicationException ex)

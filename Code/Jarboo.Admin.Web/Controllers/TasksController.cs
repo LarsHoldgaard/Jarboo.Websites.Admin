@@ -17,9 +17,10 @@ namespace Jarboo.Admin.Web.Controllers
     {
         [Inject]
         public ITaskService TaskService { get; set; }
-
         [Inject]
         public IProjectService ProjectService { get; set; }
+        [Inject]
+        public IEmployeeService EmployeeService { get; set; }
 
         // GET: /Tasks/
         public virtual ActionResult Index()
@@ -52,6 +53,7 @@ namespace Jarboo.Admin.Web.Controllers
                 task.ProjectId = projectId.Value;
             }
 
+            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(), "EmployeeId", "FullName");
             ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(), "ProjectId", "Name", "Customer.Name", task.ProjectId);
             return View(task);
         }

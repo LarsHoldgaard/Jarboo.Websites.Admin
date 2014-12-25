@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
-using Jarboo.Admin.BL;
+using Jarboo.Admin.BL.External;
 
-namespace Jarboo.Admin.Web.Infrastructure
+namespace Jarboo.Admin.Web.Infrastructure.BLExternals
 {
     public class BusinessErrorCollection : IBusinessErrorCollection
     {
@@ -14,17 +10,17 @@ namespace Jarboo.Admin.Web.Infrastructure
 
         public BusinessErrorCollection(ModelStateDictionary modelState)
         {
-            _modelState = modelState;
+            this._modelState = modelState;
         }
 
         public void Add(string property, string error)
         {
-            _modelState.AddModelError(property, error);
+            this._modelState.AddModelError(property, error);
         }
 
         public bool HasErrors()
         {
-            return _modelState.IsValid;
+            return this._modelState.IsValid;
         }
     }
 

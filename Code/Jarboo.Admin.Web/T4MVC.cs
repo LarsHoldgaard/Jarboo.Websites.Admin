@@ -92,6 +92,7 @@ namespace Links
             private const string URLPATH = "~/Scripts/Site";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string jquery_validation_fix_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validation.fix.min.js") ? Url("jquery.validation.fix.min.js") : Url("jquery.validation.fix.js");
             public static readonly string validation_style_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/validation.style.min.js") ? Url("validation.style.min.js") : Url("validation.style.js");
         }
     

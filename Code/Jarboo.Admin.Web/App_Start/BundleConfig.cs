@@ -14,6 +14,7 @@ namespace Jarboo.Admin.Web.App_Start
                 "~/Scripts/jquery-{version}.js"));
             bundles.Add(new ScriptBundle("~/js/validation").Include(
                         "~/Scripts/jquery.validate*",
+                        "~/Scripts/Site/jquery.validation.fix.js",
                         "~/Scripts/Site/validation.style.js"));
 
             bundles.Add(new ScriptBundle("~/js/bootstrap").Include(

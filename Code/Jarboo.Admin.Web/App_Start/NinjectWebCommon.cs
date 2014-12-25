@@ -2,6 +2,7 @@ using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.BL.ThirdParty;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.Web.Infrastructure;
+using Jarboo.Admin.Web.Infrastructure.BLExternals;
 using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Jarboo.Admin.Web.App_Start.NinjectWebCommon), "Start")]
@@ -84,6 +85,8 @@ namespace Jarboo.Admin.Web.App_Start
             {
                 kernel.Bind<IFolderCreator>().To<NoopFolderCrator>().InRequestScope();
             }
+            
+            kernel.Bind<ITaskStepEmployeeStrategy>().To<RandomTaskStepEmployeeStrategy>().InRequestScope();
 
             kernel.Bind<IUnitOfWork>().To<Context>().InRequestScope();
             kernel.Bind<ICustomerService>().To<CustomerService>().InRequestScope();

@@ -12,6 +12,7 @@ namespace Jarboo.Admin.DAL.Entities
         public Employee()
         {
             Positions = new List<EmployeePosition>();
+            TaskSteps = new List<TaskStep>();
         }
 
         public int EmployeeId { get; set; }
@@ -28,5 +29,6 @@ namespace Jarboo.Admin.DAL.Entities
         public double HourlyPrice { get; set; }
 
         public virtual List<EmployeePosition> Positions { get; set; }
+        public virtual List<TaskStep> TaskSteps { get; set; }
     }
 }

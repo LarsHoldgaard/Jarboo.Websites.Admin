@@ -39,18 +39,15 @@ namespace Jarboo.Admin.BL.Services
         protected void Add<TM>(T entity, TM model)
             where TM : class, new()
         {
-            entity.DateCreated = DateTime.Now;
-            entity.DateModified = entity.DateCreated;
-
             Table.Add(entity);
             Save(entity, model);
         }
         protected void Edit<TM>(T entity, TM model)
             where TM : class, new()
         {
+            Table.Attach(entity);
             entity.DateModified = DateTime.Now;
 
-            Table.Attach(entity);
             Save(entity, model);
         }
         protected virtual void Save<TM>(T entity, TM model)

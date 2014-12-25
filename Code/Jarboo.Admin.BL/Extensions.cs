@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 using AutoMapper;
 
+using Jarboo.Admin.BL.External;
+
 namespace Jarboo.Admin.BL
 {
     public static class Extensions

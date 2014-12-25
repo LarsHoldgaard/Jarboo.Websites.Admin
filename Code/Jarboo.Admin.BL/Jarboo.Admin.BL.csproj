@@ -54,7 +54,7 @@
   <ItemGroup>
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="IBusinessErrorCollection.cs" />
+    <Compile Include="External\IBusinessErrorCollection.cs" />
     <Compile Include="Models\CustomerCreate.cs" />
     <Compile Include="Models\EmployeeEdit.cs" />
     <Compile Include="Models\ProjectCreate.cs" />
@@ -67,8 +67,9 @@
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\TaskService.cs" />
-    <Compile Include="ThirdParty\IFolderCreator.cs" />
-    <Compile Include="ThirdParty\ITaskRegister.cs" />
+    <Compile Include="External\IFolderCreator.cs" />
+    <Compile Include="External\ITaskRegister.cs" />
+    <Compile Include="External\ITaskStepEmployeeStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,6 +1,6 @@
 ﻿@model Jarboo.Admin.BL.Models.EmployeeEdit
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm(MVC.Employees.Edit())) 
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.EmployeeId)

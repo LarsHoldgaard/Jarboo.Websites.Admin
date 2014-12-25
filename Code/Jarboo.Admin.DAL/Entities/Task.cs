@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Jarboo.Admin.DAL.Entities
@@ -21,6 +22,11 @@ namespace Jarboo.Admin.DAL.Entities
 
     public class Task : BaseEntity
     {
+        public Task()
+        {
+            Steps = new List<TaskStep>();
+        }
+
         public int TaskId { get; set; }
         [Required]
         public string Title { get; set; }
@@ -34,6 +40,8 @@ namespace Jarboo.Admin.DAL.Entities
 
         public int ProjectId { get; set; }
         public virtual Project Project { get; set; }
+
+        public virtual List<TaskStep> Steps { get; set; }
 
         public static string TaskFullTitle(string title, TaskType type)
         {
