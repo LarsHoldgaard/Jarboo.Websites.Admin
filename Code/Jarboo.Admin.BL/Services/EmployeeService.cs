@@ -57,6 +57,11 @@ namespace Jarboo.Admin.BL.Services
             }
             else
             {
+                foreach (var position in UnitOfWork.EmployeePositions.Where(x => x.EmployeeId == model.EmployeeId))
+                {
+                    UnitOfWork.EmployeePositions.Remove(position);
+                }
+
                 var entity = new Employee { EmployeeId = model.EmployeeId };
                 Edit(entity, model);
             }

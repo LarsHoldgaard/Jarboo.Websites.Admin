@@ -42,18 +42,22 @@ namespace Jarboo.Admin.BL.Services
             Table.Add(entity);
             Save(entity, model);
         }
-        protected void Edit<TM>(T entity, TM model)
+        protected void Edit<TM>(T entity, TM model, Action beforeSave = null)
             where TM : class, new()
         {
             Table.Attach(entity);
             entity.DateModified = DateTime.Now;
 
-            Save(entity, model);
+            Save(entity, model, beforeSave);
         }
-        protected virtual void Save<TM>(T entity, TM model)
+        protected virtual void Save<TM>(T entity, TM model, Action beforeSave = null)
             where TM : class, new()
         {
             model.MapTo(entity);
+            if (beforeSave != null)
+            {
+                beforeSave();
+            }
             UnitOfWork.SaveChanges();
             entity.MapTo(model);
         }

@@ -259,6 +259,7 @@
     <Compile Include="Infrastructure\BLExternals\RandomTaskStepEmployeeStrategy.cs" />
     <Compile Include="Infrastructure\Configuration.cs" />
     <Compile Include="Infrastructure\DataBaseInitializer.cs" />
+    <Compile Include="Infrastructure\HtmlExtensions.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\AppFlowMetadata.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\GoogleDriveFolderHierarchy.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\GoogleFolderCreator.cs" />

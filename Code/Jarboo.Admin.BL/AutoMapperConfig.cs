@@ -58,8 +58,15 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<TaskCreate, DAL.Entities.Task>()
                 .ForMember(x => x.TaskId, x => x.Ignore());
 
-            Mapper.CreateMap<Employee, EmployeeEdit>();
-            Mapper.CreateMap<EmployeeEdit, Employee>();
+            Mapper.CreateMap<Employee, EmployeeEdit>()
+                .ForMember(x => x.Positions, x => x.MapFrom(y => y.Positions.Select(z => z.Position).ToList()));
+            Mapper.CreateMap<EmployeeEdit, Employee>()
+                .ForMember(x => x.Positions, x => x.MapFrom(y =>
+                    y.Positions.Select(z => new EmployeePosition()
+                                                {
+                                                    EmployeeId = y.EmployeeId,
+                                                    Position = z
+                                                })));
         }
     }
 }
