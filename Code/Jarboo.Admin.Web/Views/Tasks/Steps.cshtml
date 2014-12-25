@@ -1,0 +1,44 @@
+﻿@model Jarboo.Admin.DAL.Entities.Task
+
+@{
+    ViewBag.Title = "Steps";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@(new BreadCrumbsBuilder()
+    .Add(Url.Action(MVC.Customers.Index()), "Customers")
+    .Add(Url.Action(MVC.Customers.View(Model.Project.CustomerId)), Model.Project.Customer.Name)
+    .Add(Url.Action(MVC.Projects.View(Model.ProjectId)), Model.Project.Name)
+    .Add(Model.Title)
+    .Done())
+
+@foreach (var step in Model.Steps)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                @if (step.DateEnd.HasValue)
+                {
+                    <i class="glyphicon glyphicon-check"></i>
+                }
+                else
+                {
+                    <i class="glyphicon glyphicon-unchecked"></i>
+                }
+                @step.Step
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div>
+                <a class="btn btn-default btn-xs" href="@Url.Action(MVC.Employees.View(step.EmployeeId))">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> @step.Employee.FullName
+                </a>
+                was assigned at
+                <time>@step.DateCreated.ToString("yyyy-MM-dd hh:mm:ss")</time>
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </div>
+}

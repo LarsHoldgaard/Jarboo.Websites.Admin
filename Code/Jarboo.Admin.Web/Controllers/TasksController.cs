@@ -69,5 +69,20 @@ namespace Jarboo.Admin.Web.Controllers
                 () => RedirectToAction(MVC.Tasks.View(model.TaskId)),
                 RedirectToAction(MVC.Tasks.Create()));
         }
+
+        public virtual ActionResult Steps(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Task task = TaskService.GetById(id.Value);
+            if (task == null)
+            {
+                return HttpNotFound();
+            }
+            return View(task);
+        }
     }
 }

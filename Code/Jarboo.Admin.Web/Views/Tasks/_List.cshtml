@@ -1,4 +1,5 @@
-﻿@model Jarboo.Admin.Web.Models.Task.TasksListViewModel
+﻿@using System.Linq
+@model Jarboo.Admin.Web.Models.Task.TasksListViewModel
 
 <table class="table table-striped">
     <tr>
@@ -14,6 +15,8 @@
         <th>Size
         </th>
         <th>Urgency
+        </th>
+        <th>Step
         </th>
         <th></th>
     </tr>
@@ -40,6 +43,11 @@
                 @Html.DisplayFor(x => task.Urgency)
             </td>
             <td>
+                <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Tasks.Steps(task.TaskId))">
+                    <i class="glyphicon glyphicon-list"></i> @task.Steps.Last().Step
+                </a>
+            </td>
+            <td>
                 @Html.ActionLink("View", MVC.Tasks.View(task.TaskId))
             </td>
         </tr>
@@ -48,7 +56,7 @@
     @if (Model.Tasks.Count == 0)
     {
         <tr>
-            <td colspan="6">
+            <td colspan="7">
                 No task has been created.
             </td>
         </tr>

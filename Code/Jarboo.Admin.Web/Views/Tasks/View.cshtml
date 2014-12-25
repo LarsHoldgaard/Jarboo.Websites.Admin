@@ -1,4 +1,5 @@
-﻿@model Jarboo.Admin.DAL.Entities.Task
+﻿@using System.Linq
+@model Jarboo.Admin.DAL.Entities.Task
 
 @{
     ViewBag.Title = "Task - " + Model.Title;
@@ -44,6 +45,16 @@
             </td>
             <td>
                 @Html.DisplayFor(x => x.Urgency)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Step
+            </td>
+            <td>
+                <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Tasks.Steps(Model.TaskId))">
+                    <i class="glyphicon glyphicon-list"></i> @Model.Steps.Last().Step
+                </a>
             </td>
         </tr>
     </tbody>
