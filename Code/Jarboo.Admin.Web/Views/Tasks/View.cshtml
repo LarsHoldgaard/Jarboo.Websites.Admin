@@ -48,12 +48,39 @@
             </td>
         </tr>
         <tr>
+            <td>Folder
+            </td>
             <td>
-                Step
+                @if (string.IsNullOrEmpty(Model.FolderLink))
+                {
+                    <span>Missing</span>
+                }
+                else
+                {
+                    <a target="_blank" href="@Model.FolderLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Card
+            </td>
+            <td>
+                @if (string.IsNullOrEmpty(Model.CardLink))
+                {
+                    <span>Missing</span>
+                }
+                else
+                {
+                    <a target="_blank" href="@Model.CardLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Step
             </td>
             <td>
                 <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Tasks.Steps(Model.TaskId))">
-                    <i class="glyphicon glyphicon-list"></i> @Model.Step()
+                    <i class="glyphicon glyphicon-list"></i>@Model.Step()
                 </a>
             </td>
         </tr>

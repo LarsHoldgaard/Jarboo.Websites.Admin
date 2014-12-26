@@ -16,6 +16,10 @@
         </th>
         <th>Urgency
         </th>
+        <th>Folder
+        </th>
+        <th>Card
+        </th>
         <th>Step
         </th>
         <th></th>
@@ -43,8 +47,28 @@
                 @Html.DisplayFor(x => task.Urgency)
             </td>
             <td>
+                @if (string.IsNullOrEmpty(task.FolderLink))
+                {
+                    <span>Missing</span>
+                }
+                else
+                {
+                    <a target="_blank" href="@task.FolderLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                }
+            </td>
+            <td>
+                @if (string.IsNullOrEmpty(task.CardLink))
+                {
+                    <span>Missing</span>
+                }
+                else
+                {
+                    <a target="_blank" href="@task.CardLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                }
+            </td>
+            <td>
                 <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Tasks.Steps(task.TaskId))">
-                    <i class="glyphicon glyphicon-list"></i> @task.Step()
+                    <i class="glyphicon glyphicon-list"></i>@task.Step()
                 </a>
             </td>
             <td>
@@ -56,8 +80,7 @@
     @if (Model.Tasks.Count == 0)
     {
         <tr>
-            <td colspan="7">
-                No task has been created.
+            <td colspan="9">No task has been created.
             </td>
         </tr>
     }
