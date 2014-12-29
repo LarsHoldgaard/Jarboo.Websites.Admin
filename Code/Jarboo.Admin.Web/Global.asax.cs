@@ -14,6 +14,20 @@ namespace Jarboo.Admin.Web
     {
         protected void Application_Start()
         {
+            try
+            {
+                this.ApplicationStartInternal();
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorLog.GetDefault(null).Log(new Elmah.Error(ex));
+                throw;
+            }
+
+        }
+        private void ApplicationStartInternal()
+        {
+            Elmah.Mvc.Bootstrap.Initialize();
             DatabaseConfig.ConfigureDatabase();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
