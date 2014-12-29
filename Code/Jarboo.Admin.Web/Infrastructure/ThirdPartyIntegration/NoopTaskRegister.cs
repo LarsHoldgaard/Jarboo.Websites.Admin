@@ -11,5 +11,8 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 
         public void Unregister(string customerName, string taskTitle)
         { }
+
+        public void ChangeResponsible(string customerName, string taskTitle, string responsibleUserId)
+        { }
     }
 }

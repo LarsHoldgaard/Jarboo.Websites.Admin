@@ -12,5 +12,6 @@ namespace Jarboo.Admin.BL.ThirdParty
     {
         string Register(string customerName, string taskTitle);
         void Unregister(string customerName, string taskTitle);
+        void ChangeResponsible(string customerName, string taskTitle, string responsibleUserId);
     }
 }

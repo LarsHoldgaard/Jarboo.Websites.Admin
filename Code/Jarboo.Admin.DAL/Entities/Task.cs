@@ -59,6 +59,10 @@ namespace Jarboo.Admin.DAL.Entities
 
             return Steps.Last().Step.ToString();
         }
+        public string FullTitle()
+        {
+            return TaskFullTitle(Title, Type);
+        }
 
         public static string TaskFullTitle(string title, TaskType type)
         {

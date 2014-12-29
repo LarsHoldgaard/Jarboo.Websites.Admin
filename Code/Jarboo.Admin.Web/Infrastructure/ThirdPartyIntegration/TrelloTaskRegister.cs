@@ -73,20 +73,50 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
         {
             this.EnsureTrello();
 
+            var card = this.FindCard(customerName, taskTitle);
+            if (card != null)
+            {
+                this.trello.Cards.Delete(card);
+            }
+        }
+
+        private Card FindCard(string customerName, string taskTitle)
+        {
+            this.EnsureTrello();
+
             var board = this.OpenBoard(customerName);
 
             var lists = this.trello.Lists.ForBoard(board);
             var list = lists.FirstOrDefault();
             if (list == null)
             {
+                return null;
+            }
+
+            return this.trello.Cards.ForList(list).FirstOrDefault(x => x.Name == taskTitle);
+        }
+
+        public void ChangeResponsible(string customerName, string taskTitle, string responsibleUserId)
+        {
+            this.EnsureTrello();
+
+            var card = this.FindCard(customerName, taskTitle);
+            if (card == null)
+            {
                 return;
             }
 
-            var card = this.trello.Cards.ForList(list).FirstOrDefault(x => x.Name == taskTitle);
-            if (card != null)
+            foreach (var memberId in card.IdMembers)
             {
-                this.trello.Cards.Delete(card);
+                this.trello.Cards.RemoveMember(card, new MemberId(memberId));
             }
+
+            if (string.IsNullOrEmpty(responsibleUserId))
+            {
+                return;
+            }
+
+            this.trello.Cards.AddMember(card, new MemberId(responsibleUserId));
         }
     }
 }

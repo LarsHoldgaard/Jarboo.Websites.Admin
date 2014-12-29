@@ -76,13 +76,16 @@ namespace Jarboo.Admin.BL.Services
 
             try
             {
-                taskLink = RegisterTask(customer.Name, taskFullTitle);
-                folderLink = CreateFolder(customer.Name, taskFullTitle);
-
                 if (!model.EmployeeId.HasValue)
                 {
                     model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId);
                 }
+                var employee = UnitOfWork.Employees.AsNoTracking().First(x => x.EmployeeId == model.EmployeeId.Value);
+
+                taskLink = RegisterTask(customer.Name, taskFullTitle);
+                ChangeResponsible(customer.Name, taskFullTitle, employee.TrelloId);
+
+                folderLink = CreateFolder(customer.Name, taskFullTitle);
 
                 var entity = new Task()
                 {
@@ -122,6 +125,21 @@ namespace Jarboo.Admin.BL.Services
             catch (Exception ex)
             {
                 throw new ApplicationException("Could not register task in third party service", ex);
+            }
+        }
+        private void ChangeResponsible(string customerName, string taskTitle, string responsibleUserId)
+        {
+            try
+            {
+                TaskRegister.ChangeResponsible(customerName, taskTitle, responsibleUserId);
+            }
+            catch (ApplicationException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Could not set responsible for task", ex);
             }
         }
         private void UnregisterTask(string customerName, string taskTitle)
@@ -178,13 +196,7 @@ namespace Jarboo.Admin.BL.Services
             {
                 throw new NotFoundException();
             }
-
             entity.DateModified = now;
-
-            if (!model.EmployeeId.HasValue)
-            {
-                model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), entity.ProjectId);
-            }
 
             var lastStep = entity.Steps.Last();
             lastStep.DateModified = now;
@@ -193,6 +205,20 @@ namespace Jarboo.Admin.BL.Services
             var nextStep = TaskStep.Next(lastStep.Step);
             if (nextStep.HasValue)
             {
+                if (!model.EmployeeId.HasValue)
+                {
+                    model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), entity.ProjectId);
+                }
+                var employee = UnitOfWork.Employees.AsNoTracking().First(x => x.EmployeeId == model.EmployeeId.Value);
+
+                var customer = UnitOfWork.Customers.FirstOrDefault(x => x.Projects.Any(y => y.ProjectId == entity.ProjectId));
+                if (customer == null)
+                {
+                    throw new Exception("Couldn't find customer for project " + entity.ProjectId);
+                }
+
+                ChangeResponsible(customer.Name, entity.FullTitle(), employee.TrelloId);
+
                 entity.Steps.Add(new TaskStep() { EmployeeId = model.EmployeeId.Value, Step = nextStep.Value});
             }
             else
