@@ -31,14 +31,14 @@ namespace Jarboo.Admin.BL.Services
             get { return UnitOfWork.Employees; }
         }
 
-        public override Employee GetById(int id)
+        public Employee GetById(int id)
         {
-            return Table.Include(x => x.Positions).Include(x => x.TaskSteps.Select(y => y.Task)).FirstOrDefault(x => x.EmployeeId == id);
+            return TableNoTracking.Include(x => x.Positions).Include(x => x.TaskSteps.Select(y => y.Task)).FirstOrDefault(x => x.EmployeeId == id);
         }
 
         public List<Employee> GetAll()
         {
-            return Table.Include(x => x.Positions)
+            return TableNoTracking.Include(x => x.Positions)
                 .AsEnumerable()
                 .ToList();
         }

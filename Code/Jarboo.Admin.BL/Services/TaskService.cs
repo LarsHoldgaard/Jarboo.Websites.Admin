@@ -44,14 +44,14 @@ namespace Jarboo.Admin.BL.Services
             get { return UnitOfWork.Tasks; }
         }
 
-        public override Task GetById(int id)
+        public Task GetById(int id)
         {
-            return Table.Include(x => x.Project.Customer).Include(x => x.Steps.Select(y => y.Employee)).FirstOrDefault(x => x.TaskId == id);
+            return TableNoTracking.Include(x => x.Project.Customer).Include(x => x.Steps.Select(y => y.Employee)).FirstOrDefault(x => x.TaskId == id);
         }
 
         public List<Task> GetAll()
         {
-            return Table.Include(x => x.Project)
+            return TableNoTracking.Include(x => x.Project)
                 .Include(x => x.Steps)
                 .AsEnumerable()
                 .ToList();

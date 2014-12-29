@@ -19,21 +19,12 @@ namespace Jarboo.Admin.BL.Services
         { }
 
         protected abstract IDbSet<T> Table { get; }
-        //protected abstract IQueryable<T> All { get; }
-
-        protected virtual T GetByIdInternal(int id)
+        protected virtual IQueryable<T> TableNoTracking
         {
-            return Table.Find(id);
-        }
-        public virtual T GetById(int id)
-        {
-            var entity = GetByIdInternal(id);
-            if (entity == null)
+            get
             {
-                throw new NotFoundException();
+                return Table.AsNoTracking();
             }
-
-            return entity;
         }
 
         protected void Add<TM>(T entity, TM model)

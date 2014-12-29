@@ -29,14 +29,14 @@ namespace Jarboo.Admin.BL.Services
             get { return UnitOfWork.Customers; }
         }
 
-        public override Customer GetById(int id)
+        public Customer GetById(int id)
         {
-            return Table.Include(x => x.Projects).FirstOrDefault(x => x.CustomerId == id);
+            return TableNoTracking.Include(x => x.Projects).FirstOrDefault(x => x.CustomerId == id);
         }
 
         public List<Customer> GetAll()
         {
-            return Table.Include(x => x.Projects)
+            return TableNoTracking.Include(x => x.Projects)
                 .AsEnumerable()
                 .ToList();
         }

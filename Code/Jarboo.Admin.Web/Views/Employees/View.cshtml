@@ -1,4 +1,5 @@
-﻿@using Jarboo.Admin.Web.Models.Task
+﻿@using Jarboo.Admin.DAL.Entities
+@using Jarboo.Admin.Web.Models.Task
 @model Jarboo.Admin.DAL.Entities.Employee
 
 @{
@@ -87,5 +88,5 @@
 
 @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
                                             {
-                                                Tasks = Model.TaskSteps.Select(x => x.Task).Distinct().ToList()
+                                                Tasks = Model.TaskSteps.Select(x => x.Task).Distinct(new TaskEqualityComparer()).ToList()
                                             })

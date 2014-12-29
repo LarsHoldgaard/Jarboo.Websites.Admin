@@ -217,7 +217,9 @@
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Scripts\Site\jquery.validation.fix.js" />
     <Content Include="Scripts\Site\validation.style.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminController.generated.cs">
@@ -288,7 +290,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
+    <Content Include="Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="packages.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\TopMenu.cshtml" />
