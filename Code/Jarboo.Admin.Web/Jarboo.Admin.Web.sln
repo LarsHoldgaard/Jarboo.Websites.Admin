@@ -7,7 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarboo.Admin.DAL", "..\Jarb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarboo.Admin.BL", "..\Jarboo.Admin.BL\Jarboo.Admin.BL.csproj", "{BB94A70C-F2A8-43A2-8357-4D790131AA89}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3D5AD43B-11B2-45B4-B543-07990AF23BEC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A7B7510F-F953-4FEF-9BA7-99826FE530E2}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2CB72816-C022-4D7B-BBAB-6BD92B957FAB}"
 	ProjectSection(SolutionItems) = preProject
 		WE-browsers.xml = WE-browsers.xml
 	EndProjectSection
