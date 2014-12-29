@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using StackExchange.Profiling
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,5 +48,7 @@
     @Scripts.Render("~/js/bootstrap")
     @Scripts.Render("~/js/validation")
     @RenderSection("scripts", required: false)
+    
+    @MiniProfiler.RenderIncludes()
 </body>
 </html>

@@ -100,6 +100,18 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
       <HintPath>packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
+    <Reference Include="MiniProfiler, Version=3.1.1.140, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\MiniProfiler.3.1.1.140\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler.EntityFramework6, Version=3.0.11.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\MiniProfiler.EF6.3.0.11\lib\net40\MiniProfiler.EntityFramework6.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler.Mvc, Version=3.0.11.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\MiniProfiler.Mvc4.3.0.11\lib\net40\MiniProfiler.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -237,6 +249,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebEngineConfig.cs" />
     <Compile Include="AuthCallbackController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

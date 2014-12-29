@@ -8,6 +8,15 @@ namespace Jarboo.Admin.Web.Infrastructure
 {
     public static class Configuration
     {
+        public static bool IsDebug()
+        {
+#if DEBUG
+            return true;
+#else
+            return false;
+#endif
+        }
+
         private static string[] predefinedCustomers;
         public static string[] PredefinedCustomers
         {

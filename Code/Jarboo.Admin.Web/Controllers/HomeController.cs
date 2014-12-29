@@ -20,6 +20,7 @@ namespace Jarboo.Admin.Web.Controllers
         public virtual ActionResult Index()
         {
             ViewBag.Customers = CustomerService.GetAll();
+
             return View();
         }
 	}

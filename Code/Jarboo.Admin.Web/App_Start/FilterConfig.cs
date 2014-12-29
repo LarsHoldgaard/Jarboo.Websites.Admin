@@ -6,6 +6,8 @@ using System.Web.Mvc;
 
 using Jarboo.Admin.Web.Infrastructure;
 
+using StackExchange.Profiling.Mvc;
+
 namespace Jarboo.Admin.Web.App_Start
 {
     public class FilterConfig
@@ -14,6 +16,7 @@ namespace Jarboo.Admin.Web.App_Start
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new ValidateAntiForgeryTokenWrapperAttribute(HttpVerbs.Post));
+            filters.Add(new ProfilingActionFilter());
         }
     }
 }

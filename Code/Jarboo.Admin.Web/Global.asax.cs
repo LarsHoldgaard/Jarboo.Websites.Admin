@@ -8,6 +8,9 @@ using System.Web.Routing;
 
 using Jarboo.Admin.Web.App_Start;
 
+using StackExchange.Profiling;
+using StackExchange.Profiling.EntityFramework6;
+
 namespace Jarboo.Admin.Web
 {
     public class MvcApplication : System.Web.HttpApplication
@@ -28,12 +31,27 @@ namespace Jarboo.Admin.Web
         private void ApplicationStartInternal()
         {
             Elmah.Mvc.Bootstrap.Initialize();
+            WebEngineConfig.RegisterWebEngines();
+            MiniProfilerEF6.Initialize();
             DatabaseConfig.ConfigureDatabase();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperConfig.RegisterMappers();
+        }
+
+        protected void Application_BeginRequest()
+        {
+            if (Request.IsLocal)
+            {
+                MiniProfiler.Start();
+            }
+        }
+
+        protected void Application_EndRequest()
+        {
+            MiniProfiler.Stop();
         }
     }
 }
