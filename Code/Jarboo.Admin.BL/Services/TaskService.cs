@@ -198,6 +198,12 @@ namespace Jarboo.Admin.BL.Services
             }
             entity.DateModified = now;
 
+            var customer = UnitOfWork.Customers.FirstOrDefault(x => x.Projects.Any(y => y.ProjectId == entity.ProjectId));
+            if (customer == null)
+            {
+                throw new Exception("Couldn't find customer for project " + entity.ProjectId);
+            }
+
             var lastStep = entity.Steps.Last();
             lastStep.DateModified = now;
             lastStep.DateEnd = now;
@@ -211,18 +217,14 @@ namespace Jarboo.Admin.BL.Services
                 }
                 var employee = UnitOfWork.Employees.AsNoTracking().First(x => x.EmployeeId == model.EmployeeId.Value);
 
-                var customer = UnitOfWork.Customers.FirstOrDefault(x => x.Projects.Any(y => y.ProjectId == entity.ProjectId));
-                if (customer == null)
-                {
-                    throw new Exception("Couldn't find customer for project " + entity.ProjectId);
-                }
-
                 ChangeResponsible(customer.Name, entity.FullTitle(), employee.TrelloId);
 
                 entity.Steps.Add(new TaskStep() { EmployeeId = model.EmployeeId.Value, Step = nextStep.Value});
             }
             else
             {
+                ChangeResponsible(customer.Name, entity.FullTitle(), null);
+
                 entity.Done = true;
             }
             UnitOfWork.SaveChanges();

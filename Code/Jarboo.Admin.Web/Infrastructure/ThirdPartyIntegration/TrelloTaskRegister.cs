@@ -106,6 +106,11 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 return;
             }
 
+            if (card.IdMembers.Count == 1 && card.IdMembers[0] == responsibleUserId)
+            {
+                return;
+            }
+
             foreach (var memberId in card.IdMembers)
             {
                 this.trello.Cards.RemoveMember(card, new MemberId(memberId));
