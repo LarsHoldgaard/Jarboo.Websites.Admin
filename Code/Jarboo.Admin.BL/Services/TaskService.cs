@@ -83,7 +83,7 @@ namespace Jarboo.Admin.BL.Services
                 var employee = UnitOfWork.Employees.AsNoTracking().First(x => x.EmployeeId == model.EmployeeId.Value);
 
                 taskLink = RegisterTask(customer.Name, taskFullTitle);
-                ChangeResponsible(customer.Name, taskFullTitle, employee.TrelloId);
+                ChangeResponsible(customer.Name, taskFullTitle, taskLink, employee.TrelloId);
 
                 folderLink = CreateFolder(customer.Name, taskFullTitle);
 
@@ -127,11 +127,11 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Could not register task in third party service", ex);
             }
         }
-        private void ChangeResponsible(string customerName, string taskTitle, string responsibleUserId)
+        private void ChangeResponsible(string customerName, string taskTitle, string url, string responsibleUserId)
         {
             try
             {
-                TaskRegister.ChangeResponsible(customerName, taskTitle, responsibleUserId);
+                TaskRegister.ChangeResponsible(customerName, taskTitle, url, responsibleUserId);
             }
             catch (ApplicationException)
             {
@@ -142,11 +142,11 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Could not set responsible for task", ex);
             }
         }
-        private void UnregisterTask(string customerName, string taskTitle)
+        private void UnregisterTask(string customerName, string taskTitle, string url)
         {
             try
             {
-                TaskRegister.Unregister(customerName, taskTitle);
+                TaskRegister.Unregister(customerName, taskTitle, url);
             }
             catch
             { }
@@ -179,7 +179,7 @@ namespace Jarboo.Admin.BL.Services
         {
             if (!string.IsNullOrEmpty(taskLink))
             {
-                this.UnregisterTask(customer.Name, taskFullTitle);
+                this.UnregisterTask(customer.Name, taskFullTitle, taskLink);
             }
             if (!string.IsNullOrEmpty(folderLink))
             {
@@ -217,13 +217,13 @@ namespace Jarboo.Admin.BL.Services
                 }
                 var employee = UnitOfWork.Employees.AsNoTracking().First(x => x.EmployeeId == model.EmployeeId.Value);
 
-                ChangeResponsible(customer.Name, entity.FullTitle(), employee.TrelloId);
+                ChangeResponsible(customer.Name, entity.FullTitle(), entity.CardLink, employee.TrelloId);
 
                 entity.Steps.Add(new TaskStep() { EmployeeId = model.EmployeeId.Value, Step = nextStep.Value});
             }
             else
             {
-                ChangeResponsible(customer.Name, entity.FullTitle(), null);
+                ChangeResponsible(customer.Name, entity.FullTitle(), entity.CardLink, null);
 
                 entity.Done = true;
             }

@@ -11,7 +11,7 @@ namespace Jarboo.Admin.BL.ThirdParty
     public interface ITaskRegister
     {
         string Register(string customerName, string taskTitle);
-        void Unregister(string customerName, string taskTitle);
-        void ChangeResponsible(string customerName, string taskTitle, string responsibleUserId);
+        void Unregister(string customerName, string taskTitle, string url);
+        void ChangeResponsible(string customerName, string taskTitle, string url, string responsibleUserId);
     }
 }

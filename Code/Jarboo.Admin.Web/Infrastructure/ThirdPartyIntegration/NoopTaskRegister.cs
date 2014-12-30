@@ -9,10 +9,10 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             return null;
         }
 
-        public void Unregister(string customerName, string taskTitle)
+        public void Unregister(string customerName, string taskTitle, string url)
         { }
 
-        public void ChangeResponsible(string customerName, string taskTitle, string responsibleUserId)
+        public void ChangeResponsible(string customerName, string taskTitle, string url, string responsibleUserId)
         { }
     }
 }

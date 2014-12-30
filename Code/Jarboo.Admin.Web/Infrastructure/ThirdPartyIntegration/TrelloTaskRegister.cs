@@ -69,18 +69,18 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             return card.Url;
         }
 
-        public void Unregister(string customerName, string taskTitle)
+        public void Unregister(string customerName, string taskTitle, string url)
         {
             this.EnsureTrello();
 
-            var card = this.FindCard(customerName, taskTitle);
+            var card = this.FindCard(customerName, taskTitle, url);
             if (card != null)
             {
                 this.trello.Cards.Delete(card);
             }
         }
 
-        private Card FindCard(string customerName, string taskTitle)
+        private Card FindCard(string customerName, string taskTitle, string url)
         {
             this.EnsureTrello();
 
@@ -93,17 +93,17 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 return null;
             }
 
-            return this.trello.Cards.ForList(list).FirstOrDefault(x => x.Name == taskTitle);
+            return this.trello.Cards.ForList(list).FirstOrDefault(x => x.Name == taskTitle && x.Url == url);
         }
 
-        public void ChangeResponsible(string customerName, string taskTitle, string responsibleUserId)
+        public void ChangeResponsible(string customerName, string taskTitle, string url, string responsibleUserId)
         {
             this.EnsureTrello();
 
-            var card = this.FindCard(customerName, taskTitle);
+            var card = this.FindCard(customerName, taskTitle, url);
             if (card == null)
             {
-                return;
+                throw new ApplicationException("Coudn't find card");
             }
 
             if (card.IdMembers.Count == 1 && card.IdMembers[0] == responsibleUserId)
