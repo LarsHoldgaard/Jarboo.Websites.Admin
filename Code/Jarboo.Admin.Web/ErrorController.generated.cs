@@ -23,13 +23,13 @@ using System.Web.Routing;
 using T4MVC;
 namespace Jarboo.Admin.Web.Controllers
 {
-    public partial class AdminController
+    public partial class ErrorController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public AdminController() { }
+        public ErrorController() { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected AdminController(Dummy d) { }
+        protected ErrorController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -57,21 +57,15 @@ namespace Jarboo.Admin.Web.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult TrelloId()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TrelloId);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public AdminController Actions { get { return MVC.Admin; } }
+        public ErrorController Actions { get { return MVC.Error; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Admin";
+        public readonly string Name = "Error";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Admin";
+        public const string NameConst = "Error";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -79,26 +73,16 @@ namespace Jarboo.Admin.Web.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string RequestRefreshToken = "RequestRefreshToken";
-            public readonly string TrelloId = "TrelloId";
+            public readonly string Index = "Index";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string RequestRefreshToken = "RequestRefreshToken";
-            public const string TrelloId = "TrelloId";
+            public const string Index = "Index";
         }
 
 
-        static readonly ActionParamsClass_TrelloId s_params_TrelloId = new ActionParamsClass_TrelloId();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_TrelloId TrelloIdParams { get { return s_params_TrelloId; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_TrelloId
-        {
-            public readonly string id = "id";
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -109,35 +93,25 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string Index = "Index";
             }
+            public readonly string Index = "~/Views/Error/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_AdminController : Jarboo.Admin.Web.Controllers.AdminController
+    public partial class T4MVC_ErrorController : Jarboo.Admin.Web.Controllers.ErrorController
     {
-        public T4MVC_AdminController() : base(Dummy.Instance) { }
+        public T4MVC_ErrorController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void RequestRefreshTokenOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult RequestRefreshToken()
+        public override System.Web.Mvc.ActionResult Index()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RequestRefreshToken);
-            RequestRefreshTokenOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void TrelloIdOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult TrelloId(string id)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TrelloId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            TrelloIdOverride(callInfo, id);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            IndexOverride(callInfo);
             return callInfo;
         }
 

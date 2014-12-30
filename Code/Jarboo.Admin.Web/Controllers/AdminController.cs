@@ -8,9 +8,13 @@ using System.Web.Mvc;
 
 using Google.Apis.Auth.OAuth2.Mvc;
 using Google.Apis.Auth.OAuth2.Responses;
+
+using Jarboo.Admin.Web.Infrastructure;
 using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
 
 using Nito.AsyncEx.Synchronous;
+
+using TrelloNet;
 
 namespace Jarboo.Admin.Web.Controllers
 {
@@ -36,6 +40,31 @@ namespace Jarboo.Admin.Web.Controllers
             {
                 return new RedirectResult(result.RedirectUri);
             }
+        }
+
+        public virtual ActionResult TrelloId(string id)
+        {
+            if (string.IsNullOrEmpty(Configuration.TrelloApiKey) || string.IsNullOrEmpty(Configuration.TrelloToken))
+            {
+                throw new ApplicationException("Missing trello configuration");
+            }
+
+            var trello = new Trello(Configuration.TrelloApiKey);
+            trello.Authorize(Configuration.TrelloToken);
+
+            var members = trello.Members.Search(id);
+            if (members == null)
+            {
+                return Content("Member not found");
+            }
+
+            var member = members.FirstOrDefault();
+            if (member == null)
+            {
+                return Content("Member not found");
+            }
+
+            return Content(member.Id);
         }
 	}
 }

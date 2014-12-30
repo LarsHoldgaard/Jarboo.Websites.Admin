@@ -14,7 +14,6 @@ namespace Jarboo.Admin.Web.App_Start
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
             filters.Add(new ValidateAntiForgeryTokenWrapperAttribute(HttpVerbs.Post));
             filters.Add(new ProfilingActionFilter());
         }

@@ -103,7 +103,8 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             var card = this.FindCard(customerName, taskTitle, url);
             if (card == null)
             {
-                throw new ApplicationException("Coudn't find card");
+                //throw new ApplicationException("Coudn't find the card");
+                return;
             }
 
             if (card.IdMembers.Count == 1 && card.IdMembers[0] == responsibleUserId)
@@ -121,7 +122,14 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 return;
             }
 
-            this.trello.Cards.AddMember(card, new MemberId(responsibleUserId));
+            try
+            {
+                this.trello.Cards.AddMember(card, new MemberId(responsibleUserId));
+            }
+            catch (TrelloException ex)
+            {
+                throw new ApplicationException("Coudn't set responsible. Check trello Id.", ex);
+            }
         }
     }
 }

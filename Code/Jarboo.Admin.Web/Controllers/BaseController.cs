@@ -15,8 +15,8 @@ namespace Jarboo.Admin.Web.Controllers
     public partial class BaseController : Controller
     {
         protected const string ModelStateKey = "ModelStateKey";
-        private const string TempErrorsKey = "TempErrorsKey";
-        private const string TempSuccessesKey = "TempSuccessesKey";
+        protected const string TempErrorsKey = "TempErrorsKey";
+        protected const string TempSuccessesKey = "TempSuccessesKey";
 
         protected ActionResult Handle<TModel>(TModel model, Action<TModel, IBusinessErrorCollection> handler, ActionResult successResult, ActionResult failureResult, params string[] messages)
         {
@@ -41,6 +41,11 @@ namespace Jarboo.Admin.Web.Controllers
                 catch (NotFoundException)
                 {
                     return this.HttpNotFound();
+                }
+                catch (ApplicationException ex)
+                {
+                    AddError(ex.Message);
+                    return RedirectToAction(MVC.Error.Index());
                 }
 
                 if (ModelState.IsValid)
