@@ -30,7 +30,6 @@ namespace Jarboo.Admin.Web
         }
         private void ApplicationStartInternal()
         {
-            Elmah.Mvc.Bootstrap.Initialize();
             WebEngineConfig.RegisterWebEngines();
             MiniProfilerEF6.Initialize();
             DatabaseConfig.ConfigureDatabase();
