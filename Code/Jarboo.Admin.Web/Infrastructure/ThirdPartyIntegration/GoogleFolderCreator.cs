@@ -72,7 +72,12 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
         {
             EnsureService();
 
-            return CreateFolders(CreateFolderPath(customerName, taskTitle));
+            var driveFolders = this.LoadGoogleDriveFolderHierarchy();
+
+            var newFolder = CreateFolders(CreateFolderPath(customerName, taskTitle), driveFolders);
+            CopyTemplate(taskTitle, driveFolders, newFolder);
+
+            return newFolder.File.AlternateLink;
         }
         public void Delete(string customerName, string taskTitle)
         {
@@ -96,16 +101,12 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             return new GoogleDriveFolderHierarchy(driveFiles);
         }
 
-        private string CreateFolders(IEnumerable<string> folders)
+        private GoogleDriveFolderHierarchy.Folder CreateFolders(IEnumerable<string> folders, GoogleDriveFolderHierarchy driveFolders)
         {
-            EnsureService();
-
-            var driveFolders = this.LoadGoogleDriveFolderHierarchy();
-
             var parentFolder = driveFolders.Root;
             foreach (var folderName in folders)
             {
-                var driveFolder = parentFolder.Find(folderName);
+                var driveFolder = parentFolder.FindFolder(folderName);
                 if (driveFolder != null)
                 {
                     parentFolder = driveFolder;
@@ -116,8 +117,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 parentFolder = new GoogleDriveFolderHierarchy.Folder(driveFile);
             }
 
-            CreateDoc(parentFolder.Title, parentFolder.Id);
-            return parentFolder.File.AlternateLink;
+            return parentFolder;
         }
         private File CreateFolder(string title, string parentId)
         {
@@ -129,8 +129,6 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
         }
         private File CreateFile(string title, string parentId, string mimeType)
         {
-            EnsureService();
-
             var body = new File
             {
                 Title = title,
@@ -148,22 +146,75 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             var file = request.Execute();
             if (file == null)
             {
-                throw new ApplicationException("Couldn't create google drive folder");
+                throw new ApplicationException("Couldn't create google drive file/folder");
             }
 
             return file;
         }
+        private File CopyFile(string newFileName, File file, string parentId)
+        {
+            var body = new File
+            {
+                Title = newFileName,
+                MimeType = file.MimeType,
+                Parents = new ParentReference[]
+                              {
+                                  new ParentReference()
+                                      {
+                                          Id = parentId
+                                      }
+                              }
+            };
+
+            var request = driveService.Files.Copy(body, file.Id);
+            var copy = request.Execute();
+            if (copy == null)
+            {
+                throw new ApplicationException("Couldn't copy google drive file");
+            }
+
+            return copy;
+        }
+
+        private void CopyTemplate(string newFileName, GoogleDriveFolderHierarchy driveFolders, GoogleDriveFolderHierarchy.Folder newFolder)
+        {
+            if (string.IsNullOrEmpty(Configuration.GoogleDriveTemplatePath))
+            {
+                return;
+            }
+
+            var path = Configuration.GoogleDriveTemplatePath.Split('\\');
+            var fileName = path[path.Length - 1];
+
+            var parentFolder = driveFolders.Root;
+            foreach (var folderName in path.Take(path.Length - 1))
+            {
+                var driveFolder = parentFolder.FindFolder(folderName);
+                if (driveFolder == null)
+                {
+                    throw new ApplicationException("Couldn't find template to copy. Folder '" + folderName + "' is missing");
+                }
+
+                parentFolder = driveFolder;
+            }
+
+            var templateFile = parentFolder.FindFile(fileName);
+            if (templateFile == null)
+            {
+                throw new ApplicationException("Couldn't find template to copy. File is missing");
+            }
+
+            this.CopyFile(newFileName, templateFile, newFolder.Id);
+        }
 
         private void DeleteFolder(IEnumerable<string> folders)
         {
-            EnsureService();
-
             var driveFolders = this.LoadGoogleDriveFolderHierarchy();
 
             var parentFolder = driveFolders.Root;
             foreach (var folderName in folders)
             {
-                var driveFolder = parentFolder.Find(folderName);
+                var driveFolder = parentFolder.FindFolder(folderName);
                 if (driveFolder == null)
                 {
                     return;

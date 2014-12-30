@@ -82,6 +82,19 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
+        private static string googleDriveTemplatePath;
+        public static string GoogleDriveTemplatePath
+        {
+            get
+            {
+                if (googleDriveTemplatePath == null)
+                {
+                    googleDriveTemplatePath = ConfigurationManager.AppSettings["GoogleDriveTemplatePath"];
+                }
+                return googleDriveTemplatePath;
+            }
+        }
+
         private static string googleDrivePath;
         public static string GoogleDrivePath
         {

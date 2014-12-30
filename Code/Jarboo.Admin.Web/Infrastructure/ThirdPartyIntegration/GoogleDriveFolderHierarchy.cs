@@ -48,7 +48,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 
             foreach (var file in files.Items)
             {
-                if (file.MimeType != GoogleFolderCreator.FOLDER_MIME_TYPE || file.ExplicitlyTrashed == true)
+                if (file.ExplicitlyTrashed == true)
                 {
                     continue;
                 }
@@ -60,7 +60,14 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                         continue;
                     }
 
-                    folders[parent.Id].Children.Add(folders[file.Id]);
+                    if (file.MimeType == GoogleFolderCreator.FOLDER_MIME_TYPE)
+                    {
+                        folders[parent.Id].NestedFolders.Add(folders[file.Id]);
+                    }
+                    else
+                    {
+                        folders[parent.Id].Files.Add(file);
+                    }
                 }
             }
         }
@@ -71,7 +78,8 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
         {
             public Folder()
             {
-                Children = new List<Folder>();
+                NestedFolders = new List<Folder>();
+                Files = new List<File>();
             }
             public Folder(File file) : this()
             {
@@ -83,11 +91,16 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             public File File { get; set; }
             public string Id { get; set; }
             public string Title { get; set; }
-            public List<Folder> Children { get; set; }
+            public List<Folder> NestedFolders { get; set; }
+            public List<File> Files { get; set; }
 
-            public Folder Find(string title)
+            public Folder FindFolder(string title)
             {
-                return Children.FirstOrDefault(x => x.Title == title);
+                return NestedFolders.FirstOrDefault(x => x.Title == title);
+            }
+            public File FindFile(string title)
+            {
+                return Files.FirstOrDefault(x => x.Title == title);
             }
         }
     }
