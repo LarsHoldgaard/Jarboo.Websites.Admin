@@ -10,6 +10,8 @@ using Google.Apis.Auth.OAuth2.Mvc;
 using Google.Apis.Auth.OAuth2.Responses;
 using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
 
+using Nito.AsyncEx.Synchronous;
+
 namespace Jarboo.Admin.Web.Controllers
 {
     public partial class AdminController : BaseController
@@ -17,7 +19,7 @@ namespace Jarboo.Admin.Web.Controllers
         public virtual ActionResult RequestRefreshToken()
         {
             var result = new AuthorizationCodeMvcApp(this, new AppFlowMetadata()).
-                AuthorizeAsync(new CancellationTokenSource().Token).Result;
+                AuthorizeAsync(new CancellationTokenSource().Token).WaitAndUnwrapException();
 
             if (result.Credential != null)
             {

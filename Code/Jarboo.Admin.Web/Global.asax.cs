@@ -30,6 +30,7 @@ namespace Jarboo.Admin.Web
         }
         private void ApplicationStartInternal()
         {
+            InitializeElmah();
             WebEngineConfig.RegisterWebEngines();
             MiniProfilerEF6.Initialize();
             DatabaseConfig.ConfigureDatabase();
@@ -38,6 +39,13 @@ namespace Jarboo.Admin.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperConfig.RegisterMappers();
+        }
+        private void InitializeElmah()
+        {
+            if (RouteTable.Routes["Elmah.Mvc"] == null)
+            {
+                Elmah.Mvc.Bootstrap.Initialize();
+            }
         }
 
         protected void Application_BeginRequest()
