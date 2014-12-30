@@ -21,7 +21,14 @@ namespace Jarboo.Admin.Web.Controllers
 
             if (result.Credential != null)
             {
-                return Content(result.Credential.Token.RefreshToken);
+                if (!string.IsNullOrEmpty(result.Credential.Token.RefreshToken))
+                {
+                    return Content(result.Credential.Token.RefreshToken);
+                }
+                else
+                {
+                    return Content("Server didn't return refresh token. To reissue token you should disconnect app from google drive first.");
+                }
             }
             else
             {
