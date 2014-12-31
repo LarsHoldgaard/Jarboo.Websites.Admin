@@ -76,16 +76,16 @@ namespace Jarboo.Admin.BL.Services
 
             try
             {
+                folderLink = CreateFolder(customer.Name, taskFullTitle);
+
                 if (!model.EmployeeId.HasValue)
                 {
                     model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId);
                 }
                 var employee = UnitOfWork.Employees.AsNoTracking().First(x => x.EmployeeId == model.EmployeeId.Value);
 
-                taskLink = RegisterTask(customer.Name, taskFullTitle);
+                taskLink = RegisterTask(customer.Name, taskFullTitle, folderLink);
                 ChangeResponsible(customer.Name, taskFullTitle, taskLink, employee.TrelloId);
-
-                folderLink = CreateFolder(customer.Name, taskFullTitle);
 
                 var entity = new Task()
                 {
@@ -112,11 +112,11 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Couldn't create task", ex);
             }
         }
-        private string RegisterTask(string customerName, string taskTitle)
+        private string RegisterTask(string customerName, string taskTitle, string folderLink)
         {
             try
             {
-                return TaskRegister.Register(customerName, taskTitle);
+                return TaskRegister.Register(customerName, taskTitle, folderLink);
             }
             catch (ApplicationException)
             {

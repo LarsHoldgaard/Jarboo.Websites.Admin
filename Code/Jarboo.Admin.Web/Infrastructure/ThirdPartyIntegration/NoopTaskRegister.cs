@@ -4,7 +4,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 {
     public class NoopTaskRegister : ITaskRegister
     {
-        public string Register(string customerName, string taskTitle)
+        public string Register(string customerName, string taskTitle, string folderLink)
         {
             return null;
         }

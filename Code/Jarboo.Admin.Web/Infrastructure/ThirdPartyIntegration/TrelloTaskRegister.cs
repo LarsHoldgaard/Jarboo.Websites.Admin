@@ -52,7 +52,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             return board;
         }
 
-        public string Register(string customerName, string taskTitle)
+        public string Register(string customerName, string taskTitle, string folderLink)
         {
             this.EnsureTrello();
 
@@ -66,6 +66,8 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             }
 
             var card = this.trello.Cards.Add(taskTitle, list);
+            card.Desc = folderLink;
+            this.trello.Cards.Update(card);
             return card.Url;
         }
 

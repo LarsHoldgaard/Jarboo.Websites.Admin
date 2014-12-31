@@ -96,11 +96,11 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 
             public Folder FindFolder(string title)
             {
-                return NestedFolders.FirstOrDefault(x => x.Title == title);
+                return NestedFolders.FirstOrDefault(x => x.Title.Equals(title, StringComparison.CurrentCultureIgnoreCase));
             }
             public File FindFile(string title)
             {
-                return Files.FirstOrDefault(x => x.Title == title);
+                return Files.FirstOrDefault(x => x.Title.Equals(title, StringComparison.CurrentCultureIgnoreCase));
             }
         }
     }
