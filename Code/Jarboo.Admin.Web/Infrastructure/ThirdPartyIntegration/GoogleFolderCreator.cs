@@ -97,7 +97,9 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
         }
         private GoogleDriveFolderHierarchy LoadGoogleDriveFolderHierarchy()
         {
-            var driveFiles = this.driveService.Files.List().Execute();
+            var files = this.driveService.Files.List();
+            files.MaxResults = int.MaxValue;
+            var driveFiles = files.Execute();
             return new GoogleDriveFolderHierarchy(driveFiles);
         }
 
