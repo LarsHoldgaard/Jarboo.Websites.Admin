@@ -64,10 +64,20 @@ namespace Jarboo.Admin.BL.Services
                 return;
             }
 
-            var customer = UnitOfWork.Customers.FirstOrDefault(x => x.Projects.Any(y => y.ProjectId == model.ProjectId));
+            var customer = UnitOfWork.Customers.AsNoTracking().FirstOrDefault(x => x.Projects.Any(y => y.ProjectId == model.ProjectId));
             if (customer == null)
             {
                 throw new Exception("Couldn't find customer for project " + model.ProjectId);
+            }
+
+            if (!model.EmployeeId.HasValue)
+            {
+                model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId);
+            }
+            var employee = UnitOfWork.Employees.AsNoTracking().FirstOrDefault(x => x.EmployeeId == model.EmployeeId.Value);
+            if (employee == null)
+            {
+                throw new Exception("Couldn't find employee " + model.EmployeeId.Value);
             }
 
             var taskFullTitle = Task.TaskFullTitle(model.Title, model.Type);
@@ -77,12 +87,6 @@ namespace Jarboo.Admin.BL.Services
             try
             {
                 folderLink = CreateFolder(customer.Name, taskFullTitle);
-
-                if (!model.EmployeeId.HasValue)
-                {
-                    model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId);
-                }
-                var employee = UnitOfWork.Employees.AsNoTracking().First(x => x.EmployeeId == model.EmployeeId.Value);
 
                 taskLink = RegisterTask(customer.Name, taskFullTitle, folderLink);
                 ChangeResponsible(customer.Name, taskFullTitle, taskLink, employee.TrelloId);

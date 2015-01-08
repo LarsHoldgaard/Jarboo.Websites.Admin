@@ -14,7 +14,7 @@ namespace Jarboo.Admin.DAL
         IDbSet<Employee> Employees { get; set; }
         IDbSet<EmployeePosition> EmployeePositions { get; set; }
 
-        DbContextTransaction BeginTransaction();
+        //DbContextTransaction BeginTransaction();
 
         int SaveChanges();
     }
