@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EntityFramework.Extensions;
 
 using Jarboo.Admin.BL.External;
 using Jarboo.Admin.BL.Models;
@@ -57,10 +58,7 @@ namespace Jarboo.Admin.BL.Services
             }
             else
             {
-                foreach (var position in UnitOfWork.EmployeePositions.Where(x => x.EmployeeId == model.EmployeeId))
-                {
-                    UnitOfWork.EmployeePositions.Remove(position);
-                }
+                UnitOfWork.EmployeePositions.Where(x => x.EmployeeId == model.EmployeeId).Delete();
 
                 var entity = new Employee { EmployeeId = model.EmployeeId };
                 Edit(entity, model);
