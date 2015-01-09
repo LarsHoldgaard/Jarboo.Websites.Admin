@@ -15,11 +15,8 @@ using Task = Jarboo.Admin.DAL.Entities.Task;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface ITaskService
+    public interface ITaskService : IEntityService<Task>
     {
-        Task GetById(int id);
-        List<Task> GetAll();
-
         void Create(TaskCreate model, IBusinessErrorCollection errors);
 
         void NextStep(TaskNextStep model, IBusinessErrorCollection errors);
@@ -43,18 +40,9 @@ namespace Jarboo.Admin.BL.Services
         {
             get { return UnitOfWork.Tasks; }
         }
-
-        public Task GetById(int id)
+        protected override Task Find(int id, IQueryable<Task> query)
         {
-            return TableNoTracking.Include(x => x.Project.Customer).Include(x => x.Steps.Select(y => y.Employee)).FirstOrDefault(x => x.TaskId == id);
-        }
-
-        public List<Task> GetAll()
-        {
-            return TableNoTracking.Include(x => x.Project)
-                .Include(x => x.Steps)
-                .AsEnumerable()
-                .ToList();
+            return query.FirstOrDefault(x => x.TaskId == id);
         }
 
         public void Create(TaskCreate model, IBusinessErrorCollection errors)

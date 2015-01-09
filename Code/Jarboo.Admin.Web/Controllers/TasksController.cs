@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
+using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
@@ -25,7 +26,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Tasks/
         public virtual ActionResult Index()
         {
-            return View(TaskService.GetAll());
+            return View(TaskService.GetAllEx(Include.ForTask().Project()));
         }
 
         // GET: /Tasks/View/5
@@ -36,7 +37,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Task task = TaskService.GetById(id.Value);
+            Task task = TaskService.GetByIdEx(id.Value, Include.ForTask().Project().Customer());
             if (task == null)
             {
                 return HttpNotFound();
@@ -78,7 +79,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Task task = TaskService.GetById(id.Value);
+            Task task = TaskService.GetByIdEx(id.Value, Include.ForTask().Project().Customer().TaskSteps().Employee());
             if (task == null)
             {
                 return HttpNotFound();

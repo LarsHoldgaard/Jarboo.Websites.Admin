@@ -4,17 +4,15 @@ using System.Data.Entity;
 using System.Linq;
 
 using Jarboo.Admin.BL.External;
+using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface ICustomerService
+    public interface ICustomerService : IEntityService<Customer>
     {
-        Customer GetById(int id);
-        List<Customer> GetAll();
-
         void Create(CustomerCreate model, IBusinessErrorCollection errors);
     }
 
@@ -28,17 +26,9 @@ namespace Jarboo.Admin.BL.Services
         {
             get { return UnitOfWork.Customers; }
         }
-
-        public Customer GetById(int id)
+        protected override Customer Find(int id, IQueryable<Customer> query)
         {
-            return TableNoTracking.Include(x => x.Projects).FirstOrDefault(x => x.CustomerId == id);
-        }
-
-        public List<Customer> GetAll()
-        {
-            return TableNoTracking.Include(x => x.Projects)
-                .AsEnumerable()
-                .ToList();
+            return query.FirstOrDefault(x => x.CustomerId == id);
         }
 
         public void Create(CustomerCreate model, IBusinessErrorCollection errors)

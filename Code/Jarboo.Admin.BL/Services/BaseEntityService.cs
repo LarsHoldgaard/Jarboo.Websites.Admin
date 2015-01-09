@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 
@@ -25,6 +26,27 @@ namespace Jarboo.Admin.BL.Services
             {
                 return Table.AsNoTracking();
             }
+        }
+
+        public T GetById(int id)
+        {
+            return this.GetByIdEx(id, Include.None<T>());
+        }
+        public T GetByIdEx(int id, Include<T> include)
+        {
+            return Find(id, TableNoTracking.Include(include));
+        }
+        protected abstract T Find(int id, IQueryable<T> query);
+
+        public List<T> GetAll()
+        {
+            return this.GetAllEx(Include.None<T>());
+        }
+        public List<T> GetAllEx(Include<T> include)
+        {
+            return TableNoTracking.Include(include)
+                .AsEnumerable()
+                .ToList();
         }
 
         protected void Add<TM>(T entity, TM model)

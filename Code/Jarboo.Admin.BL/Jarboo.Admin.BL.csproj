@@ -60,6 +60,11 @@
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="External\IBusinessErrorCollection.cs" />
+    <Compile Include="Includes\CustomerInclude.cs" />
+    <Compile Include="Includes\EmployeeInclude.cs" />
+    <Compile Include="Includes\Include.cs" />
+    <Compile Include="Includes\ProjectInclude.cs" />
+    <Compile Include="Includes\TaskInclude.cs" />
     <Compile Include="Models\CustomerCreate.cs" />
     <Compile Include="Models\EmployeeEdit.cs" />
     <Compile Include="Models\ProjectCreate.cs" />
@@ -71,6 +76,7 @@
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\IEntityService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\TaskService.cs" />
     <Compile Include="External\IFolderCreator.cs" />

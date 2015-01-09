@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
+using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
@@ -35,7 +36,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Customer customer = CustomerService.GetById(id.Value);
+            Customer customer = CustomerService.GetByIdEx(id.Value, Include.ForCustomer().Projects());
             if (customer == null)
             {
                 return HttpNotFound();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Services;
 
 using Ninject;
@@ -19,7 +20,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         public virtual ActionResult Index()
         {
-            ViewBag.Customers = CustomerService.GetAll();
+            ViewBag.Customers = CustomerService.GetAllEx(Include.ForCustomer().Projects());
 
             return View();
         }

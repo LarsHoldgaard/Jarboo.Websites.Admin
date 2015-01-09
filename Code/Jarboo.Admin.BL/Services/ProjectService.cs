@@ -12,11 +12,8 @@ using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface IProjectService
+    public interface IProjectService : IEntityService<Project>
     {
-        Project GetById(int id);
-        List<Project> GetAll();
-
         void Create(ProjectCreate model, IBusinessErrorCollection errors);
     }
 
@@ -30,17 +27,9 @@ namespace Jarboo.Admin.BL.Services
         {
             get { return UnitOfWork.Projects; }
         }
-
-        public Project GetById(int id)
+        protected override Project Find(int id, IQueryable<Project> query)
         {
-            return TableNoTracking.Include(x => x.Customer).Include(x => x.Tasks.Select(y => y.Steps)).FirstOrDefault(x => x.ProjectId == id);
-        }
-
-        public List<Project> GetAll()
-        {
-            return TableNoTracking.Include(x => x.Customer)
-                .AsEnumerable()
-                .ToList();
+            return query.FirstOrDefault(x => x.ProjectId == id);
         }
 
         public void Create(ProjectCreate model, IBusinessErrorCollection errors)
