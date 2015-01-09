@@ -27,6 +27,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 .Build();
             var model = ValidTaskCreate();
 
+
             Assert.Throws<Exception>(() => service.Create(model, null));
         }
         [Test]
@@ -38,6 +39,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 .UnitOfWork(context.UnitOfWork)
                 .Build();
             var model = ValidTaskCreate();
+
 
             Assert.Throws<Exception>(() => service.Create(model, null));
         }
@@ -51,6 +53,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 .Build();
             var model = ValidTaskCreate();
 
+
             Assert.Throws<Exception>(() => service.Create(model, null));
         }
 
@@ -58,6 +61,8 @@ namespace Jarboo.Admin.BL.Tests.Services
         public void Create_WhenFailsAfterFolderCreate_DeleteFolder()
         {
             var context = EmptyContext().AddCustomer().AddProject().AddEmployee();
+            A.CallTo(() => context.UnitOfWork.SaveChanges()).Throws<Exception>();
+
             var folderCreator = A.Fake<IFolderCreator>();
             A.CallTo(() => folderCreator.Create(A<string>._, A<string>._)).Returns("link");
 
@@ -67,7 +72,10 @@ namespace Jarboo.Admin.BL.Tests.Services
                 .Build();
             var model = ValidTaskCreate();
 
+
             Assert.Throws<ApplicationException>(() => service.Create(model, null));
+
+
             A.CallTo(() => folderCreator.Delete(A<string>._, A<string>._)).MustHaveHappened();
         }
 

@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\TaskServiceBuilder.cs" />
     <Compile Include="Services\TaskServiceTests.cs" />
+    <Compile Include="SetUp.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
