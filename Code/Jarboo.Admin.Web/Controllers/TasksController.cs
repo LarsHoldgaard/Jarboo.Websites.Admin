@@ -26,7 +26,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Tasks/
         public virtual ActionResult Index()
         {
-            return View(TaskService.GetAllEx(Include.ForTask().Project()));
+            return View(TaskService.GetAllEx(Include.ForTask().Project().TaskSteps()));
         }
 
         // GET: /Tasks/View/5
@@ -37,7 +37,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Task task = TaskService.GetByIdEx(id.Value, Include.ForTask().Project().Customer());
+            Task task = TaskService.GetByIdEx(id.Value, Include.ForTask().Project().Customer().TaskSteps());
             if (task == null)
             {
                 return HttpNotFound();

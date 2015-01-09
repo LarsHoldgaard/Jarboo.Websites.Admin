@@ -38,7 +38,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Project project = ProjectService.GetByIdEx(id.Value, Include.ForProject().Customer().Tasks());
+            Project project = ProjectService.GetByIdEx(id.Value, Include.ForProject().Customer().Tasks().TaskSteps());
             if (project == null)
             {
                 return HttpNotFound();
