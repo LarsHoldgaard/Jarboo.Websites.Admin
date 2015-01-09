@@ -53,6 +53,7 @@
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Documentation.cs" />
     <Compile Include="Entities\EmployeePosition.cs" />
+    <Compile Include="Entities\Enums.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\Task.cs" />
     <Compile Include="Entities\Employee.cs" />

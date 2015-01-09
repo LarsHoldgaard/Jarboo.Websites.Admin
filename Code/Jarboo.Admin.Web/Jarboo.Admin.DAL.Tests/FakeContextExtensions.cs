@@ -26,16 +26,37 @@ namespace Jarboo.Admin.DAL.Tests
                 CustomerId = 1,
             });
         }
-        public static FakeContext AddEmployee(this FakeContext context)
+        public static FakeContext AddEmployee(this FakeContext context, Action<Employee> edit = null)
         {
-            return context.Add(new Employee()
+            var employee = new Employee()
+                               {
+                                   EmployeeId = 1,
+                                   FullName = "Employee",
+                                   TrelloId = "TrelloId",
+                                   Email = "Email",
+                                   Country = "Country",
+                               };
+
+            if (edit != null)
             {
-                EmployeeId = 1,
-                FullName = "Employee",
-                TrelloId = "TrelloId",
-                Email = "Email",
-                Country = "Country",
-            });
+                edit(employee);
+            }
+
+            return context.Add(employee);
+        }
+        public static FakeContext AddPosition(this FakeContext context, Action<EmployeePosition> edit = null)
+        {
+            var position = new EmployeePosition()
+                               {
+                                   EmployeeId = 1,
+                                   Position = Position.Architecture,
+                               };
+            if (edit != null)
+            {
+                edit(position);
+            }
+
+            return context.Add(position);
         }
     }
 }

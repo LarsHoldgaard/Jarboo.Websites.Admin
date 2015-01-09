@@ -6,9 +6,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-using Jarboo.Admin.BL.External;
 using Jarboo.Admin.BL.Models;
-using Jarboo.Admin.BL.ThirdParty;
+using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 using Task = Jarboo.Admin.DAL.Entities.Task;
@@ -205,7 +204,7 @@ namespace Jarboo.Admin.BL.Services
             {
                 if (!model.EmployeeId.HasValue)
                 {
-                    model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), entity.ProjectId);
+                    model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(nextStep.Value, entity.ProjectId);
                 }
                 var employee = UnitOfWork.Employees.AsNoTracking().First(x => x.EmployeeId == model.EmployeeId.Value);
 

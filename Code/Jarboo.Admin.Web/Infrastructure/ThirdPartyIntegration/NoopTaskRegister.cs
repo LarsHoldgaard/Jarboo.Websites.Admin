@@ -1,4 +1,4 @@
-﻿using Jarboo.Admin.BL.ThirdParty;
+﻿using Jarboo.Admin.BL.Other;
 
 namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 {

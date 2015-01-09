@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 using AutoMapper;
 
-using Jarboo.Admin.BL.External;
+using Jarboo.Admin.BL.Other;
 
 namespace Jarboo.Admin.BL
 {

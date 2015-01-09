@@ -1,6 +1,6 @@
 ﻿using FakeItEasy;
 using Jarboo.Admin.BL.Models;
-using Jarboo.Admin.BL.ThirdParty;
+using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Tests;

@@ -1,6 +1,7 @@
 ﻿using FakeItEasy;
+
+using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
-using Jarboo.Admin.BL.ThirdParty;
 using Jarboo.Admin.DAL;
 using System;
 using System.Collections.Generic;

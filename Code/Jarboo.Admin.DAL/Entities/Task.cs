@@ -86,7 +86,6 @@ namespace Jarboo.Admin.DAL.Entities
 
     public class TaskEqualityComparer : IEqualityComparer<Task>
     {
-
         public bool Equals(Task x, Task y)
         {
             return x.TaskId == y.TaskId;

@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using Jarboo.Admin.BL;
-using Jarboo.Admin.BL.External;
+using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.Web.Infrastructure;
 using Jarboo.Admin.Web.Infrastructure.BLExternals;
 

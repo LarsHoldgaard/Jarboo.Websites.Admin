@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using Jarboo.Admin.BL.ThirdParty;
+using Jarboo.Admin.BL.Other;
 
 using TrelloNet;
 

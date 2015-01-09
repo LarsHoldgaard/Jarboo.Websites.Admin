@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using EntityFramework.Extensions;
 
-using Jarboo.Admin.BL.External;
 using Jarboo.Admin.BL.Models;
+using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 

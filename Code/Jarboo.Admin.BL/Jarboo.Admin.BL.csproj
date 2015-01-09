@@ -59,7 +59,7 @@
   <ItemGroup>
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="External\IBusinessErrorCollection.cs" />
+    <Compile Include="Other\IBusinessErrorCollection.cs" />
     <Compile Include="Includes\CustomerInclude.cs" />
     <Compile Include="Includes\EmployeeInclude.cs" />
     <Compile Include="Includes\Include.cs" />
@@ -79,9 +79,9 @@
     <Compile Include="Services\IEntityService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\TaskService.cs" />
-    <Compile Include="External\IFolderCreator.cs" />
-    <Compile Include="External\ITaskRegister.cs" />
-    <Compile Include="External\ITaskStepEmployeeStrategy.cs" />
+    <Compile Include="Other\IFolderCreator.cs" />
+    <Compile Include="Other\ITaskRegister.cs" />
+    <Compile Include="Other\TaskStepEmployeeStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

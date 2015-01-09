@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-using Jarboo.Admin.BL.External;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
+using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 

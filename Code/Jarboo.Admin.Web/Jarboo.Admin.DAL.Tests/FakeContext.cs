@@ -13,6 +13,7 @@ namespace Jarboo.Admin.DAL.Tests
     public class FakeContext
     {
         private const string KeyId = "Id";
+        public const int DefaultId = 1;
 
         public IUnitOfWork UnitOfWork { get; set; }
         private Dictionary<Type, IList> lists = new Dictionary<Type, IList>();
@@ -50,7 +51,7 @@ namespace Jarboo.Admin.DAL.Tests
             A.CallTo(() => dbSet.Provider).Returns(queryableData.Provider);
             A.CallTo(() => dbSet.Expression).Returns(queryableData.Expression);
             A.CallTo(() => dbSet.ElementType).Returns(queryableData.ElementType);
-            A.CallTo(() => dbSet.GetEnumerator()).Returns(queryableData.GetEnumerator());
+            A.CallTo(() => dbSet.GetEnumerator()).ReturnsLazily(x => queryableData.GetEnumerator());
 
             A.CallTo(getter).Returns(dbSet);
         }

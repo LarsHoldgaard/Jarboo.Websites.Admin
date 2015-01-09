@@ -1,4 +1,4 @@
-﻿namespace Jarboo.Admin.BL.External
+﻿namespace Jarboo.Admin.BL.Other
 {
     public interface IBusinessErrorCollection
     {

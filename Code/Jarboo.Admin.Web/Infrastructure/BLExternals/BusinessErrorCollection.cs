@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-using Jarboo.Admin.BL.External;
+using Jarboo.Admin.BL.Other;
 
 namespace Jarboo.Admin.Web.Infrastructure.BLExternals
 {
