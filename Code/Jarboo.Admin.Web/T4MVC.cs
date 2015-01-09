@@ -31,6 +31,7 @@ public static partial class MVC
     public static Jarboo.Admin.Web.Controllers.CustomersController Customers = new Jarboo.Admin.Web.Controllers.T4MVC_CustomersController();
     public static Jarboo.Admin.Web.Controllers.EmployeesController Employees = new Jarboo.Admin.Web.Controllers.T4MVC_EmployeesController();
     public static Jarboo.Admin.Web.Controllers.ErrorController Error = new Jarboo.Admin.Web.Controllers.T4MVC_ErrorController();
+    public static Jarboo.Admin.Web.Controllers.GuidesController Guides = new Jarboo.Admin.Web.Controllers.T4MVC_GuidesController();
     public static Jarboo.Admin.Web.Controllers.HomeController Home = new Jarboo.Admin.Web.Controllers.T4MVC_HomeController();
     public static Jarboo.Admin.Web.Controllers.ProjectsController Projects = new Jarboo.Admin.Web.Controllers.T4MVC_ProjectsController();
     public static Jarboo.Admin.Web.Controllers.TasksController Tasks = new Jarboo.Admin.Web.Controllers.T4MVC_TasksController();
