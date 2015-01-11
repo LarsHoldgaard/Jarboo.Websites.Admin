@@ -314,6 +314,8 @@
     <Compile Include="Infrastructure\ThirdPartyIntegration\NoopTaskRegister.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\TrelloTaskRegister.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
+    <Compile Include="Models\Documentation\DocumentationDelete.cs" />
+    <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
     <Compile Include="Models\Task\TasksListViewModel.cs" />
     <Compile Include="ProjectsController.generated.cs">
@@ -368,6 +370,10 @@
     <Content Include="Views\Documentations\Index.cshtml" />
     <Content Include="Views\Documentations\Create.cshtml" />
     <Content Include="Views\Documentations\_Form.cshtml" />
+    <Content Include="Views\Documentations\View.cshtml" />
+    <Content Include="Views\Documentations\Edit.cshtml" />
+    <Content Include="Views\Documentations\_List.cshtml" />
+    <Content Include="Views\Documentations\_DeleteForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

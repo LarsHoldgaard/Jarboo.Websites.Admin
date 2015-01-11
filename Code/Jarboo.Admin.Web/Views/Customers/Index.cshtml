@@ -27,7 +27,7 @@
                 @Html.DisplayFor(modelItem => customer.Name)
             </td>
             <td>
-                @Html.ActionLink("View", MVC.Customers.View(customer.CustomerId))
+                @Html.ActionLink(MVC.Customers.ActionNames.View, MVC.Customers.View(customer.CustomerId))
             </td>
         </tr>
     }

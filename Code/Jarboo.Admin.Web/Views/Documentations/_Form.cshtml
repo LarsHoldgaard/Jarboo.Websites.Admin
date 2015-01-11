@@ -1,6 +1,4 @@
-﻿@using Jarboo.Admin.DAL.Entities
-@using Jarboo.Admin.Web.Infrastructure
-@model Jarboo.Admin.BL.Models.DocumentationEdit
+﻿@model Jarboo.Admin.BL.Models.DocumentationEdit
 
 @using (Html.BeginForm(MVC.Documentations.Edit()))
 {
@@ -27,7 +25,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DocumentLink, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(x => x.DocumentLink, new { @class = "form-control" })
+                @Html.TextBoxFor(x => x.DocumentLink, new { @class = "form-control", type="url" })
             </div>
         </div>
 

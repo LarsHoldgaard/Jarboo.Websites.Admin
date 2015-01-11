@@ -14,7 +14,7 @@ namespace Jarboo.Admin.BL.Services
     public interface IDocumentationService : IEntityService<Documentation>
     {
         void Save(DocumentationEdit model, IBusinessErrorCollection errors);
-        void Delete(int documentationId);
+        void Delete(int documentationId, IBusinessErrorCollection errors);
     }
 
     public class DocumentationService : BaseEntityService<Documentation>, IDocumentationService
@@ -51,8 +51,13 @@ namespace Jarboo.Admin.BL.Services
             }
         }
 
-        public void Delete(int documentationId)
+        public void Delete(int documentationId, IBusinessErrorCollection errors)
         {
+            if (documentationId == 0)
+            {
+                throw new NotFoundException();
+            }
+
             Delete(new Documentation()
             {
                 DocumentationId = documentationId

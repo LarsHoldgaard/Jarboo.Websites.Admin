@@ -52,3 +52,7 @@
 .start-page h4 {
     display: inline-block;
 }
+
+.delete-btn-form {
+    display: inline;
+}

@@ -71,8 +71,8 @@
                     }
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", MVC.Employees.Edit(employee.EmployeeId)) |
-                    @Html.ActionLink("View", MVC.Employees.View(employee.EmployeeId))
+                    @Html.ActionLink(MVC.Employees.ActionNames.Edit, MVC.Employees.Edit(employee.EmployeeId)) |
+                    @Html.ActionLink(MVC.Employees.ActionNames.View, MVC.Employees.View(employee.EmployeeId))
                 </td>
             </tr>
         }
