@@ -35,7 +35,7 @@
     @{ Html.RenderPartial("_Header", RenderSection("topright", false)); }
     @{ Html.RenderPartial("_Aside"); }
     <div id="main" role="main">
-        @{ Html.RenderPartial("_Ribbon"); }
+        @*@{ Html.RenderPartial("_Ribbon"); }*@
         @RenderBody()
     </div>
 
@@ -45,6 +45,5 @@
     @{ Html.RenderPartial("_Scripts", RenderSection("pagespecific", false)); }
 
     @MiniProfiler.RenderIncludes()
-
 </body>
 </html>

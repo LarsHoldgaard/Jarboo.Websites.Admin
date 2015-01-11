@@ -6,34 +6,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@(new BreadCrumbsBuilder()
-    .Add(Url.Action(MVC.Customers.Index()), "Customers")
-    .Add(Model.Name)
-    .Done())
+<!-- RIBBON -->
+<div id="ribbon">
+    <span class="ribbon-button-alignment">
+        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
+						<i class="fa fa-refresh"></i>
+					</span>
+    </span>
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @(new BreadCrumbsBuilder()
+            .Add(Url.Action(MVC.Customers.Index()), "Customers")
+            .Add(Model.Name)
+            .Done())
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+<div id="content">
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(x => x.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => x.Name)
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-<table class="table table-striped">
-    <tbody>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(x => x.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.Name)
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <h2>Projects</h2>
+    <hr />
 
-<h2>Projects</h2>
-<hr />
+    <p>
+        <a class="btn btn-success" href="@Url.Action(MVC.Projects.Create(Model.CustomerId))">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add project
+        </a>
+    </p>
 
-<p>
-    <a class="btn btn-success" href="@Url.Action(MVC.Projects.Create(Model.CustomerId))">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add project
-    </a>
-</p>
-
-@Html.Partial(MVC.Projects.Views._List, new ProjectsListViewModel()
+    @Html.Partial(MVC.Projects.Views._List, new ProjectsListViewModel()
                                             {
                                                 Projects = Model.Projects
                                             })
+</div>
