@@ -29,6 +29,7 @@ public static partial class MVC
     public static Jarboo.Admin.Web.Controllers.AuthCallbackController AuthCallback = new Jarboo.Admin.Web.Controllers.T4MVC_AuthCallbackController();
     public static Jarboo.Admin.Web.Controllers.BaseController Base = new Jarboo.Admin.Web.Controllers.T4MVC_BaseController();
     public static Jarboo.Admin.Web.Controllers.CustomersController Customers = new Jarboo.Admin.Web.Controllers.T4MVC_CustomersController();
+    public static Jarboo.Admin.Web.Controllers.DocumentationsController Documentations = new Jarboo.Admin.Web.Controllers.T4MVC_DocumentationsController();
     public static Jarboo.Admin.Web.Controllers.EmployeesController Employees = new Jarboo.Admin.Web.Controllers.T4MVC_EmployeesController();
     public static Jarboo.Admin.Web.Controllers.ErrorController Error = new Jarboo.Admin.Web.Controllers.T4MVC_ErrorController();
     public static Jarboo.Admin.Web.Controllers.GuidesController Guides = new Jarboo.Admin.Web.Controllers.T4MVC_GuidesController();

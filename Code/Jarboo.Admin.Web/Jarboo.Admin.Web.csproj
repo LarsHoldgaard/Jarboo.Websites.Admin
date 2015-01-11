@@ -273,6 +273,7 @@
     <Compile Include="Controllers\AuthCallbackController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\DocumentationsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GuidesController.cs" />
@@ -280,6 +281,9 @@
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="CustomersController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentationsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="EmployeesController.generated.cs">
@@ -361,6 +365,9 @@
     <Content Include="Views\Tasks\_NextStep.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Guides\Index.cshtml" />
+    <Content Include="Views\Documentations\Index.cshtml" />
+    <Content Include="Views\Documentations\Create.cshtml" />
+    <Content Include="Views\Documentations\_Form.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

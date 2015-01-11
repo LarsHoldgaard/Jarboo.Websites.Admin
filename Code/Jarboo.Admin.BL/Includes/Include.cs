@@ -42,6 +42,10 @@ namespace Jarboo.Admin.BL.Includes
         {
             return new EmployeeInclude();
         }
+        public static DocumentationInclude ForDocumentation()
+        {
+            return new DocumentationInclude();
+        }
     }
 
     public static class IncludeExtensions
