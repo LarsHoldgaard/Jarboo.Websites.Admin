@@ -52,5 +52,5 @@
 
 @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
                                             {
-                                                Tasks = Model.Tasks
+                                                Tasks = Model.Tasks.Decorate()
                                             })

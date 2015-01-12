@@ -1,8 +1,8 @@
 ﻿@using System.Linq
-@model Jarboo.Admin.DAL.Entities.Task
+@model Jarboo.Admin.Web.Models.Task.TaskVM
 
 @{
-    ViewBag.Title = "Task - " + Model.Title;
+    ViewBag.Title = Model.FullTitle();
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,7 +10,7 @@
     .Add(Url.Action(MVC.Customers.Index()), "Customers")
     .Add(Url.Action(MVC.Customers.View(Model.Project.CustomerId)), Model.Project.Customer.Name)
     .Add(Url.Action(MVC.Projects.View(Model.ProjectId)), Model.Project.Name)
-    .Add(Model.Title)
+    .Add(Model.FullTitle())
     .Done())
 
 <table class="table table-striped">

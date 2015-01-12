@@ -305,6 +305,7 @@
     <Compile Include="Infrastructure\BreadCrumbsBuilder.cs" />
     <Compile Include="Infrastructure\Configuration.cs" />
     <Compile Include="Infrastructure\DataBaseInitializer.cs" />
+    <Compile Include="Infrastructure\DecorationExtensions.cs" />
     <Compile Include="Infrastructure\HtmlExtensions.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\AppFlowMetadata.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\GoogleDriveFolderHierarchy.cs" />
@@ -318,6 +319,7 @@
     <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
     <Compile Include="Models\Task\TasksListViewModel.cs" />
+    <Compile Include="Models\Task\TaskVM.cs" />
     <Compile Include="ProjectsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

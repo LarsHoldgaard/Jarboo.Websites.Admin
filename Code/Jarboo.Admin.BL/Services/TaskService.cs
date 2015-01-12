@@ -67,16 +67,16 @@ namespace Jarboo.Admin.BL.Services
                 throw new Exception("Couldn't find employee " + model.EmployeeId.Value);
             }
 
-            var taskFullTitle = Task.TaskFullTitle(model.Title, model.Type);
+            var taskTitle = Task.TaskTitleWithType(model.Title, model.Type);
             string taskLink = null;
             string folderLink = null;
 
             try
             {
-                folderLink = CreateFolder(customer.Name, taskFullTitle);
+                folderLink = CreateFolder(customer.Name, taskTitle);
 
-                taskLink = RegisterTask(customer.Name, taskFullTitle, folderLink);
-                ChangeResponsible(customer.Name, taskFullTitle, taskLink, employee.TrelloId);
+                taskLink = RegisterTask(customer.Name, taskTitle, folderLink);
+                ChangeResponsible(customer.Name, taskTitle, taskLink, employee.TrelloId);
 
                 var entity = new Task()
                 {
@@ -94,12 +94,12 @@ namespace Jarboo.Admin.BL.Services
             }
             catch (ApplicationException ex)
             {
-                this.Cleanup(customer, taskFullTitle, taskLink, folderLink);
+                this.Cleanup(customer, taskTitle, taskLink, folderLink);
                 throw;
             }
             catch (Exception ex)
             {
-                this.Cleanup(customer, taskFullTitle, taskLink, folderLink);
+                this.Cleanup(customer, taskTitle, taskLink, folderLink);
                 throw new ApplicationException("Couldn't create task", ex);
             }
         }
@@ -208,13 +208,13 @@ namespace Jarboo.Admin.BL.Services
                 }
                 var employee = UnitOfWork.Employees.AsNoTracking().First(x => x.EmployeeId == model.EmployeeId.Value);
 
-                ChangeResponsible(customer.Name, entity.FullTitle(), entity.CardLink, employee.TrelloId);
+                ChangeResponsible(customer.Name, entity.TitleWithType(), entity.CardLink, employee.TrelloId);
 
                 entity.Steps.Add(new TaskStep() { EmployeeId = model.EmployeeId.Value, Step = nextStep.Value});
             }
             else
             {
-                ChangeResponsible(customer.Name, entity.FullTitle(), entity.CardLink, null);
+                ChangeResponsible(customer.Name, entity.TitleWithType(), entity.CardLink, null);
 
                 entity.Done = true;
             }
