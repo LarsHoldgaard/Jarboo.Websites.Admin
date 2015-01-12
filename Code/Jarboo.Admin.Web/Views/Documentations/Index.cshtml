@@ -1,0 +1,24 @@
+﻿@using Jarboo.Admin.Web.Infrastructure
+@using Jarboo.Admin.Web.Models.Documentation
+@model System.Collections.Generic.List<Jarboo.Admin.DAL.Entities.Documentation>
+
+@{
+    ViewBag.Title = "Documentations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@(new BreadCrumbsBuilder()
+    .Add("Documentations")
+    .Done())
+
+<p>
+    <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create())">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
+    </a>
+</p>
+
+@Html.Partial(MVC.Documentations.Views._List, new DocumentationsListViewModel()
+                                            {
+                                                Documentations = Model,
+                                                ShowProject = true
+                                            })

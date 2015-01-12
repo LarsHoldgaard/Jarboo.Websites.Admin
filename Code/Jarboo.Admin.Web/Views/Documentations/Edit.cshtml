@@ -1,0 +1,13 @@
+﻿@model Jarboo.Admin.BL.Models.DocumentationEdit
+
+@{
+    ViewBag.Title = "Documentation ( Edit )";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@(new BreadCrumbsBuilder()
+    .Add(Url.Action(MVC.Documentations.Index()), "Documentations")
+    .Add("Documentation ( Edit )")
+    .Done())
+
+@Html.Partial(MVC.Documentations.Views._Form, Model)

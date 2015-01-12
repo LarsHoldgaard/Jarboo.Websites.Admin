@@ -14,6 +14,7 @@ namespace Jarboo.Admin.BL.Includes
         private bool customer;
         private bool taskSteps;
         private bool tasks;
+        private bool documentations;
 
         public ProjectInclude Customer()
         {
@@ -28,6 +29,11 @@ namespace Jarboo.Admin.BL.Includes
         public ProjectInclude Tasks()
         {
             tasks = true;
+            return this;
+        }
+        public ProjectInclude Documentations()
+        {
+            documentations = true;
             return this;
         }
 
@@ -46,6 +52,11 @@ namespace Jarboo.Admin.BL.Includes
             if (taskSteps)
             {
                 query = query.Include(x => x.Tasks.Select(y => y.Steps));
+            }
+
+            if (documentations)
+            {
+                query = query.Include(x => x.Documentations);
             }
 
             return query;

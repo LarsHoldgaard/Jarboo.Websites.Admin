@@ -29,6 +29,7 @@ public static partial class MVC
     public static Jarboo.Admin.Web.Controllers.AuthCallbackController AuthCallback = new Jarboo.Admin.Web.Controllers.T4MVC_AuthCallbackController();
     public static Jarboo.Admin.Web.Controllers.BaseController Base = new Jarboo.Admin.Web.Controllers.T4MVC_BaseController();
     public static Jarboo.Admin.Web.Controllers.CustomersController Customers = new Jarboo.Admin.Web.Controllers.T4MVC_CustomersController();
+    public static Jarboo.Admin.Web.Controllers.DocumentationsController Documentations = new Jarboo.Admin.Web.Controllers.T4MVC_DocumentationsController();
     public static Jarboo.Admin.Web.Controllers.EmployeesController Employees = new Jarboo.Admin.Web.Controllers.T4MVC_EmployeesController();
     public static Jarboo.Admin.Web.Controllers.ErrorController Error = new Jarboo.Admin.Web.Controllers.T4MVC_ErrorController();
     public static Jarboo.Admin.Web.Controllers.GuidesController Guides = new Jarboo.Admin.Web.Controllers.T4MVC_GuidesController();
@@ -95,6 +96,7 @@ namespace Links
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string jquery_validation_fix_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validation.fix.min.js") ? Url("jquery.validation.fix.min.js") : Url("jquery.validation.fix.js");
+            public static readonly string site_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.js") ? Url("site.min.js") : Url("site.js");
             public static readonly string validation_style_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/validation.style.min.js") ? Url("validation.style.min.js") : Url("validation.style.js");
         }
     

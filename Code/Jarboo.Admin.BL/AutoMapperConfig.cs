@@ -67,6 +67,9 @@ namespace Jarboo.Admin.BL
                                                     EmployeeId = y.EmployeeId,
                                                     Position = z
                                                 })));
+
+            Mapper.CreateMap<Documentation, DocumentationEdit>();
+            Mapper.CreateMap<DocumentationEdit, Documentation>();
         }
     }
 }

@@ -902,6 +902,7 @@
     <Content Include="Scripts\plugin\x-editable\moment.min.js" />
     <Content Include="Scripts\plugin\x-editable\x-editable.min.js" />
     <Content Include="Scripts\Site\jquery.validation.fix.js" />
+    <Content Include="Scripts\Site\site.js" />
     <Content Include="Scripts\Site\validation.style.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.manager.min.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.ui.min.js" />
@@ -935,6 +936,7 @@
     <Compile Include="Controllers\AuthCallbackController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\DocumentationsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GuidesController.cs" />
@@ -942,6 +944,9 @@
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="CustomersController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentationsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="EmployeesController.generated.cs">
@@ -963,6 +968,7 @@
     <Compile Include="Infrastructure\BreadCrumbsBuilder.cs" />
     <Compile Include="Infrastructure\Configuration.cs" />
     <Compile Include="Infrastructure\DataBaseInitializer.cs" />
+    <Compile Include="Infrastructure\DecorationExtensions.cs" />
     <Compile Include="Infrastructure\HtmlExtensions.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\AppFlowMetadata.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\GoogleDriveFolderHierarchy.cs" />
@@ -972,8 +978,11 @@
     <Compile Include="Infrastructure\ThirdPartyIntegration\NoopTaskRegister.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\TrelloTaskRegister.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
+    <Compile Include="Models\Documentation\DocumentationDelete.cs" />
+    <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
     <Compile Include="Models\Task\TasksListViewModel.cs" />
+    <Compile Include="Models\Task\TaskVM.cs" />
     <Compile Include="ProjectsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1023,6 +1032,7 @@
     <Content Include="Views\Tasks\_NextStep.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Guides\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_TopRight.cshtml" />
@@ -1032,6 +1042,15 @@
     <Content Include="Views\Shared\_Ribbon.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Tiles.cshtml" />
+=======
+    <Content Include="Views\Documentations\Index.cshtml" />
+    <Content Include="Views\Documentations\Create.cshtml" />
+    <Content Include="Views\Documentations\_Form.cshtml" />
+    <Content Include="Views\Documentations\View.cshtml" />
+    <Content Include="Views\Documentations\Edit.cshtml" />
+    <Content Include="Views\Documentations\_List.cshtml" />
+    <Content Include="Views\Documentations\_DeleteForm.cshtml" />
+>>>>>>> develop
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

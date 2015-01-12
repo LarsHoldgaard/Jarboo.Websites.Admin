@@ -75,12 +75,12 @@ namespace Jarboo.Admin.BL.Services
             entity.MapTo(model);
         }
 
-        /*protected void Delete(T entity)
+        protected void Delete(T entity)
         {
             Table.Attach(entity);
             Table.Remove(entity);
 
             UnitOfWork.SaveChanges();
-        }*/
+        }
     }
 }

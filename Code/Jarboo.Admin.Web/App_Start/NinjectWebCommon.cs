@@ -93,6 +93,7 @@ namespace Jarboo.Admin.Web.App_Start
             kernel.Bind<IProjectService>().To<ProjectService>().InRequestScope();
             kernel.Bind<ITaskService>().To<TaskService>().InRequestScope();
             kernel.Bind<IEmployeeService>().To<EmployeeService>().InRequestScope();
+            kernel.Bind<IDocumentationService>().To<DocumentationService>().InRequestScope();
         }
     }
 }

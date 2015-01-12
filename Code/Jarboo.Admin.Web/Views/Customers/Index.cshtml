@@ -67,6 +67,7 @@
                         data-widget-collapsed="true"
                         data-widget-sortable="false"
 
+<<<<<<< HEAD
                         -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
@@ -129,5 +130,18 @@
         <!-- end row -->
     </section>
     <!-- end widget grid -->
+=======
+    @foreach (var customer in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => customer.Name)
+            </td>
+            <td>
+                @Html.ActionLink(MVC.Customers.ActionNames.View, MVC.Customers.View(customer.CustomerId))
+            </td>
+        </tr>
+    }
+>>>>>>> develop
 
 </div>

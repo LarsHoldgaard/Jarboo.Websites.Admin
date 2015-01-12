@@ -59,6 +59,7 @@
                     <!-- widget options:
                         usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
+<<<<<<< HEAD
                         data-widget-colorbutton="false"
                         data-widget-editbutton="false"
                         data-widget-togglebutton="false"
@@ -67,6 +68,41 @@
                         data-widget-custombutton="false"
                         data-widget-collapsed="true"
                         data-widget-sortable="false"
+=======
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => employee.FullName)
+                </td>
+                <td>
+                    <a href="skype:@employee.SkypeName">@employee.SkypeName</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => employee.TrelloId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => employee.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => employee.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => employee.HourlyPrice)
+                </td>
+                <td>
+                    @foreach (var position in employee.Positions)
+                    {
+                        <span class="label label-info">@position.Position</span>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink(MVC.Employees.ActionNames.Edit, MVC.Employees.Edit(employee.EmployeeId)) |
+                    @Html.ActionLink(MVC.Employees.ActionNames.View, MVC.Employees.View(employee.EmployeeId))
+                </td>
+            </tr>
+        }
+>>>>>>> develop
 
                         -->
                     <header>

@@ -14,6 +14,7 @@
                 <!-- widget options:
                     usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
+<<<<<<< HEAD
                     data-widget-colorbutton="false"
                     data-widget-editbutton="false"
                     data-widget-togglebutton="false"
@@ -22,6 +23,25 @@
                     data-widget-custombutton="false"
                     data-widget-collapsed="true"
                     data-widget-sortable="false"
+=======
+    @foreach (var project in Model.Projects)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => project.Name)
+            </td>
+            @if (Model.ShowCustomer)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => project.Customer.Name)
+                </td>
+            }
+            <td>
+                @Html.ActionLink(MVC.Projects.ActionNames.View, MVC.Projects.View(project.ProjectId))
+            </td>
+        </tr>
+    }
+>>>>>>> develop
 
                     -->
                 <header>

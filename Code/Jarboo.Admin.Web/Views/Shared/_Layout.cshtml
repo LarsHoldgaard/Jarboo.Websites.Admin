@@ -37,12 +37,22 @@
     <div id="main" role="main">
         @RenderBody()
     </div>
+<<<<<<< HEAD
 
     @{Html.RenderPartial("_Footer"); };
     @{Html.RenderPartial("_Tiles"); };
 
     @{ Html.RenderPartial("_Scripts", RenderSection("pagespecific", false)); }
 
+=======
+    
+    @Scripts.Render("~/js/jquery")
+    @Scripts.Render("~/js/bootstrap")
+    @Scripts.Render("~/js/validation")
+    @Scripts.Render("~/js/site")
+    @RenderSection("scripts", required: false)
+    
+>>>>>>> develop
     @MiniProfiler.RenderIncludes()
 </body>
 </html>
