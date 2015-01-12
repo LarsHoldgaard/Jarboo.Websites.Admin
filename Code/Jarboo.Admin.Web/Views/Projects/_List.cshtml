@@ -30,7 +30,7 @@
         </tr>
     }
 
-    @if (Model.Projects.Count == 0)
+    @if (!Model.Projects.Any())
     {
         <tr>
             <td colspan="3">

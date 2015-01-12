@@ -59,6 +59,13 @@
   <ItemGroup>
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Filters\CustomerFilter.cs" />
+    <Compile Include="Filters\DocumentationFilter.cs" />
+    <Compile Include="Filters\EmployeeFilter.cs" />
+    <Compile Include="Filters\Filter.cs" />
+    <Compile Include="Filters\PagedData.cs" />
+    <Compile Include="Filters\ProjectFilter.cs" />
+    <Compile Include="Filters\TaskFilter.cs" />
     <Compile Include="Includes\DocumentationInclude.cs" />
     <Compile Include="Models\DocumentationEdit.cs" />
     <Compile Include="Other\IBusinessErrorCollection.cs" />

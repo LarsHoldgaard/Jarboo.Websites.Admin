@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
@@ -23,7 +24,7 @@ namespace Jarboo.Admin.BL.Other
 
         public int SelectEmployee(TaskStepEnum step, int projectId)
         {
-            var employees = EmployeeService.GetAllEx(Include.ForEmployee().Positions());
+            var employees = EmployeeService.GetAllEx(Include.ForEmployee().Positions(), Filter<Employee>.None).Data;
             if (employees.Count == 0)
             {
                 throw new ApplicationException("At least one employee should be created first");

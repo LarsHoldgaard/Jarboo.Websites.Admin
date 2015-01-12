@@ -5,13 +5,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
+using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Web.Infrastructure;
+using Jarboo.Admin.Web.Models.Task;
 
 using Ninject;
+
+using Filter = Jarboo.Admin.BL.Filters.Filter;
 
 namespace Jarboo.Admin.Web.Controllers
 {
@@ -27,7 +31,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Tasks/
         public virtual ActionResult Index()
         {
-            return View(TaskService.GetAllEx(Include.ForTask().Project().TaskSteps()).Decorate());
+            return View(MVC.Tasks.Views.Index);
         }
 
         // GET: /Tasks/View/5
@@ -56,7 +60,7 @@ namespace Jarboo.Admin.Web.Controllers
             }
 
             ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(), "EmployeeId", "FullName");
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer()), "ProjectId", "Name", "Customer.Name", task.ProjectId);
+            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer(), Filter<Project>.None), "ProjectId", "Name", "Customer.Name", task.ProjectId);
             return View(task);
         }
 
@@ -100,6 +104,20 @@ namespace Jarboo.Admin.Web.Controllers
                 TaskService.NextStep,
                 () => RedirectToAction(MVC.Tasks.Steps(model.TaskId)),
                 RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
+        }
+
+        public virtual ActionResult List(bool showProject, TaskFilter taskFilter = null)
+        {
+            taskFilter = taskFilter ?? Filter.ForTask();
+
+            var model = new TasksListViewModel()
+                            {
+                                ShowProject = showProject,
+                                Tasks = TaskService.GetAllEx(Include.ForTask().Project().TaskSteps(), taskFilter).Decorate(),
+                                TaskFilter = taskFilter
+                            };
+
+            return View(MVC.Tasks.Views._List, model); 
         }
     }
 }

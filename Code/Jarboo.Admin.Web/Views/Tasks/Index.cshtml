@@ -1,7 +1,4 @@
-﻿@using Jarboo.Admin.Web.Models.Task
-@model System.Collections.Generic.List<TaskVM>
-
-@{
+﻿@{
     ViewBag.Title = "Tasks";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -16,8 +13,4 @@
     </a>
 </p>
 
-@Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
-                                            {
-                                                Tasks = Model,
-                                                ShowProject = true
-                                            })
+@Html.Action("List", "Tasks", new { showProject = true})

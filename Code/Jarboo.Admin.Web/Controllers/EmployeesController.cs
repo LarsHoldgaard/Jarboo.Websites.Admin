@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using Jarboo.Admin.BL;
+using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
@@ -26,7 +27,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Employees/
         public virtual ActionResult Index()
         {
-            return View(EmployeeService.GetAllEx(Include.ForEmployee().Positions()));
+            return View(EmployeeService.GetAllEx(Include.ForEmployee().Positions(), Filter<Employee>.None));
         }
 
         // GET: /Employees/View/5

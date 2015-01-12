@@ -1,5 +1,7 @@
 ﻿@model Jarboo.Admin.Web.Models.Task.TasksListViewModel
 
+@Html.EditorFor(x => x.TaskFilter)
+
 <table class="table table-striped">
     <tr>
         <th>Title
@@ -76,7 +78,7 @@
         </tr>
     }
 
-    @if (Model.Tasks.Count == 0)
+    @if (!Model.Tasks.Any())
     {
         <tr>
             <td colspan="9">No task has been created.
