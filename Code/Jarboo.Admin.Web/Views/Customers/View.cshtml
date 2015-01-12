@@ -24,22 +24,23 @@
 </div>
 <!-- END RIBBON -->
 <div id="content">
-    <table class="table table-striped">
-        <tbody>
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(x => x.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(x => x.Name)
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h2>Projects</h2>
-    <hr />
-
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
+                @Model.Name
+                @*<span>
+                        >
+                        Overview
+                    </span>*@
+            </h1>
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end row -->
     <p>
         <a class="btn btn-success" href="@Url.Action(MVC.Projects.Create(Model.CustomerId))">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add project
