@@ -9,26 +9,18 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 {
     public class GoogleDriveFolderHierarchy
     {
-        public GoogleDriveFolderHierarchy(FileList files)
+        public GoogleDriveFolderHierarchy(string rootFolderId, FileList files)
         {
-            CreateRoot(files);
+            CreateRoot(rootFolderId);
             CreateHierarchy(files);
         }
 
-        private void CreateRoot(FileList files)
+        private void CreateRoot(string rootFolderId)
         {
-            this.Root = new Folder();
-
-            foreach (var file in files.Items)
-            {
-                foreach (var parent in file.Parents)
-                {
-                    if (parent.IsRoot == true)
-                    {
-                        Root.Id = parent.Id;
-                    }
-                }
-            }
+            this.Root = new Folder()
+                            {
+                                Id = rootFolderId,
+                            };
         }
 
         private void CreateHierarchy(FileList files)

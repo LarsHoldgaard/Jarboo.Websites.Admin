@@ -1,4 +1,5 @@
-﻿@using Jarboo.Admin.Web.Models.Task
+﻿@using Jarboo.Admin.Web.Models.Documentation
+@using Jarboo.Admin.Web.Models.Task
 @model Jarboo.Admin.DAL.Entities.Project
 
 @{
@@ -25,6 +26,21 @@
     </tbody>
 </table>
 
+<h2>Documentations</h2>
+<hr />
+
+<p>
+    <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create(Model.ProjectId))">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
+    </a>
+</p>
+
+@Html.Partial(MVC.Documentations.Views._List, new DocumentationsListViewModel()
+                                            {
+                                                Documentations = Model.Documentations,
+                                                ProjectId = Model.ProjectId
+                                            })
+
 <h2>Tasks</h2>
 <hr />
 
@@ -36,5 +52,5 @@
 
 @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
                                             {
-                                                Tasks = Model.Tasks
+                                                Tasks = Model.Tasks.Decorate()
                                             })

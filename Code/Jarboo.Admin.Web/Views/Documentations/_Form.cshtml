@@ -1,0 +1,38 @@
+﻿@model Jarboo.Admin.BL.Models.DocumentationEdit
+
+@using (Html.BeginForm(MVC.Documentations.Edit()))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.DocumentationId)
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(false)
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.ProjectId, "Project", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.ProjectId, (SelectList)ViewBag.ProjectsList, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Type, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(x => x.Type, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DocumentLink, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.DocumentLink, new { @class = "form-control", type="url" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

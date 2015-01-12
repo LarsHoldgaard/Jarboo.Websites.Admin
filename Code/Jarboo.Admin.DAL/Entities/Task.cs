@@ -45,26 +45,11 @@ namespace Jarboo.Admin.DAL.Entities
 
         public virtual List<TaskStep> Steps { get; set; }
 
-        public string Step()
+        public string TitleWithType()
         {
-            if (Done)
-            {
-                return "Done";
-            }
-
-            if (Steps.Count == 0)
-            {
-                return "Unknown";
-            }
-
-            return Steps.Last().Step.ToString();
+            return TaskTitleWithType(Title, Type);
         }
-        public string FullTitle()
-        {
-            return TaskFullTitle(Title, Type);
-        }
-
-        public static string TaskFullTitle(string title, TaskType type)
+        public static string TaskTitleWithType(string title, TaskType type)
         {
             return LetterForType(type) + "_" + title;
         }

@@ -4,9 +4,9 @@ namespace Jarboo.Admin.DAL.Entities
 {
     public enum DocumentationType
     {
-        Architecture,
-        ProgrammingStyle,
-        Setup 
+        SetupGuide,
+        CodingStandard,
+        ProjectInfo 
     }
 
     public class Documentation : BaseEntity

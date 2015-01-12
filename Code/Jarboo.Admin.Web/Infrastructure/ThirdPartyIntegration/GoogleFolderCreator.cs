@@ -100,7 +100,10 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             var files = this.driveService.Files.List();
             files.MaxResults = int.MaxValue;
             var driveFiles = files.Execute();
-            return new GoogleDriveFolderHierarchy(driveFiles);
+
+            var about = this.driveService.About.Get().Execute();
+
+            return new GoogleDriveFolderHierarchy(about.RootFolderId, driveFiles);
         }
 
         private GoogleDriveFolderHierarchy.Folder CreateFolders(IEnumerable<string> folders, GoogleDriveFolderHierarchy driveFolders)

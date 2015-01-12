@@ -7,7 +7,7 @@ namespace Jarboo.Admin.Web.Models.Task
 {
     public class TasksListViewModel
     {
-        public List<DAL.Entities.Task> Tasks { get; set; }
+        public List<TaskVM> Tasks { get; set; }
         public bool ShowProject { get; set; }
     }
 }

@@ -10,8 +10,12 @@ namespace Jarboo.Admin.Web.App_Start
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/js/site").Include(
+                "~/Scripts/Site/site.js"));
+
             bundles.Add(new ScriptBundle("~/js/jquery").Include(
                 "~/Scripts/jquery-{version}.js"));
+
             bundles.Add(new ScriptBundle("~/js/validation").Include(
                         "~/Scripts/jquery.validate*",
                         "~/Scripts/Site/jquery.validation.fix.js",

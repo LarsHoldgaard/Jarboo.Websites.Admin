@@ -1,5 +1,4 @@
-﻿@using System.Linq
-@model Jarboo.Admin.Web.Models.Task.TasksListViewModel
+﻿@model Jarboo.Admin.Web.Models.Task.TasksListViewModel
 
 <table class="table table-striped">
     <tr>
@@ -29,7 +28,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => task.Title)
+                @task.FullTitle()
             </td>
             @if (Model.ShowProject)
             {
@@ -72,7 +71,7 @@
                 </a>
             </td>
             <td>
-                @Html.ActionLink("View", MVC.Tasks.View(task.TaskId))
+                @Html.ActionLink(MVC.Tasks.ActionNames.View, MVC.Tasks.View(task.TaskId))
             </td>
         </tr>
     }

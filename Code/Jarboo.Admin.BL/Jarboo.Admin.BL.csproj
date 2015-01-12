@@ -59,6 +59,8 @@
   <ItemGroup>
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Includes\DocumentationInclude.cs" />
+    <Compile Include="Models\DocumentationEdit.cs" />
     <Compile Include="Other\IBusinessErrorCollection.cs" />
     <Compile Include="Includes\CustomerInclude.cs" />
     <Compile Include="Includes\EmployeeInclude.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="Services\BaseEntityService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\DocumentationService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\IEntityService.cs" />
     <Compile Include="Services\ProjectService.cs" />

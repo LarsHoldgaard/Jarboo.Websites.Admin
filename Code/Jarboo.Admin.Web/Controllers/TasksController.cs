@@ -9,6 +9,7 @@ using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
+using Jarboo.Admin.Web.Infrastructure;
 
 using Ninject;
 
@@ -26,7 +27,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Tasks/
         public virtual ActionResult Index()
         {
-            return View(TaskService.GetAllEx(Include.ForTask().Project().TaskSteps()));
+            return View(TaskService.GetAllEx(Include.ForTask().Project().TaskSteps()).Decorate());
         }
 
         // GET: /Tasks/View/5
@@ -42,7 +43,7 @@ namespace Jarboo.Admin.Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(task);
+            return View(task.Decorate());
         }
 
         // GET: /Tasks/Create
@@ -55,7 +56,7 @@ namespace Jarboo.Admin.Web.Controllers
             }
 
             ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(), "EmployeeId", "FullName");
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(), "ProjectId", "Name", "Customer.Name", task.ProjectId);
+            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer()), "ProjectId", "Name", "Customer.Name", task.ProjectId);
             return View(task);
         }
 
