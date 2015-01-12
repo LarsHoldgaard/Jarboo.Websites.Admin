@@ -247,6 +247,7 @@
     <Content Include="Scripts\npm.js" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Scripts\Site\jquery.validation.fix.js" />
+    <Content Include="Scripts\Site\site.js" />
     <Content Include="Scripts\Site\validation.style.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
