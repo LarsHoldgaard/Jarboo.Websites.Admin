@@ -25,6 +25,7 @@
     <!-- end breadcrumb -->
 </div>
 <!-- END RIBBON -->
+
 <div id="content">
     <!-- row -->
     <div class="row">
@@ -33,7 +34,7 @@
             <h1 class="page-title txt-color-blueDark">
                 <!-- PAGE HEADER -->
                 <i class="fa-fw fa fa-file-text-o"></i>
-                Task
+                Documentations
                 @*<span>
                         >
                         Overview
@@ -43,59 +44,39 @@
         <!-- end col -->
     </div>
     <!-- end row -->
-    <p>
-        <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create(Model.ProjectId))">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
+    <p class="pull-right">
+        <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create(Model.ProjectId))">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
         </a>
     </p>
 
-<<<<<<< HEAD
-    @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
-                                            {
-                                                Tasks = Model.Tasks
-                                            })
-
-</div>
-=======
-<table class="table table-striped">
-    <tbody>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(x => x.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.Name)
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-<h2>Documentations</h2>
-<hr />
-
-<p>
-    <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create(Model.ProjectId))">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
-    </a>
-</p>
-
-@Html.Partial(MVC.Documentations.Views._List, new DocumentationsListViewModel()
+    @Html.Partial(MVC.Documentations.Views._List, new DocumentationsListViewModel()
                                             {
                                                 Documentations = Model.Documentations,
                                                 ProjectId = Model.ProjectId
                                             })
+    
+    <!-- col -->
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+        <h1 class="page-title txt-color-blueDark">
+            <!-- PAGE HEADER -->
+            <i class="fa-fw fa fa-file-text-o"></i>
+            Tasks
+            @*<span>
+                    >
+                    Overview
+                </span>*@
+        </h1>
 
-<h2>Tasks</h2>
-<hr />
-
-<p>
-    <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create(Model.ProjectId))">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
-    </a>
-</p>
-
-@Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
+    </div>
+    <p class="pull-right">
+        <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create(Model.ProjectId))">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
+        </a>
+    </p>
+    @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
                                             {
                                                 Tasks = Model.Tasks.Decorate()
                                             })
->>>>>>> develop
+    <!-- end col -->
+</div>
