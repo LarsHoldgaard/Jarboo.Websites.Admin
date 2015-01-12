@@ -1032,7 +1032,7 @@
     <Content Include="Views\Tasks\_NextStep.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Guides\Index.cshtml" />
-<<<<<<< HEAD
+
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_TopRight.cshtml" />
@@ -1042,7 +1042,7 @@
     <Content Include="Views\Shared\_Ribbon.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Tiles.cshtml" />
-=======
+
     <Content Include="Views\Documentations\Index.cshtml" />
     <Content Include="Views\Documentations\Create.cshtml" />
     <Content Include="Views\Documentations\_Form.cshtml" />
@@ -1050,7 +1050,7 @@
     <Content Include="Views\Documentations\Edit.cshtml" />
     <Content Include="Views\Documentations\_List.cshtml" />
     <Content Include="Views\Documentations\_DeleteForm.cshtml" />
->>>>>>> develop
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

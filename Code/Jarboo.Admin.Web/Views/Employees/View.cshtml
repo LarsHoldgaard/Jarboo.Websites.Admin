@@ -31,7 +31,7 @@
             <h1 class="page-title txt-color-blueDark">
                 <!-- PAGE HEADER -->
                 <i class="fa-fw fa fa-file-text-o"></i>
-                Employees
+                @Html.DisplayFor(x => x.FullName)
                 @*<span>
                         >
                         Overview
@@ -171,13 +171,24 @@
         <!-- end row -->
     </section>
     <!-- end widget grid -->
-</div>
 
-
-<h2>Tasks </h2>
-<hr />
-
-@Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
+                Tasks
+                @*<span>
+                        >
+                        Overview
+                    </span>*@
+            </h1>
+        </div>
+        @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
                                             {
                                                 Tasks = Model.TaskSteps.Select(x => x.Task).Distinct(new TaskEqualityComparer()).ToList().Decorate()
                                             })
+                <!-- end col -->
+          
+    </div>
+
