@@ -1,4 +1,5 @@
-﻿@using Jarboo.Admin.Web.Models.Documentation
+﻿@using Jarboo.Admin.BL.Filters
+@using Jarboo.Admin.Web.Models.Documentation
 @using Jarboo.Admin.Web.Models.Task
 @model Jarboo.Admin.DAL.Entities.Project
 
@@ -50,7 +51,4 @@
     </a>
 </p>
 
-@Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
-                                            {
-                                                Tasks = Model.Tasks.Decorate()
-                                            })
+@Html.Action("List", "Tasks", new { showProject = true, projectId = Model.ProjectId })

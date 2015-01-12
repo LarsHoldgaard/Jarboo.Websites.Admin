@@ -11,9 +11,21 @@ namespace Jarboo.Admin.BL.Filters
     public class TaskFilter : Filter<Task>, IValidatableObject
     {
         public int? ProjectId { get; set; }
+        public int? EmployeeId { get; set; }
 
         public DateTime? DateModifiedFrom { get; set; }
         public DateTime? DateModifiedTo { get; set; }
+
+        public TaskFilter WithProjectId(int? projectId)
+        {
+            this.ProjectId = projectId;
+            return this;
+        }
+        public TaskFilter WithEmployeeId(int? employeeId)
+        {
+            this.EmployeeId = employeeId;
+            return this;
+        }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -27,12 +39,24 @@ namespace Jarboo.Admin.BL.Filters
         {
             if (DateModifiedFrom.HasValue)
             {
-                query = query.Where(x => x.DateModified >= DateModifiedFrom.Value);
+                var date = DateModifiedFrom.Value.StartOfDay();
+                query = query.Where(x => x.DateModified >= date);
             }
 
             if (DateModifiedTo.HasValue)
             {
-                query = query.Where(x => x.DateModified <= DateModifiedTo.Value);
+                var date = DateModifiedTo.Value.EndOfDay();
+                query = query.Where(x => x.DateModified <= date);
+            }
+
+            if (ProjectId.HasValue)
+            {
+                query = query.Where(x => x.ProjectId == ProjectId.Value);
+            }
+
+            if (EmployeeId.HasValue)
+            {
+                query = query.Where(x => x.Steps.Any(y => y.EmployeeId == EmployeeId.Value));
             }
 
             return base.Execute(query);

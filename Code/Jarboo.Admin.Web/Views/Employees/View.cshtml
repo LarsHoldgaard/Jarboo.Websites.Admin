@@ -86,7 +86,4 @@
 <h2>Tasks </h2>
 <hr />
 
-@Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
-                                            {
-                                                Tasks = Model.TaskSteps.Select(x => x.Task).Distinct(new TaskEqualityComparer()).ToList().Decorate()
-                                            })
+@Html.Action("List", "Tasks", new { showProject = true, employeeId = Model.EmployeeId })

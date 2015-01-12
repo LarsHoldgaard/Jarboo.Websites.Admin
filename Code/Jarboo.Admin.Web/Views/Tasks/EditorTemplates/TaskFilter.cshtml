@@ -1,28 +1,22 @@
 ﻿@model Jarboo.Admin.BL.Filters.TaskFilter
 
-@{
-    ViewBag.Title = "_FilterForm";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-@using (@Html.BeginForm((string)ViewContext.ParentRouteData().Values["action"], (string)ViewContext.ParentRouteData().Values["controller"], FormMethod.Get))
+@using (@Html.BeginForm(null, null, ViewContext.ParentRouteData().Values, FormMethod.Get))
 {
     <div class="form-horizontal">
         @Html.ValidationSummary(false)
 
         <div class="form-group">
-            @Html.LabelFor(x => x.PageNumber, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(x => x.DateModifiedFrom, "Date", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(x => x.PageNumber, new { @class = "form-control" })
+                <div class="input-daterange input-group" id="datepicker">
+                    @Html.TextBoxFor(x => x.DateModifiedFrom, new { @class = "form-control" })
+                    <span class="input-group-addon">to</span>
+                    @Html.TextBoxFor(x => x.DateModifiedTo, new { @class = "form-control" })
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(x => x.PageSize, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(x => x.PageSize, new { @class = "form-control" })
-            </div>
-        </div>
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

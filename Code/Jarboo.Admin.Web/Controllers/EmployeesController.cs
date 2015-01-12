@@ -38,7 +38,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Employee employee = EmployeeService.GetByIdEx(id.Value, Include.ForEmployee().Positions().Tasks());
+            Employee employee = EmployeeService.GetByIdEx(id.Value, Include.ForEmployee().Positions());
             if (employee == null)
             {
                 return HttpNotFound();
