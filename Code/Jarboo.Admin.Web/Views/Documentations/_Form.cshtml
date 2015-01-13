@@ -1,38 +1,78 @@
 ﻿@model Jarboo.Admin.BL.Models.DocumentationEdit
 
-@using (Html.BeginForm(MVC.Documentations.Edit()))
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(x => x.DocumentationId)
-    
-    <div class="form-horizontal">
-        @Html.ValidationSummary(false)
+<!-- row -->
+<div class="row">
+    <article class="col-sm-12 col-md-12 col-lg-7">
+        <!-- Widget ID (each widget will need unique ID)-->
+        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-5" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+            <!-- widget options:
+            usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-        <div class="form-group">
-            @Html.LabelFor(x => x.ProjectId, "Project", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(x => x.ProjectId, (SelectList)ViewBag.ProjectsList, new { @class = "form-control" })
-            </div>
-        </div>
+            data-widget-colorbutton="false"
+            data-widget-editbutton="false"
+            data-widget-togglebutton="false"
+            data-widget-deletebutton="false"
+            data-widget-fullscreenbutton="false"
+            data-widget-custombutton="false"
+            data-widget-collapsed="true"
+            data-widget-sortable="false"
 
-        <div class="form-group">
-            @Html.LabelFor(x => x.Type, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(x => x.Type, new { @class = "form-control" })
-            </div>
-        </div>
+            -->
+            <header>
+                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                <h2>Edit </h2>
+            </header>
+            <!-- widget div-->
+            <div>
+                <!-- widget edit box -->
+                <div class="jarviswidget-editbox">
+                    <!-- This area used as dropdown edit box -->
+                </div>
+                <!-- end widget edit box -->
+                <!-- widget content -->
+                <div class="widget-body no-padding">
+                    @using (Html.BeginForm(MVC.Documentations.Edit(), FormMethod.Post, new { @class = "smart-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.DocumentationId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DocumentLink, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(x => x.DocumentLink, new { @class = "form-control", type="url" })
-            </div>
-        </div>
+                        @Html.ValidationSummary(false)
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                        <header>
+                            Edit form
+                        </header>
+                        <fieldset>
+                            <section>
+                                @Html.LabelFor(model => model.ProjectId, new { @class = "label" })
+                                <label class="input">
+                                    @Html.DropDownListFor(x => x.ProjectId, (SelectList)ViewBag.ProjectsList, new { @class = "form-control" })
+                                </label>
+                            </section>
+                            <section>
+                                @Html.LabelFor(model => model.Type, new { @class = "label" })
+                                <label class="input">
+                                    @Html.EnumDropDownListFor(x => x.Type, new { @placeholder = "Type" })
+                                </label>
+                            </section>
+                            <section>
+                                @Html.LabelFor(model => model.DocumentLink, new { @class = "label" })
+                                <label class="input">
+                                    @Html.TextBoxFor(x => x.DocumentLink, new { @placeholder = "DocumentLink" })
+                                </label>
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button type="submit" class="btn btn-primary">
+                                Save
+                            </button>
+                        </footer>
+                    }
+                </div>
+                <!-- end widget content -->
             </div>
+            <!-- end widget div -->
         </div>
-    </div>
-}
+        <!-- end widget -->
+    </article>
+</div>
+<!-- end row -->
