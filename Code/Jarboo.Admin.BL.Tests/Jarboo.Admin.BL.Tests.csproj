@@ -76,7 +76,7 @@
       <Project>{286ff3f8-7581-4bf0-af2c-47a88b50ff3a}</Project>
       <Name>Jarboo.Admin.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Jarboo.Admin.Web\Jarboo.Admin.DAL.Tests\Jarboo.Admin.DAL.Tests.csproj">
+    <ProjectReference Include="..\Jarboo.Admin.DAL.Tests\Jarboo.Admin.DAL.Tests.csproj">
       <Project>{69444b53-23bb-470a-aa13-8a00d984a167}</Project>
       <Name>Jarboo.Admin.DAL.Tests</Name>
     </ProjectReference>
