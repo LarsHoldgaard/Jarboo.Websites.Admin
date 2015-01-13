@@ -9,6 +9,5 @@ namespace Jarboo.Admin.Web.Models.Documentation
     {
         public IEnumerable<DAL.Entities.Documentation> Documentations { get; set; }
         public bool ShowProject { get; set; }
-        public int? ProjectId { get; set; }
     }
 }

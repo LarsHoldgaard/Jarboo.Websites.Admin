@@ -40,6 +40,8 @@ namespace Jarboo.Admin.DAL.Entities
         public string FolderLink { get; set; }
         public string CardLink { get; set; }
 
+        public DateTime? DateDeleted { get; set; }
+
         public int ProjectId { get; set; }
         public virtual Project Project { get; set; }
 
@@ -52,6 +54,11 @@ namespace Jarboo.Admin.DAL.Entities
         public static string TaskTitleWithType(string title, TaskType type)
         {
             return type.GetLetter() + "_" + title;
+        }
+
+        public bool Deleted()
+        {
+            return DateDeleted.HasValue;
         }
     }
 

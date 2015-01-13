@@ -10,5 +10,22 @@ namespace Jarboo.Admin.BL.Filters
 {
     public class DocumentationFilter : Filter<Documentation>
     {
+        public int? ProjectId { get; set; }
+
+        public DocumentationFilter WithProjectId(int? projectId)
+        {
+            this.ProjectId = projectId;
+            return this;
+        }
+
+        public override PagedData<Documentation> Execute(IQueryable<Documentation> query)
+        {
+            if (ProjectId.HasValue)
+            {
+                query = query.Where(x => x.ProjectId == ProjectId.Value);
+            }
+
+            return base.Execute(query);
+        }
     }
 }

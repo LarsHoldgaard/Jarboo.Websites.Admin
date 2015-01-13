@@ -96,13 +96,32 @@ namespace Jarboo.Admin.Web.Controllers
         // POST: /Documentations/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(DocumentationDelete model)
+        public virtual ActionResult Delete(int id, string returnUrl)
         {
-            var result = model.ProjectId.HasValue
-                             ? RedirectToAction(MVC.Projects.View(model.ProjectId.Value))
-                             : RedirectToAction(MVC.Documentations.Index());
+            ActionResult result;
+            if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
+            {
+                result = RedirectToAction(MVC.Documentations.Index());
+            }
+            else
+            {
+                result = this.Redirect(returnUrl);
+            }
 
-            return Handle(model.DocumentationId, DocumentationService.Delete, result, result);
+            return Handle(id, DocumentationService.Delete, result, result, "Documentation successfully deleted");
+        }
+
+        public virtual ActionResult List(bool showProject = false, int? projectId = null)
+        {
+            var documentationFilter = BL.Filters.Filter.ForDocumentation().WithProjectId(projectId);
+
+            var model = new DocumentationsListViewModel()
+            {
+                ShowProject = showProject,
+                Documentations = DocumentationService.GetAllEx(Include.ForDocumentation().Project(), documentationFilter)
+            };
+
+            return View(model);
         }
     }
 }

@@ -21,6 +21,8 @@ namespace Jarboo.Admin.BL.Services
         void Create(TaskCreate model, IBusinessErrorCollection errors);
 
         void NextStep(TaskNextStep model, IBusinessErrorCollection errors);
+
+        void Delete(int taskId, IBusinessErrorCollection errors);
     }
 
     public class TaskService : BaseEntityService<Task>, ITaskService
@@ -204,6 +206,22 @@ namespace Jarboo.Admin.BL.Services
 
                 entity.Done = true;
             }
+            UnitOfWork.SaveChanges();
+        }
+
+        public void Delete(int taskId, IBusinessErrorCollection errors)
+        {
+            if (taskId == 0)
+            {
+                throw new Exception("Incorrect entity id");
+            }
+
+            var entity = new Task { TaskId = taskId };
+            Table.Attach(entity);
+
+            entity.DateModified = DateTime.Now;
+            entity.DateDeleted = DateTime.Now;
+
             UnitOfWork.SaveChanges();
         }
     }

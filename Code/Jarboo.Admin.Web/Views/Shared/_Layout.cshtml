@@ -39,8 +39,10 @@
             </div>
         </div>
     </nav>
-
+    
     <div class="container site-container">
+        @Html.Partial(MVC.Shared.Views.Messages, ViewData)
+
         @RenderBody()
     </div>
     

@@ -1,4 +1,4 @@
-﻿@using Jarboo.Admin.Web.Models.Documentation
+﻿@using Jarboo.Admin.Web.Models
 @model Jarboo.Admin.Web.Models.Documentation.DocumentationsListViewModel
 
 <table class="table table-striped">
@@ -33,10 +33,11 @@
             <td>
                 @Html.ActionLink(MVC.Documentations.ActionNames.Edit, MVC.Documentations.Edit(doc.DocumentationId)) |
                 @Html.ActionLink(MVC.Documentations.ActionNames.View, MVC.Documentations.View(doc.DocumentationId)) |
-                @Html.Partial(MVC.Documentations.Views._DeleteForm, new DocumentationDelete()
+                @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
                                                                         {
-                                                                            DocumentationId = doc.DocumentationId,
-                                                                            ProjectId = Model.ProjectId
+                                                                            Id = doc.DocumentationId,
+                                                                            Action = MVC.Documentations.Delete(),
+                                                                            Small = true
                                                                         })
             </td>
         </tr>

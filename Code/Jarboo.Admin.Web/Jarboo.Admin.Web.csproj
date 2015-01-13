@@ -233,6 +233,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="migrate.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -379,7 +382,7 @@
     <Compile Include="Infrastructure\ThirdPartyIntegration\NoopTaskRegister.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\TrelloTaskRegister.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
-    <Compile Include="Models\Documentation\DocumentationDelete.cs" />
+    <Compile Include="Models\DeleteBtnVM.cs" />
     <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
     <Compile Include="Models\Task\TasksListViewModel.cs" />
@@ -421,7 +424,7 @@
     <Content Include="Views\Projects\Index.cshtml" />
     <Content Include="Views\Projects\_List.cshtml" />
     <Content Include="Views\Tasks\Index.cshtml" />
-    <Content Include="Views\Tasks\_List.cshtml" />
+    <Content Include="Views\Tasks\List.cshtml" />
     <Content Include="Views\Tasks\Create.cshtml" />
     <Content Include="Views\Tasks\View.cshtml" />
     <Content Include="Views\Employees\Create.cshtml" />
@@ -438,10 +441,11 @@
     <Content Include="Views\Documentations\_Form.cshtml" />
     <Content Include="Views\Documentations\View.cshtml" />
     <Content Include="Views\Documentations\Edit.cshtml" />
-    <Content Include="Views\Documentations\_List.cshtml" />
-    <Content Include="Views\Documentations\_DeleteForm.cshtml" />
+    <Content Include="Views\Documentations\List.cshtml" />
     <Content Include="Views\Tasks\EditorTemplates\TaskFilter.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Shared\Messages.cshtml" />
+    <Content Include="Views\Shared\DeleteBtnForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -32,15 +32,11 @@
 
 <p>
     <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create(Model.ProjectId))">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
     </a>
 </p>
 
-@Html.Partial(MVC.Documentations.Views._List, new DocumentationsListViewModel()
-                                            {
-                                                Documentations = Model.Documentations,
-                                                ProjectId = Model.ProjectId
-                                            })
+@Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new { projectId = Model.ProjectId})
 
 <h2>Tasks</h2>
 <hr />
@@ -51,4 +47,4 @@
     </a>
 </p>
 
-@Html.Action("List", "Tasks", new { showProject = true, projectId = Model.ProjectId })
+@Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { projectId = Model.ProjectId })

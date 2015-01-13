@@ -16,8 +16,4 @@
     </a>
 </p>
 
-@Html.Partial(MVC.Documentations.Views._List, new DocumentationsListViewModel()
-                                            {
-                                                Documentations = Model,
-                                                ShowProject = true
-                                            })
+@Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new { showProject = true})

@@ -106,7 +106,7 @@ namespace Jarboo.Admin.Web.Controllers
                 RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
         }
 
-        public virtual ActionResult List(bool showProject, int? projectId = null, int? employeeId = null, TaskFilter taskFilter = null)
+        public virtual ActionResult List(bool showProject = false, int? projectId = null, int? employeeId = null, TaskFilter taskFilter = null)
         {
             taskFilter = (taskFilter ?? Filter.ForTask()).WithProjectId(projectId).WithEmployeeId(employeeId);
            
@@ -117,7 +117,25 @@ namespace Jarboo.Admin.Web.Controllers
                                 TaskFilter = taskFilter
                             };
 
-            return View(MVC.Tasks.Views._List, model); 
+            return View(model); 
+        }
+
+        // POST: /Tasks/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Delete(int id, string returnUrl)
+        {
+            ActionResult result;
+            if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
+            {
+                result = RedirectToAction(MVC.Tasks.Index());
+            }
+            else
+            {
+                result = this.Redirect(returnUrl);
+            }
+
+            return Handle(id, TaskService.Delete, result, result, "Task successfully deleted");
         }
     }
 }

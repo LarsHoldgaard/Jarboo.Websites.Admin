@@ -40,6 +40,7 @@ namespace Jarboo.Admin.Web.Controllers
                 }
                 catch (ApplicationException ex)
                 {
+                    Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
                     AddError(ex.Message);
                     return RedirectToAction(MVC.Error.Index());
                 }
