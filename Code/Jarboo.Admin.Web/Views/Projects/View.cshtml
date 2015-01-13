@@ -44,7 +44,7 @@
         <!-- end col -->
     </div>
     <!-- end row -->
-    <p class="pull-right">
+    <p class="pull-left">
         <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create(Model.ProjectId))">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
         </a>
@@ -55,28 +55,31 @@
                                                 Documentations = Model.Documentations,
                                                 ProjectId = Model.ProjectId
                                             })
-    
-    <!-- col -->
-    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-        <h1 class="page-title txt-color-blueDark">
-            <!-- PAGE HEADER -->
-            <i class="fa-fw fa fa-file-text-o"></i>
-            Tasks
-            @*<span>
-                    >
-                    Overview
-                </span>*@
-        </h1>
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
+                Tasks
+                @*<span>
+                        >
+                        Overview
+                    </span>*@
+            </h1>
 
+        </div>
     </div>
-    <p class="pull-right">
-        <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create(Model.ProjectId))">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
-        </a>
-    </p>
-    @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
+    <!-- end row -->
+        <p class="pull-left">
+            <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create(Model.ProjectId))">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
+            </a>
+        </p>
+        @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
                                             {
                                                 Tasks = Model.Tasks.Decorate()
                                             })
-    <!-- end col -->
-</div>
+        <!-- end col -->
+    </div>
