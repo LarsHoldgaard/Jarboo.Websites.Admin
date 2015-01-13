@@ -13,12 +13,11 @@ namespace Jarboo.Admin.DAL.Tests
     public class FakeContext
     {
         private const string KeyId = "Id";
-        public const int DefaultId = 1;
 
         public IUnitOfWork UnitOfWork { get; set; }
         private Dictionary<Type, IList> lists = new Dictionary<Type, IList>();
 
-        public FakeContext()
+        private FakeContext()
         {
             UnitOfWork = A.Fake<IUnitOfWork>();
             FakeSet(() => UnitOfWork.Customers);
@@ -52,33 +51,76 @@ namespace Jarboo.Admin.DAL.Tests
             A.CallTo(() => dbSet.Expression).Returns(queryableData.Expression);
             A.CallTo(() => dbSet.ElementType).Returns(queryableData.ElementType);
             A.CallTo(() => dbSet.GetEnumerator()).ReturnsLazily(x => queryableData.GetEnumerator());
+            A.CallTo(() => dbSet.Add(A<T>._)).ReturnsLazily(
+                x =>
+                    {
+                        var entity = (T)x.Arguments[0];
+
+                        data.Add(entity);
+                        SetEntityKey(entity);
+                        AddToRefEntities(entity, data.GetType());
+
+                        return entity;
+                    });
 
             A.CallTo(getter).Returns(dbSet);
         }
 
         private List<T> GetList<T>()
         {
-            if(!lists.ContainsKey(typeof(T)))
+            return (List<T>)GetList(typeof(T));
+        }
+        private IList GetList(Type type)
+        {
+            if (!lists.ContainsKey(type))
             {
-                throw new Exception("Unknown entity - " + typeof(T).Name + ". All dbsets must be registered in the constructor");
+                throw new Exception("Unknown entity - " + type.Name + ". All dbsets must be registered in the constructor");
             }
-            var list = lists[typeof(T)];
-            return (List<T>)list;
+            var list = lists[type];
+            return (IList)list;
         }
 
-        public FakeContext Add<T>(T entity)
+        private void SetEntityKey<T>(T entity)
         {
-            var getListsMethod = typeof(FakeContext).GetMethod("GetList", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var keyPropertyName = typeof(T).Name + KeyId;
+            var keyProperty = typeof(T).GetProperty(keyPropertyName);
+            if (keyProperty == null)
+            {
+                return;
+            }
 
-            var list = GetList<T>();
-            list.Add(entity);
+            var lastKey = 0;
+            foreach (var ent in GetList<T>())
+            {
+                var keyValue = keyProperty.GetValue(ent);
+                var intKeyValue = Convert.ToInt32(keyValue);
+                if (lastKey < intKeyValue)
+                {
+                    lastKey = intKeyValue;
+                }
+            }
 
+            keyProperty.SetValue(entity, lastKey + 1);
+        }
+
+        private void AddToRefEntities<T>(T entity, Type listType)
+        {
+            // Called with (Project, List<Project>)
+
+            // Searching for peoperties with other entity's id references
+            //   int(?) CustomerId {get; set;}
             var keyProperties = typeof(T).GetProperties()
                 .Where(x => x.Name.EndsWith(KeyId))
                 .Where(x => x.PropertyType == typeof(int) || x.PropertyType == typeof(int?));
 
+            // Back reference from other entity - ProjectId
+            //var backRefPropertyName = typeof(T).Name + KeyId;
+
             foreach (var keyProperty in keyProperties)
             {
+                // Found Property CustomerId
+
+                // Property that would reference other entity - Customer
                 var refPropertyName = keyProperty.Name.Substring(0, keyProperty.Name.Length - KeyId.Length);
                 var refProperty = typeof(T).GetProperty(refPropertyName);
                 if (refProperty == null)
@@ -86,42 +128,43 @@ namespace Jarboo.Admin.DAL.Tests
                     continue;
                 }
 
-                var keyValue = keyProperty.GetValue(entity);
-                if (keyValue == null)
+                // Customer
+                var refEntity = refProperty.GetValue(entity);
+                if (refEntity == null)
                 {
                     continue;
                 }
 
-                var refPropertyType = refProperty.PropertyType;
-                var refEntityKeyProperty = refPropertyType.GetProperty(keyProperty.Name);
+                // typeof(Customer)
+                var refEntityType = refProperty.PropertyType;
+
+                // Customer's CustomerId property
+                var refEntityKeyProperty = refEntityType.GetProperty(keyProperty.Name);
                 if (refEntityKeyProperty == null)
                 {
                     continue;
                 }
 
-                var refEntityListProperty = refPropertyType.GetProperties().FirstOrDefault(x => x.PropertyType == list.GetType());
+                // Set Project's CustomerId = Customer's Customer
+                keyProperty.SetValue(entity, refEntityKeyProperty.GetValue(refEntity));
+
+                // Customer's "List<Project> Projects" property
+                // One to many relationship
+                var refEntityListProperty = refEntityType.GetProperties().FirstOrDefault(x => x.PropertyType == listType);
                 if (refEntityListProperty == null)
                 {
                     continue;
                 }
 
-                var refEntities = (IList)getListsMethod.MakeGenericMethod(refPropertyType).Invoke(this, null);
-                foreach (var refEntity in refEntities)
-                {
-                    var refEntityKeyValue = refEntityKeyProperty.GetValue(refEntity);
-                    if (refEntityKeyValue == null || !refEntityKeyValue.Equals(keyValue))
-                    {
-                        continue;
-                    }
-
-                    var refEntityList = (IList)refEntityListProperty.GetValue(refEntity, null);
-                    refEntityList.Add(entity);
-
-                    refProperty.SetValue(entity, refEntity);
-                }
+                // Add Project to Customer's Projects
+                var refEntityList = (IList)refEntityListProperty.GetValue(refEntity, null);
+                refEntityList.Add(entity);
             }
+        }
 
-            return this;
+        public static IUnitOfWork Create()
+        {
+            return new FakeContext().UnitOfWork;
         }
     }
 }

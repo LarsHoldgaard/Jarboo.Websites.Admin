@@ -58,6 +58,9 @@
     <Compile Include="Entities\Task.cs" />
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\TaskStep.cs" />
+    <Compile Include="Extensions\CustomerExtensions.cs" />
+    <Compile Include="Extensions\EmployeeExtensions.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

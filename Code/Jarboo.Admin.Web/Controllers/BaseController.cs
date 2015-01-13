@@ -38,10 +38,6 @@ namespace Jarboo.Admin.Web.Controllers
                 {
                     handler(model, ModelState.Wrap());
                 }
-                catch (NotFoundException)
-                {
-                    return this.HttpNotFound();
-                }
                 catch (ApplicationException ex)
                 {
                     AddError(ex.Message);

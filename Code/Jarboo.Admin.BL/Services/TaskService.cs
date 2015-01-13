@@ -10,6 +10,8 @@ using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
+using Jarboo.Admin.DAL.Extensions;
+
 using Task = Jarboo.Admin.DAL.Entities.Task;
 
 namespace Jarboo.Admin.BL.Services
@@ -35,13 +37,13 @@ namespace Jarboo.Admin.BL.Services
             TaskStepEmployeeStrategy = taskStepEmployeeStrategy;
         }
 
-        protected override System.Data.Entity.IDbSet<Task> Table
+        protected override IDbSet<Task> Table
         {
             get { return UnitOfWork.Tasks; }
         }
         protected override Task Find(int id, IQueryable<Task> query)
         {
-            return query.FirstOrDefault(x => x.TaskId == id);
+            return query.ById(id);
         }
 
         public void Create(TaskCreate model, IBusinessErrorCollection errors)
@@ -51,21 +53,13 @@ namespace Jarboo.Admin.BL.Services
                 return;
             }
 
-            var customer = UnitOfWork.Customers.AsNoTracking().FirstOrDefault(x => x.Projects.Any(y => y.ProjectId == model.ProjectId));
-            if (customer == null)
-            {
-                throw new Exception("Couldn't find customer for project " + model.ProjectId);
-            }
+            var customer = UnitOfWork.Customers.AsNoTracking().ByProject(model.ProjectId);
 
             if (!model.EmployeeId.HasValue)
             {
                 model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId);
             }
-            var employee = UnitOfWork.Employees.AsNoTracking().FirstOrDefault(x => x.EmployeeId == model.EmployeeId.Value);
-            if (employee == null)
-            {
-                throw new Exception("Couldn't find employee " + model.EmployeeId.Value);
-            }
+            var employee = UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
             var taskTitle = Task.TaskTitleWithType(model.Title, model.Type);
             string taskLink = null;
@@ -182,18 +176,10 @@ namespace Jarboo.Admin.BL.Services
         {
             var now = DateTime.Now;
 
-            var entity = Table.Include(x => x.Steps).FirstOrDefault(x => x.TaskId == model.TaskId);
-            if (entity == null)
-            {
-                throw new NotFoundException();
-            }
+            var entity = Table.Include(x => x.Steps).ByIdMust(model.TaskId);
             entity.DateModified = now;
 
-            var customer = UnitOfWork.Customers.FirstOrDefault(x => x.Projects.Any(y => y.ProjectId == entity.ProjectId));
-            if (customer == null)
-            {
-                throw new Exception("Couldn't find customer for project " + entity.ProjectId);
-            }
+            var customer = UnitOfWork.Customers.ByProjectMust(entity.ProjectId);
 
             var lastStep = entity.Steps.Last();
             lastStep.DateModified = now;
@@ -206,7 +192,7 @@ namespace Jarboo.Admin.BL.Services
                 {
                     model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(nextStep.Value, entity.ProjectId);
                 }
-                var employee = UnitOfWork.Employees.AsNoTracking().First(x => x.EmployeeId == model.EmployeeId.Value);
+                var employee = UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
                 ChangeResponsible(customer.Name, entity.TitleWithType(), entity.CardLink, employee.TrelloId);
 

@@ -51,21 +51,7 @@ namespace Jarboo.Admin.DAL.Entities
         }
         public static string TaskTitleWithType(string title, TaskType type)
         {
-            return LetterForType(type) + "_" + title;
-        }
-        private static string LetterForType(TaskType type)
-        {
-            switch (type)
-            {
-                case TaskType.Bug:
-                    return "B";
-                case TaskType.Feature:
-                    return "F";
-                case TaskType.Project:
-                    return "P";
-                default:
-                    throw new Exception("Unnknown task type " + type);
-            }
+            return type.GetLetter() + "_" + title;
         }
     }
 

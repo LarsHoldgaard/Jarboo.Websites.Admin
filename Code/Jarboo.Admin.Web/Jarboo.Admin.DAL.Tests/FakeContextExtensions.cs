@@ -9,28 +9,60 @@ namespace Jarboo.Admin.DAL.Tests
 {
     public static class FakeContextExtensions
     {
-        public static FakeContext AddCustomer(this FakeContext context)
+        public static IUnitOfWork AddCustomer(this IUnitOfWork context, Action<Customer> edit = null, Action<Customer> afterSave = null)
         {
-            return context.Add(new Customer()
+            var customer = new Customer()
+                               {
+                                   Name = "Customer",
+                               };
+
+            if (edit != null)
             {
-                CustomerId = 1,
-                Name = "Customer",
-            });
+                edit(customer);
+            }
+
+            context.Customers.Add(customer);
+            context.SaveChanges();
+
+            if (afterSave != null)
+            {
+                afterSave(customer);
+            }
+
+            return context;
         }
-        public static FakeContext AddProject(this FakeContext context)
+        public static IUnitOfWork AddProject(this IUnitOfWork context, Action<Project> edit = null, Action<Project> afterSave = null)
         {
-            return context.Add(new Project()
+            if (!context.Customers.Any())
             {
-                ProjectId = 1,
-                Name = "Project",
-                CustomerId = 1,
-            });
+                context.AddCustomer();
+            }
+
+            var project = new Project()
+                              {
+                                  Name = "Project",
+                                  Customer = context.Customers.OrderBy(x => x.DateCreated).Last()
+                              };
+
+            if (edit != null)
+            {
+                edit(project);
+            }
+
+            context.Projects.Add(project);
+            context.SaveChanges();
+
+            if (afterSave != null)
+            {
+                afterSave(project);
+            }
+
+            return context;
         }
-        public static FakeContext AddEmployee(this FakeContext context, Action<Employee> edit = null)
+        public static IUnitOfWork AddEmployee(this IUnitOfWork context, Action<Employee> edit = null, Action<Employee> afterSave = null)
         {
             var employee = new Employee()
                                {
-                                   EmployeeId = 1,
                                    FullName = "Employee",
                                    TrelloId = "TrelloId",
                                    Email = "Email",
@@ -42,13 +74,27 @@ namespace Jarboo.Admin.DAL.Tests
                 edit(employee);
             }
 
-            return context.Add(employee);
+            context.Employees.Add(employee);
+            context.SaveChanges();
+
+            if (afterSave != null)
+            {
+                afterSave(employee);
+            }
+
+            return context;
         }
-        public static FakeContext AddPosition(this FakeContext context, Action<EmployeePosition> edit = null)
+        public static IUnitOfWork AddEmployeePosition(this IUnitOfWork context, Action<EmployeePosition> edit = null, Action<EmployeePosition> afterSave = null)
         {
+            if (!context.Employees.Any())
+            {
+                context.AddEmployee();
+            }
+
+
             var position = new EmployeePosition()
                                {
-                                   EmployeeId = 1,
+                                   Employee = context.Employees.OrderBy(x => x.DateCreated).Last(),
                                    Position = Position.Architecture,
                                };
             if (edit != null)
@@ -56,7 +102,15 @@ namespace Jarboo.Admin.DAL.Tests
                 edit(position);
             }
 
-            return context.Add(position);
+            context.EmployeePositions.Add(position);
+            context.SaveChanges();
+
+            if (afterSave != null)
+            {
+                afterSave(position);
+            }
+
+            return context;
         }
     }
 }

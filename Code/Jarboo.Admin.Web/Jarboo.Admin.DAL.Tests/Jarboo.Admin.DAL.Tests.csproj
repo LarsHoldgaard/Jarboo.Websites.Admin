@@ -42,6 +42,9 @@
     <Reference Include="FakeItEasy">
       <HintPath>..\packages\FakeItEasy.1.25.1\lib\net40\FakeItEasy.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -52,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\EnumsTests.cs" />
+    <Compile Include="Entities\TaskTests.cs" />
+    <Compile Include="Extensions\CustomerExtensionsTests.cs" />
     <Compile Include="FakeContext.cs" />
     <Compile Include="FakeContextExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Jarboo.Admin.BL.Services;
+using Jarboo.Admin.BL.Tests.Services;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Tests;
@@ -20,38 +21,74 @@ namespace Jarboo.Admin.BL.Tests.Other
         [Test]
         public void SelectEmployee_WhenNoEmployee_Throws()
         {
-            var context = new FakeContext().AddProject();
-            var strategy = CreateStrategy(context.UnitOfWork);
+            var projectId = 0;
+
+            var context = FakeContext.Create().AddProject(afterSave: x => { projectId = x.ProjectId; });
+            var strategy = CreateStrategy(context);
 
 
-            Assert.Throws<ApplicationException>(() => strategy.SelectEmployee(TaskStepEnum.Specification, FakeContext.DefaultId));
+            Assert.Throws<ApplicationException>(() => strategy.SelectEmployee(TaskStepEnum.Specification, projectId));
         }
 
         [Test]
         public void SelectEmployee_WhenOneUnappropriateEmployee_SelectHim()
         {
-            var step = TaskStepEnum.Specification;
-            var position = Position.Tester;
-            if (step.GetPosition() == position)
-            {
-                throw new Exception("Position must not fit step");
-            }
+            var stepWithWrongPosition = this.GetStepWithWrongPosition();
+            var step = stepWithWrongPosition.Item1;
+            var wrongPosition = stepWithWrongPosition.Item2;
 
-            var context = new FakeContext().AddProject().AddEmployee().AddPosition(x => { x.Position = position; });
-            var strategy = CreateStrategy(context.UnitOfWork);
+            var projectId = 0;
+            var expEmployeeId = 0;
+
+            var context = FakeContext.Create()
+                .AddProject(afterSave: x => { projectId = x.ProjectId; })
+                .AddEmployeePosition(x => { x.Position = wrongPosition; }, 
+                    x => { expEmployeeId = x.EmployeeId; });
+            var strategy = CreateStrategy(context);
 
 
-            var employeeId = strategy.SelectEmployee(step, FakeContext.DefaultId);
+            var employeeId = strategy.SelectEmployee(step, projectId);
 
 
-            Assert.AreEqual(FakeContext.DefaultId, employeeId);
+            Assert.AreEqual(expEmployeeId, employeeId);
         }
 
         [Test]
         public void SelectEmployee_WhenAppropriateEmployeeExists_SelectHim()
         {
-            var goodEmployeeId = 2;
+            var stepWithWrongPosition = this.GetStepWithWrongPosition();
+            var step = stepWithWrongPosition.Item1;
+            var wrongPosition = stepWithWrongPosition.Item2;
 
+            var projectId = 0;
+            var goodEmployeeId = 0;
+
+            var context = FakeContext.Create()
+                .AddProject(afterSave: x => { projectId = x.ProjectId; })
+                .AddEmployee()
+                .AddEmployeePosition(x => { x.Position = wrongPosition; })
+                .AddEmployee()
+                .AddEmployeePosition(x => { x.Position = step.GetPosition(); },
+                    x => { goodEmployeeId = x.EmployeeId; })
+                .AddEmployee()
+                .AddEmployeePosition(x => { x.Position = wrongPosition; });
+            var strategy = CreateStrategy(context);
+
+
+            var employeeId = strategy.SelectEmployee(step, projectId);
+
+
+            Assert.AreEqual(goodEmployeeId, employeeId);
+        }
+
+        private TaskStepEmployeeStrategy CreateStrategy(IUnitOfWork unitOfWork)
+        {
+            var employeeService = ServicesFactory.CreateEmployeeService(unitOfWork);
+            return new TaskStepEmployeeStrategy(employeeService);
+        }
+
+        private Tuple<TaskStepEnum, Position> GetStepWithWrongPosition()
+        {
             var step = TaskStepEnum.Specification;
             var wrongPosition = Position.Tester;
             if (step.GetPosition() == wrongPosition)
@@ -59,40 +96,7 @@ namespace Jarboo.Admin.BL.Tests.Other
                 throw new Exception("Position must not fit step");
             }
 
-            var context = new FakeContext().AddProject()
-                .AddEmployee(x => { x.EmployeeId = 1; })
-                .AddPosition(x =>
-                    {
-                        x.EmployeeId = 1;
-                        x.Position = wrongPosition;
-                    })
-                .AddEmployee(x => { x.EmployeeId = goodEmployeeId; })
-                .AddPosition(x =>
-                    {
-                        x.EmployeeId = goodEmployeeId;
-                        x.Position = step.GetPosition();
-                    })
-                .AddEmployee(x => { x.EmployeeId = 3; })
-                .AddPosition(x =>
-                    {
-                        x.EmployeeId = 3;
-                        x.Position = wrongPosition;
-                    })
-                ;
-            var strategy = CreateStrategy(context.UnitOfWork);
-
-
-            var employeeId = strategy.SelectEmployee(step, FakeContext.DefaultId);
-
-
-            Assert.AreEqual(goodEmployeeId, employeeId);
-        }
-
-
-        private TaskStepEmployeeStrategy CreateStrategy(IUnitOfWork unitOfWork)
-        {
-            var employeeService = new EmployeeService(unitOfWork);
-            return new TaskStepEmployeeStrategy(employeeService);
+            return Tuple.Create(step, wrongPosition);
         }
     }
 }
