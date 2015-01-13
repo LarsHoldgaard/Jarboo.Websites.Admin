@@ -38,6 +38,9 @@
             <li class="@Html.RouteIf("documentations", "active")">
                 <a href="@Url.Action("index", "documentations")"><i class="fa fa-lg fa-fw fa-stack-overflow"></i> <span class="menu-item-parent">Documentations</span></a>
             </li>
+            <li class="@Html.RouteIf("guides", "active")">
+                <a href="@Url.Action("index", "guides")"><i class="fa fa-lg fa-fw fa-book"></i> <span class="menu-item-parent">Guide</span></a>
+            </li>
             <li class="@Html.RouteIf("graphs", "active")">
                 <a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Graphs</span></a>
                 <ul>
