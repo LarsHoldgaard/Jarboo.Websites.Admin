@@ -17,5 +17,10 @@ namespace Jarboo.Admin.Web.Controllers
             }
             return View(MVC.Shared.Views.Error);
         }
-	}
+
+        public virtual ActionResult NotFound()
+        {
+            return View();
+        }
+    }
 }

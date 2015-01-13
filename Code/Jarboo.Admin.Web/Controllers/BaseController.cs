@@ -120,5 +120,10 @@ namespace Jarboo.Admin.Web.Controllers
 
             base.OnActionExecuted(filterContext);
         }
+
+        protected new HttpNotFoundResult HttpNotFound()
+        {
+            throw new HttpException(404, "Not found");
+        }
     }
 }
