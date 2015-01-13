@@ -15,7 +15,7 @@ namespace Jarboo.Admin.Web.Controllers
             {
                 ViewBag.Error = errors[0];
             }
-            return View();
+            return View(MVC.Shared.Views.Error);
         }
 	}
 }
