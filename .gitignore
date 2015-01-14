@@ -159,3 +159,7 @@ $RECYCLE.BIN/
 Code/Jarboo.Admin.Web/App_Data/errors/
 
 !Code/Jarboo.Admin.Web/migrate.exe
+
+!tools/NUnit/*.exe
+!tools/NUnit/*.dll
+tools/NUnit/TestResult.xml
