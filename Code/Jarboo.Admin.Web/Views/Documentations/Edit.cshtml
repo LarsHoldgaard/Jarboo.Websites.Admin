@@ -5,9 +5,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@(new BreadCrumbsBuilder()
-    .Add(Url.Action(MVC.Documentations.Index()), "Documentations")
-    .Add("Documentation ( Edit )")
-    .Done())
+<!-- RIBBON -->
+<div id="ribbon">
+    <span class="ribbon-button-alignment">
+        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
+						<i class="fa fa-refresh"></i>
+					</span>
+    </span>
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @(new BreadCrumbsBuilder()
+            .Add(Url.Action(MVC.Documentations.Index()), "Documentations")
+            .Add("Documentation ( Edit )")
+            .Done())
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
 
-@Html.Partial(MVC.Documentations.Views._Form, Model)
+<div id="content">
+    @Html.Partial(MVC.Documentations.Views._Form, Model)
+</div>

@@ -53,7 +53,7 @@
                     <!-- end widget edit box -->
                     <!-- widget content -->
                     <div class="widget-body no-padding">
-                        @using (Html.BeginForm("create", "tasks", FormMethod.Post, new { @class = "smart-form" }))
+                        @using (Html.BeginForm("create", "tasks", FormMethod.Post, new { @id="form1", @class = "smart-form" }))
                         {
                             @Html.AntiForgeryToken()
                             @Html.ValidationSummary(false)
@@ -117,3 +117,34 @@
     </div>
     <!-- end row -->
 </div>
+@section pagespecific {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#form1').validate({
+                // Rules for form validation
+                rules: {
+                    Title: {
+                        required: true
+                    },
+                    Size: {
+                        number: true
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    Title: {
+                        required: 'Enter title name',
+                    }
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+        });
+
+    </script>
+}
