@@ -38,7 +38,8 @@
         {
             <tr>
                 <td>
-                    @task.FullTitle()
+                    @Html.ActionLink(task.FullTitle(), MVC.Tasks.View(task.TaskId))
+                   
                 </td>
                 <td>
                     @task.Date()
