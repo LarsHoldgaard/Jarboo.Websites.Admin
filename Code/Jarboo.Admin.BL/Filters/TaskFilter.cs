@@ -18,6 +18,8 @@ namespace Jarboo.Admin.BL.Filters
 
         public bool ShowDeleted { get; set; }
 
+        public bool ShowDone { get; set; }
+
         public TaskFilter WithProjectId(int? projectId)
         {
             this.ProjectId = projectId;
@@ -28,6 +30,13 @@ namespace Jarboo.Admin.BL.Filters
             this.EmployeeId = employeeId;
             return this;
         }
+
+        public TaskFilter WithDone()
+        {
+            this.ShowDone = true;
+            return this;
+        }
+
         public TaskFilter WithDeleted()
         {
             this.ShowDeleted = true;
@@ -69,6 +78,11 @@ namespace Jarboo.Admin.BL.Filters
             if (!ShowDeleted)
             {
                 query = query.Where(x => !x.DateDeleted.HasValue);
+            }
+
+            if (!ShowDone)
+            {
+                query = query.Where(x => !x.Done);
             }
 
             return base.Execute(query);
