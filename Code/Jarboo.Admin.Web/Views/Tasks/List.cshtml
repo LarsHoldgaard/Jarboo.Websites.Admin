@@ -31,6 +31,7 @@
             <th>Step
             </th>
             <th></th>
+            <th></th>
         </tr>
 
         @foreach (var task in Model.Tasks)
@@ -84,12 +85,15 @@
                 </td>
                 <td>
                     @Html.ActionLink(MVC.Tasks.ActionNames.View, MVC.Tasks.View(task.TaskId)) |
+                  
+                </td>
+                <td>
                     @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
-                                                                      {
-                                                                        Id  = task.TaskId,
-                                                                        Action = MVC.Tasks.Delete(),
-                                                                        Small = true
-                                                                      })
+                    {
+                        Id = task.TaskId,
+                        Action = MVC.Tasks.Delete(),
+                        Small = true
+                    })
                 </td>
             </tr>
         }
