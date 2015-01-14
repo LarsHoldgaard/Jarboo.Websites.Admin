@@ -39,7 +39,7 @@
                     <div class="widget-body no-padding">
                         <div class="dataTables_wrapper form-inline no-footer">
                             <div class="dt-toolbar"><div class="col-xs-12 col-sm-6"><div id="example_filter" class="dataTables_filter"><label><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span> <input type="search" class="form-control" placeholder="" aria-controls="example"></label></div></div><div class="col-xs-12 col-sm-6"><div class="dataTables_length" id="example_length"><label><select name="example_length" aria-controls="example" class="form-control"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select></label></div></div></div>
-                            <table class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
+                            <table id="example" class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -77,7 +77,7 @@
                                     @foreach (var task in Model.Tasks)
                                     {
                                         <tr>
-                                            <td class="details-control"></td>
+                                            <td class="details-control" id="@task.TaskId"></td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => task.Title)
                                             </td>
@@ -122,8 +122,8 @@
                                                 </a>
                                             </td>
                                             @*<td>
-                                                @Html.ActionLink("View", MVC.Tasks.View(task.TaskId))
-                                            </td>*@
+                            @Html.ActionLink("View", MVC.Tasks.View(task.TaskId))
+                        </td>*@
                                         </tr>
                                     }
                                     @if (Model.Tasks.Count == 0)

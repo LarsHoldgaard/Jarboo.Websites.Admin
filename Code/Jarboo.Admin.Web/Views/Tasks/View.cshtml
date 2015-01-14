@@ -1,88 +1,95 @@
 ﻿@using System.Linq
 @model Jarboo.Admin.Web.Models.Task.TaskVM
 
-@{
-    ViewBag.Title = Model.FullTitle();
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+@*@{
+        ViewBag.Title = Model.FullTitle();
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 
-@(new BreadCrumbsBuilder()
-    .Add(Url.Action(MVC.Customers.Index()), "Customers")
-    .Add(Url.Action(MVC.Customers.View(Model.Project.CustomerId)), Model.Project.Customer.Name)
-    .Add(Url.Action(MVC.Projects.View(Model.ProjectId)), Model.Project.Name)
-    .Add(Model.FullTitle())
-    .Done())
+    @(new BreadCrumbsBuilder()
+        .Add(Url.Action(MVC.Customers.Index()), "Customers")
+        .Add(Url.Action(MVC.Customers.View(Model.Project.CustomerId)), Model.Project.Customer.Name)
+        .Add(Url.Action(MVC.Projects.View(Model.ProjectId)), Model.Project.Name)
+        .Add(Model.FullTitle())
+        .Done())*@
 
-<table class="table table-striped">
-    <tbody>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(x => x.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.Title)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(x => x.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.Type)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(x => x.Size)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.Size) hour(s)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(x => x.Urgency)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.Urgency)
-            </td>
-        </tr>
-        <tr>
-            <td>Folder
-            </td>
-            <td>
-                @if (string.IsNullOrEmpty(Model.FolderLink))
-                {
-                    <span>Missing</span>
-                }
-                else
-                {
-                    <a target="_blank" href="@Model.FolderLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
-                }
-            </td>
-        </tr>
-        <tr>
-            <td>Card
-            </td>
-            <td>
-                @if (string.IsNullOrEmpty(Model.CardLink))
-                {
-                    <span>Missing</span>
-                }
-                else
-                {
-                    <a target="_blank" href="@Model.CardLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
-                }
-            </td>
-        </tr>
-        <tr>
-            <td>Step
-            </td>
-            <td>
-                <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Tasks.Steps(Model.TaskId))">
-                    <i class="glyphicon glyphicon-list"></i> @Model.Step()
-                </a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<tr>
+    <td colspan="9">
+        <table cellpadding="5" cellspacing="0" border="0" class="table table-hover table-condensed">
+            <tbody>
+                <tr>
+                    <td style="width:100px">
+                        @Html.DisplayNameFor(x => x.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x.Title)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(x => x.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x.Type)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(x => x.Size)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x.Size) hour(s)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(x => x.Urgency)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x.Urgency)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Folder
+                    </td>
+                    <td>
+                        @if (string.IsNullOrEmpty(Model.FolderLink))
+                        {
+                            <span>Missing</span>
+                        }
+                        else
+                        {
+                            <a target="_blank" href="@Model.FolderLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Card
+                    </td>
+                    <td>
+                        @if (string.IsNullOrEmpty(Model.CardLink))
+                        {
+                            <span>Missing</span>
+                        }
+                        else
+                        {
+                            <a target="_blank" href="@Model.CardLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Step
+                    </td>
+                    <td>
+                        <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Tasks.Steps(Model.TaskId))">
+                            <i class="glyphicon glyphicon-list"></i> @Model.Step()
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
