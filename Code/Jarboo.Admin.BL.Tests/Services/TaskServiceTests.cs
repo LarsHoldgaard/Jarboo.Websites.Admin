@@ -20,29 +20,32 @@ namespace Jarboo.Admin.BL.Tests.Services
         [Test]
         public void Create_WhenFailsAfterFolderCreate_DeleteFolder()
         {
-            var context = FakeContext.Create().AddProject().AddEmployee();
-            A.CallTo(() => context.SaveChanges()).Throws<Exception>();
+            using (var context = ContextHelper.Create())
+            {
+                var folderCreator = A.Fake<IFolderCreator>();
+                A.CallTo(() => folderCreator.Create(A<string>._, A<string>._)).Returns("link");
 
-            var folderCreator = A.Fake<IFolderCreator>();
-            A.CallTo(() => folderCreator.Create(A<string>._, A<string>._)).Returns("link");
-
-            var service = ServicesFactory.CreateTaskService(context, folderCreator: folderCreator);
-            var model = ValidTaskCreate();
-
-
-            Assert.Throws<ApplicationException>(() => service.Create(model, null));
+                var service = ServicesFactory.CreateTaskService(context, folderCreator: folderCreator);
+                var model = CreateValidTask(context);
+                A.CallTo(() => context.SaveChanges()).Throws<Exception>();
 
 
-            A.CallTo(() => folderCreator.Delete(A<string>._, A<string>._)).MustHaveHappened();
+                Assert.Throws<ApplicationException>(() => service.Create(model, null));
+
+
+                A.CallTo(() => folderCreator.Delete(A<string>._, A<string>._)).MustHaveHappened();
+            }
         }
 
-        public TaskCreate ValidTaskCreate()
+        public TaskCreate CreateValidTask(IUnitOfWork context)
         {
+            context.AddProject().AddEmployee();
+
             return new TaskCreate()
             {
                 Title = "Title",
-                ProjectId = 1,
-                EmployeeId = 1,
+                ProjectId = context.Projects.First().ProjectId,
+                EmployeeId = context.Employees.First().EmployeeId,
             };
         }
     }

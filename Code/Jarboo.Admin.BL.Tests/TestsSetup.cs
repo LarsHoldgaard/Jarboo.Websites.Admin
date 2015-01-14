@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Jarboo.Admin.BL.Tests
 {
     [SetUpFixture]
-    public class SetUp
+    public class TestsSetup
     {
         [SetUp]
         public void SetupFixture()

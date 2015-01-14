@@ -8,6 +8,8 @@ using System.Data.Entity;
 using System.Linq.Expressions;
 using System.Collections;
 
+using Jarboo.Admin.DAL.Entities;
+
 namespace Jarboo.Admin.DAL.Tests
 {
     public class FakeContext
@@ -20,15 +22,19 @@ namespace Jarboo.Admin.DAL.Tests
         private FakeContext()
         {
             UnitOfWork = A.Fake<IUnitOfWork>();
-            FakeSet(() => UnitOfWork.Customers);
-            FakeSet(() => UnitOfWork.Projects);
-            FakeSet(() => UnitOfWork.Documentations);
-            FakeSet(() => UnitOfWork.Tasks);
-            FakeSet(() => UnitOfWork.TaskSteps);
-            FakeSet(() => UnitOfWork.Employees);
-            FakeSet(() => UnitOfWork.EmployeePositions);
+
+            ContextHelper.IterateDbSets(
+                UnitOfWork,
+                this.GetType().GetMethod("FakeSet", new Type[] { typeof(MemberExpression) }),
+                this);
         }
 
+        public void FakeSet<T>(MemberExpression exp)
+            where T : class
+        {
+            var getter = Expression.Lambda<Func<IDbSet<T>>>(exp);
+            FakeSet(getter);
+        }
         public void FakeSet<T>(Expression<Func<IDbSet<T>>> getter)
             where T : class
         {

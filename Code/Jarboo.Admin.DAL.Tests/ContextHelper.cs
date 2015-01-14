@@ -1,14 +1,25 @@
-﻿using Jarboo.Admin.DAL.Entities;
+﻿using System.Data.Common;
+using System.Data.Entity;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.IO;
+using System.Linq.Expressions;
+using System.Reflection;
+
+using Jarboo.Admin.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity.Infrastructure;
 
 namespace Jarboo.Admin.DAL.Tests
 {
-    public static class FakeContextExtensions
+    public static class ContextHelper
     {
+        #region FillDb
+
         public static IUnitOfWork AddCustomer(this IUnitOfWork context, Action<Customer> edit = null, Action<Customer> afterSave = null)
         {
             var customer = new Customer()
@@ -38,10 +49,11 @@ namespace Jarboo.Admin.DAL.Tests
                 context.AddCustomer();
             }
 
+            var customer = context.Customers.OrderBy(x => x.DateCreated).AsEnumerable().Last();
             var project = new Project()
                               {
                                   Name = "Project",
-                                  Customer = context.Customers.OrderBy(x => x.DateCreated).Last()
+                                  Customer = customer
                               };
 
             if (edit != null)
@@ -65,7 +77,7 @@ namespace Jarboo.Admin.DAL.Tests
                                {
                                    FullName = "Employee",
                                    TrelloId = "TrelloId",
-                                   Email = "Email",
+                                   Email = "email@email.com",
                                    Country = "Country",
                                };
 
@@ -91,10 +103,10 @@ namespace Jarboo.Admin.DAL.Tests
                 context.AddEmployee();
             }
 
-
+            var employee = context.Employees.OrderBy(x => x.DateCreated).AsEnumerable().Last();
             var position = new EmployeePosition()
                                {
-                                   Employee = context.Employees.OrderBy(x => x.DateCreated).Last(),
+                                   Employee = employee,
                                    Position = Position.Architecture,
                                };
             if (edit != null)
@@ -111,6 +123,37 @@ namespace Jarboo.Admin.DAL.Tests
             }
 
             return context;
+        }
+
+        #endregion
+
+        #region internal
+
+        internal static void IterateDbSets(IUnitOfWork context, MethodInfo callback, object caller)
+        {
+            foreach (var property in typeof(IUnitOfWork).GetProperties())
+            {
+                if (!property.PropertyType.IsGenericType || property.PropertyType.GetGenericTypeDefinition() != typeof(IDbSet<>))
+                {
+                    continue;
+                }
+
+                var exp = Expression.MakeMemberAccess(Expression.Constant(context), property);
+
+                callback.MakeGenericMethod(property.PropertyType.GetGenericArguments()[0])
+                    .Invoke(caller, new object[] { exp });
+            }
+        }
+
+        #endregion
+
+        public static IUnitOfWork Create()
+        {
+#if DEBUG
+            return FakeContext.Create();
+#else
+            return RealContextWrapper.Create();
+#endif
         }
     }
 }

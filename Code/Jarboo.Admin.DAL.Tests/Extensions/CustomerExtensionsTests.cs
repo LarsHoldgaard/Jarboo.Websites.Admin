@@ -16,38 +16,45 @@ namespace Jarboo.Admin.DAL.Tests.Extensions
         [Test]
         public void ByProject_WhenNotExists_ReturnsNull()
         {
-            var context = FakeContext.Create();
+            using (var context = ContextHelper.Create())
+            {
+                var customer = context.Customers.ByProject(1);
 
 
-            Assert.Null(context.Customers.ByProject(1));
+                Assert.Null(customer);
+            }
         }
         [Test]
         public void ByProject_WhenExists_ReturnsIt()
         {
-            var projectId = 0;
-            var customerId = 0;
-            var context = FakeContext.Create().AddProject(afterSave: x =>
-                {
-                    projectId = x.ProjectId;
-                    customerId = x.CustomerId;
-                });
+            using (var context = ContextHelper.Create())
+            {
+                var projectId = 0;
+                var customerId = 0;
+                context.AddProject(
+                    afterSave: x =>
+                        {
+                            projectId = x.ProjectId;
+                            customerId = x.CustomerId;
+                        });
 
 
-            var customer = context.Customers.ByProject(projectId);
+                var customer = context.Customers.ByProject(projectId);
 
 
-            Assert.NotNull(customer);
-            Assert.AreEqual(customerId, customer.CustomerId);
+                Assert.NotNull(customer);
+                Assert.AreEqual(customerId, customer.CustomerId);
+            }
         }
 
 
         [Test]
         public void ByProjectMust_WhenNotExists_Throws()
         {
-            var context = FakeContext.Create();
-
-
-            Assert.Throws<Exception>(() => context.Customers.ByProjectMust(1));
+            using (var context = ContextHelper.Create())
+            {
+                Assert.Throws<Exception>(() => context.Customers.ByProjectMust(1));
+            }
         }
     }
 }
