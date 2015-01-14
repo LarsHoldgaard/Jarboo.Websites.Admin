@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity.Infrastructure;
 
 namespace Jarboo.Admin.DAL.Tests
@@ -20,29 +19,23 @@ namespace Jarboo.Admin.DAL.Tests
     {
         #region FillDb
 
-        public static IUnitOfWork AddCustomer(this IUnitOfWork context, Action<Customer> edit = null, Action<Customer> afterSave = null)
+        public static Customer AddCustomer(this IUnitOfWork context, Action<Customer> beforeSave = null)
         {
             var customer = new Customer()
                                {
                                    Name = "Customer",
                                };
 
-            if (edit != null)
+            if (beforeSave != null)
             {
-                edit(customer);
+                beforeSave(customer);
             }
 
             context.Customers.Add(customer);
             context.SaveChanges();
-
-            if (afterSave != null)
-            {
-                afterSave(customer);
-            }
-
-            return context;
+            return customer;
         }
-        public static IUnitOfWork AddProject(this IUnitOfWork context, Action<Project> edit = null, Action<Project> afterSave = null)
+        public static Project AddProject(this IUnitOfWork context, Action<Project> beforeSave = null)
         {
             if (!context.Customers.Any())
             {
@@ -56,22 +49,16 @@ namespace Jarboo.Admin.DAL.Tests
                                   Customer = customer
                               };
 
-            if (edit != null)
+            if (beforeSave != null)
             {
-                edit(project);
+                beforeSave(project);
             }
 
             context.Projects.Add(project);
             context.SaveChanges();
-
-            if (afterSave != null)
-            {
-                afterSave(project);
-            }
-
-            return context;
+            return project;
         }
-        public static IUnitOfWork AddEmployee(this IUnitOfWork context, Action<Employee> edit = null, Action<Employee> afterSave = null)
+        public static Employee AddEmployee(this IUnitOfWork context, Action<Employee> beforeSave = null)
         {
             var employee = new Employee()
                                {
@@ -81,22 +68,16 @@ namespace Jarboo.Admin.DAL.Tests
                                    Country = "Country",
                                };
 
-            if (edit != null)
+            if (beforeSave != null)
             {
-                edit(employee);
+                beforeSave(employee);
             }
 
             context.Employees.Add(employee);
             context.SaveChanges();
-
-            if (afterSave != null)
-            {
-                afterSave(employee);
-            }
-
-            return context;
+            return employee;
         }
-        public static IUnitOfWork AddEmployeePosition(this IUnitOfWork context, Action<EmployeePosition> edit = null, Action<EmployeePosition> afterSave = null)
+        public static EmployeePosition AddEmployeePosition(this IUnitOfWork context, Action<EmployeePosition> beforeSave = null)
         {
             if (!context.Employees.Any())
             {
@@ -109,20 +90,44 @@ namespace Jarboo.Admin.DAL.Tests
                                    Employee = employee,
                                    Position = Position.Architecture,
                                };
-            if (edit != null)
+            if (beforeSave != null)
             {
-                edit(position);
+                beforeSave(position);
             }
 
             context.EmployeePositions.Add(position);
             context.SaveChanges();
 
-            if (afterSave != null)
+            return position;
+        }
+        public static Task AddTask(this IUnitOfWork context, Action<Task> beforeSave = null)
+        {
+            if (!context.Projects.Any())
             {
-                afterSave(position);
+                context.AddProject();
             }
 
-            return context;
+            var project = context.Projects.OrderBy(x => x.DateCreated).AsEnumerable().Last();
+            var task = new Task()
+            {
+                Title = "Task",
+                Type = TaskType.Bug,
+                Urgency = TaskUrgency.Medium,
+                CardLink = "card",
+                FolderLink = "folder",
+                Size = 1,
+                Project = project,
+            };
+
+            if (beforeSave != null)
+            {
+                beforeSave(task);
+            }
+
+            context.Tasks.Add(task);
+            context.SaveChanges();
+
+            return task;
         }
 
         #endregion

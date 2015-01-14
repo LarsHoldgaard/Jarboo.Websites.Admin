@@ -63,16 +63,16 @@ namespace Jarboo.Admin.BL.Services
             }
             var employee = UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
-            var taskTitle = Task.TaskTitleWithType(model.Title, model.Type);
+            var taskIdentifier = Task.TaskIdentifier(model.Title, model.Type);
             string taskLink = null;
             string folderLink = null;
 
             try
             {
-                folderLink = CreateFolder(customer.Name, taskTitle);
+                folderLink = CreateFolder(customer.Name, taskIdentifier);
 
-                taskLink = RegisterTask(customer.Name, taskTitle, folderLink);
-                ChangeResponsible(customer.Name, taskTitle, taskLink, employee.TrelloId);
+                taskLink = RegisterTask(customer.Name, taskIdentifier, folderLink);
+                ChangeResponsible(customer.Name, taskIdentifier, taskLink, employee.TrelloId);
 
                 var entity = new Task()
                 {
@@ -90,20 +90,20 @@ namespace Jarboo.Admin.BL.Services
             }
             catch (ApplicationException ex)
             {
-                this.Cleanup(customer, taskTitle, taskLink, folderLink);
+                this.Cleanup(customer, taskIdentifier, taskLink, folderLink);
                 throw;
             }
             catch (Exception ex)
             {
-                this.Cleanup(customer, taskTitle, taskLink, folderLink);
+                this.Cleanup(customer, taskIdentifier, taskLink, folderLink);
                 throw new ApplicationException("Couldn't create task", ex);
             }
         }
-        private string RegisterTask(string customerName, string taskTitle, string folderLink)
+        private string RegisterTask(string customerName, string taskIdentifier, string folderLink)
         {
             try
             {
-                return TaskRegister.Register(customerName, taskTitle, folderLink);
+                return TaskRegister.Register(customerName, taskIdentifier, folderLink);
             }
             catch (ApplicationException)
             {
@@ -114,11 +114,11 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Could not register task in third party service", ex);
             }
         }
-        private void ChangeResponsible(string customerName, string taskTitle, string url, string responsibleUserId)
+        private void ChangeResponsible(string customerName, string tasktaskIdentifierTitle, string url, string responsibleUserId)
         {
             try
             {
-                TaskRegister.ChangeResponsible(customerName, taskTitle, url, responsibleUserId);
+                TaskRegister.ChangeResponsible(customerName, tasktaskIdentifierTitle, url, responsibleUserId);
             }
             catch (ApplicationException)
             {
@@ -129,20 +129,20 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Could not set responsible for task", ex);
             }
         }
-        private void UnregisterTask(string customerName, string taskTitle, string url)
+        private void UnregisterTask(string customerName, string taskIdentifier, string url)
         {
             try
             {
-                TaskRegister.Unregister(customerName, taskTitle, url);
+                TaskRegister.Unregister(customerName, taskIdentifier, url);
             }
             catch
             { }
         }
-        private string CreateFolder(string customerName, string taskTitle)
+        private string CreateFolder(string customerName, string taskIdentifier)
         {
             try
             {
-                return FolderCreator.Create(customerName, taskTitle);
+                return FolderCreator.Create(customerName, taskIdentifier);
             }
             catch (ApplicationException)
             {
@@ -153,24 +153,24 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Could not create folder in third party service", ex);
             }
         }
-        private void DeleteFolder(string customerName, string taskTitle)
+        private void DeleteFolder(string customerName, string taskIdentifier)
         {
             try
             {
-                FolderCreator.Delete(customerName, taskTitle);
+                FolderCreator.Delete(customerName, taskIdentifier);
             }
             catch
             { }
         }
-        private void Cleanup(Customer customer, string taskFullTitle, string taskLink, string folderLink)
+        private void Cleanup(Customer customer, string taskIdentifier, string taskLink, string folderLink)
         {
             if (!string.IsNullOrEmpty(taskLink))
             {
-                this.UnregisterTask(customer.Name, taskFullTitle, taskLink);
+                this.UnregisterTask(customer.Name, taskIdentifier, taskLink);
             }
             if (!string.IsNullOrEmpty(folderLink))
             {
-                this.DeleteFolder(customer.Name, taskFullTitle);
+                this.DeleteFolder(customer.Name, taskIdentifier);
             }
         }
 
@@ -196,13 +196,13 @@ namespace Jarboo.Admin.BL.Services
                 }
                 var employee = UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
-                ChangeResponsible(customer.Name, entity.TitleWithType(), entity.CardLink, employee.TrelloId);
+                ChangeResponsible(customer.Name, entity.Identifier(), entity.CardLink, employee.TrelloId);
 
                 entity.Steps.Add(new TaskStep() { EmployeeId = model.EmployeeId.Value, Step = nextStep.Value});
             }
             else
             {
-                ChangeResponsible(customer.Name, entity.TitleWithType(), entity.CardLink, null);
+                ChangeResponsible(customer.Name, entity.Identifier(), entity.CardLink, null);
 
                 entity.Done = true;
             }
@@ -216,13 +216,16 @@ namespace Jarboo.Admin.BL.Services
                 throw new Exception("Incorrect entity id");
             }
 
-            var entity = new Task { TaskId = taskId };
-            Table.Attach(entity);
+            var entity = Table.ByIdMust(taskId);
+            var customer = UnitOfWork.Customers.ByProjectMust(entity.ProjectId);
 
             entity.DateModified = DateTime.Now;
             entity.DateDeleted = DateTime.Now;
 
             UnitOfWork.SaveChanges();
+
+            this.DeleteFolder(customer.Name, entity.Identifier());
+            this.UnregisterTask(customer.Name, entity.Identifier(), entity.CardLink);
         }
     }
 }

@@ -29,21 +29,14 @@ namespace Jarboo.Admin.DAL.Tests.Extensions
         {
             using (var context = ContextHelper.Create())
             {
-                var projectId = 0;
-                var customerId = 0;
-                context.AddProject(
-                    afterSave: x =>
-                        {
-                            projectId = x.ProjectId;
-                            customerId = x.CustomerId;
-                        });
+                var project = context.AddProject();
 
 
-                var customer = context.Customers.ByProject(projectId);
+                var customer = context.Customers.ByProject(project.ProjectId);
 
 
                 Assert.NotNull(customer);
-                Assert.AreEqual(customerId, customer.CustomerId);
+                Assert.AreEqual(project.CustomerId, customer.CustomerId);
             }
         }
 

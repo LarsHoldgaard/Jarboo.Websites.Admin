@@ -47,11 +47,11 @@ namespace Jarboo.Admin.DAL.Entities
 
         public virtual List<TaskStep> Steps { get; set; }
 
-        public string TitleWithType()
+        public string Identifier()
         {
-            return TaskTitleWithType(Title, Type);
+            return TaskIdentifier(Title, Type);
         }
-        public static string TaskTitleWithType(string title, TaskType type)
+        public static string TaskIdentifier(string title, TaskType type)
         {
             return type.GetLetter() + "_" + title;
         }

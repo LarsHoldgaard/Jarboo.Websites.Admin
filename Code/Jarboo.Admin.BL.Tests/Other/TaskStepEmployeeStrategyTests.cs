@@ -23,9 +23,7 @@ namespace Jarboo.Admin.BL.Tests.Other
         {
             using (var context = ContextHelper.Create())
             {
-                var projectId = 0;
-
-                context.AddProject(afterSave: x => { projectId = x.ProjectId; });
+                var projectId = context.AddProject().ProjectId;
                 var strategy = CreateStrategy(context);
 
 
@@ -43,14 +41,8 @@ namespace Jarboo.Admin.BL.Tests.Other
                 var step = stepWithWrongPosition.Item1;
                 var wrongPosition = stepWithWrongPosition.Item2;
 
-                var projectId = 0;
-                var expEmployeeId = 0;
-
-                context
-                    .AddProject(afterSave: x => { projectId = x.ProjectId; })
-                    .AddEmployeePosition(
-                        x => { x.Position = wrongPosition; },
-                        x => { expEmployeeId = x.EmployeeId; });
+                var projectId = context.AddProject().ProjectId;
+                var expEmployeeId = context.AddEmployeePosition(x => { x.Position = wrongPosition; }).EmployeeId;
                 var strategy = CreateStrategy(context);
 
 
@@ -70,19 +62,13 @@ namespace Jarboo.Admin.BL.Tests.Other
                 var step = stepWithWrongPosition.Item1;
                 var wrongPosition = stepWithWrongPosition.Item2;
 
-                var projectId = 0;
-                var goodEmployeeId = 0;
-
-                context
-                    .AddProject(afterSave: x => { projectId = x.ProjectId; })
-                    .AddEmployee()
-                    .AddEmployeePosition(x => { x.Position = wrongPosition; })
-                    .AddEmployee()
-                    .AddEmployeePosition(
-                        x => { x.Position = step.GetPosition(); },
-                        x => { goodEmployeeId = x.EmployeeId; })
-                    .AddEmployee()
-                    .AddEmployeePosition(x => { x.Position = wrongPosition; });
+                var projectId = context.AddProject().ProjectId;
+                context.AddEmployee();
+                context.AddEmployeePosition(x => { x.Position = wrongPosition; });
+                context.AddEmployee();
+                var goodEmployeeId = context.AddEmployeePosition(x => { x.Position = step.GetPosition(); }).EmployeeId;
+                context.AddEmployee();
+                context.AddEmployeePosition(x => { x.Position = wrongPosition; });
                 var strategy = CreateStrategy(context);
 
 

@@ -13,9 +13,9 @@ namespace Jarboo.Admin.DAL.Tests.Entities
     public class TaskTests
     {
         [Test]
-        public void TaskTitleWithType_ReturnsCorrect()
+        public void TaskIdentifier_ReturnsCorrect()
         {
-            var title = Task.TaskTitleWithType("title", TaskType.Bug);
+            var title = Task.TaskIdentifier("title", TaskType.Bug);
 
             Assert.AreEqual("B_title", title);
         }

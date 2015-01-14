@@ -26,7 +26,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 A.CallTo(() => folderCreator.Create(A<string>._, A<string>._)).Returns("link");
 
                 var service = ServicesFactory.CreateTaskService(context, folderCreator: folderCreator);
-                var model = CreateValidTask(context);
+                var model = ValidTaskCreate(context);
                 A.CallTo(() => context.SaveChanges()).Throws<Exception>();
 
 
@@ -37,9 +37,50 @@ namespace Jarboo.Admin.BL.Tests.Services
             }
         }
 
-        public TaskCreate CreateValidTask(IUnitOfWork context)
+        [Test]
+        public void Delete_Always_DeleteTasksFolder()
         {
-            context.AddProject().AddEmployee();
+            using (var context = ContextHelper.Create())
+            {
+                var customer = context.AddCustomer();
+                var task = context.AddTask();
+
+                var folderCreator = A.Fake<IFolderCreator>();
+                var service = ServicesFactory.CreateTaskService(context, folderCreator: folderCreator);
+
+
+                service.Delete(task.TaskId, null);
+
+
+                A.CallTo(() => folderCreator.Delete(customer.Name, task.Identifier())).MustHaveHappened();
+            }
+        }
+
+        [Test]
+        public void Delete_Always_DeleteTasksCard()
+        {
+            using (var context = ContextHelper.Create())
+            {
+                const string cardLink = "card_link";
+
+                var customer = context.AddCustomer();
+                var task = context.AddTask(x => { x.CardLink = cardLink; });
+
+                var taskRegister = A.Fake<ITaskRegister>();
+                var service = ServicesFactory.CreateTaskService(context, taskRegister: taskRegister);
+
+
+                service.Delete(task.TaskId, null);
+
+
+                A.CallTo(() => taskRegister.Unregister(customer.Name, task.Identifier(), cardLink)).MustHaveHappened();
+            }
+        }
+
+        public TaskCreate ValidTaskCreate(IUnitOfWork context)
+        {
+            context.AddProject();
+            context.AddEmployee();
 
             return new TaskCreate()
             {
