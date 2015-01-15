@@ -15,7 +15,6 @@
                 <!-- widget options:
                     usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-<<<<<<< HEAD:Code/Jarboo.Admin.Web/Views/Documentations/_List.cshtml
                     data-widget-colorbutton="false"
                     data-widget-editbutton="false"
                     data-widget-togglebutton="false"
@@ -78,29 +77,8 @@
                                             </td>
                                             <td>
                                                 @Html.ActionLink(MVC.Documentations.ActionNames.Edit, MVC.Documentations.Edit(doc.DocumentationId)) |
-                                                @Html.ActionLink(MVC.Documentations.ActionNames.View, MVC.Documentations.View(doc.DocumentationId)) |
-                                                @Html.Partial(MVC.Documentations.Views._DeleteForm, new DocumentationDelete()
-=======
-    @foreach (var doc in Model.Documentations)
-    {
-        <tr>
-            @if (Model.ShowProject)
-            {
-                <td>
-                    @Html.LabelFor(x => doc.ProjectId, doc.Project.Name)
-                </td>
-            }
-            <td>
-                @Html.DisplayFor(x => doc.Type)
-            </td>
-            <td>
-                <a target="_blank" href="@doc.DocumentLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
-            </td>
-            <td>
-                @Html.ActionLink(MVC.Documentations.ActionNames.Edit, MVC.Documentations.Edit(doc.DocumentationId)) |
-                @Html.ActionLink(MVC.Documentations.ActionNames.View, MVC.Documentations.View(doc.DocumentationId)) |
-                @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
->>>>>>> origin/develop:Code/Jarboo.Admin.Web/Views/Documentations/List.cshtml
+                                                @Html.ActionLink(MVC.Documentations.ActionNames.View, MVC.Documentations.View(doc.DocumentationId)) |                                                
+                                                @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
                                                                         {
                                                                             Id = doc.DocumentationId,
                                                                             Action = MVC.Documentations.Delete(),
