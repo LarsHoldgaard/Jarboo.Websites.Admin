@@ -60,7 +60,7 @@ namespace Jarboo.Admin.Web.Controllers
             }
 
             ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(), "EmployeeId", "FullName");
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer(), Filter<Project>.None), "ProjectId", "Name", "Customer.Name", task.ProjectId);
+            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer(), Filter.ForProject()), "ProjectId", "Name", "Customer.Name", task.ProjectId);
             return View(task);
         }
 

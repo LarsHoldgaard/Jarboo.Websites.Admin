@@ -25,7 +25,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var folderCreator = A.Fake<IFolderCreator>();
                 A.CallTo(() => folderCreator.Create(A<string>._, A<string>._)).Returns("link");
 
-                var service = ServicesFactory.CreateTaskService(context, folderCreator: folderCreator);
+                var service = Factory.CreateTaskService(context, folderCreator: folderCreator);
                 var model = ValidTaskCreate(context);
                 A.CallTo(() => context.SaveChanges()).Throws<Exception>();
 
@@ -46,7 +46,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var task = context.AddTask();
 
                 var folderCreator = A.Fake<IFolderCreator>();
-                var service = ServicesFactory.CreateTaskService(context, folderCreator: folderCreator);
+                var service = Factory.CreateTaskService(context, folderCreator: folderCreator);
 
 
                 service.Delete(task.TaskId, null);
@@ -67,7 +67,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var task = context.AddTask(x => { x.CardLink = cardLink; });
 
                 var taskRegister = A.Fake<ITaskRegister>();
-                var service = ServicesFactory.CreateTaskService(context, taskRegister: taskRegister);
+                var service = Factory.CreateTaskService(context, taskRegister: taskRegister);
 
 
                 service.Delete(task.TaskId, null);

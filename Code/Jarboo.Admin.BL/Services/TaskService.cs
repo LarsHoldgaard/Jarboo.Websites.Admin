@@ -57,11 +57,9 @@ namespace Jarboo.Admin.BL.Services
 
             var customer = UnitOfWork.Customers.AsNoTracking().ByProject(model.ProjectId);
 
-            if (!model.EmployeeId.HasValue)
-            {
-                model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId);
-            }
-            var employee = UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
+            var employee = !model.EmployeeId.HasValue ? 
+                this.TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId) : 
+                this.UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
             var taskIdentifier = Task.TaskIdentifier(model.Title, model.Type);
             string taskLink = null;
@@ -82,7 +80,7 @@ namespace Jarboo.Admin.BL.Services
 
                 entity.Steps.Add(new TaskStep()
                 {
-                    EmployeeId = model.EmployeeId.Value,
+                    EmployeeId = employee.EmployeeId,
                     Step = TaskStep.First()
                 });
 
@@ -190,15 +188,13 @@ namespace Jarboo.Admin.BL.Services
             var nextStep = TaskStep.Next(lastStep.Step);
             if (nextStep.HasValue)
             {
-                if (!model.EmployeeId.HasValue)
-                {
-                    model.EmployeeId = TaskStepEmployeeStrategy.SelectEmployee(nextStep.Value, entity.ProjectId);
-                }
-                var employee = UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
+                Employee employee = !model.EmployeeId.HasValue ? 
+                    this.TaskStepEmployeeStrategy.SelectEmployee(nextStep.Value, entity.ProjectId) : 
+                    this.UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
                 ChangeResponsible(customer.Name, entity.Identifier(), entity.CardLink, employee.TrelloId);
 
-                entity.Steps.Add(new TaskStep() { EmployeeId = model.EmployeeId.Value, Step = nextStep.Value});
+                entity.Steps.Add(new TaskStep() { EmployeeId = employee.EmployeeId, Step = nextStep.Value });
             }
             else
             {
@@ -211,11 +207,6 @@ namespace Jarboo.Admin.BL.Services
 
         public void Delete(int taskId, IBusinessErrorCollection errors)
         {
-            if (taskId == 0)
-            {
-                throw new Exception("Incorrect entity id");
-            }
-
             var entity = Table.ByIdMust(taskId);
             var customer = UnitOfWork.Customers.ByProjectMust(entity.ProjectId);
 

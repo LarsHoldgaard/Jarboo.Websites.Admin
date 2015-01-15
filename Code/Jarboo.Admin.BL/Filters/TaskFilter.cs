@@ -72,7 +72,7 @@ namespace Jarboo.Admin.BL.Filters
 
             if (EmployeeId.HasValue)
             {
-                query = query.Where(x => x.Steps.Any(y => y.EmployeeId == EmployeeId.Value));
+                query = query.Where(x => x.Steps.Any(y => !y.DateEnd.HasValue && y.EmployeeId == EmployeeId.Value));
             }
 
             if (!ShowDeleted)

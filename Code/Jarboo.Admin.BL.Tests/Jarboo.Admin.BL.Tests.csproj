@@ -60,7 +60,8 @@
   <ItemGroup>
     <Compile Include="Other\TaskStepEmployeeStrategyTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ServicesFactory.cs" />
+    <Compile Include="Services\EmployeeServiceTests.cs" />
+    <Compile Include="Factory.cs" />
     <Compile Include="Services\TaskServiceTests.cs" />
     <Compile Include="TestsSetup.cs" />
   </ItemGroup>

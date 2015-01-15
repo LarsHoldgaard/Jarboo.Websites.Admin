@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Jarboo.Admin.DAL.Entities.Employee>
+﻿@using Jarboo.Admin.Web.Models
+@model IEnumerable<Jarboo.Admin.DAL.Entities.Employee>
 
 @{
     ViewBag.Title = "Employees";
@@ -40,6 +41,7 @@
                 @Html.DisplayNameFor(model => model.Positions)
             </th>
             <th></th>
+            <th></th>
         </tr>
 
         @foreach (var employee in Model)
@@ -73,13 +75,21 @@
                     @Html.ActionLink(MVC.Employees.ActionNames.Edit, MVC.Employees.Edit(employee.EmployeeId)) |
                     @Html.ActionLink(MVC.Employees.ActionNames.View, MVC.Employees.View(employee.EmployeeId))
                 </td>
+                <td>
+                        @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
+                                                                          {
+                                                                              Id = employee.EmployeeId,
+                                                                              Action = MVC.Employees.Delete(),
+                                                                              Small = true
+                                                                          })
+                </td>
             </tr>
         }
 
         @if (!Model.Any())
         {
             <tr>
-                <td colspan="8">No employee has been created.
+                <td colspan="9">No employee has been created.
                 </td>
             </tr>
         }

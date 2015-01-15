@@ -28,7 +28,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Projects/
         public virtual ActionResult Index()
         {
-            return View(ProjectService.GetAllEx(Include.ForProject().Customer(), Filter<Project>.None));
+            return View(ProjectService.GetAllEx(Include.ForProject().Customer(), BL.Filters.Filter.ForProject()));
         }
 
         // GET: /Projects/View/5

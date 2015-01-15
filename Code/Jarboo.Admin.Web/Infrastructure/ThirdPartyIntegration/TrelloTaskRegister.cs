@@ -66,9 +66,18 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             }
 
             var card = this.trello.Cards.Add(taskIdentifier, list);
-            card.Desc = folderLink;
-            this.trello.Cards.Update(card);
-            return card.Url;
+
+            try
+            {
+                card.Desc = folderLink ?? "Missing";
+                this.trello.Cards.Update(card);
+                return card.Url;
+            }
+            catch (Exception ex)
+            {
+                this.Unregister(customerName, taskIdentifier, card.Url);
+                throw;
+            }
         }
 
         public void Unregister(string customerName, string taskIdentifier, string url)

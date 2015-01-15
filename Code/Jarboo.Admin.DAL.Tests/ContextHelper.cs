@@ -130,6 +130,38 @@ namespace Jarboo.Admin.DAL.Tests
             return task;
         }
 
+        public static TaskStep AddTaskStep(this IUnitOfWork context, Action<TaskStep> beforeSave = null)
+        {
+            if (!context.Employees.Any())
+            {
+                context.AddEmployee();
+            }
+            var employee = context.Employees.OrderBy(x => x.DateCreated).AsEnumerable().Last();
+
+            if (!context.Tasks.Any())
+            {
+                context.AddTask();
+            }
+            var task = context.Tasks.OrderBy(x => x.DateCreated).AsEnumerable().Last();
+
+            var taskStep = new TaskStep()
+            {
+                Employee = employee,
+                Task = task,
+                Step = TaskStep.First()
+            };
+
+            if (beforeSave != null)
+            {
+                beforeSave(taskStep);
+            }
+
+            context.TaskSteps.Add(taskStep);
+            context.SaveChanges();
+
+            return taskStep;
+        }
+
         #endregion
 
         #region internal

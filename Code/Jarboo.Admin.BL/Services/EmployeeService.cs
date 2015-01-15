@@ -17,13 +17,21 @@ namespace Jarboo.Admin.BL.Services
     public interface IEmployeeService : IEntityService<Employee>
     {
         void Save(EmployeeEdit model, IBusinessErrorCollection errors);
+
+        void Delete(int employeeId, IBusinessErrorCollection errors);
     }
 
     public class EmployeeService : BaseEntityService<Employee>, IEmployeeService
     {
-        public EmployeeService(IUnitOfWork UnitOfWork)
-            : base(UnitOfWork)
-        { }
+        protected ITaskRegister TaskRegister { get; set; }
+        protected ITaskStepEmployeeStrategy TaskStepEmployeeStrategy { get; set; }
+
+        public EmployeeService(IUnitOfWork unitOfWork, ITaskRegister taskRegister, ITaskStepEmployeeStrategy taskStepEmployeeStrategy)
+            : base(unitOfWork)
+        {
+            TaskStepEmployeeStrategy = taskStepEmployeeStrategy;
+            TaskRegister = taskRegister;
+        }
 
         protected override IDbSet<Employee> Table
         {
@@ -52,6 +60,46 @@ namespace Jarboo.Admin.BL.Services
 
                 var entity = new Employee { EmployeeId = model.EmployeeId };
                 Edit(entity, model);
+            }
+        }
+
+        public void Delete(int employeeId, IBusinessErrorCollection errors)
+        {
+            var entity = Table.ByIdMust(employeeId);
+            entity.DateModified = DateTime.Now;
+            entity.DateDeleted = DateTime.Now;
+
+            UnitOfWork.SaveChanges();
+
+            try
+            {
+                var steps = UnitOfWork.TaskSteps.Include(x => x.Task.Project.Customer).ForEmployee(employeeId).NotDone().ToList();
+                foreach (var step in steps)
+                {
+                    var newEmployee = TaskStepEmployeeStrategy.SelectEmployee(step.Step, step.Task.ProjectId);
+                    ChangeResponsible(step.Task.Project.Customer.Name, step.Task.Identifier(), step.Task.CardLink, newEmployee.TrelloId);
+                    step.EmployeeId = newEmployee.EmployeeId;
+                }
+                UnitOfWork.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error during tasks assigment. Some task may left assigned to deleted employee.", ex);
+            }
+        }
+        private void ChangeResponsible(string customerName, string tasktaskIdentifierTitle, string url, string responsibleUserId)
+        {
+            try
+            {
+                TaskRegister.ChangeResponsible(customerName, tasktaskIdentifierTitle, url, responsibleUserId);
+            }
+            catch (ApplicationException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Could not set responsible for task", ex);
             }
         }
     }
