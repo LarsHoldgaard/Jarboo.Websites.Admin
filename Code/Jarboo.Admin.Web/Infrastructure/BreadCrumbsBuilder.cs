@@ -15,27 +15,27 @@ namespace Jarboo.Admin.Web.Infrastructure
         public BreadCrumbsBuilder()
         {
             stringBuilder = new StringBuilder();
-            stringBuilder.Append("<div class='breadcrumbs small'>");
+            stringBuilder.Append("");
         }
 
         public BreadCrumbsBuilder Add(string url, string label)
         {
-            stringBuilder.Append(string.Format(@"<span class='item'>
+            stringBuilder.Append(string.Format(@"<li>
                     <strong>
                         <a href='{0}'>{1}</a>
                     </strong>
-                </span>", url, label));
+                </li>", url, label));
             return this;
         }
         public BreadCrumbsBuilder Add(string label)
         {
-            stringBuilder.Append(string.Format("<span class='item'>{0}</span>", label));
+            stringBuilder.Append(string.Format("<li>{0}</li>", label));
             return this;
         }
 
         public MvcHtmlString Done()
         {
-            stringBuilder.Append("</div>");
+            stringBuilder.Append("");
             return MvcHtmlString.Create(stringBuilder.ToString());
         }
 

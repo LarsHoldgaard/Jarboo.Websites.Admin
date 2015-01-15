@@ -170,14 +170,18 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _DeleteForm = "_DeleteForm";
                 public readonly string _Form = "_Form";
+                public readonly string _List = "_List";
                 public readonly string Create = "Create";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
                 public readonly string List = "List";
                 public readonly string View = "View";
             }
+            public readonly string _DeleteForm = "~/Views/Documentations/_DeleteForm.cshtml";
             public readonly string _Form = "~/Views/Documentations/_Form.cshtml";
+            public readonly string _List = "~/Views/Documentations/_List.cshtml";
             public readonly string Create = "~/Views/Documentations/Create.cshtml";
             public readonly string Edit = "~/Views/Documentations/Edit.cshtml";
             public readonly string Index = "~/Views/Documentations/Index.cshtml";

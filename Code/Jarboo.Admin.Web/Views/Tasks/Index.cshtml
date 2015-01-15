@@ -2,15 +2,75 @@
     ViewBag.Title = "Tasks";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!-- RIBBON -->
+<div id="ribbon">
+    <span class="ribbon-button-alignment">
+        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
+						<i class="fa fa-refresh"></i>
+					</span>
+    </span>
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @(new BreadCrumbsBuilder()
+                            .Add("Tasks")
+            .Done())
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
 
-@(new BreadCrumbsBuilder()
-    .Add("Tasks")
-    .Done())
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
+                Tasks
+                @*<span>
+                        >
+                        Overview
+                    </span>*@
+            </h1>
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end row -->
+    <p>
+        <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create())">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
+        </a>
+    </p>
+    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { showProject = true })
+</div>
 
-<p>
-    <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create())">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
-    </a>
-</p>
+@section pagespecific {
+    <script type="text/javascript">
 
-@Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { showProject = true})
+        $(document).ready(function () {
+            // Add event listener for opening and closing details
+            $('#example tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+
+                if (tr.hasClass('shown')) {
+                    tr.next('tr').remove();
+                    tr.removeClass('shown');
+                } else {
+                    $.ajax({
+                        type: "GET",
+                        url: "/tasks/view/",
+                        data: { id: $(this).attr('id') },
+                        success: function (data) {
+                            tr.after(data);
+                        }
+                    });
+
+                    // Open this row
+                    tr.addClass('shown');
+                }
+            });
+        });
+    </script>
+}
+

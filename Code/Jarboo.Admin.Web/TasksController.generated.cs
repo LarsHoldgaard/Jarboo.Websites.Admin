@@ -188,6 +188,7 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _List = "_List";
                 public readonly string _NextStep = "_NextStep";
                 public readonly string Create = "Create";
                 public readonly string Index = "Index";
@@ -195,6 +196,7 @@ namespace Jarboo.Admin.Web.Controllers
                 public readonly string Steps = "Steps";
                 public readonly string View = "View";
             }
+            public readonly string _List = "~/Views/Tasks/_List.cshtml";
             public readonly string _NextStep = "~/Views/Tasks/_NextStep.cshtml";
             public readonly string Create = "~/Views/Tasks/Create.cshtml";
             public readonly string Index = "~/Views/Tasks/Index.cshtml";

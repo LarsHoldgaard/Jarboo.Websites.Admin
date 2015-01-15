@@ -36,13 +36,31 @@ namespace T4MVC
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _Aside = "_Aside";
+                public readonly string _CurrentUser = "_CurrentUser";
+                public readonly string _Footer = "_Footer";
+                public readonly string _Header = "_Header";
                 public readonly string _Layout = "_Layout";
+                public readonly string _Layout_ = "_Layout_";
+                public readonly string _Ribbon = "_Ribbon";
+                public readonly string _Scripts = "_Scripts";
+                public readonly string _Tiles = "_Tiles";
+                public readonly string _TopRight = "_TopRight";
                 public readonly string DeleteBtnForm = "DeleteBtnForm";
                 public readonly string Error = "Error";
                 public readonly string Messages = "Messages";
                 public readonly string TopMenu = "TopMenu";
             }
+            public readonly string _Aside = "~/Views/Shared/_Aside.cshtml";
+            public readonly string _CurrentUser = "~/Views/Shared/_CurrentUser.cshtml";
+            public readonly string _Footer = "~/Views/Shared/_Footer.cshtml";
+            public readonly string _Header = "~/Views/Shared/_Header.cshtml";
             public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
+            public readonly string _Layout_ = "~/Views/Shared/_Layout_.cshtml";
+            public readonly string _Ribbon = "~/Views/Shared/_Ribbon.cshtml";
+            public readonly string _Scripts = "~/Views/Shared/_Scripts.cshtml";
+            public readonly string _Tiles = "~/Views/Shared/_Tiles.cshtml";
+            public readonly string _TopRight = "~/Views/Shared/_TopRight.cshtml";
             public readonly string DeleteBtnForm = "~/Views/Shared/DeleteBtnForm.cshtml";
             public readonly string Error = "~/Views/Shared/Error.cshtml";
             public readonly string Messages = "~/Views/Shared/Messages.cshtml";

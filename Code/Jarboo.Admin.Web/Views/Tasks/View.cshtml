@@ -2,87 +2,180 @@
 @model Jarboo.Admin.Web.Models.Task.TaskVM
 
 @{
-    ViewBag.Title = Model.FullTitle();
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+        ViewBag.Title = Model.FullTitle();
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 
-@(new BreadCrumbsBuilder()
-    .Add(Url.Action(MVC.Customers.Index()), "Customers")
-    .Add(Url.Action(MVC.Customers.View(Model.Project.CustomerId)), Model.Project.Customer.Name)
-    .Add(Url.Action(MVC.Projects.View(Model.ProjectId)), Model.Project.Name)
-    .Add(Model.FullTitle())
-    .Done())
-
-<table class="table table-striped">
-    <tbody>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(x => x.Title)
-            </td>
-            <td>
+<!-- RIBBON -->
+<div id="ribbon">
+    <span class="ribbon-button-alignment">
+        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
+						<i class="fa fa-refresh"></i>
+					</span>
+    </span>
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @(new BreadCrumbsBuilder()
+        .Add(Url.Action(MVC.Customers.Index()), "Customers")
+        .Add(Url.Action(MVC.Customers.View(Model.Project.CustomerId)), Model.Project.Customer.Name)
+        .Add(Url.Action(MVC.Projects.View(Model.ProjectId)), Model.Project.Name)
+        .Add(Model.FullTitle())
+        .Done())
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-12">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
                 @Html.DisplayFor(x => x.Title)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(x => x.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.Type)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(x => x.Size)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.Size) hour(s)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(x => x.Urgency)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.Urgency)
-            </td>
-        </tr>
-        <tr>
-            <td>Folder
-            </td>
-            <td>
-                @if (string.IsNullOrEmpty(Model.FolderLink))
-                {
-                    <span>Missing</span>
-                }
-                else
-                {
-                    <a target="_blank" href="@Model.FolderLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
-                }
-            </td>
-        </tr>
-        <tr>
-            <td>Card
-            </td>
-            <td>
-                @if (string.IsNullOrEmpty(Model.CardLink))
-                {
-                    <span>Missing</span>
-                }
-                else
-                {
-                    <a target="_blank" href="@Model.CardLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
-                }
-            </td>
-        </tr>
-        <tr>
-            <td>Step
-            </td>
-            <td>
-                <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Tasks.Steps(Model.TaskId))">
-                    <i class="glyphicon glyphicon-list"></i> @Model.Step()
-                </a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                @*<span>
+                        >
+                        Overview
+                    </span>*@
+            </h1>
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end row -->
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                @*<div class="alert alert-info">
+                        <strong>NOTE:</strong> All the data is loaded from a seperate JSON file
+                    </div>*@
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget well" id="wid-id-0">
+                    <!-- widget options:
+                        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                        data-widget-colorbutton="false"
+                        data-widget-editbutton="false"
+                        data-widget-togglebutton="false"
+                        data-widget-deletebutton="false"
+                        data-widget-fullscreenbutton="false"
+                        data-widget-custombutton="false"
+                        data-widget-collapsed="true"
+                        data-widget-sortable="false"
+                        -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
+                        <h2>Widget Title </h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                            <input class="form-control" type="text">
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <div class="dataTables_wrapper form-inline no-footer">
+                                <table class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayNameFor(x => x.Title)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(x => x.Title)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayNameFor(x => x.Type)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(x => x.Type)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayNameFor(x => x.Size)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(x => x.Size) hour(s)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayNameFor(x => x.Urgency)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(x => x.Urgency)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Folder
+                                            </td>
+                                            <td>
+                                                @if (string.IsNullOrEmpty(Model.FolderLink))
+                                                {
+                                                    <span>Missing</span>
+                                                }
+                                                else
+                                                {
+                                                    <a target="_blank" href="@Model.FolderLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                                                }
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Card
+                                            </td>
+                                            <td>
+                                                @if (string.IsNullOrEmpty(Model.CardLink))
+                                                {
+                                                    <span>Missing</span>
+                                                }
+                                                else
+                                                {
+                                                    <a target="_blank" href="@Model.CardLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                                                }
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Step
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Tasks.Steps(Model.TaskId))">
+                                                    <i class="glyphicon glyphicon-list"></i> @Model.Step()
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+        <!-- row -->
+        <div class="row">
+            <!-- a blank row to get started -->
+            <div class="col-sm-12">
+                <!-- your contents here -->
+            </div>
+        </div>
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
