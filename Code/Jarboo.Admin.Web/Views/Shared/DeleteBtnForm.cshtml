@@ -4,7 +4,7 @@
     string btnClass = Model.Small ? "btn-xs" : "";
 }
 
-@using (@Html.BeginForm(Model.Action, FormMethod.Post, new { @class = "delete-btn-form"}))
+@using (@Html.BeginForm(Model.Action, FormMethod.Post, new { @class = "delete-btn-form pull-left"}))
 {
     @Html.AntiForgeryToken()
     @Html.Hidden("id", Model.Id)

@@ -5,9 +5,86 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@(new BreadCrumbsBuilder()
-    .Add(Url.Action(MVC.Employees.Index()), "Employees")
-    .Add("New employee")
-    .Done())
+<!-- RIBBON -->
+<div id="ribbon">
+    <span class="ribbon-button-alignment">
+        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
+						<i class="fa fa-refresh"></i>
+					</span>
+    </span>
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @(new BreadCrumbsBuilder()
+            .Add(Url.Action(MVC.Employees.Index()), "Employees")
+            .Add("New employee")
+            .Done())
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+<div id="content">
+    @Html.Partial(MVC.Employees.Views._Form, Model)
+</div>
+@section pagespecific {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#form1').validate({
+                // Rules for form validation
+                rules: {
+                    FullName: {
+                        required: true
+                    },
+                    SkypeName: {
+                        required: true
+                    },
+                    TrelloId: {
+                        required: true
+                    },
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    Country: {
+                        required: true
+                    },
+                    HourlyPrice: {
+                        required: true,
+                        number: true
+                    },
+                    Positions: {
+                        required: true
+                    }
+                },
 
-@Html.Partial(MVC.Employees.Views._Form, Model)
+                // Messages for form validation
+                messages: {
+                    FullName: {
+                        required: 'Enter full name',
+                    },
+                    SkypeName: {
+                        required: 'Skype account required',
+                    },
+                    TrelloId: {
+                        required: 'TrelloId required',
+                    },
+                    Email: {
+                        required: 'Email required',
+                    },
+                    Country: {
+                        required: 'Country required',
+                    },
+                    Positions: {
+                        required: 'Positions required',
+                    }
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+        });
+
+    </script>
+}

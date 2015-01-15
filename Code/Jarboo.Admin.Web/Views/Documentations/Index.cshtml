@@ -6,14 +6,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@(new BreadCrumbsBuilder()
-    .Add("Documentations")
-    .Done())
-
-<p>
-    <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create())">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
-    </a>
-</p>
-
-@Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new { showProject = true})
+<!-- RIBBON -->
+<div id="ribbon">
+    <span class="ribbon-button-alignment">
+        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
+						<i class="fa fa-refresh"></i>
+					</span>
+    </span>
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @(new BreadCrumbsBuilder()
+                    .Add("Documentations")
+            .Done())
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
+                Documentations
+                @*<span>
+                        >
+                        Overview
+                    </span>*@
+            </h1>
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end row -->
+    <p>
+        <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create())">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
+        </a>
+    </p>
+    @Html.Partial(MVC.Documentations.Views.List, new DocumentationsListViewModel()
+                                            {
+                                                Documentations = Model,
+                                                ShowProject = true
+                                            })
+</div>

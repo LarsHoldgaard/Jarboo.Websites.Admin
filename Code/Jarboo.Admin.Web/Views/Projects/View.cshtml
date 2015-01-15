@@ -8,45 +8,94 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@(new BreadCrumbsBuilder()
-    .Add(Url.Action(MVC.Customers.Index()), "Customers")
-    .Add(Url.Action(MVC.Customers.View(Model.CustomerId)), Model.Customer.Name)
-    .Add(Model.Name)
-    .Done())
+<!-- RIBBON -->
+<div id="ribbon">
+    <span class="ribbon-button-alignment">
+        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
+						<i class="fa fa-refresh"></i>
+					</span>
+    </span>
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @(new BreadCrumbsBuilder()
+            .Add(Url.Action(MVC.Customers.Index()), "Customers")
+            .Add(Url.Action(MVC.Customers.View(Model.CustomerId)), Model.Customer.Name)
+            .Add(Model.Name)
+            .Done())
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
 
-<table class="table table-striped">
-    <tbody>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(x => x.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.Name)
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
+                Tasks
+                @*<span>
+                        >
+                        Overview
+                    </span>*@
+            </h1>
 
-<h2>Tasks</h2>
-<hr />
+        </div>
+    </div>
+    <p>
+        <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create(Model.ProjectId))">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
+        </a>
+    </p>
+    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { projectId = Model.ProjectId })
 
-<p>
-    <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create(Model.ProjectId))">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
-    </a>
-</p>
+    <!-- end row -->
+    @*<h2>Tasks</h2>
+        <hr />
 
-@Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { projectId = Model.ProjectId })
+        <p>
+            <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create(Model.ProjectId))">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
+            </a>
+        </p>
+
+        @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { projectId = Model.ProjectId })*@
+
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
+                Documentations
+                @*<span>
+                        >
+                        Overview
+                    </span>*@
+            </h1>
+
+        </div>
+    </div>
+    <p>
+        <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create(Model.ProjectId))">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
+        </a>
+    </p>
+    @Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new { projectId = Model.ProjectId })
 
 
+    @*<h2>Documentations</h2>
+        <hr />
 
-<h2>Documentations</h2>
-<hr />
+        <p>
+            <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create(Model.ProjectId))">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
+            </a>
+        </p>
 
-<p>
-    <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create(Model.ProjectId))">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
-    </a>
-</p>
-
-@Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new { projectId = Model.ProjectId })
+        @Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new { projectId = Model.ProjectId })
+        >>>>>>> origin/develop*@
+</div>
