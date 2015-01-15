@@ -45,20 +45,9 @@
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
         </a>
     </p>
-
-<<<<<<< HEAD
     @Html.Partial(MVC.Documentations.Views._List, new DocumentationsListViewModel()
                                             {
                                                 Documentations = Model,
                                                 ShowProject = true
                                             })
 </div>
-=======
-<p>
-    <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create())">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
-    </a>
-</p>
-
-@Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new { showProject = true})
->>>>>>> origin/develop

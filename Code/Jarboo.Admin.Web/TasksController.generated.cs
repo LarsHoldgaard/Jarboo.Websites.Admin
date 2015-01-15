@@ -168,6 +168,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string projectId = "projectId";
             public readonly string employeeId = "employeeId";
             public readonly string taskFilter = "taskFilter";
+            public readonly string showDone = "showDone";
         }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -288,17 +289,18 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool showProject, int? projectId, int? employeeId, Jarboo.Admin.BL.Filters.TaskFilter taskFilter);
+        partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool showProject, int? projectId, int? employeeId, Jarboo.Admin.BL.Filters.TaskFilter taskFilter, bool showDone);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult List(bool showProject, int? projectId, int? employeeId, Jarboo.Admin.BL.Filters.TaskFilter taskFilter, bool showDone = false)
+        public override System.Web.Mvc.ActionResult List(bool showProject, int? projectId, int? employeeId, Jarboo.Admin.BL.Filters.TaskFilter taskFilter, bool showDone)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.List);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "showProject", showProject);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "projectId", projectId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "employeeId", employeeId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskFilter", taskFilter);
-            ListOverride(callInfo, showProject, projectId, employeeId, taskFilter);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "showDone", showDone);
+            ListOverride(callInfo, showProject, projectId, employeeId, taskFilter, showDone);
             return callInfo;
         }
 
