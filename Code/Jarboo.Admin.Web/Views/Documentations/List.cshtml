@@ -13,6 +13,7 @@
         <th>Link
         </th>
         <th></th>
+        <th></th>
     </tr>
 
     @foreach (var doc in Model.Documentations)
@@ -32,7 +33,9 @@
             </td>
             <td>
                 @Html.ActionLink(MVC.Documentations.ActionNames.Edit, MVC.Documentations.Edit(doc.DocumentationId)) |
-                @Html.ActionLink(MVC.Documentations.ActionNames.View, MVC.Documentations.View(doc.DocumentationId)) |
+                @Html.ActionLink(MVC.Documentations.ActionNames.View, MVC.Documentations.View(doc.DocumentationId))
+            </td>
+            <td>
                 @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
                                                                         {
                                                                             Id = doc.DocumentationId,
@@ -46,7 +49,7 @@
     @if (!Model.Documentations.Any())
     {
         <tr>
-            <td colspan="4">No documentation has been created.
+            <td colspan="5">No documentation has been created.
             </td>
         </tr>
     }

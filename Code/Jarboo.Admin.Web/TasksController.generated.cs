@@ -291,7 +291,7 @@ namespace Jarboo.Admin.Web.Controllers
         partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool showProject, int? projectId, int? employeeId, Jarboo.Admin.BL.Filters.TaskFilter taskFilter);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult List(bool showProject, int? projectId, int? employeeId, Jarboo.Admin.BL.Filters.TaskFilter taskFilter, bool showDone = false)
+        public override System.Web.Mvc.ActionResult List(bool showProject, int? projectId, int? employeeId, Jarboo.Admin.BL.Filters.TaskFilter taskFilter)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.List);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "showProject", showProject);
