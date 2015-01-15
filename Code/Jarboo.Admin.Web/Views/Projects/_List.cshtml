@@ -14,7 +14,6 @@
                 <!-- widget options:
                     usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-<<<<<<< HEAD
                     data-widget-colorbutton="false"
                     data-widget-editbutton="false"
                     data-widget-togglebutton="false"
@@ -23,27 +22,6 @@
                     data-widget-custombutton="false"
                     data-widget-collapsed="true"
                     data-widget-sortable="false"
-=======
-    @foreach (var project in Model.Projects)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => project.Name)
-            </td>
-            @if (Model.ShowCustomer)
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => project.Customer.Name)
-                </td>
-            }
-            <td>
-                @Html.ActionLink(MVC.Projects.ActionNames.View, MVC.Projects.View(project.ProjectId))
-            </td>
-        </tr>
-    }
->>>>>>> develop
-
-<<<<<<< HEAD
                     -->
                 <header>
                     <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
@@ -94,20 +72,8 @@
                                             </td>
                                         </tr>
                                     }
-=======
-    @if (!Model.Projects.Any())
-    {
-        <tr>
-            <td colspan="3">
-                No project has been created.
-            </td>
-        </tr>
-    }
 
-</table>
->>>>>>> origin/develop
-
-                                    @if (Model.Projects.Count == 0)
+                                    @if (!Model.Projects.Any())
                                     {
                                         <tr>
                                             <td colspan="3">
@@ -115,6 +81,7 @@
                                             </td>
                                         </tr>
                                     }
+
                                 </tbody>
                             </table>
                             <div class="dt-toolbar-footer"><div class="col-xs-12 col-sm-6"><div class="dataTables_info" id="example_info" role="status" aria-live="polite">Showing <span class="txt-color-darken">1</span> to <span class="txt-color-darken">15</span> of <span class="text-primary">15</span> entries</div></div><div class="col-xs-12 col-sm-6"><div class="dataTables_paginate paging_simple_numbers" id="example_paginate"><ul class="pagination pagination-sm"><li class="paginate_button previous disabled" aria-controls="example" tabindex="0" id="example_previous"><a href="#">Previous</a></li><li class="paginate_button active" aria-controls="example" tabindex="0"><a href="#">1</a></li><li class="paginate_button next disabled" aria-controls="example" tabindex="0" id="example_next"><a href="#">Next</a></li></ul></div></div></div>

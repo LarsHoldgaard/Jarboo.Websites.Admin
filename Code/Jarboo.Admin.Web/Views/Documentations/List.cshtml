@@ -76,8 +76,8 @@
                                                 <a target="_blank" href="@doc.DocumentLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
                                             </td>
                                             <td>
-                                                @Html.ActionLink(MVC.Documentations.ActionNames.Edit, MVC.Documentations.Edit(doc.DocumentationId)) |
-                                                @Html.ActionLink(MVC.Documentations.ActionNames.View, MVC.Documentations.View(doc.DocumentationId)) |                                                
+                                                @Html.ActionLink(MVC.Documentations.ActionNames.Edit + "|", MVC.Documentations.Edit(doc.DocumentationId), new { @class = "pull-left" })
+                                                @Html.ActionLink(MVC.Documentations.ActionNames.View + "|", MVC.Documentations.View(doc.DocumentationId), new { @class = "pull-left" })                                                
                                                 @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
                                                                         {
                                                                             Id = doc.DocumentationId,

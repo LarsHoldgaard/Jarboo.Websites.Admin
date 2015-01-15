@@ -42,14 +42,9 @@
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
         </a>
     </p>
-
-<<<<<<< HEAD
-    @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
-                                            {
-                                                Tasks = Model,
-                                                ShowProject = true
-                                            })
+    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { showProject = true })
 </div>
+
 @section pagespecific {
     <script type="text/javascript">
 
@@ -65,8 +60,8 @@
                     $.ajax({
                         type: "GET",
                         url: "/tasks/view/",
-                        data: {id: $(this).attr('id')},
-                        success: function (data) {                            
+                        data: { id: $(this).attr('id') },
+                        success: function (data) {
                             tr.after(data);
                         }
                     });
@@ -78,12 +73,4 @@
         });
     </script>
 }
-=======
-<p>
-    <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create())">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
-    </a>
-</p>
 
-@Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { showProject = true})
->>>>>>> origin/develop
