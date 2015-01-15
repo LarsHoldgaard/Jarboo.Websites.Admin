@@ -7,7 +7,7 @@ namespace Jarboo.Admin.Web.Models.Project
 {
     public class ProjectsListViewModel
     {
-        public List<DAL.Entities.Project> Projects { get; set; }
+        public IEnumerable<DAL.Entities.Project> Projects { get; set; }
         public bool ShowCustomer { get; set; }
     }
 }

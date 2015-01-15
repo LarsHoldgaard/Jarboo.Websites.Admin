@@ -39,14 +39,17 @@
             </div>
         </div>
     </nav>
-
+    
     <div class="container site-container">
+        @Html.Partial(MVC.Shared.Views.Messages, ViewData)
+
         @RenderBody()
     </div>
-
+    
     @Scripts.Render("~/js/jquery")
     @Scripts.Render("~/js/bootstrap")
     @Scripts.Render("~/js/validation")
+    @Scripts.Render("~/js/site")
     @RenderSection("scripts", required: false)
     
     @MiniProfiler.RenderIncludes()

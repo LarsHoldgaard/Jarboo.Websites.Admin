@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Jarboo.Admin.BL.Filters;
+using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 
@@ -25,6 +27,25 @@ namespace Jarboo.Admin.BL.Services
             {
                 return Table.AsNoTracking();
             }
+        }
+
+        public T GetById(int id)
+        {
+            return this.GetByIdEx(id, Include<T>.None);
+        }
+        public T GetByIdEx(int id, Include<T> include)
+        {
+            return Find(id, TableNoTracking.Include(include));
+        }
+        protected abstract T Find(int id, IQueryable<T> query);
+
+        public List<T> GetAll()
+        {
+            return TableNoTracking.ToList();
+        }
+        public PagedData<T> GetAllEx(Include<T> include, Filter<T> filter)
+        {
+            return filter.Execute(TableNoTracking.Include(include));
         }
 
         protected void Add<TM>(T entity, TM model)
@@ -53,12 +74,12 @@ namespace Jarboo.Admin.BL.Services
             entity.MapTo(model);
         }
 
-        /*protected void Delete(T entity)
+        protected void Delete(T entity)
         {
             Table.Attach(entity);
             Table.Remove(entity);
 
             UnitOfWork.SaveChanges();
-        }*/
+        }
     }
 }

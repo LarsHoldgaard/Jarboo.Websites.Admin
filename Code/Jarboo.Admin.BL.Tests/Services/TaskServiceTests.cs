@@ -1,6 +1,6 @@
 ﻿using FakeItEasy;
 using Jarboo.Admin.BL.Models;
-using Jarboo.Admin.BL.ThirdParty;
+using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Tests;
@@ -18,70 +18,75 @@ namespace Jarboo.Admin.BL.Tests.Services
     public class TaskServiceTests
     {
         [Test]
-        public void Create_WhenMissingProject_Throws()
-        {
-            var context = EmptyContext();
-
-            var service = new TaskServiceBuilder()
-                .UnitOfWork(context.UnitOfWork)
-                .Build();
-            var model = ValidTaskCreate();
-
-            Assert.Throws<Exception>(() => service.Create(model, null));
-        }
-        [Test]
-        public void Create_WhenMissingCustomer_Throws()
-        {
-            var context = EmptyContext().AddProject();
-
-            var service = new TaskServiceBuilder()
-                .UnitOfWork(context.UnitOfWork)
-                .Build();
-            var model = ValidTaskCreate();
-
-            Assert.Throws<Exception>(() => service.Create(model, null));
-        }
-        [Test]
-        public void Create_WhenMissingEmployee_Throws()
-        {
-            var context = EmptyContext().AddCustomer().AddProject();
-
-            var service = new TaskServiceBuilder()
-                .UnitOfWork(context.UnitOfWork)
-                .Build();
-            var model = ValidTaskCreate();
-
-            Assert.Throws<Exception>(() => service.Create(model, null));
-        }
-
-        [Test]
         public void Create_WhenFailsAfterFolderCreate_DeleteFolder()
         {
-            var context = EmptyContext().AddCustomer().AddProject().AddEmployee();
-            var folderCreator = A.Fake<IFolderCreator>();
-            A.CallTo(() => folderCreator.Create(A<string>._, A<string>._)).Returns("link");
+            using (var context = ContextHelper.Create())
+            {
+                var folderCreator = A.Fake<IFolderCreator>();
+                A.CallTo(() => folderCreator.Create(A<string>._, A<string>._)).Returns("link");
 
-            var service = new TaskServiceBuilder()
-                .UnitOfWork(context.UnitOfWork)
-                .FolderCreator(folderCreator)
-                .Build();
-            var model = ValidTaskCreate();
+                var service = ServicesFactory.CreateTaskService(context, folderCreator: folderCreator);
+                var model = ValidTaskCreate(context);
+                A.CallTo(() => context.SaveChanges()).Throws<Exception>();
 
-            Assert.Throws<ApplicationException>(() => service.Create(model, null));
-            A.CallTo(() => folderCreator.Delete(A<string>._, A<string>._)).MustHaveHappened();
+
+                Assert.Throws<ApplicationException>(() => service.Create(model, null));
+
+
+                A.CallTo(() => folderCreator.Delete(A<string>._, A<string>._)).MustHaveHappened();
+            }
         }
 
-        public FakeContext EmptyContext()
+        [Test]
+        public void Delete_Always_DeleteTasksFolder()
         {
-            return new FakeContext();
+            using (var context = ContextHelper.Create())
+            {
+                var customer = context.AddCustomer();
+                var task = context.AddTask();
+
+                var folderCreator = A.Fake<IFolderCreator>();
+                var service = ServicesFactory.CreateTaskService(context, folderCreator: folderCreator);
+
+
+                service.Delete(task.TaskId, null);
+
+
+                A.CallTo(() => folderCreator.Delete(customer.Name, task.Identifier())).MustHaveHappened();
+            }
         }
-        public TaskCreate ValidTaskCreate()
+
+        [Test]
+        public void Delete_Always_DeleteTasksCard()
         {
+            using (var context = ContextHelper.Create())
+            {
+                const string cardLink = "card_link";
+
+                var customer = context.AddCustomer();
+                var task = context.AddTask(x => { x.CardLink = cardLink; });
+
+                var taskRegister = A.Fake<ITaskRegister>();
+                var service = ServicesFactory.CreateTaskService(context, taskRegister: taskRegister);
+
+
+                service.Delete(task.TaskId, null);
+
+
+                A.CallTo(() => taskRegister.Unregister(customer.Name, task.Identifier(), cardLink)).MustHaveHappened();
+            }
+        }
+
+        public TaskCreate ValidTaskCreate(IUnitOfWork context)
+        {
+            context.AddProject();
+            context.AddEmployee();
+
             return new TaskCreate()
             {
                 Title = "Title",
-                ProjectId = 1,
-                EmployeeId = 1,
+                ProjectId = context.Projects.First().ProjectId,
+                EmployeeId = context.Employees.First().EmployeeId,
             };
         }
     }

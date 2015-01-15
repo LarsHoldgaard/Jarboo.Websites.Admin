@@ -6,18 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using EntityFramework.Extensions;
 
-using Jarboo.Admin.BL.External;
 using Jarboo.Admin.BL.Models;
+using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
+using Jarboo.Admin.DAL.Extensions;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface IEmployeeService
+    public interface IEmployeeService : IEntityService<Employee>
     {
-        Employee GetById(int id);
-        List<Employee> GetAll();
-
         void Save(EmployeeEdit model, IBusinessErrorCollection errors);
     }
 
@@ -31,17 +29,9 @@ namespace Jarboo.Admin.BL.Services
         {
             get { return UnitOfWork.Employees; }
         }
-
-        public Employee GetById(int id)
+        protected override Employee Find(int id, IQueryable<Employee> query)
         {
-            return TableNoTracking.Include(x => x.Positions).Include(x => x.TaskSteps.Select(y => y.Task)).FirstOrDefault(x => x.EmployeeId == id);
-        }
-
-        public List<Employee> GetAll()
-        {
-            return TableNoTracking.Include(x => x.Positions)
-                .AsEnumerable()
-                .ToList();
+            return query.ById(id);
         }
 
         public void Save(EmployeeEdit model, IBusinessErrorCollection errors)

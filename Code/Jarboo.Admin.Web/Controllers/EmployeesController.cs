@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 
 using Jarboo.Admin.BL;
+using Jarboo.Admin.BL.Filters;
+using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
@@ -25,7 +27,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Employees/
         public virtual ActionResult Index()
         {
-            return View(EmployeeService.GetAll());
+            return View(EmployeeService.GetAllEx(Include.ForEmployee().Positions(), Filter<Employee>.None));
         }
 
         // GET: /Employees/View/5
@@ -36,7 +38,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Employee employee = EmployeeService.GetById(id.Value);
+            Employee employee = EmployeeService.GetByIdEx(id.Value, Include.ForEmployee().Positions());
             if (employee == null)
             {
                 return HttpNotFound();
@@ -58,7 +60,7 @@ namespace Jarboo.Admin.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var employee = EmployeeService.GetById(id.Value);
+            var employee = EmployeeService.GetByIdEx(id.Value, Include.ForEmployee().Positions());
             if (employee == null)
             {
                 return HttpNotFound();

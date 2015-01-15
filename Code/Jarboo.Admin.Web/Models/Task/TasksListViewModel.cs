@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using Jarboo.Admin.BL.Filters;
+
 namespace Jarboo.Admin.Web.Models.Task
 {
     public class TasksListViewModel
     {
-        public List<DAL.Entities.Task> Tasks { get; set; }
+        public IEnumerable<TaskVM> Tasks { get; set; }
         public bool ShowProject { get; set; }
+        public TaskFilter TaskFilter { get; set; }
     }
 }

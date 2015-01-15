@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 using AutoMapper;
 
-using Jarboo.Admin.BL.External;
+using Jarboo.Admin.BL.Other;
 
 namespace Jarboo.Admin.BL
 {
@@ -46,6 +46,23 @@ namespace Jarboo.Admin.BL
             where TTo : class, new()
         {
             return from.Select(x => x.MapTo<TFrom, TTo>());
+        }
+
+        public static DateTime StartOfDay(this DateTime date)
+        {
+            return date.Date;
+        }
+        public static DateTime EndOfDay(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, date.Day, 23, 59, 59);
+        }
+        public static DateTime StartOfMonth(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, 1);
+        }
+        public static DateTime EndOfMonth(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59);
         }
     }
 }

@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Jarboo.Admin.BL.ThirdParty;
+using Jarboo.Admin.BL.Other;
 
 namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 {
     public class NoopFolderCrator : IFolderCreator
     {
-        public string Create(string customerName, string taskTitle)
+        public string Create(string customerName, string taskIdentifier)
         {
             return null;
         }
 
-        public void Delete(string customerName, string taskTitle)
+        public void Delete(string customerName, string taskIdentifier)
         { }
     }
 }

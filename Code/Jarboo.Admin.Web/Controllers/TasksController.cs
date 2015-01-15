@@ -5,11 +5,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
+using Jarboo.Admin.BL.Filters;
+using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
+using Jarboo.Admin.Web.Infrastructure;
+using Jarboo.Admin.Web.Models.Task;
 
 using Ninject;
+
+using Filter = Jarboo.Admin.BL.Filters.Filter;
 
 namespace Jarboo.Admin.Web.Controllers
 {
@@ -25,7 +31,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Tasks/
         public virtual ActionResult Index()
         {
-            return View(TaskService.GetAll());
+            return View(MVC.Tasks.Views.Index);
         }
 
         // GET: /Tasks/View/5
@@ -36,12 +42,12 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Task task = TaskService.GetById(id.Value);
+            Task task = TaskService.GetByIdEx(id.Value, Include.ForTask().Project().Customer().TaskSteps());
             if (task == null)
             {
                 return HttpNotFound();
             }
-            return View(task);
+            return View(task.Decorate());
         }
 
         // GET: /Tasks/Create
@@ -54,7 +60,7 @@ namespace Jarboo.Admin.Web.Controllers
             }
 
             ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(), "EmployeeId", "FullName");
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(), "ProjectId", "Name", "Customer.Name", task.ProjectId);
+            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer(), Filter<Project>.None), "ProjectId", "Name", "Customer.Name", task.ProjectId);
             return View(task);
         }
 
@@ -78,7 +84,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Task task = TaskService.GetById(id.Value);
+            Task task = TaskService.GetByIdEx(id.Value, Include.ForTask().Project().Customer().TaskSteps().Employee());
             if (task == null)
             {
                 return HttpNotFound();
@@ -98,6 +104,38 @@ namespace Jarboo.Admin.Web.Controllers
                 TaskService.NextStep,
                 () => RedirectToAction(MVC.Tasks.Steps(model.TaskId)),
                 RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
+        }
+
+        public virtual ActionResult List(bool showProject = false, int? projectId = null, int? employeeId = null, TaskFilter taskFilter = null)
+        {
+            taskFilter = (taskFilter ?? Filter.ForTask()).WithProjectId(projectId).WithEmployeeId(employeeId);
+
+            var model = new TasksListViewModel()
+                            {
+                                ShowProject = showProject,
+                                Tasks = TaskService.GetAllEx(Include.ForTask().Project().TaskSteps(), taskFilter).Decorate(),
+                                TaskFilter = taskFilter
+                            };
+
+            return View(model); 
+        }
+
+        // POST: /Tasks/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Delete(int id, string returnUrl)
+        {
+            ActionResult result;
+            if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
+            {
+                result = RedirectToAction(MVC.Tasks.Index());
+            }
+            else
+            {
+                result = this.Redirect(returnUrl);
+            }
+
+            return Handle(id, TaskService.Delete, result, result, "Task successfully deleted");
         }
     }
 }

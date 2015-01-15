@@ -1,0 +1,26 @@
+﻿@model Jarboo.Admin.BL.Filters.TaskFilter
+
+@using (@Html.BeginFormX(null, null, ViewContext.ParentRouteData().Values, FormMethod.Get, new { @class = "filter"}))
+{
+    <div class="form-horizontal">
+        @Html.ValidationSummary(false)
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.DateModifiedFrom, "Date", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-daterange input-group" id="datepicker">
+                    @Html.TextBoxFor(x => x.DateModifiedFrom, new { @class = "form-control" })
+                    <span class="input-group-addon">to</span>
+                    @Html.TextBoxFor(x => x.DateModifiedTo, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Filter" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+

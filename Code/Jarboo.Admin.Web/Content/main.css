@@ -52,3 +52,15 @@
 .start-page h4 {
     display: inline-block;
 }
+
+.delete-btn-form {
+    display: inline;
+}
+
+a.btn i {
+    margin-right: 5px;
+}
+
+form.filter .form-group:last-child {
+    margin-top: -15px;
+}

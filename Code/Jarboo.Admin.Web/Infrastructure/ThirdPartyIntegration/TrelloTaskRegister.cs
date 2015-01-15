@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using Jarboo.Admin.BL.ThirdParty;
+using Jarboo.Admin.BL.Other;
 
 using TrelloNet;
 
@@ -52,7 +52,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             return board;
         }
 
-        public string Register(string customerName, string taskTitle, string folderLink)
+        public string Register(string customerName, string taskIdentifier, string folderLink)
         {
             this.EnsureTrello();
 
@@ -65,24 +65,24 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 list = this.trello.Lists.Add("Tasks", board);
             }
 
-            var card = this.trello.Cards.Add(taskTitle, list);
+            var card = this.trello.Cards.Add(taskIdentifier, list);
             card.Desc = folderLink;
             this.trello.Cards.Update(card);
             return card.Url;
         }
 
-        public void Unregister(string customerName, string taskTitle, string url)
+        public void Unregister(string customerName, string taskIdentifier, string url)
         {
             this.EnsureTrello();
 
-            var card = this.FindCard(customerName, taskTitle, url);
+            var card = this.FindCard(customerName, taskIdentifier, url);
             if (card != null)
             {
                 this.trello.Cards.Delete(card);
             }
         }
 
-        private Card FindCard(string customerName, string taskTitle, string url)
+        private Card FindCard(string customerName, string taskIdentifier, string url)
         {
             this.EnsureTrello();
 
@@ -95,14 +95,14 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 return null;
             }
 
-            return this.trello.Cards.ForList(list).FirstOrDefault(x => x.Name == taskTitle && x.Url == url);
+            return this.trello.Cards.ForList(list).FirstOrDefault(x => x.Name == taskIdentifier && x.Url == url);
         }
 
-        public void ChangeResponsible(string customerName, string taskTitle, string url, string responsibleUserId)
+        public void ChangeResponsible(string customerName, string taskIdentifier, string url, string responsibleUserId)
         {
             this.EnsureTrello();
 
-            var card = this.FindCard(customerName, taskTitle, url);
+            var card = this.FindCard(customerName, taskIdentifier, url);
             if (card == null)
             {
                 //throw new ApplicationException("Coudn't find the card");

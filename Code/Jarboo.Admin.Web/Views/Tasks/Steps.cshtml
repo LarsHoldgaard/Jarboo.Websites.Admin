@@ -28,7 +28,7 @@
                 <p>
                     Done by
                     <a class="btn btn-default btn-xs" href="@Url.Action(MVC.Employees.View(step.EmployeeId))">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>@step.Employee.FullName
+                        <i class="glyphicon glyphicon-user" aria-hidden="true"></i>@step.Employee.FullName
                     </a>
                     at
                     <time>@step.DateCreated.ToString("yyyy-MM-dd hh:mm:ss")</time>
@@ -48,7 +48,7 @@
             <div class="panel-body">
                 <p>
                     <a class="btn btn-default btn-xs" href="@Url.Action(MVC.Employees.View(step.EmployeeId))">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>@step.Employee.FullName
+                        <i class="glyphicon glyphicon-user" aria-hidden="true"></i>@step.Employee.FullName
                     </a>
                     was assigned at
                     <time>@step.DateCreated.ToString("yyyy-MM-dd hh:mm:ss")</time>

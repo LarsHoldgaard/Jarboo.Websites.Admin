@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using System.Web.Routing;
 
 namespace Jarboo.Admin.Web.Infrastructure
 {
@@ -27,5 +28,21 @@ namespace Jarboo.Admin.Web.Infrastructure
 
             return htmlHelper.ListBoxFor(expression, selectList, htmlAttributes);
         }
+
+        public static RouteData ParentRouteData(this ViewContext context)
+        {
+            while (context.ParentActionViewContext != null)
+            {
+                context = context.ParentActionViewContext;
+            }
+
+            return context.RouteData;
+        }
+
+        public static MvcForm BeginFormX(this HtmlHelper htmlHelper, string actionName, string controllerName, RouteValueDictionary routeValues, FormMethod method, object htmlAttributes)
+        {
+            return FormExtensions.BeginForm(htmlHelper, actionName, controllerName, routeValues, method, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+        }
+
     }
 }

@@ -1,5 +1,5 @@
+using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
-using Jarboo.Admin.BL.ThirdParty;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.Web.Infrastructure;
 using Jarboo.Admin.Web.Infrastructure.BLExternals;
@@ -85,14 +85,15 @@ namespace Jarboo.Admin.Web.App_Start
             {
                 kernel.Bind<IFolderCreator>().To<NoopFolderCrator>().InRequestScope();
             }
-            
-            kernel.Bind<ITaskStepEmployeeStrategy>().To<RandomTaskStepEmployeeStrategy>().InRequestScope();
+
+            kernel.Bind<ITaskStepEmployeeStrategy>().To<TaskStepEmployeeStrategy>().InRequestScope();
 
             kernel.Bind<IUnitOfWork>().To<Context>().InRequestScope();
             kernel.Bind<ICustomerService>().To<CustomerService>().InRequestScope();
             kernel.Bind<IProjectService>().To<ProjectService>().InRequestScope();
             kernel.Bind<ITaskService>().To<TaskService>().InRequestScope();
             kernel.Bind<IEmployeeService>().To<EmployeeService>().InRequestScope();
+            kernel.Bind<IDocumentationService>().To<DocumentationService>().InRequestScope();
         }
     }
 }

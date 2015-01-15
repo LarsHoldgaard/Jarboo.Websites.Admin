@@ -40,53 +40,30 @@ namespace Jarboo.Admin.DAL.Entities
         public string FolderLink { get; set; }
         public string CardLink { get; set; }
 
+        public DateTime? DateDeleted { get; set; }
+
         public int ProjectId { get; set; }
         public virtual Project Project { get; set; }
 
         public virtual List<TaskStep> Steps { get; set; }
 
-        public string Step()
+        public string Identifier()
         {
-            if (Done)
-            {
-                return "Done";
-            }
-
-            if (Steps.Count == 0)
-            {
-                return "Unknown";
-            }
-
-            return Steps.Last().Step.ToString();
+            return TaskIdentifier(Title, Type);
         }
-        public string FullTitle()
+        public static string TaskIdentifier(string title, TaskType type)
         {
-            return TaskFullTitle(Title, Type);
+            return type.GetLetter() + "_" + title;
         }
 
-        public static string TaskFullTitle(string title, TaskType type)
+        public bool Deleted()
         {
-            return LetterForType(type) + "_" + title;
-        }
-        private static string LetterForType(TaskType type)
-        {
-            switch (type)
-            {
-                case TaskType.Bug:
-                    return "B";
-                case TaskType.Feature:
-                    return "F";
-                case TaskType.Project:
-                    return "P";
-                default:
-                    throw new Exception("Unnknown task type " + type);
-            }
+            return DateDeleted.HasValue;
         }
     }
 
     public class TaskEqualityComparer : IEqualityComparer<Task>
     {
-
         public bool Equals(Task x, Task y)
         {
             return x.TaskId == y.TaskId;

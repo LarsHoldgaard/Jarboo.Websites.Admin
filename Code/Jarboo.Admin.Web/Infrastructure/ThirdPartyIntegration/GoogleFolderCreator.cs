@@ -12,7 +12,7 @@ using Google.Apis.Drive.v2;
 using Google.Apis.Drive.v2.Data;
 using Google.Apis.Services;
 
-using Jarboo.Admin.BL.ThirdParty;
+using Jarboo.Admin.BL.Other;
 
 using File = Google.Apis.Drive.v2.Data.File;
 
@@ -68,39 +68,42 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             }
         }
 
-        public string Create(string customerName, string taskTitle)
+        public string Create(string customerName, string taskIdentifier)
         {
             EnsureService();
 
             var driveFolders = this.LoadGoogleDriveFolderHierarchy();
 
-            var newFolder = CreateFolders(CreateFolderPath(customerName, taskTitle), driveFolders);
-            CopyTemplate(taskTitle, driveFolders, newFolder);
+            var newFolder = CreateFolders(CreateFolderPath(customerName, taskIdentifier), driveFolders);
+            CopyTemplate(taskIdentifier, driveFolders, newFolder);
 
             return newFolder.File.AlternateLink;
         }
-        public void Delete(string customerName, string taskTitle)
+        public void Delete(string customerName, string taskIdentifier)
         {
             EnsureService();
 
-            DeleteFolder(CreateFolderPath(customerName, taskTitle));
+            DeleteFolder(CreateFolderPath(customerName, taskIdentifier));
         }
 
-        private string[] CreateFolderPath(string customerName, string taskTitle)
+        private string[] CreateFolderPath(string customerName, string taskIdentifier)
         {
             var date = DateTime.Now;
             return Path.Combine(Configuration.GoogleDrivePath,
                 customerName,
                 date.Year.ToString(CultureInfo.CurrentCulture),
                 CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(date.Month),
-                taskTitle).Split('\\');
+                taskIdentifier).Split('\\');
         }
         private GoogleDriveFolderHierarchy LoadGoogleDriveFolderHierarchy()
         {
             var files = this.driveService.Files.List();
             files.MaxResults = int.MaxValue;
             var driveFiles = files.Execute();
-            return new GoogleDriveFolderHierarchy(driveFiles);
+
+            var about = this.driveService.About.Get().Execute();
+
+            return new GoogleDriveFolderHierarchy(about.RootFolderId, driveFiles);
         }
 
         private GoogleDriveFolderHierarchy.Folder CreateFolders(IEnumerable<string> folders, GoogleDriveFolderHierarchy driveFolders)

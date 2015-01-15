@@ -25,12 +25,12 @@
                 </td>
             }
             <td>
-                @Html.ActionLink("View", MVC.Projects.View(project.ProjectId))
+                @Html.ActionLink(MVC.Projects.ActionNames.View, MVC.Projects.View(project.ProjectId))
             </td>
         </tr>
     }
 
-    @if (Model.Projects.Count == 0)
+    @if (!Model.Projects.Any())
     {
         <tr>
             <td colspan="3">
