@@ -1,6 +1,5 @@
-﻿@using Jarboo.Admin.Web.Infrastructure
-@using Jarboo.Admin.Web.Models.Documentation
-@model System.Collections.Generic.List<Jarboo.Admin.DAL.Entities.Documentation>
+﻿@using Jarboo.Admin.Web.Models.Documentation
+@model IEnumerable<Jarboo.Admin.DAL.Entities.Documentation>
 
 @{
     ViewBag.Title = "Documentations";
@@ -17,8 +16,4 @@
     </a>
 </p>
 
-@Html.Partial(MVC.Documentations.Views._List, new DocumentationsListViewModel()
-                                            {
-                                                Documentations = Model,
-                                                ShowProject = true
-                                            })
+@Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new { showProject = true})

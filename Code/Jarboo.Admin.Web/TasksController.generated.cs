@@ -81,6 +81,12 @@ namespace Jarboo.Admin.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NextStep);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Delete()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public TasksController Actions { get { return MVC.Tasks; } }
@@ -102,6 +108,8 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Create = "Create";
             public readonly string Steps = "Steps";
             public readonly string NextStep = "NextStep";
+            public readonly string List = "List";
+            public readonly string Delete = "Delete";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -112,6 +120,8 @@ namespace Jarboo.Admin.Web.Controllers
             public const string Create = "Create";
             public const string Steps = "Steps";
             public const string NextStep = "NextStep";
+            public const string List = "List";
+            public const string Delete = "Delete";
         }
 
 
@@ -148,6 +158,26 @@ namespace Jarboo.Admin.Web.Controllers
         {
             public readonly string model = "model";
         }
+        static readonly ActionParamsClass_List s_params_List = new ActionParamsClass_List();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_List ListParams { get { return s_params_List; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_List
+        {
+            public readonly string showProject = "showProject";
+            public readonly string projectId = "projectId";
+            public readonly string employeeId = "employeeId";
+            public readonly string taskFilter = "taskFilter";
+        }
+        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Delete
+        {
+            public readonly string id = "id";
+            public readonly string returnUrl = "returnUrl";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -158,19 +188,26 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _List = "_List";
                 public readonly string _NextStep = "_NextStep";
                 public readonly string Create = "Create";
                 public readonly string Index = "Index";
+                public readonly string List = "List";
                 public readonly string Steps = "Steps";
                 public readonly string View = "View";
             }
-            public readonly string _List = "~/Views/Tasks/_List.cshtml";
             public readonly string _NextStep = "~/Views/Tasks/_NextStep.cshtml";
             public readonly string Create = "~/Views/Tasks/Create.cshtml";
             public readonly string Index = "~/Views/Tasks/Index.cshtml";
+            public readonly string List = "~/Views/Tasks/List.cshtml";
             public readonly string Steps = "~/Views/Tasks/Steps.cshtml";
             public readonly string View = "~/Views/Tasks/View.cshtml";
+            static readonly _EditorTemplatesClass s_EditorTemplates = new _EditorTemplatesClass();
+            public _EditorTemplatesClass EditorTemplates { get { return s_EditorTemplates; } }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public partial class _EditorTemplatesClass
+            {
+                public readonly string TaskFilter = "TaskFilter";
+            }
         }
     }
 
@@ -247,6 +284,34 @@ namespace Jarboo.Admin.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NextStep);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             NextStepOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool showProject, int? projectId, int? employeeId, Jarboo.Admin.BL.Filters.TaskFilter taskFilter);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult List(bool showProject, int? projectId, int? employeeId, Jarboo.Admin.BL.Filters.TaskFilter taskFilter)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.List);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "showProject", showProject);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "projectId", projectId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "employeeId", employeeId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskFilter", taskFilter);
+            ListOverride(callInfo, showProject, projectId, employeeId, taskFilter);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, string returnUrl);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Delete(int id, string returnUrl)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
+            DeleteOverride(callInfo, id, returnUrl);
             return callInfo;
         }
 

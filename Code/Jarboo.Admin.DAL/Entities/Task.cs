@@ -40,32 +40,25 @@ namespace Jarboo.Admin.DAL.Entities
         public string FolderLink { get; set; }
         public string CardLink { get; set; }
 
+        public DateTime? DateDeleted { get; set; }
+
         public int ProjectId { get; set; }
         public virtual Project Project { get; set; }
 
         public virtual List<TaskStep> Steps { get; set; }
 
-        public string TitleWithType()
+        public string Identifier()
         {
-            return TaskTitleWithType(Title, Type);
+            return TaskIdentifier(Title, Type);
         }
-        public static string TaskTitleWithType(string title, TaskType type)
+        public static string TaskIdentifier(string title, TaskType type)
         {
-            return LetterForType(type) + "_" + title;
+            return type.GetLetter() + "_" + title;
         }
-        private static string LetterForType(TaskType type)
+
+        public bool Deleted()
         {
-            switch (type)
-            {
-                case TaskType.Bug:
-                    return "B";
-                case TaskType.Feature:
-                    return "F";
-                case TaskType.Project:
-                    return "P";
-                default:
-                    throw new Exception("Unnknown task type " + type);
-            }
+            return DateDeleted.HasValue;
         }
     }
 

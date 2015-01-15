@@ -1,0 +1,106 @@
+﻿@using Jarboo.Admin.Web.Models
+@model Jarboo.Admin.Web.Models.Task.TasksListViewModel
+
+<div class="panel panel-default">
+    <div class="panel-heading">Filter</div>
+    <div class="panel-body">
+        @Html.EditorFor(x => x.TaskFilter)
+    </div>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Title
+            </th>
+            <th>Date
+            </th>
+            @if (Model.ShowProject)
+            {
+                <th>Project name
+                </th>
+            }
+            <th>Type
+            </th>
+            <th>Size
+            </th>
+            <th>Urgency
+            </th>
+            <th>Folder
+            </th>
+            <th>Card
+            </th>
+            <th>Step
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var task in Model.Tasks)
+        {
+            <tr>
+                <td>
+                    @task.FullTitle()
+                </td>
+                <td>
+                    @task.Date()
+                </td>
+                @if (Model.ShowProject)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => task.Project.Name)
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(x => task.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => task.Size) hour(s)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => task.Urgency)
+                </td>
+                <td>
+                    @if (string.IsNullOrEmpty(task.FolderLink))
+                    {
+                        <span>Missing</span>
+                    }
+                    else
+                    {
+                        <a target="_blank" href="@task.FolderLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                    }
+                </td>
+                <td>
+                    @if (string.IsNullOrEmpty(task.CardLink))
+                    {
+                        <span>Missing</span>
+                    }
+                    else
+                    {
+                        <a target="_blank" href="@task.CardLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Tasks.Steps(task.TaskId))">
+                        <i class="glyphicon glyphicon-list"></i>@task.Step()
+                    </a>
+                </td>
+                <td>
+                    @Html.ActionLink(MVC.Tasks.ActionNames.View, MVC.Tasks.View(task.TaskId)) |
+                    @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
+                                                                      {
+                                                                        Id  = task.TaskId,
+                                                                        Action = MVC.Tasks.Delete(),
+                                                                        Small = true
+                                                                      })
+                </td>
+            </tr>
+        }
+
+        @if (!Model.Tasks.Any())
+        {
+            <tr>
+                <td colspan="10">No task has been created.
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

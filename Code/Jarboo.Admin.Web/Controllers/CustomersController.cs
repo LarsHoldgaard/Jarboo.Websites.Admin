@@ -17,7 +17,7 @@ using Ninject;
 
 namespace Jarboo.Admin.Web.Controllers
 {
-    public partial class CustomersController : Controller
+    public partial class CustomersController : BaseController
     {
         [Inject]
         public ICustomerService CustomerService { get; set; }

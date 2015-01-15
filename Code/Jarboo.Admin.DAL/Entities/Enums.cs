@@ -26,5 +26,20 @@ namespace Jarboo.Admin.DAL.Entities
                     throw new Exception("Unknown task step: " + step);
             }
         }
+
+        public static string GetLetter(this TaskType type)
+        {
+            switch (type)
+            {
+                case TaskType.Bug:
+                    return "B";
+                case TaskType.Feature:
+                    return "F";
+                case TaskType.Project:
+                    return "P";
+                default:
+                    throw new Exception("Unnknown task type " + type);
+            }
+        }
     }
 }

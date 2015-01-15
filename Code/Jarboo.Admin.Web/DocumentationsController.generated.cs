@@ -102,6 +102,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
+            public readonly string List = "List";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -112,6 +113,7 @@ namespace Jarboo.Admin.Web.Controllers
             public const string Create = "Create";
             public const string Edit = "Edit";
             public const string Delete = "Delete";
+            public const string List = "List";
         }
 
 
@@ -146,7 +148,17 @@ namespace Jarboo.Admin.Web.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Delete
         {
-            public readonly string model = "model";
+            public readonly string id = "id";
+            public readonly string returnUrl = "returnUrl";
+        }
+        static readonly ActionParamsClass_List s_params_List = new ActionParamsClass_List();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_List ListParams { get { return s_params_List; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_List
+        {
+            public readonly string showProject = "showProject";
+            public readonly string projectId = "projectId";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -158,20 +170,18 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _DeleteForm = "_DeleteForm";
                 public readonly string _Form = "_Form";
-                public readonly string _List = "_List";
                 public readonly string Create = "Create";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
+                public readonly string List = "List";
                 public readonly string View = "View";
             }
-            public readonly string _DeleteForm = "~/Views/Documentations/_DeleteForm.cshtml";
             public readonly string _Form = "~/Views/Documentations/_Form.cshtml";
-            public readonly string _List = "~/Views/Documentations/_List.cshtml";
             public readonly string Create = "~/Views/Documentations/Create.cshtml";
             public readonly string Edit = "~/Views/Documentations/Edit.cshtml";
             public readonly string Index = "~/Views/Documentations/Index.cshtml";
+            public readonly string List = "~/Views/Documentations/List.cshtml";
             public readonly string View = "~/Views/Documentations/View.cshtml";
         }
     }
@@ -241,14 +251,28 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Documentation.DocumentationDelete model);
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, string returnUrl);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Delete(Jarboo.Admin.Web.Models.Documentation.DocumentationDelete model)
+        public override System.Web.Mvc.ActionResult Delete(int id, string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            DeleteOverride(callInfo, model);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
+            DeleteOverride(callInfo, id, returnUrl);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool showProject, int? projectId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult List(bool showProject, int? projectId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.List);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "showProject", showProject);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "projectId", projectId);
+            ListOverride(callInfo, showProject, projectId);
             return callInfo;
         }
 

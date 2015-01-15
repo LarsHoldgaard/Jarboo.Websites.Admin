@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
+using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
@@ -27,7 +28,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Projects/
         public virtual ActionResult Index()
         {
-            return View(ProjectService.GetAllEx(Include.ForProject().Customer()));
+            return View(ProjectService.GetAllEx(Include.ForProject().Customer(), Filter<Project>.None));
         }
 
         // GET: /Projects/View/5
@@ -38,7 +39,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Project project = ProjectService.GetByIdEx(id.Value, Include.ForProject().Customer().Tasks().TaskSteps().Documentations());
+            Project project = ProjectService.GetByIdEx(id.Value, Include.ForProject().Customer().Documentations());
             if (project == null)
             {
                 return HttpNotFound();

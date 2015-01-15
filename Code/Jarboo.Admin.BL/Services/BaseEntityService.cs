@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
@@ -30,7 +31,7 @@ namespace Jarboo.Admin.BL.Services
 
         public T GetById(int id)
         {
-            return this.GetByIdEx(id, Include.None<T>());
+            return this.GetByIdEx(id, Include<T>.None);
         }
         public T GetByIdEx(int id, Include<T> include)
         {
@@ -40,13 +41,11 @@ namespace Jarboo.Admin.BL.Services
 
         public List<T> GetAll()
         {
-            return this.GetAllEx(Include.None<T>());
+            return TableNoTracking.ToList();
         }
-        public List<T> GetAllEx(Include<T> include)
+        public PagedData<T> GetAllEx(Include<T> include, Filter<T> filter)
         {
-            return TableNoTracking.Include(include)
-                .AsEnumerable()
-                .ToList();
+            return filter.Execute(TableNoTracking.Include(include));
         }
 
         protected void Add<TM>(T entity, TM model)

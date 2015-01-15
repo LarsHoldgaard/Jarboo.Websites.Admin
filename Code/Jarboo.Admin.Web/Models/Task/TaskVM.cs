@@ -24,7 +24,12 @@ namespace Jarboo.Admin.Web.Models.Task
 
         public string FullTitle()
         {
-            return string.Format("{0} [{1}]", Title, DateModified.ToString());
+            return Title;
+        }
+
+        public string Date()
+        {
+            return DateModified.ToString();
         }
     }
 }

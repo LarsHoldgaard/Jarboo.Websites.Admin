@@ -2,8 +2,8 @@
 {
     public interface ITaskRegister
     {
-        string Register(string customerName, string taskTitle, string folderLink);
-        void Unregister(string customerName, string taskTitle, string url);
-        void ChangeResponsible(string customerName, string taskTitle, string url, string responsibleUserId);
+        string Register(string customerName, string taskIdentifier, string folderLink);
+        void Unregister(string customerName, string taskIdentifier, string url);
+        void ChangeResponsible(string customerName, string taskIdentifier, string url, string responsibleUserId);
     }
 }

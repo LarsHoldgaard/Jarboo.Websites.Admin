@@ -11,8 +11,6 @@ namespace Jarboo.Admin.BL.Includes
     {
         private bool project;
         private bool customer;
-        private bool taskSteps;
-        private bool employee;
 
         public DocumentationInclude Customer()
         {

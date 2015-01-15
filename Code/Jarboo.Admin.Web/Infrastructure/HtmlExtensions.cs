@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using System.Web.Routing;
 
 namespace Jarboo.Admin.Web.Infrastructure
 {
@@ -26,6 +27,16 @@ namespace Jarboo.Admin.Web.Infrastructure
             var selectList = EnumHelper.GetSelectList(metaData.ModelType.GenericTypeArguments[0]);
 
             return htmlHelper.ListBoxFor(expression, selectList, htmlAttributes);
+        }
+
+        public static RouteData ParentRouteData(this ViewContext context)
+        {
+            while (context.ParentActionViewContext != null)
+            {
+                context = context.ParentActionViewContext;
+            }
+
+            return context.RouteData;
         }
     }
 }

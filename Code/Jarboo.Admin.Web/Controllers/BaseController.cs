@@ -38,12 +38,9 @@ namespace Jarboo.Admin.Web.Controllers
                 {
                     handler(model, ModelState.Wrap());
                 }
-                catch (NotFoundException)
-                {
-                    return this.HttpNotFound();
-                }
                 catch (ApplicationException ex)
                 {
+                    Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
                     AddError(ex.Message);
                     return RedirectToAction(MVC.Error.Index());
                 }
@@ -123,6 +120,11 @@ namespace Jarboo.Admin.Web.Controllers
             }
 
             base.OnActionExecuted(filterContext);
+        }
+
+        protected new HttpNotFoundResult HttpNotFound()
+        {
+            throw new HttpException(404, "Not found");
         }
     }
 }
