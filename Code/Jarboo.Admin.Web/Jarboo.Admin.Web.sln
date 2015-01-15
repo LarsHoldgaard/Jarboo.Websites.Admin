@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarboo.Admin.BL.Tests", "..\Jarboo.Admin.BL.Tests\Jarboo.Admin.BL.Tests.csproj", "{5AFA430B-4075-477E-9DDD-14CE04C28074}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarboo.Admin.DAL.Tests", "Jarboo.Admin.DAL.Tests\Jarboo.Admin.DAL.Tests.csproj", "{69444B53-23BB-470A-AA13-8A00D984A167}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarboo.Admin.DAL.Tests", "..\Jarboo.Admin.DAL.Tests\Jarboo.Admin.DAL.Tests.csproj", "{69444B53-23BB-470A-AA13-8A00D984A167}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

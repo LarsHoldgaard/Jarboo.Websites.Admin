@@ -32,9 +32,32 @@
     <link rel="apple-touch-startup-image" href="~/content/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
 </head>
 <body>
+<<<<<<< HEAD
     @{ Html.RenderPartial("_Header", RenderSection("topright", false)); }
     @{ Html.RenderPartial("_Aside"); }
     <div id="main" role="main">
+=======
+    <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/" class="navbar-brand">Jarboo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+                @Html.Partial(MVC.Shared.Views.TopMenu)
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container site-container">
+        @Html.Partial(MVC.Shared.Views.Messages, ViewData)
+
+>>>>>>> origin/develop
         @RenderBody()
     </div>
     @{Html.RenderPartial("_Footer"); }

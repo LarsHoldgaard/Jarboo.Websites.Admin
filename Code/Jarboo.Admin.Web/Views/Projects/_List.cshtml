@@ -43,6 +43,7 @@
     }
 >>>>>>> develop
 
+<<<<<<< HEAD
                     -->
                 <header>
                     <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
@@ -93,6 +94,18 @@
                                             </td>
                                         </tr>
                                     }
+=======
+    @if (!Model.Projects.Any())
+    {
+        <tr>
+            <td colspan="3">
+                No project has been created.
+            </td>
+        </tr>
+    }
+
+</table>
+>>>>>>> origin/develop
 
                                     @if (Model.Projects.Count == 0)
                                     {

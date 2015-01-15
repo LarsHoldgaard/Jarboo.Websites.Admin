@@ -1,4 +1,5 @@
-﻿using Jarboo.Admin.BL.Includes;
+﻿using Jarboo.Admin.BL.Filters;
+using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
@@ -25,7 +26,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Documentations/
         public virtual ActionResult Index()
         {
-            return View(DocumentationService.GetAllEx(Include.ForDocumentation().Project()));
+            return View(DocumentationService.GetAllEx(Include.ForDocumentation().Project(), Filter<Documentation>.None));
         }
 
         // GET: /Documentations/View/5
@@ -75,7 +76,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         private ActionResult CreateEditView(DocumentationEdit model)
         {
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer()), "ProjectId", "Name", "Customer.Name", model.ProjectId);
+            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer(), Filter<Project>.None), "ProjectId", "Name", "Customer.Name", model.ProjectId);
             return View(model);
         }
 
@@ -95,13 +96,32 @@ namespace Jarboo.Admin.Web.Controllers
         // POST: /Documentations/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(DocumentationDelete model)
+        public virtual ActionResult Delete(int id, string returnUrl)
         {
-            var result = model.ProjectId.HasValue
-                             ? RedirectToAction(MVC.Projects.View(model.ProjectId.Value))
-                             : RedirectToAction(MVC.Documentations.Index());
+            ActionResult result;
+            if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
+            {
+                result = RedirectToAction(MVC.Documentations.Index());
+            }
+            else
+            {
+                result = this.Redirect(returnUrl);
+            }
 
-            return Handle(model.DocumentationId, DocumentationService.Delete, result, result);
+            return Handle(id, DocumentationService.Delete, result, result, "Documentation successfully deleted");
+        }
+
+        public virtual ActionResult List(bool showProject = false, int? projectId = null)
+        {
+            var documentationFilter = BL.Filters.Filter.ForDocumentation().WithProjectId(projectId);
+
+            var model = new DocumentationsListViewModel()
+            {
+                ShowProject = showProject,
+                Documentations = DocumentationService.GetAllEx(Include.ForDocumentation().Project(), documentationFilter)
+            };
+
+            return View(model);
         }
     }
 }

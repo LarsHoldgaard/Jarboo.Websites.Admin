@@ -22,7 +22,8 @@ namespace Jarboo.Admin.Web.App_Start
                         "~/Scripts/Site/validation.style.js"));
 
             bundles.Add(new ScriptBundle("~/js/bootstrap").Include(
-                "~/Scripts/bootstrap.js"));
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/bootstrap-datepicker.js"));
 
 
 

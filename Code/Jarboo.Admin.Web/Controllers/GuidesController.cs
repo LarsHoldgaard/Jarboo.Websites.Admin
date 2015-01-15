@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Jarboo.Admin.Web.Controllers
 {
-    public partial class GuidesController : Controller
+    public partial class GuidesController : BaseController
     {
         public virtual ActionResult Index()
         {

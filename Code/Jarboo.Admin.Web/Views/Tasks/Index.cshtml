@@ -1,7 +1,4 @@
-﻿@using Jarboo.Admin.Web.Models.Task
-@model System.Collections.Generic.List<TaskVM>
-
-@{
+﻿@{
     ViewBag.Title = "Tasks";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -46,6 +43,7 @@
         </a>
     </p>
 
+<<<<<<< HEAD
     @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
                                             {
                                                 Tasks = Model,
@@ -80,3 +78,12 @@
         });
     </script>
 }
+=======
+<p>
+    <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create())">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
+    </a>
+</p>
+
+@Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { showProject = true})
+>>>>>>> origin/develop

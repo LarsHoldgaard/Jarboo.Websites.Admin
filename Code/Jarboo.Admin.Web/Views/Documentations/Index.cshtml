@@ -1,6 +1,5 @@
-﻿@using Jarboo.Admin.Web.Infrastructure
-@using Jarboo.Admin.Web.Models.Documentation
-@model System.Collections.Generic.List<Jarboo.Admin.DAL.Entities.Documentation>
+﻿@using Jarboo.Admin.Web.Models.Documentation
+@model IEnumerable<Jarboo.Admin.DAL.Entities.Documentation>
 
 @{
     ViewBag.Title = "Documentations";
@@ -47,9 +46,19 @@
         </a>
     </p>
 
+<<<<<<< HEAD
     @Html.Partial(MVC.Documentations.Views._List, new DocumentationsListViewModel()
                                             {
                                                 Documentations = Model,
                                                 ShowProject = true
                                             })
 </div>
+=======
+<p>
+    <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create())">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
+    </a>
+</p>
+
+@Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new { showProject = true})
+>>>>>>> origin/develop

@@ -2,7 +2,7 @@
 {
     public interface IFolderCreator
     {
-        string Create(string customerName, string taskTitle);
-        void Delete(string customerName, string taskTitle);
+        string Create(string customerName, string taskIdentifier);
+        void Delete(string customerName, string taskIdentifier);
     }
 }

@@ -21,11 +21,6 @@ namespace Jarboo.Admin.BL.Includes
 
     public static class Include
     {
-        public static Include<T> None<T>()
-        {
-            return Include<T>.None;
-        }
-
         public static CustomerInclude ForCustomer()
         {
             return new CustomerInclude();

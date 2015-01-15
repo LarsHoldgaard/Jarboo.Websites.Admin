@@ -68,32 +68,32 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             }
         }
 
-        public string Create(string customerName, string taskTitle)
+        public string Create(string customerName, string taskIdentifier)
         {
             EnsureService();
 
             var driveFolders = this.LoadGoogleDriveFolderHierarchy();
 
-            var newFolder = CreateFolders(CreateFolderPath(customerName, taskTitle), driveFolders);
-            CopyTemplate(taskTitle, driveFolders, newFolder);
+            var newFolder = CreateFolders(CreateFolderPath(customerName, taskIdentifier), driveFolders);
+            CopyTemplate(taskIdentifier, driveFolders, newFolder);
 
             return newFolder.File.AlternateLink;
         }
-        public void Delete(string customerName, string taskTitle)
+        public void Delete(string customerName, string taskIdentifier)
         {
             EnsureService();
 
-            DeleteFolder(CreateFolderPath(customerName, taskTitle));
+            DeleteFolder(CreateFolderPath(customerName, taskIdentifier));
         }
 
-        private string[] CreateFolderPath(string customerName, string taskTitle)
+        private string[] CreateFolderPath(string customerName, string taskIdentifier)
         {
             var date = DateTime.Now;
             return Path.Combine(Configuration.GoogleDrivePath,
                 customerName,
                 date.Year.ToString(CultureInfo.CurrentCulture),
                 CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(date.Month),
-                taskTitle).Split('\\');
+                taskIdentifier).Split('\\');
         }
         private GoogleDriveFolderHierarchy LoadGoogleDriveFolderHierarchy()
         {

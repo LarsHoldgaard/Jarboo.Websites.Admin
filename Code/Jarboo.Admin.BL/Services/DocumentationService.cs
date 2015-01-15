@@ -55,7 +55,7 @@ namespace Jarboo.Admin.BL.Services
         {
             if (documentationId == 0)
             {
-                throw new NotFoundException();
+                throw new Exception("Incorrect entity id");
             }
 
             Delete(new Documentation()
