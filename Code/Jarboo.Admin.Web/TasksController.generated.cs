@@ -110,6 +110,8 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string NextStep = "NextStep";
             public readonly string List = "List";
             public readonly string Delete = "Delete";
+            public readonly string _List = "_List";
+
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -122,6 +124,8 @@ namespace Jarboo.Admin.Web.Controllers
             public const string NextStep = "NextStep";
             public const string List = "List";
             public const string Delete = "Delete";
+            public const string _List = "_List";
+
         }
 
 
@@ -195,6 +199,7 @@ namespace Jarboo.Admin.Web.Controllers
                 public readonly string List = "List";
                 public readonly string Steps = "Steps";
                 public readonly string View = "View";
+                public readonly string _List = "_List";
             }
             public readonly string _NextStep = "~/Views/Tasks/_NextStep.cshtml";
             public readonly string Create = "~/Views/Tasks/Create.cshtml";
@@ -202,6 +207,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string List = "~/Views/Tasks/List.cshtml";
             public readonly string Steps = "~/Views/Tasks/Steps.cshtml";
             public readonly string View = "~/Views/Tasks/View.cshtml";
+            public readonly string _List = "~/Views/Tasks/_List.cshtml";
             static readonly _EditorTemplatesClass s_EditorTemplates = new _EditorTemplatesClass();
             public _EditorTemplatesClass EditorTemplates { get { return s_EditorTemplates; } }
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
