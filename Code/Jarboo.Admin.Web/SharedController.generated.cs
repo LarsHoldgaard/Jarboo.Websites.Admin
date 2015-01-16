@@ -41,7 +41,6 @@ namespace T4MVC
                 public readonly string _Footer = "_Footer";
                 public readonly string _Header = "_Header";
                 public readonly string _Layout = "_Layout";
-                public readonly string _Layout_ = "_Layout_";
                 public readonly string _Ribbon = "_Ribbon";
                 public readonly string _Scripts = "_Scripts";
                 public readonly string _Tiles = "_Tiles";
@@ -56,7 +55,6 @@ namespace T4MVC
             public readonly string _Footer = "~/Views/Shared/_Footer.cshtml";
             public readonly string _Header = "~/Views/Shared/_Header.cshtml";
             public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
-            public readonly string _Layout_ = "~/Views/Shared/_Layout_.cshtml";
             public readonly string _Ribbon = "~/Views/Shared/_Ribbon.cshtml";
             public readonly string _Scripts = "~/Views/Shared/_Scripts.cshtml";
             public readonly string _Tiles = "~/Views/Shared/_Tiles.cshtml";

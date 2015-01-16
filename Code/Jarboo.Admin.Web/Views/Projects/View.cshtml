@@ -52,16 +52,6 @@
     @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { projectId = Model.ProjectId })
 
     <!-- end row -->
-    @*<h2>Tasks</h2>
-        <hr />
-
-        <p>
-            <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create(Model.ProjectId))">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
-            </a>
-        </p>
-
-        @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { projectId = Model.ProjectId })*@
 
     <!-- row -->
     <div class="row">
@@ -86,16 +76,4 @@
     </p>
     @Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new { projectId = Model.ProjectId })
 
-
-    @*<h2>Documentations</h2>
-        <hr />
-
-        <p>
-            <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create(Model.ProjectId))">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
-            </a>
-        </p>
-
-        @Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new { projectId = Model.ProjectId })
-        >>>>>>> origin/develop*@
 </div>

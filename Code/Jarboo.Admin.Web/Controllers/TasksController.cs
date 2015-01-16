@@ -48,8 +48,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return HttpNotFound();
             }
 
-            //return MVC.Tasks.PartialView(MVC.Tasks.View(task.Decorate()));
-            return PartialView("View", task.Decorate());
+            return View(task.Decorate());
         }
 
         // GET: /Tasks/Create

@@ -221,10 +221,6 @@
     <Content Include="App_Data\Jarboo.Admin_log.ldf">
       <DependentUpon>Jarboo.Admin.mdf</DependentUpon>
     </Content>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\invoice.min.css" />
@@ -423,21 +419,13 @@
     <Content Include="Content\sound\voice_off.mp3" />
     <Content Include="Content\sound\voice_on.mp3" />
     <Content Include="Content\datepicker3.css" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="Scripts\app.config.js" />
     <Content Include="Scripts\app.min.js" />
     <Content Include="migrate.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\bootstrap-datepicker.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\css\your_style.less" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
@@ -458,12 +446,6 @@
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Content\main.css" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\libs\jquery-2.1.1.min.js" />
     <Content Include="Scripts\libs\jquery-ui-1.10.3.min.js" />
     <Content Include="Scripts\notification\SmartNotification.min.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.ar.js" />
@@ -527,8 +509,6 @@
     <Content Include="Scripts\locales\bootstrap-datepicker.vi.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.zh-TW.js" />
-    <Content Include="Scripts\npm.js" />
-    <Content Include="Scripts\libs\jquery-2.1.1.min.map" />
     <Content Include="Scripts\plugin\ckeditor\CHANGES.md" />
     <Content Include="Scripts\plugin\ckeditor\LICENSE.md" />
     <Content Include="Scripts\plugin\ckeditor\plugins\scayt\LICENSE.md" />
@@ -1070,7 +1050,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="packages.config" />
-    <Content Include="Views\Shared\_Layout_.cshtml" />
     <Content Include="Views\Shared\TopMenu.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
@@ -1112,8 +1091,6 @@
     <Content Include="Views\Documentations\_Form.cshtml" />
     <Content Include="Views\Documentations\View.cshtml" />
     <Content Include="Views\Documentations\Edit.cshtml" />
-    <Content Include="Views\Documentations\_List.cshtml" />
-    <Content Include="Views\Documentations\_DeleteForm.cshtml" />
     <Content Include="Views\Documentations\List.cshtml" />
     <Content Include="Views\Tasks\EditorTemplates\TaskFilter.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />

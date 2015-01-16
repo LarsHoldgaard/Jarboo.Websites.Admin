@@ -26,7 +26,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Documentations/
         public virtual ActionResult Index()
         {
-            return View(DocumentationService.GetAllEx(Include.ForDocumentation().Project(), Filter<Documentation>.None));
+            return View(MVC.Documentations.Views.Index);
         }
 
         // GET: /Documentations/View/5

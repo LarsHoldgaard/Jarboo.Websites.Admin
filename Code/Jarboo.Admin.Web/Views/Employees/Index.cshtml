@@ -116,7 +116,7 @@
                                         {
                                             <tr>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => employee.FullName)
+                                                    @Html.ActionLink(employee.FullName, MVC.Employees.View(employee.EmployeeId))
                                                 </td>
                                                 <td>
                                                     <a href="skype:@employee.SkypeName">@employee.SkypeName</a>
@@ -140,8 +140,7 @@
                                                     }
                                                 </td>
                                                 <td>
-                                                    @Html.ActionLink("Edit", MVC.Employees.Edit(employee.EmployeeId)) |
-                                                    @Html.ActionLink("View", MVC.Employees.View(employee.EmployeeId))
+                                                    @Html.ActionLink("Edit", MVC.Employees.Edit(employee.EmployeeId))
                                                 </td>
                                             </tr>
                                         }
