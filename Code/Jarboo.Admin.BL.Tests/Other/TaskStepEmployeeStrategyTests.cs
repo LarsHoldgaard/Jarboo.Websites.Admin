@@ -46,10 +46,10 @@ namespace Jarboo.Admin.BL.Tests.Other
                 var strategy = CreateStrategy(context);
 
 
-                var employeeId = strategy.SelectEmployee(step, projectId);
+                var employee = strategy.SelectEmployee(step, projectId);
 
 
-                Assert.AreEqual(expEmployeeId, employeeId);
+                Assert.AreEqual(expEmployeeId, employee.EmployeeId);
             }
         }
 
@@ -66,23 +66,46 @@ namespace Jarboo.Admin.BL.Tests.Other
                 context.AddEmployee();
                 context.AddEmployeePosition(x => { x.Position = wrongPosition; });
                 context.AddEmployee();
-                var goodEmployeeId = context.AddEmployeePosition(x => { x.Position = step.GetPosition(); }).EmployeeId;
+                var fitEmployeeId = context.AddEmployeePosition(x => { x.Position = step.GetPosition(); }).EmployeeId;
                 context.AddEmployee();
                 context.AddEmployeePosition(x => { x.Position = wrongPosition; });
                 var strategy = CreateStrategy(context);
 
 
-                var employeeId = strategy.SelectEmployee(step, projectId);
+                var employee = strategy.SelectEmployee(step, projectId);
 
 
-                Assert.AreEqual(goodEmployeeId, employeeId);
+                Assert.AreEqual(fitEmployeeId, employee.EmployeeId);
+            }
+        }
+
+        [Test]
+        public void SelectEmployee_WhenDeletedEmplyee_IgnoresHim()
+        {
+            using (var context = ContextHelper.Create())
+            {
+                var stepWithWrongPosition = this.GetStepWithWrongPosition();
+                var step = stepWithWrongPosition.Item1;
+                var wrongPosition = stepWithWrongPosition.Item2;
+
+                var projectId = context.AddProject().ProjectId;
+                context.AddEmployee();
+                var unfitEmployeeId = context.AddEmployeePosition(x => { x.Position = wrongPosition; }).EmployeeId;
+                context.AddEmployee(x => x.DateDeleted = DateTime.Now);
+                context.AddEmployeePosition(x => { x.Position = step.GetPosition(); });
+                var strategy = CreateStrategy(context);
+
+
+                var employee = strategy.SelectEmployee(step, projectId);
+
+
+                Assert.AreEqual(unfitEmployeeId, employee.EmployeeId);
             }
         }
 
         private TaskStepEmployeeStrategy CreateStrategy(IUnitOfWork unitOfWork)
         {
-            var employeeService = ServicesFactory.CreateEmployeeService(unitOfWork);
-            return new TaskStepEmployeeStrategy(employeeService);
+            return new TaskStepEmployeeStrategy(unitOfWork);
         }
 
         private Tuple<TaskStepEnum, Position> GetStepWithWrongPosition()

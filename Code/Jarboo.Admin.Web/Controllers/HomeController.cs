@@ -22,7 +22,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         public virtual ActionResult Index()
         {
-            ViewBag.Customers = CustomerService.GetAllEx(Include.ForCustomer().Projects(), Filter<Customer>.None);
+            ViewBag.Customers = CustomerService.GetAllEx(Include.ForCustomer().Projects(), BL.Filters.Filter.ForCustomer());
 
             return View();
         }

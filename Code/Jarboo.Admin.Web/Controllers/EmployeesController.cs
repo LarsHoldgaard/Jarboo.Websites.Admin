@@ -27,7 +27,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Employees/
         public virtual ActionResult Index()
         {
-            return View(EmployeeService.GetAllEx(Include.ForEmployee().Positions(), Filter<Employee>.None));
+            return View(EmployeeService.GetAllEx(Include.ForEmployee().Positions(), BL.Filters.Filter.ForEmployee()));
         }
 
         // GET: /Employees/View/5
@@ -81,6 +81,24 @@ namespace Jarboo.Admin.Web.Controllers
                 () => model.EmployeeId == 0 ? 
                     RedirectToAction(MVC.Employees.Create()) :
                     RedirectToAction(MVC.Employees.Edit(model.EmployeeId)));
+        }
+
+        // POST: /Employees/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Delete(int id, string returnUrl)
+        {
+            ActionResult result;
+            if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
+            {
+                result = RedirectToAction(MVC.Employees.Index());
+            }
+            else
+            {
+                result = this.Redirect(returnUrl);
+            }
+
+            return Handle(id, EmployeeService.Delete, result, result, "Employee successfully deleted");
         }
     }
 }

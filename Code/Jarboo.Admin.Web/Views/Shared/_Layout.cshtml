@@ -36,6 +36,8 @@
     @{ Html.RenderPartial("_Header", RenderSection("topright", false)); }
     @{ Html.RenderPartial("_Aside"); }
     <div id="main" role="main">
+        @Html.Partial(MVC.Shared.Views.Messages, ViewData)
+
         @RenderBody()
     </div>
     @{Html.RenderPartial("_Footer"); }

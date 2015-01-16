@@ -126,5 +126,20 @@ namespace Jarboo.Admin.Web.Controllers
         {
             throw new HttpException(404, "Not found");
         }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            if (filterContext == null)
+                return;
+
+            if (filterContext.Exception != null)
+            {
+                AddError(filterContext.Exception.Message);
+            }
+
+            filterContext.ExceptionHandled = true;
+
+            filterContext.Result = RedirectToAction(MVC.Error.Index());
+        }
     }
 }

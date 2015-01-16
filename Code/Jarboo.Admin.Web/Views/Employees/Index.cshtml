@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Jarboo.Admin.DAL.Entities.Employee>
+﻿@using Jarboo.Admin.Web.Models
+@model IEnumerable<Jarboo.Admin.DAL.Entities.Employee>
 
 @{
     ViewBag.Title = "Employees";
@@ -109,6 +110,7 @@
                                                 @Html.DisplayNameFor(model => model.Positions)
                                             </th>
                                             <th></th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -142,13 +144,21 @@
                                                 <td>
                                                     @Html.ActionLink("Edit", MVC.Employees.Edit(employee.EmployeeId))
                                                 </td>
+                                                <td>
+                                                    @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
+                                                                          {
+                                                                              Id = employee.EmployeeId,
+                                                                              Action = MVC.Employees.Delete(),
+                                                                              Small = true
+                                                                          })
+                                                </td>
                                             </tr>
                                         }
 
                                         @if (!Model.Any())
                                         {
                                             <tr>
-                                                <td colspan="8">
+                                                <td colspan="9">
                                                     No employee has been created.
                                                 </td>
                                             </tr>
