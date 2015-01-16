@@ -48,8 +48,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return HttpNotFound();
             }
 
-            //return MVC.Tasks.PartialView(MVC.Tasks.View(task.Decorate()));
-            return PartialView("View", task.Decorate());
+            return View(task.Decorate());
         }
 
         // GET: /Tasks/Create
@@ -62,7 +61,7 @@ namespace Jarboo.Admin.Web.Controllers
             }
 
             ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(), "EmployeeId", "FullName");
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer(), Filter<Project>.None), "ProjectId", "Name", "Customer.Name", task.ProjectId);
+            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer(), Filter.ForProject()), "ProjectId", "Name", "Customer.Name", task.ProjectId);
             return View(task);
         }
 
@@ -108,9 +107,9 @@ namespace Jarboo.Admin.Web.Controllers
                 RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
         }
 
-        public virtual ActionResult List(bool showProject = false, int? projectId = null, int? employeeId = null, TaskFilter taskFilter = null)
+        public virtual ActionResult List(bool showProject = false, int? projectId = null, int? employeeId = null, bool includeTasksWithDoneSteps = false,TaskFilter taskFilter = null)
         {
-            taskFilter = (taskFilter ?? Filter.ForTask()).WithProjectId(projectId).WithEmployeeId(employeeId);
+            taskFilter = (taskFilter ?? Filter.ForTask()).WithProjectId(projectId).WithEmployeeId(employeeId, includeTasksWithDoneSteps);
 
             var model = new TasksListViewModel()
                             {

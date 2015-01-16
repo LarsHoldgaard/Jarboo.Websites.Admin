@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 using Jarboo.Admin.DAL.Entities;
 
@@ -20,5 +19,11 @@ namespace Jarboo.Admin.BL.Models
         public TaskUrgency Urgency { get; set; }
         public int ProjectId { get; set; }
         public int? EmployeeId { get; set; }
+        public int? ForcedPriority { get; set; }
+
+        public string Identifier()
+        {
+            return Task.TaskIdentifier(Title, Type);
+        }
     }
 }

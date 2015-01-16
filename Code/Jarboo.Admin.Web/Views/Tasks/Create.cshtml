@@ -86,18 +86,22 @@
                                         @Html.TextBoxFor(x => x.Size, new { @placeholder = "Size" })
                                     </label>
                                 </section>
-
                                 <section>
                                     @Html.LabelFor(model => model.Urgency, new { @class = "label" })
                                     <label class="select select-multiple">
                                         @Html.EnumDropDownListFor(x => x.Urgency)
                                     </label>
                                 </section>
-
+                                <section>
+                                    @Html.LabelFor(model => model.ForcedPriority, "Priority ( left blank for automatic calculation )", new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.ForcedPriority, new { @placeholder = "Priority" })
+                                    </label>
+                                </section>
                                 <section>
                                     @Html.LabelFor(model => model.EmployeeId, new { @class = "label" })
                                     <label class="select select-multiple">
-                                        @Html.DropDownListFor(x => x.EmployeeId, (SelectList)ViewBag.EmployeesList, new { @class = "form-control" })
+                                        @Html.DropDownListFor(x => x.EmployeeId, (SelectList)ViewBag.EmployeesList, "Select automatically", new { @class = "form-control" })
                                     </label>
                                 </section>
                             </fieldset>

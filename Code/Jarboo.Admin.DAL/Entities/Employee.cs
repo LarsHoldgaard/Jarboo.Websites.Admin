@@ -27,8 +27,14 @@ namespace Jarboo.Admin.DAL.Entities
         public string Country { get; set; }
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
         public double HourlyPrice { get; set; }
+        public DateTime? DateDeleted { get; set; }
 
         public virtual List<EmployeePosition> Positions { get; set; }
         public virtual List<TaskStep> TaskSteps { get; set; }
+
+        public bool Deleted()
+        {
+            return DateDeleted.HasValue;
+        }
     }
 }

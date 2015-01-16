@@ -63,6 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Services\ServicesFactory.cs" />
+    <Compile Include="Services\EmployeeServiceTests.cs" />
+    <Compile Include="Factory.cs" />
+    <Compile Include="Services\ProjectServiceTests.cs" />
     <Compile Include="Services\TaskServiceTests.cs" />
     <Compile Include="TestsSetup.cs" />
   </ItemGroup>
@@ -82,6 +85,10 @@
     <ProjectReference Include="..\Jarboo.Admin.DAL\Jarboo.Admin.DAL.csproj">
       <Project>{286ff3f8-7581-4bf0-af2c-47a88b50ff3a}</Project>
       <Name>Jarboo.Admin.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jarboo.Admin.Web\Jarboo.Admin.DAL.Tests\Jarboo.Admin.DAL.Tests.csproj">
+      <Project>{69444b53-23bb-470a-aa13-8a00d984a167}</Project>
+      <Name>Jarboo.Admin.DAL.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

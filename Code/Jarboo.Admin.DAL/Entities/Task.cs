@@ -36,6 +36,7 @@ namespace Jarboo.Admin.DAL.Entities
         public int Size { get; set; }
         public TaskUrgency Urgency { get; set; }
         public bool Done { get; set; }
+        public int? ForcedPriority { get; set; }
 
         public string FolderLink { get; set; }
         public string CardLink { get; set; }
@@ -56,9 +57,28 @@ namespace Jarboo.Admin.DAL.Entities
             return type.GetLetter() + "_" + title;
         }
 
-        public bool Deleted()
+        public bool Deleted
         {
-            return DateDeleted.HasValue;
+            get
+            {
+                return DateDeleted.HasValue;
+            }
+        }
+
+        public decimal Priority
+        {
+            get
+            {
+                var val = 0.0m;
+                if (ForcedPriority.HasValue)
+                {
+                    return ForcedPriority.Value;
+                }
+
+                val += (int)this.Urgency * 5;
+                val -= this.Size * 0.5m;
+                return val;
+            }
         }
     }
 

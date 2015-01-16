@@ -11,7 +11,7 @@ namespace Jarboo.Admin.BL.Filters
     public class Filter<T>
         where T : BaseEntity
     {
-        public static Filter<T> None = new Filter<T>();
+        internal static Filter<T> None = new Filter<T>();
 
         public int? PageSize { get; set; }
         public int? PageNumber { get; set; }
@@ -56,6 +56,15 @@ namespace Jarboo.Admin.BL.Filters
         public static DocumentationFilter ForDocumentation()
         {
             return new DocumentationFilter();
+        }
+    }
+
+    public static class FilterExtensions
+    {
+        public static PagedData<T> Filter<T>(this IQueryable<T> query, Filter<T> filter)
+            where T : BaseEntity
+        {
+            return filter.Execute(query);
         }
     }
 }

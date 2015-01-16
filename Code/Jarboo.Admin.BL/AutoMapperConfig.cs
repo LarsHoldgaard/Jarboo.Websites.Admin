@@ -50,9 +50,8 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<CustomerCreate, Customer>()
                 .ForMember(x => x.CustomerId, x => x.Ignore());
 
-            Mapper.CreateMap<Project, ProjectCreate>();
-            Mapper.CreateMap<ProjectCreate, Project>()
-                .ForMember(x => x.ProjectId, x => x.Ignore());
+            Mapper.CreateMap<Project, ProjectEdit>();
+            Mapper.CreateMap<ProjectEdit, Project>();
 
             Mapper.CreateMap<DAL.Entities.Task, TaskCreate>();
             Mapper.CreateMap<TaskCreate, DAL.Entities.Task>()

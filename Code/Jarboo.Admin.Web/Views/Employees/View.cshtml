@@ -184,11 +184,10 @@
                     </span>*@
             </h1>
         </div>
-        @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
-                                            {
-                                                Tasks = Model.TaskSteps.Select(x => x.Task).Distinct(new TaskEqualityComparer()).ToList().Decorate()
-                                            })
         <!-- end col -->
     </div>
+    
+    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { employeeId = Model.EmployeeId })
+
     <!-- end row -->
 </div>

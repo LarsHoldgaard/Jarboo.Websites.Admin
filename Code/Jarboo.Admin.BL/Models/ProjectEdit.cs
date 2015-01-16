@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Jarboo.Admin.BL.Models
 {
-    public class ProjectCreate
+    public class ProjectEdit
     {
         public int ProjectId { get; set; }
         [Required]
         public string Name { get; set; }
+        public string BoardName { get; set; }
         public int CustomerId { get; set; }
     }
 }

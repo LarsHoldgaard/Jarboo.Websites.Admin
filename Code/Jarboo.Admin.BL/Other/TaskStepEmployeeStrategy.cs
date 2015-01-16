@@ -1,30 +1,33 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 
 using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Services;
+using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Other
 {
     public interface ITaskStepEmployeeStrategy
     {
-        int SelectEmployee(TaskStepEnum step, int projectId);
+        Employee SelectEmployee(TaskStepEnum step, int projectId);
     }
 
     public class TaskStepEmployeeStrategy : ITaskStepEmployeeStrategy
     {
-        protected IEmployeeService EmployeeService { get; set; }
+        protected IUnitOfWork UnitOfWork { get; set; }
 
-        public TaskStepEmployeeStrategy(IEmployeeService employeeService)
+        public TaskStepEmployeeStrategy(IUnitOfWork unitOfWork)
         {
-            EmployeeService = employeeService;
+            UnitOfWork = unitOfWork;
         }
 
-        public int SelectEmployee(TaskStepEnum step, int projectId)
+        public Employee SelectEmployee(TaskStepEnum step, int projectId)
         {
-            var employees = EmployeeService.GetAllEx(Include.ForEmployee().Positions(), Filter<Employee>.None).Data;
+
+            var employees = UnitOfWork.Employees.AsNoTracking().Include(Include.ForEmployee().Positions()).Filter(Filter.ForEmployee()).Data;
             if (employees.Count == 0)
             {
                 throw new ApplicationException("At least one employee should be created first");
@@ -36,7 +39,7 @@ namespace Jarboo.Admin.BL.Other
                 employees = employees.Where(x => x.Positions.Any(y => y.Position == requiredPosition)).ToList();
             }
 
-            return employees[new Random().Next(employees.Count)].EmployeeId;
+            return employees[new Random().Next(employees.Count)];
         }
     }
 }

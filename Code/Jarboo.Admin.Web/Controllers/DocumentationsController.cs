@@ -26,7 +26,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Documentations/
         public virtual ActionResult Index()
         {
-            return View(DocumentationService.GetAllEx(Include.ForDocumentation().Project(), Filter<Documentation>.None));
+            return View(MVC.Documentations.Views.Index);
         }
 
         // GET: /Documentations/View/5
@@ -76,7 +76,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         private ActionResult CreateEditView(DocumentationEdit model)
         {
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer(), Filter<Project>.None), "ProjectId", "Name", "Customer.Name", model.ProjectId);
+            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer(), BL.Filters.Filter.ForProject()), "ProjectId", "Name", "Customer.Name", model.ProjectId);
             return View(model);
         }
 

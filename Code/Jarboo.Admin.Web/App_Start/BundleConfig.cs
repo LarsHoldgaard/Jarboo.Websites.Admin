@@ -13,25 +13,13 @@ namespace Jarboo.Admin.Web.App_Start
             bundles.Add(new ScriptBundle("~/js/site").Include(
                 "~/Scripts/Site/site.js"));
 
-            bundles.Add(new ScriptBundle("~/js/jquery").Include(
-                "~/Scripts/jquery-{version}.js"));
-
-            bundles.Add(new ScriptBundle("~/js/validation").Include(
-                        "~/Scripts/jquery.validate*",
-                        "~/Scripts/Site/jquery.validation.fix.js",
-                        "~/Scripts/Site/validation.style.js"));
-
-            bundles.Add(new ScriptBundle("~/js/bootstrap").Include(
-                "~/Scripts/bootstrap.js",
+            bundles.Add(new ScriptBundle("~/js/bootstrap-datepicker").Include(
                 "~/Scripts/bootstrap-datepicker.js"));
 
 
 
             bundles.Add(new StyleBundle("~/css/site").Include(
                 "~/Content/main.css"));
-
-            bundles.Add(new StyleBundle("~/css/bootstrap").Include(
-                "~/Content/bootstrap.css"));
 
             //---SmartAdmin Theme Bundles---
             bundles.Add(new StyleBundle("~/content/smartadmin").IncludeDirectory("~/content/css", "*.min.css"));

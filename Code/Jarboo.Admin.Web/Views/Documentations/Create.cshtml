@@ -16,15 +16,16 @@
     <ol class="breadcrumb">
         @(new BreadCrumbsBuilder()
             .Add(Url.Action(MVC.Documentations.Index()), "Documentations")
-            .Add("New employee")
+            .Add("New documentation")
             .Done())
     </ol>
     <!-- end breadcrumb -->
 </div>
 <!-- END RIBBON -->
 <div id="content">
-@Html.Partial(MVC.Documentations.Views._Form, Model)
+    @Html.Partial(MVC.Documentations.Views._Form, Model)
 </div>
+
 @section pagespecific {
     <script type="text/javascript">
         $(document).ready(function () {

@@ -1,4 +1,9 @@
-﻿@model Jarboo.Admin.Web.Models.Task.TasksListViewModel
+﻿@using Jarboo.Admin.Web.Models
+@model Jarboo.Admin.Web.Models.Task.TasksListViewModel
+
+@{
+    Layout = null;
+}
 
 <!-- widget grid -->
 <section id="widget-grid" class="">
@@ -53,6 +58,9 @@
                                             </th>
                                         }
                                         <th class="sorting">
+                                            Priority
+                                        </th>
+                                        <th class="sorting">
                                             Type
                                         </th>
                                         <th class="sorting">
@@ -70,6 +78,7 @@
                                         <th class="sorting">
                                             Step
                                         </th>
+                                        <th></th>
                                     </tr>
 
                                 </thead>
@@ -79,7 +88,7 @@
                                         <tr>
                                             <td class="details-control" id="@task.TaskId"></td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => task.Title)
+                                                @Html.ActionLink(task.FullTitle(), MVC.Tasks.View(task.TaskId))
                                             </td>
                                             @if (Model.ShowProject)
                                             {
@@ -87,6 +96,9 @@
                                                     @Html.DisplayFor(modelItem => task.Project.Name)
                                                 </td>
                                             }
+                                            <td>
+                                                @Html.DisplayFor(x => task.Priority)
+                                            </td>
                                             <td>
                                                 @Html.DisplayFor(x => task.Type)
                                             </td>
@@ -121,15 +133,20 @@
                                                     <i class="glyphicon glyphicon-list"></i> @task.Step()
                                                 </a>
                                             </td>
-                                            @*<td>
-                            @Html.ActionLink("View", MVC.Tasks.View(task.TaskId))
-                        </td>*@
+                                            <td>
+                                                @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
+                                                {
+                                                    Id = task.TaskId,
+                                                    Action = MVC.Tasks.Delete(),
+                                                    Small = true
+                                                })
+                                            </td>
                                         </tr>
                                     }
-                                    @if (Model.Tasks.Any())
+                                    @if (!Model.Tasks.Any())
                                     {
                                         <tr>
-                                            <td colspan="9">
+                                            <td colspan="11">
                                                 No task has been created.
                                             </td>
                                         </tr>

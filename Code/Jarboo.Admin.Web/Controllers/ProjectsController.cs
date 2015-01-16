@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
+using Jarboo.Admin.BL;
 using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
+using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL;
@@ -24,11 +26,13 @@ namespace Jarboo.Admin.Web.Controllers
         public IProjectService ProjectService { get; set; }
         [Inject]
         public ICustomerService CustomerService { get; set; }
+        [Inject]
+        public ITaskRegister TaskRegister { get; set; }
 
         // GET: /Projects/
         public virtual ActionResult Index()
         {
-            return View(ProjectService.GetAllEx(Include.ForProject().Customer(), Filter<Project>.None));
+            return View(ProjectService.GetAllEx(Include.ForProject().Customer(), BL.Filters.Filter.ForProject()));
         }
 
         // GET: /Projects/View/5
@@ -50,24 +54,49 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Projects/Create
         public virtual ActionResult Create(int? customerId)
         {
-            var project = new ProjectCreate();
+            var projectEdit = new ProjectEdit();
             if (customerId.HasValue)
             {
-                project.CustomerId = customerId.Value;
+                projectEdit.CustomerId = customerId.Value;
             }
 
-            ViewBag.CustomersList = new SelectList(CustomerService.GetAll(), "CustomerId", "Name", project.CustomerId);
-            return View(project);
+            return this.CreateEditView(projectEdit);
         }
 
-        // POST: /Projects/Create
+        // GET: /Projects/Edit/5
+        public virtual ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var project = ProjectService.GetById(id.Value);
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+
+            var projectEdit = project.MapTo<ProjectEdit>();
+            return this.CreateEditView(projectEdit);
+        }
+
+        private ActionResult CreateEditView(ProjectEdit model)
+        {
+            ViewBag.BoardNames = new SelectList(TaskRegister.BoardNames(), model.BoardName);
+            ViewBag.CustomersList = new SelectList(CustomerService.GetAll(), "CustomerId", "Name", model.CustomerId);
+            return View(model);
+        }
+
+        // POST: /Projects/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Create(ProjectCreate model)
+        public virtual ActionResult Edit(ProjectEdit model)
         {
-            return Handle(model, ProjectService.Create,
+            return Handle(model, ProjectService.Save,
                 () => RedirectToAction(MVC.Projects.View(model.ProjectId)),
-                RedirectToAction(MVC.Projects.Create()));
+                () => model.ProjectId == 0 ?
+                    RedirectToAction(MVC.Projects.Create()) :
+                    RedirectToAction(MVC.Projects.Edit(model.ProjectId)));
         }
     }
 }

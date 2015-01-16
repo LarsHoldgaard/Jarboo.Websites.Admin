@@ -37,16 +37,11 @@ namespace Jarboo.Admin.DAL.Tests
         }
         public static Project AddProject(this IUnitOfWork context, Action<Project> beforeSave = null)
         {
-            if (!context.Customers.Any())
-            {
-                context.AddCustomer();
-            }
-
-            var customer = context.Customers.OrderBy(x => x.DateCreated).AsEnumerable().Last();
             var project = new Project()
                               {
                                   Name = "Project",
-                                  Customer = customer
+                                  BoardName = "BoardName",
+                                  Customer = context.EnsureCustomer()
                               };
 
             if (beforeSave != null)
@@ -79,15 +74,9 @@ namespace Jarboo.Admin.DAL.Tests
         }
         public static EmployeePosition AddEmployeePosition(this IUnitOfWork context, Action<EmployeePosition> beforeSave = null)
         {
-            if (!context.Employees.Any())
-            {
-                context.AddEmployee();
-            }
-
-            var employee = context.Employees.OrderBy(x => x.DateCreated).AsEnumerable().Last();
             var position = new EmployeePosition()
                                {
-                                   Employee = employee,
+                                   Employee = context.EnsureEmployee(),
                                    Position = Position.Architecture,
                                };
             if (beforeSave != null)
@@ -102,12 +91,6 @@ namespace Jarboo.Admin.DAL.Tests
         }
         public static Task AddTask(this IUnitOfWork context, Action<Task> beforeSave = null)
         {
-            if (!context.Projects.Any())
-            {
-                context.AddProject();
-            }
-
-            var project = context.Projects.OrderBy(x => x.DateCreated).AsEnumerable().Last();
             var task = new Task()
             {
                 Title = "Task",
@@ -116,7 +99,7 @@ namespace Jarboo.Admin.DAL.Tests
                 CardLink = "card",
                 FolderLink = "folder",
                 Size = 1,
-                Project = project,
+                Project = context.EnsureProject(),
             };
 
             if (beforeSave != null)
@@ -128,6 +111,58 @@ namespace Jarboo.Admin.DAL.Tests
             context.SaveChanges();
 
             return task;
+        }
+        public static TaskStep AddTaskStep(this IUnitOfWork context, Action<TaskStep> beforeSave = null)
+        {
+            var taskStep = new TaskStep()
+            {
+                Employee = context.EnsureEmployee(),
+                Task = context.EnsureTask(),
+                Step = TaskStep.First()
+            };
+
+            if (beforeSave != null)
+            {
+                beforeSave(taskStep);
+            }
+
+            context.TaskSteps.Add(taskStep);
+            context.SaveChanges();
+
+            return taskStep;
+        }
+
+        public static T Ensure<T>(this IQueryable<T> query, Func<T> create)
+            where T : BaseEntity
+        {
+            if (!query.Any())
+            {
+                return create();
+            }
+
+            return query.LastCreated();
+        }
+        internal static T LastCreated<T>(this IQueryable<T> query)
+            where T : BaseEntity
+        {
+            return query.OrderBy(x => x.DateCreated).AsEnumerable().Last();
+        }
+
+        public static Customer EnsureCustomer(this IUnitOfWork context, Action<Customer> beforeSave = null)
+        {
+            return Ensure(context.Customers, () => context.AddCustomer(beforeSave));
+        }
+        public static Project EnsureProject(this IUnitOfWork context, Action<Project> beforeSave = null)
+        {
+            return Ensure(context.Projects, () => context.AddProject(beforeSave));
+        }
+        public static Employee EnsureEmployee(this IUnitOfWork context, Action<Employee> beforeSave = null)
+        {
+            return Ensure(context.Employees, () => context.AddEmployee(beforeSave));
+        }
+        public static Task EnsureTask(this IUnitOfWork context, Action<Task> beforeSave = null)
+        {
+            return Ensure(context.Tasks, () => context.AddTask(beforeSave));
         }
 
         #endregion

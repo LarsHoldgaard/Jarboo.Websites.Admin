@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- Basic Styles -->
     @Styles.Render("~/content/smartadmin")
+    @Styles.Render("~/css/site")
     <!-- FAVICONS -->
     <link rel="shortcut icon" href="~/content/img/favicon/favicon.ico" type="image/x-icon">
     <link rel="icon" href="~/content/img/favicon/favicon.ico" type="image/x-icon">
@@ -35,6 +36,8 @@
     @{ Html.RenderPartial("_Header", RenderSection("topright", false)); }
     @{ Html.RenderPartial("_Aside"); }
     <div id="main" role="main">
+        @Html.Partial(MVC.Shared.Views.Messages, ViewData)
+
         @RenderBody()
     </div>
     @{Html.RenderPartial("_Footer"); }

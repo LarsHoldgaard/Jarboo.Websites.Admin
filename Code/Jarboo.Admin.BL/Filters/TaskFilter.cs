@@ -12,6 +12,7 @@ namespace Jarboo.Admin.BL.Filters
     {
         public int? ProjectId { get; set; }
         public int? EmployeeId { get; set; }
+        public bool IncludeTasksWithDoneStepsForEmployee { get; set; }
 
         public DateTime? DateModifiedFrom { get; set; }
         public DateTime? DateModifiedTo { get; set; }
@@ -25,9 +26,10 @@ namespace Jarboo.Admin.BL.Filters
             this.ProjectId = projectId;
             return this;
         }
-        public TaskFilter WithEmployeeId(int? employeeId)
+        public TaskFilter WithEmployeeId(int? employeeId, bool includeTasksWithDoneSteps = false)
         {
             this.EmployeeId = employeeId;
+            this.IncludeTasksWithDoneStepsForEmployee = includeTasksWithDoneSteps;
             return this;
         }
 
@@ -72,7 +74,14 @@ namespace Jarboo.Admin.BL.Filters
 
             if (EmployeeId.HasValue)
             {
-                query = query.Where(x => x.Steps.Any(y => y.EmployeeId == EmployeeId.Value));
+                if (IncludeTasksWithDoneStepsForEmployee)
+                {
+                    query = query.Where(x => x.Steps.Any(y => y.EmployeeId == EmployeeId.Value));
+                }
+                else
+                {
+                    query = query.Where(x => x.Steps.Any(y => !y.DateEnd.HasValue && y.EmployeeId == EmployeeId.Value));
+                }
             }
 
             if (!ShowDeleted)

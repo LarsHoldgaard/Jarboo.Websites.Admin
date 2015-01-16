@@ -9,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jarboo.Admin.BL.Tests.Services
+namespace Jarboo.Admin.BL.Tests
 {
-    public class ServicesFactory
+    public class Factory
     {
         public static TaskService CreateTaskService(
             IUnitOfWork unitOfWork = null,
@@ -28,11 +28,25 @@ namespace Jarboo.Admin.BL.Tests.Services
         }
 
         public static EmployeeService CreateEmployeeService(
-            IUnitOfWork unitOfWork = null)
+            IUnitOfWork unitOfWork = null,
+            ITaskRegister taskRegister = null,
+            ITaskStepEmployeeStrategy taskStepEmployeeStrategy = null)
         {
             unitOfWork = unitOfWork ?? A.Fake<IUnitOfWork>();
+            taskRegister = taskRegister ?? A.Fake<ITaskRegister>();
+            taskStepEmployeeStrategy = taskStepEmployeeStrategy ?? A.Fake<ITaskStepEmployeeStrategy>();
 
-            return new EmployeeService(unitOfWork);
+            return new EmployeeService(unitOfWork, taskRegister, taskStepEmployeeStrategy);
+        }
+
+        public static ProjectService CreateProjectService(
+            IUnitOfWork unitOfWork = null,
+            ITaskRegister taskRegister = null)
+        {
+            unitOfWork = unitOfWork ?? A.Fake<IUnitOfWork>();
+            taskRegister = taskRegister ?? A.Fake<ITaskRegister>();
+
+            return new ProjectService(unitOfWork, taskRegister);
         }
     }
 }
