@@ -52,6 +52,7 @@
                                             </th>
                                         }
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,7 +69,8 @@
                                                 </td>
                                             }
                                             <td>
-                                                @Html.ActionLink("View", MVC.Projects.View(project.ProjectId))
+                                                @Html.ActionLink("View", MVC.Projects.View(project.ProjectId)) |
+                                                @Html.ActionLink("Edit", MVC.Projects.Edit(project.ProjectId))
                                             </td>
                                         </tr>
                                     }
@@ -76,7 +78,7 @@
                                     @if (!Model.Projects.Any())
                                     {
                                         <tr>
-                                            <td colspan="3">
+                                            <td colspan="4">
                                                 No project has been created.
                                             </td>
                                         </tr>

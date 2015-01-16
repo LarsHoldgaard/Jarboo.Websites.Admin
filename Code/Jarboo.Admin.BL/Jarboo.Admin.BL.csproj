@@ -76,7 +76,7 @@
     <Compile Include="Includes\TaskInclude.cs" />
     <Compile Include="Models\CustomerCreate.cs" />
     <Compile Include="Models\EmployeeEdit.cs" />
-    <Compile Include="Models\ProjectCreate.cs" />
+    <Compile Include="Models\ProjectEdit.cs" />
     <Compile Include="Models\TaskCreate.cs" />
     <Compile Include="Models\TaskNextStep.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

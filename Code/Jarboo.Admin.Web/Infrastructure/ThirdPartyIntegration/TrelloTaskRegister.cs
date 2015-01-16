@@ -36,11 +36,9 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             }
         }
 
-        private Board OpenBoard(string customerName)
+        private Board OpenBoard(string boardName)
         {
             this.EnsureTrello();
-
-            var boardName = customerName + " tasks";
 
             var boards = this.trello.Boards.Search(boardName);
             var board = boards.FirstOrDefault();
@@ -52,11 +50,11 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             return board;
         }
 
-        public string Register(string customerName, string taskIdentifier, string folderLink)
+        public string Register(string boardName, string taskIdentifier, string folderLink)
         {
             this.EnsureTrello();
 
-            var board = this.OpenBoard(customerName);
+            var board = this.OpenBoard(boardName);
 
             var lists = this.trello.Lists.ForBoard(board);
             var list = lists.FirstOrDefault();
@@ -75,27 +73,27 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             }
             catch (Exception ex)
             {
-                this.Unregister(customerName, taskIdentifier, card.Url);
+                this.Unregister(boardName, taskIdentifier, card.Url);
                 throw;
             }
         }
 
-        public void Unregister(string customerName, string taskIdentifier, string url)
+        public void Unregister(string boardName, string taskIdentifier, string url)
         {
             this.EnsureTrello();
 
-            var card = this.FindCard(customerName, taskIdentifier, url);
+            var card = this.FindCard(boardName, taskIdentifier, url);
             if (card != null)
             {
                 this.trello.Cards.Delete(card);
             }
         }
 
-        private Card FindCard(string customerName, string taskIdentifier, string url)
+        private Card FindCard(string boardName, string taskIdentifier, string url)
         {
             this.EnsureTrello();
 
-            var board = this.OpenBoard(customerName);
+            var board = this.OpenBoard(boardName);
 
             var lists = this.trello.Lists.ForBoard(board);
             var list = lists.FirstOrDefault();
@@ -107,11 +105,11 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             return this.trello.Cards.ForList(list).FirstOrDefault(x => x.Name == taskIdentifier && x.Url == url);
         }
 
-        public void ChangeResponsible(string customerName, string taskIdentifier, string url, string responsibleUserId)
+        public void ChangeResponsible(string boardName, string taskIdentifier, string url, string responsibleUserId)
         {
             this.EnsureTrello();
 
-            var card = this.FindCard(customerName, taskIdentifier, url);
+            var card = this.FindCard(boardName, taskIdentifier, url);
             if (card == null)
             {
                 //throw new ApplicationException("Coudn't find the card");
@@ -141,6 +139,19 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             {
                 throw new ApplicationException("Coudn't set responsible. Check trello Id.", ex);
             }
+        }
+
+        public string DefaultBoardName(string customerName)
+        {
+            return customerName + " tasks";
+        }
+
+        public System.Collections.Generic.IEnumerable<string> BoardNames()
+        {
+            this.EnsureTrello();
+
+            var boards = this.trello.Boards.ForMe();
+            return boards.Select(x => x.Name).ToList();
         }
     }
 }

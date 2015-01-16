@@ -60,6 +60,7 @@
     <Compile Include="Entities\TaskStep.cs" />
     <Compile Include="Extensions\CustomerExtensions.cs" />
     <Compile Include="Extensions\EmployeeExtensions.cs" />
+    <Compile Include="Extensions\ProjectExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Extensions\TaskStepExtensions.cs" />
     <Compile Include="IUnitOfWork.cs" />
@@ -74,6 +75,10 @@
     <Compile Include="Migrations\201501151324426_EmployeeDateDeleted.cs" />
     <Compile Include="Migrations\201501151324426_EmployeeDateDeleted.Designer.cs">
       <DependentUpon>201501151324426_EmployeeDateDeleted.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501161112330_Project_BoardName.cs" />
+    <Compile Include="Migrations\201501161112330_Project_BoardName.Designer.cs">
+      <DependentUpon>201501161112330_Project_BoardName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501151324426_EmployeeDateDeleted.resx">
       <DependentUpon>201501151324426_EmployeeDateDeleted.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501161112330_Project_BoardName.resx">
+      <DependentUpon>201501161112330_Project_BoardName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

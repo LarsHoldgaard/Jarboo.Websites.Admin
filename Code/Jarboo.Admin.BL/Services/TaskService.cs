@@ -55,13 +55,14 @@ namespace Jarboo.Admin.BL.Services
                 return;
             }
 
-            var customer = UnitOfWork.Customers.AsNoTracking().ByProject(model.ProjectId);
+            var project = UnitOfWork.Projects.AsNoTracking().Include(x => x.Customer).ByIdMust(model.ProjectId);
+            var customer = project.Customer;
 
             var employee = !model.EmployeeId.HasValue ? 
                 this.TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId) : 
                 this.UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
-            var taskIdentifier = Task.TaskIdentifier(model.Title, model.Type);
+            var taskIdentifier = model.Identifier();
             string taskLink = null;
             string folderLink = null;
 
@@ -69,8 +70,8 @@ namespace Jarboo.Admin.BL.Services
             {
                 folderLink = CreateFolder(customer.Name, taskIdentifier);
 
-                taskLink = RegisterTask(customer.Name, taskIdentifier, folderLink);
-                ChangeResponsible(customer.Name, taskIdentifier, taskLink, employee.TrelloId);
+                taskLink = RegisterTask(project.BoardName, taskIdentifier, folderLink);
+                ChangeResponsible(project.BoardName, taskIdentifier, taskLink, employee.TrelloId);
 
                 var entity = new Task()
                 {
@@ -88,20 +89,20 @@ namespace Jarboo.Admin.BL.Services
             }
             catch (ApplicationException ex)
             {
-                this.Cleanup(customer, taskIdentifier, taskLink, folderLink);
+                this.Cleanup(customer.Name, project.BoardName, taskIdentifier, taskLink, folderLink);
                 throw;
             }
             catch (Exception ex)
             {
-                this.Cleanup(customer, taskIdentifier, taskLink, folderLink);
+                this.Cleanup(customer.Name, project.BoardName, taskIdentifier, taskLink, folderLink);
                 throw new ApplicationException("Couldn't create task", ex);
             }
         }
-        private string RegisterTask(string customerName, string taskIdentifier, string folderLink)
+        private string RegisterTask(string boardName, string taskIdentifier, string folderLink)
         {
             try
             {
-                return TaskRegister.Register(customerName, taskIdentifier, folderLink);
+                return TaskRegister.Register(boardName, taskIdentifier, folderLink);
             }
             catch (ApplicationException)
             {
@@ -112,11 +113,11 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Could not register task in third party service", ex);
             }
         }
-        private void ChangeResponsible(string customerName, string tasktaskIdentifierTitle, string url, string responsibleUserId)
+        private void ChangeResponsible(string boardName, string tasktaskIdentifierTitle, string url, string responsibleUserId)
         {
             try
             {
-                TaskRegister.ChangeResponsible(customerName, tasktaskIdentifierTitle, url, responsibleUserId);
+                TaskRegister.ChangeResponsible(boardName, tasktaskIdentifierTitle, url, responsibleUserId);
             }
             catch (ApplicationException)
             {
@@ -127,11 +128,11 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Could not set responsible for task", ex);
             }
         }
-        private void UnregisterTask(string customerName, string taskIdentifier, string url)
+        private void UnregisterTask(string boardName, string taskIdentifier, string url)
         {
             try
             {
-                TaskRegister.Unregister(customerName, taskIdentifier, url);
+                TaskRegister.Unregister(boardName, taskIdentifier, url);
             }
             catch
             { }
@@ -160,15 +161,15 @@ namespace Jarboo.Admin.BL.Services
             catch
             { }
         }
-        private void Cleanup(Customer customer, string taskIdentifier, string taskLink, string folderLink)
+        private void Cleanup(string customerName, string boardName, string taskIdentifier, string taskLink, string folderLink)
         {
             if (!string.IsNullOrEmpty(taskLink))
             {
-                this.UnregisterTask(customer.Name, taskIdentifier, taskLink);
+                this.UnregisterTask(boardName, taskIdentifier, taskLink);
             }
             if (!string.IsNullOrEmpty(folderLink))
             {
-                this.DeleteFolder(customer.Name, taskIdentifier);
+                this.DeleteFolder(customerName, taskIdentifier);
             }
         }
 
@@ -176,12 +177,10 @@ namespace Jarboo.Admin.BL.Services
         {
             var now = DateTime.Now;
 
-            var entity = Table.Include(x => x.Steps).ByIdMust(model.TaskId);
-            entity.DateModified = now;
+            var task = Table.Include(x => x.Steps).Include(x => x.Project).ByIdMust(model.TaskId);
+            task.DateModified = now;
 
-            var customer = UnitOfWork.Customers.ByProjectMust(entity.ProjectId);
-
-            var lastStep = entity.Steps.Last();
+            var lastStep = task.Steps.Last();
             lastStep.DateModified = now;
             lastStep.DateEnd = now;
 
@@ -189,25 +188,25 @@ namespace Jarboo.Admin.BL.Services
             if (nextStep.HasValue)
             {
                 Employee employee = !model.EmployeeId.HasValue ? 
-                    this.TaskStepEmployeeStrategy.SelectEmployee(nextStep.Value, entity.ProjectId) : 
+                    this.TaskStepEmployeeStrategy.SelectEmployee(nextStep.Value, task.ProjectId) : 
                     this.UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
-                ChangeResponsible(customer.Name, entity.Identifier(), entity.CardLink, employee.TrelloId);
+                ChangeResponsible(task.Project.BoardName, task.Identifier(), task.CardLink, employee.TrelloId);
 
-                entity.Steps.Add(new TaskStep() { EmployeeId = employee.EmployeeId, Step = nextStep.Value });
+                task.Steps.Add(new TaskStep() { EmployeeId = employee.EmployeeId, Step = nextStep.Value });
             }
             else
             {
-                ChangeResponsible(customer.Name, entity.Identifier(), entity.CardLink, null);
+                ChangeResponsible(task.Project.BoardName, task.Identifier(), task.CardLink, null);
 
-                entity.Done = true;
+                task.Done = true;
             }
             UnitOfWork.SaveChanges();
         }
 
         public void Delete(int taskId, IBusinessErrorCollection errors)
         {
-            var entity = Table.ByIdMust(taskId);
+            var entity = Table.Include(x => x.Project).ByIdMust(taskId);
             var customer = UnitOfWork.Customers.ByProjectMust(entity.ProjectId);
 
             entity.DateModified = DateTime.Now;
@@ -216,7 +215,7 @@ namespace Jarboo.Admin.BL.Services
             UnitOfWork.SaveChanges();
 
             this.DeleteFolder(customer.Name, entity.Identifier());
-            this.UnregisterTask(customer.Name, entity.Identifier(), entity.CardLink);
+            this.UnregisterTask(entity.Project.BoardName, entity.Identifier(), entity.CardLink);
         }
     }
 }

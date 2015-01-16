@@ -78,7 +78,7 @@ namespace Jarboo.Admin.DAL.Tests
 
             try
             {
-                Database.SetInitializer(new CreateDatabaseIfNotExists<Context>());
+                Database.SetInitializer(new DropCreateDatabaseAlways<Context>());
                 using (var context = CreateRalContext())
                 {
                     context.Database.Initialize(true);

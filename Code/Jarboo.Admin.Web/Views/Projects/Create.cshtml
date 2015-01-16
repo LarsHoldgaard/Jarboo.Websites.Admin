@@ -1,4 +1,4 @@
-﻿@model Jarboo.Admin.BL.Models.ProjectCreate
+﻿@model Jarboo.Admin.BL.Models.ProjectEdit
 
 @{
     ViewBag.Title = "New project";
@@ -22,76 +22,8 @@
     <!-- end breadcrumb -->
 </div>
 <!-- END RIBBON -->
-<div id="content">
-    <!-- row -->
-    <div class="row">
-        <article class="col-sm-12 col-md-12 col-lg-7">
-            <!-- Widget ID (each widget will need unique ID)-->
-            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-5" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
-                <!-- widget options:
-                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-                data-widget-colorbutton="false"
-                data-widget-editbutton="false"
-                data-widget-togglebutton="false"
-                data-widget-deletebutton="false"
-                data-widget-fullscreenbutton="false"
-                data-widget-custombutton="false"
-                data-widget-collapsed="true"
-                data-widget-sortable="false"
-
-                -->
-                <header>
-                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                    <h2>New </h2>
-                </header>
-                <!-- widget div-->
-                <div>
-                    <!-- widget edit box -->
-                    <div class="jarviswidget-editbox">
-                        <!-- This area used as dropdown edit box -->
-                    </div>
-                    <!-- end widget edit box -->
-                    <!-- widget content -->
-                    <div class="widget-body no-padding">
-                        @using (Html.BeginForm("create", "projects", FormMethod.Post, new {@id = "form1", @class = "smart-form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(false)
-                            <header>
-                                New Project
-                            </header>
-                            <fieldset>
-                                <section>
-                                    @Html.LabelFor(model => model.Name, new { @class = "label" })
-                                    <label class="input">
-                                        <i class="icon-append fa fa-user"></i>
-                                        @Html.TextBoxFor(x => x.Name, new { @placeholder = "Name" })
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.CustomerId, new { @class = "label" })
-                                    <label class="select select-multiple">
-                                        @Html.DropDownListFor(x => x.CustomerId, (SelectList)ViewBag.CustomersList, new { @class = "form-control" })
-                                    </label>
-                                </section>
-                            </fieldset>
-                            <footer>
-                                <button type="submit" class="btn btn-primary">
-                                    Create
-                                </button>
-                            </footer>
-                        }
-                    </div>
-                    <!-- end widget content -->
-                </div>
-                <!-- end widget div -->
-            </div>
-            <!-- end widget -->
-        </article>
-    </div>
-    <!-- end row -->
-</div>
+@Html.Partial(MVC.Projects.Views._Form, Model)
 
 @section pagespecific {
     <script type="text/javascript">

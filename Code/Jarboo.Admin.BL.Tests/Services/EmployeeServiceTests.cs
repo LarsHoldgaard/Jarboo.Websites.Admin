@@ -42,16 +42,16 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var employeeToDelete = context.AddEmployee();
                 var taskStep = context.AddTaskStep(x => x.Employee = employeeToDelete);
 
-                var taskRegister = A.Fake<ITaskRegister>();
+                var mockTaskRegister = A.Fake<ITaskRegister>();
                 var taskStepEmployeeStrategy = A.Fake<ITaskStepEmployeeStrategy>();
                 A.CallTo(() => taskStepEmployeeStrategy.SelectEmployee(taskStep.Step, taskStep.Task.ProjectId)).Returns(employee);
-                var service = Factory.CreateEmployeeService(context, taskRegister: taskRegister, taskStepEmployeeStrategy: taskStepEmployeeStrategy);
+                var service = Factory.CreateEmployeeService(context, taskRegister: mockTaskRegister, taskStepEmployeeStrategy: taskStepEmployeeStrategy);
 
 
                 service.Delete(employeeToDelete.EmployeeId, null);
 
 
-                A.CallTo(() => taskRegister.ChangeResponsible(
+                A.CallTo(() => mockTaskRegister.ChangeResponsible(
                         taskStep.Task.Project.Customer.Name,
                         taskStep.Task.Identifier(),
                         taskStep.Task.CardLink,
@@ -66,14 +66,14 @@ namespace Jarboo.Admin.BL.Tests.Services
             {
                 var taskStep = context.AddTaskStep(x => x.DateEnd = DateTime.Now);
 
-                var taskStepEmployeeStrategy = A.Fake<ITaskStepEmployeeStrategy>();
-                var service = Factory.CreateEmployeeService(context, taskStepEmployeeStrategy: taskStepEmployeeStrategy);
+                var mockTaskStepEmployeeStrategy = A.Fake<ITaskStepEmployeeStrategy>();
+                var service = Factory.CreateEmployeeService(context, taskStepEmployeeStrategy: mockTaskStepEmployeeStrategy);
 
 
                 service.Delete(taskStep.EmployeeId, null);
 
 
-                A.CallTo(() => taskStepEmployeeStrategy.SelectEmployee(A<TaskStepEnum>._, A<int>._)).MustNotHaveHappened();
+                A.CallTo(() => mockTaskStepEmployeeStrategy.SelectEmployee(A<TaskStepEnum>._, A<int>._)).MustNotHaveHappened();
             }
         }
     }

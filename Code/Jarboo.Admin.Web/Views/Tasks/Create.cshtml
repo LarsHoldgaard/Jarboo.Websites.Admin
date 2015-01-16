@@ -97,7 +97,7 @@
                                 <section>
                                     @Html.LabelFor(model => model.EmployeeId, new { @class = "label" })
                                     <label class="select select-multiple">
-                                        @Html.DropDownListFor(x => x.EmployeeId, (SelectList)ViewBag.EmployeesList, new { @class = "form-control" })
+                                        @Html.DropDownListFor(x => x.EmployeeId, (SelectList)ViewBag.EmployeesList, "Select automatically", new { @class = "form-control" })
                                     </label>
                                 </section>
                             </fieldset>

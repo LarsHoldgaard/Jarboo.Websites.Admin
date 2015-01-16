@@ -29,7 +29,7 @@ namespace Jarboo.Admin.BL.Tests
 
         public static EmployeeService CreateEmployeeService(
             IUnitOfWork unitOfWork = null,
-            ITaskRegister taskRegister = null, 
+            ITaskRegister taskRegister = null,
             ITaskStepEmployeeStrategy taskStepEmployeeStrategy = null)
         {
             unitOfWork = unitOfWork ?? A.Fake<IUnitOfWork>();
@@ -37,6 +37,16 @@ namespace Jarboo.Admin.BL.Tests
             taskStepEmployeeStrategy = taskStepEmployeeStrategy ?? A.Fake<ITaskStepEmployeeStrategy>();
 
             return new EmployeeService(unitOfWork, taskRegister, taskStepEmployeeStrategy);
+        }
+
+        public static ProjectService CreateProjectService(
+            IUnitOfWork unitOfWork = null,
+            ITaskRegister taskRegister = null)
+        {
+            unitOfWork = unitOfWork ?? A.Fake<IUnitOfWork>();
+            taskRegister = taskRegister ?? A.Fake<ITaskRegister>();
+
+            return new ProjectService(unitOfWork, taskRegister);
         }
     }
 }

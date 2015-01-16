@@ -1,7 +1,7 @@
-﻿@model Jarboo.Admin.BL.Models.DocumentationEdit
+﻿@model Jarboo.Admin.BL.Models.ProjectEdit
 
 @{
-    ViewBag.Title = "New documentation";
+    ViewBag.Title = Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,16 +15,15 @@
     <!-- breadcrumb -->
     <ol class="breadcrumb">
         @(new BreadCrumbsBuilder()
-            .Add(Url.Action(MVC.Documentations.Index()), "Documentations")
-            .Add("New documentation")
+            .Add(Url.Action(MVC.Projects.Index()), "Projects")
+            .Add(Model.Name)
             .Done())
     </ol>
     <!-- end breadcrumb -->
 </div>
 <!-- END RIBBON -->
-<div id="content">
-    @Html.Partial(MVC.Documentations.Views._Form, Model)
-</div>
+
+@Html.Partial(MVC.Projects.Views._Form, Model)
 
 @section pagespecific {
     <script type="text/javascript">
@@ -32,23 +31,21 @@
             $('#form1').validate({
                 // Rules for form validation
                 rules: {
-                    ProjectId: {
-                        required: true,
-                        number: true
-                    },
-                    Type: {
-                        required: true,
-                        number: true
-                    },
-                    DocumentLink: {
+                    Name: {
                         required: true
-                    }                    
+                    },
+                    CustomerId: {
+                        required: true,
+                    }
                 },
 
                 // Messages for form validation
                 messages: {
-                    DocumentLink: {
-                        required: 'DocumentLink required',
+                    Name: {
+                        required: 'Enter project name',
+                    },
+                    CustomerId: {
+                        required: 'CustomerId required'
                     }
                 },
 
