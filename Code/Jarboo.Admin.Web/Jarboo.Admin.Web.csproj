@@ -1112,8 +1112,6 @@
     <Content Include="Views\Documentations\_Form.cshtml" />
     <Content Include="Views\Documentations\View.cshtml" />
     <Content Include="Views\Documentations\Edit.cshtml" />
-    <Content Include="Views\Documentations\_List.cshtml" />
-    <Content Include="Views\Documentations\_DeleteForm.cshtml" />
     <Content Include="Views\Documentations\List.cshtml" />
     <Content Include="Views\Tasks\EditorTemplates\TaskFilter.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
