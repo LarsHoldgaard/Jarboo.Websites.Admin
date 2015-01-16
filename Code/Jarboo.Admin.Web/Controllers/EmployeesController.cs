@@ -100,5 +100,21 @@ namespace Jarboo.Admin.Web.Controllers
 
             return Handle(id, EmployeeService.Delete, result, result, "Employee successfully deleted");
         }
+
+        // GET: /Employees/View/5
+        public virtual ActionResult Tasks(int? id)
+        {
+            if (id == null)
+            {
+                return View(MVC.Employees.Views.ChooseForTasks, EmployeeService.GetAll().OrderBy(x => x.FullName));
+            }
+
+            Employee employee = EmployeeService.GetByIdEx(id.Value, Include.ForEmployee().Positions());
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+            return View(employee);
+        }
     }
 }

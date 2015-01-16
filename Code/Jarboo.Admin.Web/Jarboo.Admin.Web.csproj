@@ -1099,6 +1099,8 @@
     <Content Include="Views\Tasks\_List.cshtml" />
     <Content Include="Views\Projects\_Form.cshtml" />
     <Content Include="Views\Projects\Edit.cshtml" />
+    <Content Include="Views\Employees\Tasks.cshtml" />
+    <Content Include="Views\Employees\ChooseForTasks.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

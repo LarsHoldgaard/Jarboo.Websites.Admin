@@ -75,6 +75,12 @@ namespace Jarboo.Admin.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Tasks()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Tasks);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public EmployeesController Actions { get { return MVC.Employees; } }
@@ -96,6 +102,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
+            public readonly string Tasks = "Tasks";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -106,6 +113,7 @@ namespace Jarboo.Admin.Web.Controllers
             public const string Create = "Create";
             public const string Edit = "Edit";
             public const string Delete = "Delete";
+            public const string Tasks = "Tasks";
         }
 
 
@@ -135,6 +143,14 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string id = "id";
             public readonly string returnUrl = "returnUrl";
         }
+        static readonly ActionParamsClass_Tasks s_params_Tasks = new ActionParamsClass_Tasks();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Tasks TasksParams { get { return s_params_Tasks; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Tasks
+        {
+            public readonly string id = "id";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -146,15 +162,19 @@ namespace Jarboo.Admin.Web.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _Form = "_Form";
+                public readonly string ChooseForTasks = "ChooseForTasks";
                 public readonly string Create = "Create";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
+                public readonly string Tasks = "Tasks";
                 public readonly string View = "View";
             }
             public readonly string _Form = "~/Views/Employees/_Form.cshtml";
+            public readonly string ChooseForTasks = "~/Views/Employees/ChooseForTasks.cshtml";
             public readonly string Create = "~/Views/Employees/Create.cshtml";
             public readonly string Edit = "~/Views/Employees/Edit.cshtml";
             public readonly string Index = "~/Views/Employees/Index.cshtml";
+            public readonly string Tasks = "~/Views/Employees/Tasks.cshtml";
             public readonly string View = "~/Views/Employees/View.cshtml";
         }
     }
@@ -232,6 +252,18 @@ namespace Jarboo.Admin.Web.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
             DeleteOverride(callInfo, id, returnUrl);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void TasksOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Tasks(int? id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Tasks);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            TasksOverride(callInfo, id);
             return callInfo;
         }
 

@@ -80,6 +80,10 @@
     <Compile Include="Migrations\201501161112330_Project_BoardName.Designer.cs">
       <DependentUpon>201501161112330_Project_BoardName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501161521300_Task_ForcedPriority.cs" />
+    <Compile Include="Migrations\201501161521300_Task_ForcedPriority.Designer.cs">
+      <DependentUpon>201501161521300_Task_ForcedPriority.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -98,6 +102,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501161112330_Project_BoardName.resx">
       <DependentUpon>201501161112330_Project_BoardName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501161521300_Task_ForcedPriority.resx">
+      <DependentUpon>201501161521300_Task_ForcedPriority.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

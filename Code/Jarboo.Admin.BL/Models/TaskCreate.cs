@@ -19,6 +19,7 @@ namespace Jarboo.Admin.BL.Models
         public TaskUrgency Urgency { get; set; }
         public int ProjectId { get; set; }
         public int? EmployeeId { get; set; }
+        public int? ForcedPriority { get; set; }
 
         public string Identifier()
         {
