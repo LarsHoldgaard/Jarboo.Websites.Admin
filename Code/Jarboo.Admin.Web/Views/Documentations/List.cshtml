@@ -1,7 +1,6 @@
 ﻿@using Jarboo.Admin.Web.Models
 @model Jarboo.Admin.Web.Models.Documentation.DocumentationsListViewModel
 
-<<<<<<< HEAD
 <!-- widget grid -->
 <section id="widget-grid" class="">
     <!-- row -->
@@ -80,44 +79,6 @@
                                                 @Html.ActionLink(MVC.Documentations.ActionNames.Edit + "|", MVC.Documentations.Edit(doc.DocumentationId), new { @class = "pull-left" })
                                                 @Html.ActionLink(MVC.Documentations.ActionNames.View + "|", MVC.Documentations.View(doc.DocumentationId), new { @class = "pull-left" })                                                
                                                 @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
-=======
-<table class="table table-striped">
-    <tr>
-        @if (Model.ShowProject)
-        {
-            <th>Project
-            </th>
-        }
-        <th>Type
-        </th>
-        <th>Link
-        </th>
-        <th></th>
-        <th></th>
-    </tr>
-
-    @foreach (var doc in Model.Documentations)
-    {
-        <tr>
-            @if (Model.ShowProject)
-            {
-                <td>
-                    @Html.LabelFor(x => doc.ProjectId, doc.Project.Name)
-                </td>
-            }
-            <td>
-                @Html.DisplayFor(x => doc.Type)
-            </td>
-            <td>
-                <a target="_blank" href="@doc.DocumentLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
-            </td>
-            <td>
-                @Html.ActionLink(MVC.Documentations.ActionNames.Edit, MVC.Documentations.Edit(doc.DocumentationId)) |
-                @Html.ActionLink(MVC.Documentations.ActionNames.View, MVC.Documentations.View(doc.DocumentationId))
-            </td>
-            <td>
-                @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
->>>>>>> 286b2bfa2e70209ce4b7a5b8bcb444dd17218416
                                                                         {
                                                                             Id = doc.DocumentationId,
                                                                             Action = MVC.Documentations.Delete(),
@@ -161,14 +122,5 @@
 </section>
 <!-- end widget grid -->
 
-<<<<<<< HEAD
-=======
-    @if (!Model.Documentations.Any())
-    {
-        <tr>
-            <td colspan="5">No documentation has been created.
-            </td>
-        </tr>
-    }
->>>>>>> 286b2bfa2e70209ce4b7a5b8bcb444dd17218416
+
 
