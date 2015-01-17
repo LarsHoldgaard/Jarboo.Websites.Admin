@@ -60,12 +60,13 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => project.Name)
+                                                @Html.ActionLink(project.Name, MVC.Projects.View(project.ProjectId))
                                             </td>
                                             @if (Model.ShowCustomer)
                                             {
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => project.Customer.Name)
+                                                
+
+                                                <td>@Html.ActionLink(project.Customer.Name, MVC.Customers.View(project.CustomerId))
                                                 </td>
                                             }
                                             <td>
