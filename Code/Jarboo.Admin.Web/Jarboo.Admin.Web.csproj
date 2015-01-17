@@ -248,6 +248,7 @@
     <Content Include="Content\img\blank.gif" />
     <Content Include="Content\img\border.png" />
     <Content Include="Content\img\clear.png" />
+    <Content Include="Content\img\custom\logo.png" />
     <Content Include="Content\img\demo\64x64.png" />
     <Content Include="Content\img\demo\basic.png" />
     <Content Include="Content\img\demo\chat.png" />

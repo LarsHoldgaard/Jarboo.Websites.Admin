@@ -7,7 +7,7 @@
 <!-- Top menu profile link : this shows only when top menu is active -->
 <ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
     <li class="">
-        <a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown">
+        @*<a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown">
             <img src="~/content/img/avatars/sunny.png" alt="John Doe" class="online" />
         </a>
         <ul class="dropdown-menu pull-right">
@@ -30,7 +30,7 @@
             <li>
                 <a href="@Url.Action("login", "account")" class="padding-10 padding-top-5 padding-bottom-5" data-action="userLogout"><i class="fa fa-sign-out fa-lg"></i> <strong><>L</>ogout</strong></a>
             </li>
-        </ul>
+        </ul>*@
     </li>
 </ul>
 
@@ -46,7 +46,7 @@
 <!-- end search mobile button -->
 <!-- input: search field -->
 <form action="@Url.Action("search", "misc")" class="header-search pull-right">
-    <input id="search-fld" type="text" name="param" placeholder="Find reports and more" data-autocomplete='["ActionScript","AppleScript","Asp","BASIC","C","C++","Clojure","COBOL","ColdFusion","Erlang","Fortran","Groovy","Haskell","Java","JavaScript","Lisp","Perl","PHP","Python","Ruby","Scala","Scheme"]'>
+    <input id="search-fld" type="text" name="param" placeholder="Search tasks and projects..." data-autocomplete='["ActionScript","AppleScript","Asp","BASIC","C","C++","Clojure","COBOL","ColdFusion","Erlang","Fortran","Groovy","Haskell","Java","JavaScript","Lisp","Perl","PHP","Python","Ruby","Scala","Scheme"]'>
     <button type="submit">
         <i class="fa fa-search"></i>
     </button>
@@ -59,7 +59,7 @@
 </div>
 <!-- end fullscreen button -->
 <!-- #Voice Command: Start Speech -->
-<div id="speech-btn" class="btn-header transparent pull-right hidden-sm hidden-xs">
+@*<div id="speech-btn" class="btn-header transparent pull-right hidden-sm hidden-xs">
     <div>
         <a href="javascript:void(0)" title="Voice Command" data-action="voiceCommand"><i class="fa fa-microphone"></i></a>
         <div class="popover bottom">
@@ -76,10 +76,10 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 <!-- end voice command -->
 <!-- multiple lang dropdown : find all flags in the flags page -->
-<ul class="header-dropdown-list hidden-xs">
+@*<ul class="header-dropdown-list hidden-xs">
     <li>
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="~/content/img/blank.gif" class="flag flag-us" alt="United States"> <span> English (US) </span> <i class="fa fa-angle-down"></i> </a>
         <ul class="dropdown-menu pull-right">
@@ -116,5 +116,5 @@
 
         </ul>
     </li>
-</ul>
+</ul>*@
 <!-- end multiple lang -->
