@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
 
+using FakeItEasy;
+
 using Jarboo.Admin.DAL.Entities;
 using System;
 using System.Collections.Generic;

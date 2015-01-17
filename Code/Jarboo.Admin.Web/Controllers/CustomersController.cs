@@ -15,6 +15,8 @@ using Jarboo.Admin.DAL;
 
 using Ninject;
 
+using Filter = Jarboo.Admin.BL.Filters.Filter;
+
 namespace Jarboo.Admin.Web.Controllers
 {
     public partial class CustomersController : BaseController
@@ -25,7 +27,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Customers/
         public virtual ActionResult Index()
         {
-            return View(CustomerService.GetAll());
+            return View(CustomerService.GetAll(Include.ForCustomer(), Filter.ForCustomer()));
         }
 
         // GET: /Customers/View/5

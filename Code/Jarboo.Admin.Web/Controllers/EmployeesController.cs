@@ -27,7 +27,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Employees/
         public virtual ActionResult Index()
         {
-            return View(EmployeeService.GetAllEx(Include.ForEmployee().Positions(), BL.Filters.Filter.ForEmployee()));
+            return View(EmployeeService.GetAll(Include.ForEmployee().Positions(), BL.Filters.Filter.ForEmployee()));
         }
 
         // GET: /Employees/View/5
@@ -106,7 +106,7 @@ namespace Jarboo.Admin.Web.Controllers
         {
             if (id == null)
             {
-                return View(MVC.Employees.Views.ChooseForTasks, EmployeeService.GetAll().OrderBy(x => x.FullName));
+                return View(MVC.Employees.Views.ChooseForTasks, EmployeeService.GetAll(Include.ForEmployee(), BL.Filters.Filter.ForEmployee()).OrderBy(x => x.FullName));
             }
 
             Employee employee = EmployeeService.GetByIdEx(id.Value, Include.ForEmployee().Positions());

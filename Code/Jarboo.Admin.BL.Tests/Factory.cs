@@ -48,5 +48,10 @@ namespace Jarboo.Admin.BL.Tests
 
             return new ProjectService(unitOfWork, taskRegister);
         }
+
+        public static TaskStepEmployeeStrategy CreateStrategy(IUnitOfWork unitOfWork)
+        {
+            return new TaskStepEmployeeStrategy(unitOfWork);
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var service = Factory.CreateEmployeeService(context);
 
 
-                service.Delete(employeeId, null);
+                Helper.Suppress(() => service.Delete(employeeId, null));
 
                 
                 Assert.NotNull(context.Employees.First().DateDeleted);
@@ -48,7 +48,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var service = Factory.CreateEmployeeService(context, taskRegister: mockTaskRegister, taskStepEmployeeStrategy: taskStepEmployeeStrategy);
 
 
-                service.Delete(employeeToDelete.EmployeeId, null);
+                Helper.Suppress(() => service.Delete(employeeToDelete.EmployeeId, null));
 
 
                 A.CallTo(() => mockTaskRegister.ChangeResponsible(
@@ -70,7 +70,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var service = Factory.CreateEmployeeService(context, taskStepEmployeeStrategy: mockTaskStepEmployeeStrategy);
 
 
-                service.Delete(taskStep.EmployeeId, null);
+                Helper.Suppress(() => service.Delete(taskStep.EmployeeId, null));
 
 
                 A.CallTo(() => mockTaskStepEmployeeStrategy.SelectEmployee(A<TaskStepEnum>._, A<int>._)).MustNotHaveHappened();

@@ -14,9 +14,8 @@ namespace Jarboo.Admin.BL.Services
         where T : BaseEntity
     {
         T GetById(int id);
-        List<T> GetAll();
-
         T GetByIdEx(int id, Include<T> include);
-        PagedData<T> GetAllEx(Include<T> include, Filter<T> filter);
+
+        PagedData<T> GetAll(Include<T> include, Filter<T> filter);
     }
 }
