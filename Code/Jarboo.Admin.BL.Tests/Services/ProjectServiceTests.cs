@@ -30,7 +30,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var service = Factory.CreateProjectService(context, taskRegister: mockTaskRegister);
 
 
-                service.Save(model, null);
+                Helper.Suppress(() => service.Save(model, null));
 
 
                 A.CallTo(() => mockTaskRegister.DefaultBoardName(customer.Name)).MustHaveHappened();

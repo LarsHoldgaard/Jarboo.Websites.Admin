@@ -29,7 +29,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var service = Factory.CreateTaskService(context, folderCreator: mockFolderCreator);
 
 
-                service.Create(model, null);
+                Helper.Suppress(() =>service.Create(model, null));
 
 
                 A.CallTo(() => mockFolderCreator.Create(customer.Name, model.Identifier())).MustHaveHappened();
@@ -49,7 +49,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var service = Factory.CreateTaskService(context, folderCreator: mockFolderCreator);
 
 
-                Assert.Throws<ApplicationException>(() => service.Create(model, null));
+                Helper.Suppress(() => service.Create(model, null));
 
 
                 A.CallTo(() => mockFolderCreator.Delete(customer.Name, model.Identifier())).MustHaveHappened();
@@ -72,7 +72,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var service = Factory.CreateTaskService(context, taskRegister: mockTaskRegister, folderCreator: folderCreator);
 
 
-                service.Create(model, null);
+                Helper.Suppress(() => service.Create(model, null));
 
 
                 A.CallTo(() => mockTaskRegister.Register(project.BoardName, model.Identifier(), folderLink)).MustHaveHappened();
@@ -94,12 +94,29 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var service = Factory.CreateTaskService(context, taskRegister: mockTaskRegister);
 
 
-                Assert.Throws<ApplicationException>(() => service.Create(model, null));
+                Helper.Suppress(() => service.Create(model, null));
 
 
                 A.CallTo(() => mockTaskRegister.Unregister(project.BoardName, model.Identifier(), taskLink)).MustHaveHappened();
             }
         }
+
+        [Test]
+        public void Create_WhenEmployeeIdNotPassed_CallsTaskStepEmployeeStrategy()
+        {
+            using (var context = ContextHelper.Create())
+            {
+                var model = this.ValidTaskCreate(context);
+
+                var mockTaskStepEmployeeStrategy = A.Fake<ITaskStepEmployeeStrategy>();
+                var service = Factory.CreateTaskService(context, taskStepEmployeeStrategy: mockTaskStepEmployeeStrategy);
+
+                Helper.Suppress(() => service.Create(model, null));
+
+                A.CallTo(() => mockTaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId)).MustHaveHappened();
+            }
+        }
+
 
         [Test]
         public void Delete_Always_DeleteTasksFolder()
@@ -133,25 +150,95 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var service = Factory.CreateTaskService(context, taskRegister: mockTaskRegister);
 
 
-                service.Delete(task.TaskId, null);
+                Helper.Suppress(() => service.Delete(task.TaskId, null));
 
 
                 A.CallTo(() => mockTaskRegister.Unregister(project.BoardName, task.Identifier(), cardLink)).MustHaveHappened();
             }
         }
 
-        public TaskCreate ValidTaskCreate(IUnitOfWork context, Project project = null, Employee employee = null)
-        {
-            project = project ?? context.EnsureProject();
-            employee = employee ?? context.EnsureEmployee();
 
+        [Test]
+        public void NextStep_WhenLastStep_ChangeResponsibleToNone()
+        {
+            using (var context = ContextHelper.Create())
+            {
+                var project = context.AddProject();
+                var task = context.AddTask();
+                context.AddTaskStep(x => x.Step = Helper.LastStep());
+
+                var model = this.ValidNextStep(context);
+                model.EmployeeId = context.AddEmployee().EmployeeId;
+
+                var mockTaskRegister = A.Fake<ITaskRegister>();
+                var service = Factory.CreateTaskService(context, taskRegister: mockTaskRegister);
+
+                Helper.Suppress(() => service.NextStep(model, null));
+
+                A.CallTo(() => mockTaskRegister.ChangeResponsible(project.BoardName, task.Identifier(), task.CardLink, null)).MustHaveHappened();
+            }
+        }
+        [Test]
+        public void NextStep_WhenNotLastStep_ChangeResponsibleToPassed()
+        {
+            using (var context = ContextHelper.Create())
+            {
+                var project = context.AddProject();
+                var employee = context.AddEmployee();
+                var task = context.AddTask();
+                context.AddTaskStep();
+
+                var model = this.ValidNextStep(context);
+                model.EmployeeId = employee.EmployeeId;
+
+                var mockTaskRegister = A.Fake<ITaskRegister>();
+                var service = Factory.CreateTaskService(context, taskRegister: mockTaskRegister);
+
+                Helper.Suppress(() => service.NextStep(model, null));
+
+                A.CallTo(() => mockTaskRegister.ChangeResponsible(project.BoardName, task.Identifier(), task.CardLink, employee.TrelloId)).MustHaveHappened();
+            }
+        }
+        [Test]
+        public void NextStep_WhenNotLastStepAndEmployeeIdNotPassed_CallsTaskStepEmployeeStrategy()
+        {
+            using (var context = ContextHelper.Create())
+            {
+                var project = context.AddProject();
+                var taskStep = context.AddTaskStep();
+
+                var model = this.ValidNextStep(context);
+                var nextStep = TaskStep.Next(taskStep.Step);
+                if (!nextStep.HasValue)
+                {
+                    throw new Exception("step can't be last");
+                }
+
+                var mockTaskStepEmployeeStrategy = A.Fake<ITaskStepEmployeeStrategy>();
+                var service = Factory.CreateTaskService(context, taskStepEmployeeStrategy: mockTaskStepEmployeeStrategy);
+
+                Helper.Suppress(() => service.NextStep(model, null));
+
+                A.CallTo(() => mockTaskStepEmployeeStrategy.SelectEmployee(nextStep.Value, project.ProjectId)).MustHaveHappened();
+            }
+        }
+
+        public TaskCreate ValidTaskCreate(IUnitOfWork context)
+        {
             return new TaskCreate()
             {
                 Title = "Title",
                 Type = TaskType.Bug,
-                ProjectId = project.ProjectId,
-                EmployeeId = employee.EmployeeId,
+                ProjectId = context.EnsureProject().ProjectId,
             };
+        }
+
+        public TaskNextStep ValidNextStep(IUnitOfWork context)
+        {
+            return new TaskNextStep()
+                       {
+                           TaskId = context.EnsureTask().TaskId,
+                       };
         }
     }
 }

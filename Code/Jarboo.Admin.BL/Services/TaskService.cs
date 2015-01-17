@@ -177,7 +177,7 @@ namespace Jarboo.Admin.BL.Services
         {
             var now = DateTime.Now;
 
-            var task = Table.Include(x => x.Steps).Include(x => x.Project).ByIdMust(model.TaskId);
+            var task = Table.Include(x => x.Steps.Select(y => y.Employee)).Include(x => x.Project).ByIdMust(model.TaskId);
             task.DateModified = now;
 
             var lastStep = task.Steps.Last();
@@ -201,7 +201,16 @@ namespace Jarboo.Admin.BL.Services
 
                 task.Done = true;
             }
-            UnitOfWork.SaveChanges();
+
+            try
+            {
+                UnitOfWork.SaveChanges();
+            }
+            catch (Exception)
+            {
+                ChangeResponsible(task.Project.BoardName, task.Identifier(), task.CardLink, lastStep.Employee.TrelloId);
+                throw;
+            }
         }
 
         public void Delete(int taskId, IBusinessErrorCollection errors)

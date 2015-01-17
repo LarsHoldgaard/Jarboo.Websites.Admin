@@ -43,7 +43,7 @@ namespace Jarboo.Admin.BL.Services
         {
             return TableNoTracking.ToList();
         }
-        public PagedData<T> GetAllEx(Include<T> include, Filter<T> filter)
+        public PagedData<T> GetAll(Include<T> include, Filter<T> filter)
         {
             return filter.Execute(TableNoTracking.Include(include));
         }
