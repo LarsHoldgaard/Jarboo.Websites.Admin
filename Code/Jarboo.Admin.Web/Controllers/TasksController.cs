@@ -60,8 +60,8 @@ namespace Jarboo.Admin.Web.Controllers
                 task.ProjectId = projectId.Value;
             }
 
-            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(), "EmployeeId", "FullName");
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer(), Filter.ForProject()), "ProjectId", "Name", "Customer.Name", task.ProjectId);
+            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Include.ForEmployee(), Filter.ForEmployee()), "EmployeeId", "FullName");
+            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(Include.ForProject().Customer(), Filter.ForProject()), "ProjectId", "Name", "Customer.Name", task.ProjectId);
             return View(task);
         }
 
@@ -91,7 +91,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(), "EmployeeId", "FullName");
+            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Include.ForEmployee(), Filter.ForEmployee()), "EmployeeId", "FullName");
             return View(task);
         }
 
@@ -114,7 +114,7 @@ namespace Jarboo.Admin.Web.Controllers
             var model = new TasksListViewModel()
                             {
                                 ShowProject = showProject,
-                                Tasks = TaskService.GetAllEx(Include.ForTask().Project().TaskSteps(), taskFilter).Decorate(),
+                                Tasks = TaskService.GetAll(Include.ForTask().Project().TaskSteps(), taskFilter).Decorate(),
                                 TaskFilter = taskFilter
                             };
 

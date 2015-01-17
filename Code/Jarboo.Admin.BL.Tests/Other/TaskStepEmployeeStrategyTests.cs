@@ -24,7 +24,7 @@ namespace Jarboo.Admin.BL.Tests.Other
             using (var context = ContextHelper.Create())
             {
                 var projectId = context.AddProject().ProjectId;
-                var strategy = CreateStrategy(context);
+                var strategy = Factory.CreateStrategy(context);
 
 
                 Assert.Throws<ApplicationException>(
@@ -43,7 +43,7 @@ namespace Jarboo.Admin.BL.Tests.Other
 
                 var projectId = context.AddProject().ProjectId;
                 var expEmployeeId = context.AddEmployeePosition(x => { x.Position = wrongPosition; }).EmployeeId;
-                var strategy = CreateStrategy(context);
+                var strategy = Factory.CreateStrategy(context);
 
 
                 var employee = strategy.SelectEmployee(step, projectId);
@@ -69,7 +69,7 @@ namespace Jarboo.Admin.BL.Tests.Other
                 var fitEmployeeId = context.AddEmployeePosition(x => { x.Position = step.GetPosition(); }).EmployeeId;
                 context.AddEmployee();
                 context.AddEmployeePosition(x => { x.Position = wrongPosition; });
-                var strategy = CreateStrategy(context);
+                var strategy = Factory.CreateStrategy(context);
 
 
                 var employee = strategy.SelectEmployee(step, projectId);
@@ -93,7 +93,7 @@ namespace Jarboo.Admin.BL.Tests.Other
                 var unfitEmployeeId = context.AddEmployeePosition(x => { x.Position = wrongPosition; }).EmployeeId;
                 context.AddEmployee(x => x.DateDeleted = DateTime.Now);
                 context.AddEmployeePosition(x => { x.Position = step.GetPosition(); });
-                var strategy = CreateStrategy(context);
+                var strategy = Factory.CreateStrategy(context);
 
 
                 var employee = strategy.SelectEmployee(step, projectId);
@@ -101,11 +101,6 @@ namespace Jarboo.Admin.BL.Tests.Other
 
                 Assert.AreEqual(unfitEmployeeId, employee.EmployeeId);
             }
-        }
-
-        private TaskStepEmployeeStrategy CreateStrategy(IUnitOfWork unitOfWork)
-        {
-            return new TaskStepEmployeeStrategy(unitOfWork);
         }
 
         private Tuple<TaskStepEnum, Position> GetStepWithWrongPosition()

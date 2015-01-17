@@ -76,7 +76,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         private ActionResult CreateEditView(DocumentationEdit model)
         {
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAllEx(Include.ForProject().Customer(), BL.Filters.Filter.ForProject()), "ProjectId", "Name", "Customer.Name", model.ProjectId);
+            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(Include.ForProject().Customer(), BL.Filters.Filter.ForProject()), "ProjectId", "Name", "Customer.Name", model.ProjectId);
             return View(model);
         }
 
@@ -118,7 +118,7 @@ namespace Jarboo.Admin.Web.Controllers
             var model = new DocumentationsListViewModel()
             {
                 ShowProject = showProject,
-                Documentations = DocumentationService.GetAllEx(Include.ForDocumentation().Project(), documentationFilter)
+                Documentations = DocumentationService.GetAll(Include.ForDocumentation().Project(), documentationFilter)
             };
 
             return View(model);

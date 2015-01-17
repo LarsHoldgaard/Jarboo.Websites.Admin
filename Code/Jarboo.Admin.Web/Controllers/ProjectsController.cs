@@ -32,7 +32,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Projects/
         public virtual ActionResult Index()
         {
-            return View(ProjectService.GetAllEx(Include.ForProject().Customer(), BL.Filters.Filter.ForProject()));
+            return View(ProjectService.GetAll(Include.ForProject().Customer(), BL.Filters.Filter.ForProject()));
         }
 
         // GET: /Projects/View/5
@@ -83,7 +83,7 @@ namespace Jarboo.Admin.Web.Controllers
         private ActionResult CreateEditView(ProjectEdit model)
         {
             ViewBag.BoardNames = new SelectList(TaskRegister.BoardNames(), model.BoardName);
-            ViewBag.CustomersList = new SelectList(CustomerService.GetAll(), "CustomerId", "Name", model.CustomerId);
+            ViewBag.CustomersList = new SelectList(CustomerService.GetAll(Include.ForCustomer(), BL.Filters.Filter.ForCustomer()), "CustomerId", "Name", model.CustomerId);
             return View(model);
         }
 
