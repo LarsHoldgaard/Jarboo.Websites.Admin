@@ -23,6 +23,8 @@ namespace Jarboo.Admin.Web.Controllers
     {
         [Inject]
         public IEmployeeService EmployeeService { get; set; }
+        [Inject]
+        public ITaskService TaskService { get; set; }
 
         // GET: /Employees/
         public virtual ActionResult Index()
@@ -114,6 +116,14 @@ namespace Jarboo.Admin.Web.Controllers
             {
                 return HttpNotFound();
             }
+
+            var nextTask = TaskService.GetAll(
+                    Include.ForTask().Project().Customer().TaskSteps(),
+                    BL.Filters.Filter.ForTask().WithEmployeeId(id.Value))
+                .OrderByDescending(x => x.Priority)
+                .FirstOrDefault();
+
+            ViewBag.NextTask = nextTask;
             return View(employee);
         }
     }

@@ -44,33 +44,3 @@
     </p>
     @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { showProject = true })
 </div>
-
-@section pagespecific {
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            // Add event listener for opening and closing details
-            $('#example tbody').on('click', 'td.details-control', function () {
-                var tr = $(this).closest('tr');
-
-                if (tr.hasClass('shown')) {
-                    tr.next('tr').remove();
-                    tr.removeClass('shown');
-                } else {
-                    $.ajax({
-                        type: "GET",
-                        url: "/tasks/view/",
-                        data: { id: $(this).attr('id') },
-                        success: function (data) {
-                            tr.after(data);
-                        }
-                    });
-
-                    // Open this row
-                    tr.addClass('shown');
-                }
-            });
-        });
-    </script>
-}
-

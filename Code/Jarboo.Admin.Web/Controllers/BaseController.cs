@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 using Jarboo.Admin.BL;
@@ -131,6 +132,15 @@ namespace Jarboo.Admin.Web.Controllers
         {
             if (filterContext == null)
                 return;
+
+            if (Configuration.ErrorMode == CustomErrorsMode.Off)
+            {
+                return;
+            }
+            else if ((Configuration.ErrorMode == CustomErrorsMode.RemoteOnly) && HttpContext.Request.IsLocal)
+            {
+                return;
+            }
 
             if (filterContext.Exception != null)
             {

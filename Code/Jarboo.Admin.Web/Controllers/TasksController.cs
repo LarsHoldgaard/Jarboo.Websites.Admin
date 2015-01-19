@@ -107,7 +107,7 @@ namespace Jarboo.Admin.Web.Controllers
                 RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
         }
 
-        public virtual ActionResult List(bool showProject = false, bool includeTasksWithDoneSteps = false,TaskFilter taskFilter = null)
+        public virtual ActionResult List(bool showProject = false, string sorting = null, TaskFilter taskFilter = null)
         {
             taskFilter = (taskFilter ?? Filter.ForTask());
 
@@ -115,7 +115,8 @@ namespace Jarboo.Admin.Web.Controllers
                             {
                                 ShowProject = showProject,
                                 Tasks = TaskService.GetAll(Include.ForTask().Project().TaskSteps(), taskFilter).Decorate(),
-                                TaskFilter = taskFilter
+                                TaskFilter = taskFilter,
+                                Sorting = sorting,
                             };
 
             return View(model); 

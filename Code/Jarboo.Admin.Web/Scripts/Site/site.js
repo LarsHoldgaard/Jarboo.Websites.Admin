@@ -4,4 +4,15 @@
     });
 
     $(".input-daterange").datepicker({});
+
+    $(".dataTable").each(function() {
+        var $this = $(this);
+
+        var sortingColumn = $this.data("sorting-column");
+        var sortingDirection = $this.data("sorting-direction");
+
+        $this.dataTable({
+            "order": [sortingColumn, sortingDirection]
+        });
+    });
 });

@@ -165,7 +165,7 @@ namespace Jarboo.Admin.Web.Controllers
         public class ActionParamsClass_List
         {
             public readonly string showProject = "showProject";
-            public readonly string includeTasksWithDoneSteps = "includeTasksWithDoneSteps";
+            public readonly string sorting = "sorting";
             public readonly string taskFilter = "taskFilter";
         }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
@@ -289,16 +289,16 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool showProject, bool includeTasksWithDoneSteps, Jarboo.Admin.BL.Filters.TaskFilter taskFilter);
+        partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool showProject, string sorting, Jarboo.Admin.BL.Filters.TaskFilter taskFilter);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult List(bool showProject, bool includeTasksWithDoneSteps, Jarboo.Admin.BL.Filters.TaskFilter taskFilter)
+        public override System.Web.Mvc.ActionResult List(bool showProject, string sorting, Jarboo.Admin.BL.Filters.TaskFilter taskFilter)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.List);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "showProject", showProject);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "includeTasksWithDoneSteps", includeTasksWithDoneSteps);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "sorting", sorting);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskFilter", taskFilter);
-            ListOverride(callInfo, showProject, includeTasksWithDoneSteps, taskFilter);
+            ListOverride(callInfo, showProject, sorting, taskFilter);
             return callInfo;
         }
 
