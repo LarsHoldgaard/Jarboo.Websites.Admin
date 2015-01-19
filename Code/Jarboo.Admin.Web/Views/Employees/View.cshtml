@@ -187,7 +187,10 @@
         <!-- end col -->
     </div>
     
-    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { employeeId = Model.EmployeeId })
+    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new
+                                                                 {
+                                                                     taskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().WithEmployeeId(Model.EmployeeId)
+                                                                 })
 
     <!-- end row -->
 </div>

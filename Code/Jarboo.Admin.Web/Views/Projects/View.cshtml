@@ -154,7 +154,10 @@
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
         </a>
     </p>
-    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { projectId = Model.ProjectId })
+    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new
+                                                                 {
+                                                                     taskFilter = new TaskFilter().WithProjectId(Model.ProjectId)
+                                                                 })
 
     <!-- end row -->
 

@@ -107,9 +107,9 @@ namespace Jarboo.Admin.Web.Controllers
                 RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
         }
 
-        public virtual ActionResult List(bool showProject = false, int? projectId = null, int? employeeId = null, bool includeTasksWithDoneSteps = false,TaskFilter taskFilter = null)
+        public virtual ActionResult List(bool showProject = false, bool includeTasksWithDoneSteps = false,TaskFilter taskFilter = null)
         {
-            taskFilter = (taskFilter ?? Filter.ForTask()).WithProjectId(projectId).WithEmployeeId(employeeId, includeTasksWithDoneSteps);
+            taskFilter = (taskFilter ?? Filter.ForTask());
 
             var model = new TasksListViewModel()
                             {

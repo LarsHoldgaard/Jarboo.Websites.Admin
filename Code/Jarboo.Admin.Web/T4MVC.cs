@@ -1744,6 +1744,14 @@ namespace Links
             public static readonly string border_png = Url("border.png");
             public static readonly string clear_png = Url("clear.png");
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class custom {
+                private const string URLPATH = "~/Content/img/custom";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string logo_png = Url("logo.png");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public static class demo {
                 private const string URLPATH = "~/Content/img/demo";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
