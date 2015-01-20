@@ -93,7 +93,7 @@ namespace Jarboo.Admin.BL.Filters
             where TEntity: BaseEntity
         {
             return new PagedData<TEntity>(
-                source.OrderBy(x => x.DateCreated).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList(),
+                source.OrderBy(x => x.DateCreated).Skip(pageNumber * pageSize).Take(pageSize).ToList(),
                 pageSize,
                 pageNumber,
                 source.Count());

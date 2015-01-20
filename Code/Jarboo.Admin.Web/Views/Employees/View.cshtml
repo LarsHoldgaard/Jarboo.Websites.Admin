@@ -78,8 +78,8 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <div class="dataTables_wrapper form-inline no-footer">
-                                <table class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
                                     <tbody>
                                         <tr>
                                             <td>
@@ -182,11 +182,12 @@
         </div>
         <!-- end col -->
     </div>
-    
-    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new
-                                                                 {
-                                                                     taskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().WithEmployeeId(Model.EmployeeId)
-                                                                 })
+
+    @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
+                                             {
+                                                 ShowProject = true,
+                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().WithEmployeeId(Model.EmployeeId),
+                                             })
 
     <!-- end row -->
 </div>

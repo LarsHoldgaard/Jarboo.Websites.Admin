@@ -9,9 +9,8 @@ namespace Jarboo.Admin.Web.Models.Task
 {
     public class TasksListViewModel
     {
-        public IEnumerable<TaskVM> Tasks { get; set; }
         public bool ShowProject { get; set; }
         public TaskFilter TaskFilter { get; set; }
-        public string Sorting { get; set; }
+        public TaskSorting Sorting { get; set; }
     }
 }

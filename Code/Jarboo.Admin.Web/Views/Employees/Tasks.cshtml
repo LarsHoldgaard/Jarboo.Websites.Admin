@@ -1,4 +1,5 @@
-﻿@model Jarboo.Admin.DAL.Entities.Employee
+﻿@using Jarboo.Admin.Web.Models.Task
+@model Jarboo.Admin.DAL.Entities.Employee
 
 @{
     ViewBag.Title = Model.FullName + " tasks";
@@ -71,11 +72,12 @@
     </div>
     <!-- end row -->
 
-    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new
-                                                                 {
-                                                                     taskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().WithEmployeeId(Model.EmployeeId),
-                                                                     sorting = "priority"
-                                                                 })
+    @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
+                                             {
+                                                 ShowProject = true,
+                                                 Sorting = TaskSorting.Pricing,
+                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().WithEmployeeId(Model.EmployeeId),
+                                             })
 </div>
 
 <div id="content">
@@ -93,8 +95,9 @@
     </div>
     <!-- end row -->
 
-    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new
-                                                                 {
-                                                                     taskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().WithEmployeeId(Model.EmployeeId, true)
-                                                                 })
+    @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
+                                             {
+                                                 ShowProject = true,
+                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().WithEmployeeId(Model.EmployeeId, true),
+                                             })
 </div>
