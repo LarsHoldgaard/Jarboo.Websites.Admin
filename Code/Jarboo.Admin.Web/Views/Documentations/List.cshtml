@@ -38,61 +38,59 @@
                     <!-- end widget edit box -->
                     <!-- widget content -->
                     <div class="widget-body no-padding">
-                        <div class="dataTables_wrapper form-inline no-footer">
-                            <table class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
-                                <thead>
+                        <table class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
+                            <thead>
+                                <tr>
+                                    @if (Model.ShowProject)
+                                    {
+                                        <th class="sorting">
+                                            Project
+                                        </th>
+                                    }
+                                    <th class="sorting">
+                                        Type
+                                    </th>
+                                    <th class="sorting">
+                                        Link
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                @foreach (var doc in Model.Documentations)
+                                {
                                     <tr>
                                         @if (Model.ShowProject)
                                         {
-                                            <th class="sorting">
-                                                Project
-                                            </th>
+                                            <td>
+                                                @Html.LabelFor(x => doc.ProjectId, doc.Project.Name)
+                                            </td>
                                         }
-                                        <th class="sorting">
-                                            Type
-                                        </th>
-                                        <th class="sorting">
-                                            Link
-                                        </th>
-                                        <th></th>
-                                        <th></th>
+                                        <td>
+                                            @Html.DisplayFor(x => doc.Type)
+                                        </td>
+                                        <td>
+                                            <a target="_blank" href="@doc.DocumentLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink(MVC.Documentations.ActionNames.Edit, MVC.Documentations.Edit(doc.DocumentationId), new { @class = "pull-left" })
+                                            <span class="pull-left"> | </span>
+                                            @Html.ActionLink(MVC.Documentations.ActionNames.View, MVC.Documentations.View(doc.DocumentationId), new { @class = "pull-left" })
+                                        </td>
+                                        <td>
+                                            @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
+                                                                    {
+                                                                        Id = doc.DocumentationId,
+                                                                        Action = MVC.Documentations.Delete(),
+                                                                        Small = true
+                                                                    })
+                                        </td>
                                     </tr>
-
-                                </thead>
-                                <tbody>
-                                    @foreach (var doc in Model.Documentations)
-                                    {
-                                        <tr>
-                                            @if (Model.ShowProject)
-                                            {
-                                                <td>
-                                                    @Html.LabelFor(x => doc.ProjectId, doc.Project.Name)
-                                                </td>
-                                            }
-                                            <td>
-                                                @Html.DisplayFor(x => doc.Type)
-                                            </td>
-                                            <td>
-                                                <a target="_blank" href="@doc.DocumentLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink(MVC.Documentations.ActionNames.Edit, MVC.Documentations.Edit(doc.DocumentationId), new { @class = "pull-left" })
-                                                <span class="pull-left"> | </span>
-                                                @Html.ActionLink(MVC.Documentations.ActionNames.View, MVC.Documentations.View(doc.DocumentationId), new { @class = "pull-left" })
-                                            </td>
-                                            <td>
-                                                @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
-                                                                        {
-                                                                            Id = doc.DocumentationId,
-                                                                            Action = MVC.Documentations.Delete(),
-                                                                            Small = true
-                                                                        })
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                     <!-- end widget content -->
                 </div>

@@ -183,11 +183,11 @@
         <!-- end col -->
     </div>
 
-    @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
+    @Html.Action(MVC.Tasks.List(new TasksListViewModel()
                                              {
                                                  ShowProject = true,
-                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().WithEmployeeId(Model.EmployeeId),
-                                             })
+                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().ByEmployeeId(Model.EmployeeId),
+                                             }))
 
     <!-- end row -->
 </div>

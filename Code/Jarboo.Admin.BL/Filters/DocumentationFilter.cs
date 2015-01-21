@@ -12,7 +12,7 @@ namespace Jarboo.Admin.BL.Filters
     {
         public int? ProjectId { get; set; }
 
-        public DocumentationFilter WithProjectId(int? projectId)
+        public DocumentationFilter ByProjectId(int? projectId)
         {
             this.ProjectId = projectId;
             return this;

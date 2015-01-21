@@ -954,6 +954,7 @@
     <Content Include="Scripts\plugin\x-editable\x-editable.min.js" />
     <Content Include="Scripts\Site\jquery.validation.fix.js" />
     <Content Include="Scripts\Site\site.js" />
+    <Content Include="Scripts\Site\smartAdmin.dataTable.js" />
     <Content Include="Scripts\Site\validation.style.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.manager.min.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.ui.min.js" />
@@ -1100,11 +1101,11 @@
     <Content Include="Views\Documentations\View.cshtml" />
     <Content Include="Views\Documentations\Edit.cshtml" />
     <Content Include="Views\Documentations\List.cshtml" />
-    <Content Include="Views\Tasks\EditorTemplates\TaskFilter.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DataTableTaskFilter.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Shared\Messages.cshtml" />
     <Content Include="Views\Shared\DeleteBtnForm.cshtml" />
-    <Content Include="Views\Tasks\_List.cshtml" />
+    <Content Include="Views\Tasks\List.cshtml" />
     <Content Include="Views\Projects\_Form.cshtml" />
     <Content Include="Views\Projects\Edit.cshtml" />
     <Content Include="Views\Employees\Tasks.cshtml" />

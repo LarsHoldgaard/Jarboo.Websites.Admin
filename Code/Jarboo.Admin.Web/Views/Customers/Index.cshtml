@@ -81,31 +81,29 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <div class="dataTables_wrapper form-inline no-footer">
-                                <table class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
-                                    <thead>
+                            <table class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th class="sorting">
+                                            @Html.DisplayNameFor(model => model.Name)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var customer in Model)
+                                    {
                                         <tr>
-                                            <th class="sorting">
-                                                @Html.DisplayNameFor(model => model.Name)
-                                            </th>
-                                            <th></th>
+                                            <td>
+                                                @Html.ActionLink(customer.Name, MVC.Customers.View(customer.CustomerId))
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("View", MVC.Customers.View(customer.CustomerId))
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var customer in Model)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    @Html.ActionLink(customer.Name, MVC.Customers.View(customer.CustomerId))
-                                                </td>
-                                                <td>
-                                                    @Html.ActionLink("View", MVC.Customers.View(customer.CustomerId))
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                         <!-- end widget content -->
                     </div>

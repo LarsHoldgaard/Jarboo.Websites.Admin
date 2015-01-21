@@ -89,6 +89,12 @@ namespace Jarboo.Admin.Web.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult List()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.List);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ActionResult ListData()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ListData);
@@ -115,6 +121,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Steps = "Steps";
             public readonly string NextStep = "NextStep";
             public readonly string Delete = "Delete";
+            public readonly string List = "List";
             public readonly string ListConfig = "ListConfig";
             public readonly string ListData = "ListData";
         }
@@ -128,6 +135,7 @@ namespace Jarboo.Admin.Web.Controllers
             public const string Steps = "Steps";
             public const string NextStep = "NextStep";
             public const string Delete = "Delete";
+            public const string List = "List";
             public const string ListConfig = "ListConfig";
             public const string ListData = "ListData";
         }
@@ -175,6 +183,14 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string id = "id";
             public readonly string returnUrl = "returnUrl";
         }
+        static readonly ActionParamsClass_List s_params_List = new ActionParamsClass_List();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_List ListParams { get { return s_params_List; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_List
+        {
+            public readonly string model = "model";
+        }
         static readonly ActionParamsClass_ListConfig s_params_ListConfig = new ActionParamsClass_ListConfig();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_ListConfig ListConfigParams { get { return s_params_ListConfig; } }
@@ -191,6 +207,7 @@ namespace Jarboo.Admin.Web.Controllers
         public class ActionParamsClass_ListData
         {
             public readonly string request = "request";
+            public readonly string taskFilter = "taskFilter";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -202,26 +219,19 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _List = "_List";
                 public readonly string _NextStep = "_NextStep";
                 public readonly string Create = "Create";
                 public readonly string Index = "Index";
+                public readonly string List = "List";
                 public readonly string Steps = "Steps";
                 public readonly string View = "View";
             }
-            public readonly string _List = "~/Views/Tasks/_List.cshtml";
             public readonly string _NextStep = "~/Views/Tasks/_NextStep.cshtml";
             public readonly string Create = "~/Views/Tasks/Create.cshtml";
             public readonly string Index = "~/Views/Tasks/Index.cshtml";
+            public readonly string List = "~/Views/Tasks/List.cshtml";
             public readonly string Steps = "~/Views/Tasks/Steps.cshtml";
             public readonly string View = "~/Views/Tasks/View.cshtml";
-            static readonly _EditorTemplatesClass s_EditorTemplates = new _EditorTemplatesClass();
-            public _EditorTemplatesClass EditorTemplates { get { return s_EditorTemplates; } }
-            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-            public partial class _EditorTemplatesClass
-            {
-                public readonly string TaskFilter = "TaskFilter";
-            }
         }
     }
 
@@ -315,6 +325,18 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
+        partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Task.TasksListViewModel model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult List(Jarboo.Admin.Web.Models.Task.TasksListViewModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.List);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            ListOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
         partial void ListConfigOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool showProject, Jarboo.Admin.Web.Models.Task.TaskSorting sorting);
 
         [NonAction]
@@ -328,14 +350,15 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void ListDataOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, DataTables.Mvc.IDataTablesRequest request);
+        partial void ListDataOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, DataTables.Mvc.IDataTablesRequest request, Jarboo.Admin.BL.Filters.TaskFilter taskFilter);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult ListData(DataTables.Mvc.IDataTablesRequest request)
+        public override System.Web.Mvc.ActionResult ListData(DataTables.Mvc.IDataTablesRequest request, Jarboo.Admin.BL.Filters.TaskFilter taskFilter)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ListData);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "request", request);
-            ListDataOverride(callInfo, request);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskFilter", taskFilter);
+            ListDataOverride(callInfo, request, taskFilter);
             return callInfo;
         }
 

@@ -134,8 +134,29 @@ namespace Jarboo.Admin.Web.Controllers
             return Handle(id, TaskService.Delete, result, result, "Task successfully deleted");
         }
 
+        public virtual ActionResult List(TasksListViewModel model)
+        {
+            model.TaskFilter = model.TaskFilter ?? Filter.ForTask();
+            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(Include.ForProject().Customer(), Filter.ForProject()), "ProjectId", "Name", "Customer.Name");
+            return View(model);
+        }
+
         #region ListColumns
 
+        public enum TaskListColumns
+        {
+            Title,
+            Date,
+            ProjectName,
+            Priority,
+            Type,
+            Size,
+            Urgency,
+            Folder,
+            Card,
+            Step,
+            Delete
+        }
         private static List<Column<TaskVM>> columns = new List<Column<TaskVM>>()
         {
             new Column<TaskVM>()
@@ -143,6 +164,11 @@ namespace Jarboo.Admin.Web.Controllers
                     Title = "Title",
                     Type = DataTableConfig.Column.ColumnSpecialType.TaskLink,
                     Getter = (x) => new object[] {x.TaskId, x.Title}
+                },
+            new Column<TaskVM>()
+                {
+                    Title = "Date",
+                    Getter = (x) => x.Date()
                 },
             new Column<TaskVM>()
                 {
@@ -197,10 +223,10 @@ namespace Jarboo.Admin.Web.Controllers
         }; 
 
         #endregion
-
         public virtual ActionResult ListConfig(bool showProject = false, TaskSorting sorting = TaskSorting.Title)
         {
             var config = new DataTableConfig();
+            config.Searching = true;
             config.SetupServerDataSource(Url.Action(MVC.Tasks.ListData()), FormMethod.Post);
             config.Columns = new List<DataTableConfig.Column>(columns);
             config.Columns[1].Visible = showProject;
@@ -209,12 +235,12 @@ namespace Jarboo.Admin.Web.Controllers
             {
                     case TaskSorting.Title:
                     {
-                        config.AddOrder(0, DataTables.Mvc.Column.OrderDirection.Ascendant);
+                        config.AddOrder((int)TaskListColumns.Title, DataTables.Mvc.Column.OrderDirection.Ascendant);
                         break;
                     }
-                    case TaskSorting.Pricing:
+                    case TaskSorting.Priority:
                     {
-                        config.AddOrder(2, DataTables.Mvc.Column.OrderDirection.Descendant);
+                        config.AddOrder((int)TaskListColumns.Priority, DataTables.Mvc.Column.OrderDirection.Descendant);
                         break;
                     }
             }
@@ -222,10 +248,10 @@ namespace Jarboo.Admin.Web.Controllers
             var json = JsonConvert.SerializeObject(config);
             return Content(json, "application/json");
         }
-        public virtual ActionResult ListData([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest request)
+        public virtual ActionResult ListData([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest request, TaskFilter taskFilter = null)
         {
-            var taskFilter = Filter.ForTask().WithPaging(request.Length, request.Start / request.Length);
-            var tasks = TaskService.GetAll(Include.ForTask().Project().TaskSteps(), taskFilter);
+            var filter = (taskFilter ?? Filter.ForTask()).WithPaging(request.Length, request.Start / request.Length).ByString(request.Search.Value);
+            var tasks = TaskService.GetAll(Include.ForTask().Project().TaskSteps(), filter);
 
             var rows = columns.ExtractRows(tasks.Decorate());
 

@@ -45,7 +45,8 @@ namespace Jarboo.Admin.Web.Models.DataTable
 
         public DataTableConfig()
         {
-            this.Order = new ArrayList();
+            Order = new ArrayList();
+            Searching = true;
         }
 
         [JsonProperty("serverSide")]
@@ -56,7 +57,8 @@ namespace Jarboo.Admin.Web.Models.DataTable
         public ArrayList Order { get; set; }
         [JsonProperty("columns")]
         public List<Column> Columns { get; set; }
-
+        [JsonProperty("searching")]
+        public bool Searching { get; set; }
 
         public void AddOrder(int column, DataTables.Mvc.Column.OrderDirection direction)
         {

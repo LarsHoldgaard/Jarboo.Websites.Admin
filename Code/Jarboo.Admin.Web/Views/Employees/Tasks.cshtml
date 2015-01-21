@@ -72,12 +72,12 @@
     </div>
     <!-- end row -->
 
-    @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
+    @Html.Action(MVC.Tasks.List(new TasksListViewModel()
                                              {
                                                  ShowProject = true,
-                                                 Sorting = TaskSorting.Pricing,
-                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().WithEmployeeId(Model.EmployeeId),
-                                             })
+                                                 Sorting = TaskSorting.Priority,
+                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().ByEmployeeId(Model.EmployeeId),
+                                             }))
 </div>
 
 <div id="content">
@@ -95,9 +95,9 @@
     </div>
     <!-- end row -->
 
-    @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
+    @Html.Action(MVC.Tasks.List(new TasksListViewModel()
                                              {
                                                  ShowProject = true,
-                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().WithEmployeeId(Model.EmployeeId, true),
-                                             })
+                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().ByEmployeeId(Model.EmployeeId, true),
+                                             }))
 </div>

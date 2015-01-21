@@ -10,6 +10,8 @@ namespace Jarboo.Admin.BL.Filters
 {
     public class TaskFilter : Filter<Task>, IValidatableObject
     {
+        public string String { get; set; }
+
         public int? ProjectId { get; set; }
         public int? EmployeeId { get; set; }
         public bool IncludeTasksWithDoneStepsForEmployee { get; set; }
@@ -18,15 +20,20 @@ namespace Jarboo.Admin.BL.Filters
         public DateTime? DateModifiedTo { get; set; }
 
         public bool ShowDeleted { get; set; }
-
         public bool ShowDone { get; set; }
 
-        public TaskFilter WithProjectId(int? projectId)
+        public TaskFilter ByString(string s)
+        {
+            String = s;
+            return this;
+        }
+
+        public TaskFilter ByProjectId(int? projectId)
         {
             this.ProjectId = projectId;
             return this;
         }
-        public TaskFilter WithEmployeeId(int? employeeId, bool includeTasksWithDoneSteps = false)
+        public TaskFilter ByEmployeeId(int? employeeId, bool includeTasksWithDoneSteps = false)
         {
             this.EmployeeId = employeeId;
             this.IncludeTasksWithDoneStepsForEmployee = includeTasksWithDoneSteps;
@@ -38,7 +45,6 @@ namespace Jarboo.Admin.BL.Filters
             this.ShowDone = true;
             return this;
         }
-
         public TaskFilter WithDeleted()
         {
             this.ShowDeleted = true;
@@ -92,6 +98,15 @@ namespace Jarboo.Admin.BL.Filters
             if (!ShowDone)
             {
                 query = query.Where(x => !x.Done);
+            }
+
+            if (!string.IsNullOrEmpty(String))
+            {
+                var values = String.Split(new [] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var value in values)
+                {
+                    query = query.Where(x => x.Title.IndexOf(value) != -1);
+                }
             }
 
             return base.Execute(query);

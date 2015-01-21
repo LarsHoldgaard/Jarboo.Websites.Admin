@@ -119,7 +119,7 @@ namespace Jarboo.Admin.Web.Controllers
 
             var nextTask = TaskService.GetAll(
                     Include.ForTask().Project().Customer().TaskSteps(),
-                    BL.Filters.Filter.ForTask().WithEmployeeId(id.Value))
+                    BL.Filters.Filter.ForTask().ByEmployeeId(id.Value))
                 .OrderByDescending(x => x.Priority)
                 .FirstOrDefault();
 

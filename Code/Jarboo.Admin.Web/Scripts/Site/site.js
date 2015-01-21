@@ -22,8 +22,8 @@
                 success: function(config) {
                     console.log(config);
 
+                    var ajax = config.ajax;
                     if (config.ajax) {
-                        var ajax = config.ajax;
                         config.ajax = function (data, callback, settings) {
                             data.__RequestVerificationToken = token;
 
@@ -49,6 +49,23 @@
 
                             column.render = getColumnRender(column.type);
                         }
+                    }
+
+                    var $filter = $this.parent().find(".data-table-filter");
+                    if ($filter.length) {
+                        config.initComplete = function () {
+                            $filter.detach();
+                            $filter.appendTo($this.parent().find(".dataTables_filter"));
+                            $filter.show();
+                        };
+                        var initUrl = ajax.url;
+                        config.preDrawCallback = function () {
+                            ajax.url = initUrl + (initUrl.indexOf("?") == -1 ? "?" : "&");
+                            ajax.url += $filter.find("input, textarea, select").serialize().replace(/=on\b/, "=true");
+                        }
+                        $filter.on("change", function() {
+                            $this.DataTable().draw();
+                        });
                     }
 
                     $this.dataTable(config);

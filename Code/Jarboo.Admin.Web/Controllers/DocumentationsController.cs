@@ -111,9 +111,10 @@ namespace Jarboo.Admin.Web.Controllers
             return Handle(id, DocumentationService.Delete, result, result, "Documentation successfully deleted");
         }
 
-        public virtual ActionResult List(bool showProject = false, int? projectId = null)
+        [ChildActionOnly]
+        public virtual ActionResult List(bool showProject = false, DocumentationFilter documentationFilter = null)
         {
-            var documentationFilter = BL.Filters.Filter.ForDocumentation().WithProjectId(projectId);
+            documentationFilter = documentationFilter ?? BL.Filters.Filter.ForDocumentation();
 
             var model = new DocumentationsListViewModel()
             {

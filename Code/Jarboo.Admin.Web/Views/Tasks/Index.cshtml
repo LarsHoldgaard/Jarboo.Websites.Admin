@@ -43,8 +43,8 @@
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
         </a>
     </p>
-    @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
+    @Html.Action(MVC.Tasks.List(new TasksListViewModel()
                                              {
                                                  ShowProject = true
-                                             })
+                                             }))
 </div>

@@ -63,6 +63,13 @@ namespace T4MVC
             public readonly string Error = "~/Views/Shared/Error.cshtml";
             public readonly string Messages = "~/Views/Shared/Messages.cshtml";
             public readonly string TopMenu = "~/Views/Shared/TopMenu.cshtml";
+            static readonly _EditorTemplatesClass s_EditorTemplates = new _EditorTemplatesClass();
+            public _EditorTemplatesClass EditorTemplates { get { return s_EditorTemplates; } }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public partial class _EditorTemplatesClass
+            {
+                public readonly string DataTableTaskFilter = "DataTableTaskFilter";
+            }
         }
     }
 

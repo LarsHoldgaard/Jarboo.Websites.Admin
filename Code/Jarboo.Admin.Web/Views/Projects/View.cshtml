@@ -155,10 +155,10 @@
         </a>
     </p>
 
-    @Html.Partial(MVC.Tasks.Views._List, new TasksListViewModel()
+    @Html.Action(MVC.Tasks.List(new TasksListViewModel()
                                              {
-                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().WithProjectId(Model.ProjectId)
-                                             })
+                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().ByProjectId(Model.ProjectId)
+                                             }))
 
     <!-- end row -->
 
@@ -183,6 +183,9 @@
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
         </a>
     </p>
-    @Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new { projectId = Model.ProjectId })
+    @Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new
+                                                                                   {
+                                                                                       documentationFilter = new DocumentationFilter().ByProjectId(Model.ProjectId)
+                                                                                   })
 
 </div>

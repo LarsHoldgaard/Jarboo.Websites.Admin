@@ -8,6 +8,6 @@ namespace Jarboo.Admin.Web.Models.Task
     public enum TaskSorting
     {
         Title,
-        Pricing
+        Priority
     }
 }
