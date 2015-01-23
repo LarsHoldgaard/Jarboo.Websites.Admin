@@ -36,6 +36,8 @@ namespace Jarboo.Admin.Web.Controllers
         public IProjectService ProjectService { get; set; }
         [Inject]
         public IEmployeeService EmployeeService { get; set; }
+        [Inject]
+        public ICustomerService CustomerService { get; set; }
 
         // GET: /Tasks/
         public virtual ActionResult Index()
@@ -137,6 +139,7 @@ namespace Jarboo.Admin.Web.Controllers
         public virtual ActionResult List(TasksListViewModel model)
         {
             model.TaskFilter = model.TaskFilter ?? new TaskFilter();
+            ViewBag.CustomersList = new SelectList(CustomerService.GetAll(Query.ForCustomer()), "CustomerId", "Name");
             ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(Query.ForProject().Include(x => x.Customer())), "ProjectId", "Name", "Customer.Name");
             return View(model);
         }

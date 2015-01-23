@@ -93,6 +93,7 @@ namespace Links
         public static readonly string jquery_2_1_1_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-2.1.1.min.js") ? Url("jquery-2.1.1.min.js") : Url("jquery-2.1.1.js");
         public static readonly string jquery_2_1_1_min_js = Url("jquery-2.1.1.min.js");
         public static readonly string jquery_2_1_1_min_map = Url("jquery-2.1.1.min.map");
+        public static readonly string jquery_bonnet_ajax_dropdownlist_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.bonnet.ajax-dropdownlist.min.js") ? Url("jquery.bonnet.ajax-dropdownlist.min.js") : Url("jquery.bonnet.ajax-dropdownlist.js");
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class libs {
             private const string URLPATH = "~/Scripts/libs";

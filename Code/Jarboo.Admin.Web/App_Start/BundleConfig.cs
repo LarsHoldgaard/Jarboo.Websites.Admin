@@ -12,6 +12,7 @@ namespace Jarboo.Admin.Web.App_Start
         {
             bundles.Add(new ScriptBundle("~/js/site").Include(
                 "~/Scripts/Site/smartAdmin.dataTable.js",
+                "~/Scripts/jquery.bonnet.ajax-dropdownlist.js",
                 "~/Scripts/Site/site.js"));
 
             bundles.Add(new ScriptBundle("~/js/bootstrap-datepicker").Include(

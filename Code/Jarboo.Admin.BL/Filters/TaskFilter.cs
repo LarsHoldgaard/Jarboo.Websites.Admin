@@ -12,6 +12,7 @@ namespace Jarboo.Admin.BL.Filters
     {
         public string String { get; set; }
 
+        public int? CustomerId { get; set; }
         public int? ProjectId { get; set; }
         public int? EmployeeId { get; set; }
         public bool IncludeTasksWithDoneStepsForEmployee { get; set; }
@@ -28,6 +29,11 @@ namespace Jarboo.Admin.BL.Filters
             return this;
         }
 
+        public TaskFilter ByCustomerId(int? customerId)
+        {
+            this.CustomerId = customerId;
+            return this;
+        }
         public TaskFilter ByProjectId(int? projectId)
         {
             this.ProjectId = projectId;
@@ -71,6 +77,11 @@ namespace Jarboo.Admin.BL.Filters
             {
                 var date = DateModifiedTo.Value.EndOfDay();
                 query = query.Where(x => x.DateModified <= date);
+            }
+
+            if (CustomerId.HasValue)
+            {
+                query = query.Where(x => x.Project.CustomerId == CustomerId.Value);
             }
 
             if (ProjectId.HasValue)

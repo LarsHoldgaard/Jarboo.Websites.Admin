@@ -1,21 +1,30 @@
-﻿@model Jarboo.Admin.BL.Filters.TaskFilter
+﻿@using Share.Bonnet.AjaxDropDownList
+@model Jarboo.Admin.BL.Filters.TaskFilter
 
 <div class="data-table-filter">
     @Html.HiddenFor(x => x.EmployeeId)
 
+    @if (Model.ProjectId.HasValue || Model.CustomerId.HasValue)
+    {
+        @Html.HiddenFor(x => x.ProjectId)
+        @Html.HiddenFor(x => x.CustomerId)
+    }
+    else
+    {
+        @Html.DropDownListFor(x => x.CustomerId, (SelectList)ViewBag.CustomersList, "Any customer", new { @class = "form-control" },
+            new AjaxUpdateOptions {
+                    Target = Html.IdFor(x => x.ProjectId).ToString(),
+                    DisableTargetWhenEmpty = false,
+                    Url = Url.Action(MVC.Projects.ProductListByCustomerForSelectJson())
+                })
+
+        @Html.DropDownListFor(x => x.ProjectId, (SelectList)ViewBag.ProjectsList, "Any project", new { @class = "form-control" })
+    }
+    
     <div class="input-daterange input-group" id="datepicker">
         @Html.TextBoxFor(x => x.DateModifiedFrom, new { @class = "form-control", placeholder = "Date from" })
         @Html.TextBoxFor(x => x.DateModifiedTo, new { @class = "form-control", placeholder = "Date to" })
     </div>
-    
-    @if (Model.ProjectId.HasValue)
-    {
-        @Html.HiddenFor(x => x.ProjectId)
-    }
-    else
-    {
-        @Html.DropDownListFor(x => x.ProjectId, (SelectList)ViewBag.ProjectsList, "Any project", new { @class = "form-control" })
-    }
 
     <div class="checkbox">
         <label>

@@ -98,5 +98,22 @@ namespace Jarboo.Admin.Web.Controllers
                     RedirectToAction(MVC.Projects.Create()) :
                     RedirectToAction(MVC.Projects.Edit(model.ProjectId)));
         }
+
+        public virtual ActionResult ProductListByCustomerForSelectJson(int? value)
+        {
+            var projects = ProjectService.GetAll(Query.ForProject().Include(x => x.Customer()).Filter(x => x.ByCustomerId(value)));
+            var projectsList = projects
+                .Select(x => new SelectListItem()
+                {
+                    Text = x.Name,
+                    Value = x.ProjectId.ToString()
+                })
+                .ToList();
+            projectsList.Insert(0, new SelectListItem()
+                                       {
+                                           Text = "Any project"
+                                       });
+            return Json(projectsList, JsonRequestBehavior.AllowGet);
+        }
     }
 }
