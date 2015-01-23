@@ -6,16 +6,15 @@ using System.Web;
 using System.Web.Configuration;
 
 using Jarboo.Admin.Integration.GoogleDrive;
+using Jarboo.Admin.Integration.Mandrill;
 using Jarboo.Admin.Integration.Trello;
 
 namespace Jarboo.Admin.Web.Infrastructure
 {
-    public class Configuration : IGoogleDriveConfiguration, ITrelloConfiguration
+    public class Configuration : IGoogleDriveConfiguration, ITrelloConfiguration, IMandrillConfiguration
     {
         private Configuration()
-        {
-            
-        }
+        { }
 
         private static Lazy<Configuration> configuration = new Lazy<Configuration>(() => new Configuration());
         public static Configuration Instance
@@ -177,6 +176,59 @@ namespace Jarboo.Admin.Web.Infrastructure
                     googleLocalUserId = ConfigurationManager.AppSettings["GoogleLocalUserId"];
                 }
                 return googleLocalUserId;
+            }
+        }
+
+
+        private bool? useNotifier;
+        public bool UseNotifier
+        {
+            get
+            {
+                if (useNotifier == null)
+                {
+                    useNotifier = bool.Parse(ConfigurationManager.AppSettings["UseNotifier"]);
+                }
+                return useNotifier.Value;
+            }
+        }
+
+        private string mandrillApiKey;
+        public string MandrillApiKey
+        {
+            get
+            {
+                if (mandrillApiKey == null)
+                {
+                    mandrillApiKey = ConfigurationManager.AppSettings["MandrillApiKey"];
+                }
+                return mandrillApiKey;
+            }
+        }
+
+        private string mandrillTaskResponsibleNotificationTemplate;
+        public string MandrillTaskResponsibleNotificationTemplate
+        {
+            get
+            {
+                if (mandrillTaskResponsibleNotificationTemplate == null)
+                {
+                    mandrillTaskResponsibleNotificationTemplate = ConfigurationManager.AppSettings["MandrillTaskResponsibleNotificationTemplate"];
+                }
+                return mandrillTaskResponsibleNotificationTemplate;
+            }
+        }
+
+        private string mandrillFrom;
+        public string MandrillFrom
+        {
+            get
+            {
+                if (mandrillFrom == null)
+                {
+                    mandrillFrom = ConfigurationManager.AppSettings["MandrillFrom"];
+                }
+                return mandrillFrom;
             }
         }
 

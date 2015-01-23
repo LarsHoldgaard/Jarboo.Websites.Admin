@@ -3,6 +3,7 @@ using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.Integration;
 using Jarboo.Admin.Integration.GoogleDrive;
+using Jarboo.Admin.Integration.Mandrill;
 using Jarboo.Admin.Integration.Noop;
 using Jarboo.Admin.Integration.Trello;
 using Jarboo.Admin.Web.Infrastructure;
@@ -89,6 +90,16 @@ namespace Jarboo.Admin.Web.App_Start
             else
             {
                 kernel.Bind<IFolderCreator>().To<NoopFolderCrator>().InRequestScope();
+            }
+
+            if (Configuration.Instance.UseNotifier)
+            {
+                kernel.Bind<IMandrillConfiguration>().ToConstant(Configuration.Instance);
+                kernel.Bind<INotifier>().To<MandrillNotifier>().InRequestScope();
+            }
+            else
+            {
+                kernel.Bind<INotifier>().To<NoopNotifier>().InRequestScope();
             }
 
             kernel.Bind<ITaskStepEmployeeStrategy>().To<TaskStepEmployeeStrategy>().InRequestScope();

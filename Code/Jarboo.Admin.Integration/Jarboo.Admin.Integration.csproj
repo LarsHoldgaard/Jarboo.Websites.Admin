@@ -54,6 +54,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Jarboo.Admin.Web\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Mandrill">
+      <HintPath>..\Jarboo.Admin.Web\packages\Mandrill.1.0.109.0\lib\net40\Mandrill.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -64,10 +67,11 @@
       <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Jarboo.Admin.Web\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Jarboo.Admin.Web\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\Jarboo.Admin.Web\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
+    <Reference Include="RestSharp, Version=105.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jarboo.Admin.Web\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -96,7 +100,10 @@
     <Compile Include="GoogleDrive\FolderHierarchy.cs" />
     <Compile Include="GoogleDrive\GoogleDriveFolderCreator.cs" />
     <Compile Include="GoogleDrive\IGoogleDriveConfiguration.cs" />
+    <Compile Include="Mandrill\IMandrillConfiguration.cs" />
+    <Compile Include="Mandrill\MandrillNotifier.cs" />
     <Compile Include="Noop\NoopFolderCrator.cs" />
+    <Compile Include="Noop\NoopNotifier.cs" />
     <Compile Include="Noop\NoopTaskRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trello\ITrelloConfiguration.cs" />
@@ -106,6 +113,10 @@
     <ProjectReference Include="..\Jarboo.Admin.BL\Jarboo.Admin.BL.csproj">
       <Project>{bb94a70c-f2a8-43a2-8357-4d790131aa89}</Project>
       <Name>Jarboo.Admin.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jarboo.Admin.DAL\Jarboo.Admin.DAL.csproj">
+      <Project>{286ff3f8-7581-4bf0-af2c-47a88b50ff3a}</Project>
+      <Name>Jarboo.Admin.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
