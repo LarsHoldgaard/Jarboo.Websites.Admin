@@ -16,8 +16,8 @@ namespace Jarboo.Admin.Web.App_Start
         {
             ViewEngines.Engines.Clear();
             var razorViewEngine = new RazorViewEngine();
-            
-            if (Configuration.IsDebug())
+
+            if (Configuration.Instance.IsDebug())
             {
                 ViewEngines.Engines.Add(new ProfilingViewEngine(razorViewEngine));
             }

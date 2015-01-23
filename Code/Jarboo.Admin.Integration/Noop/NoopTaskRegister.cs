@@ -3,7 +3,7 @@ using System.Linq;
 
 using Jarboo.Admin.BL.Other;
 
-namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
+namespace Jarboo.Admin.Integration.Noop
 {
     public class NoopTaskRegister : ITaskRegister
     {
@@ -20,7 +20,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 
         public string DefaultBoardName(string customerName)
         {
-            return null;
+            return "Board";
         }
 
         public IEnumerable<string> BoardNames()

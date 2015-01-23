@@ -5,11 +5,28 @@ using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 
+using Jarboo.Admin.Integration.GoogleDrive;
+using Jarboo.Admin.Integration.Trello;
+
 namespace Jarboo.Admin.Web.Infrastructure
 {
-    public static class Configuration
+    public class Configuration : IGoogleDriveConfiguration, ITrelloConfiguration
     {
-        public static bool IsDebug()
+        private Configuration()
+        {
+            
+        }
+
+        private static Lazy<Configuration> configuration = new Lazy<Configuration>(() => new Configuration());
+        public static Configuration Instance
+        {
+            get
+            {
+                return configuration.Value;
+            }
+        }
+
+        public bool IsDebug()
         {
 #if DEBUG
             return true;
@@ -18,8 +35,8 @@ namespace Jarboo.Admin.Web.Infrastructure
 #endif
         }
 
-        private static string[] predefinedCustomers;
-        public static string[] PredefinedCustomers
+        private string[] predefinedCustomers;
+        public string[] PredefinedCustomers
         {
             get
             {
@@ -31,8 +48,9 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
-        private static bool? useTrello;
-        public static bool UseTrello
+
+        private bool? useTrello;
+        public bool UseTrello
         {
             get
             {
@@ -44,8 +62,8 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
-        private static string trelloApiKey;
-        public static string TrelloApiKey
+        private string trelloApiKey;
+        public string TrelloApiKey
         {
             get
             {
@@ -57,8 +75,8 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
-        private static string trelloToken;
-        public static string TrelloToken
+        private string trelloToken;
+        public string TrelloToken
         {
             get
             {
@@ -70,8 +88,9 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
-        private static bool? useGoogleDrive;
-        public static bool UseGoogleDrive
+
+        private bool? useGoogleDrive;
+        public bool UseGoogleDrive
         {
             get
             {
@@ -83,8 +102,8 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
-        private static string googleDriveTemplatePath;
-        public static string GoogleDriveTemplatePath
+        private string googleDriveTemplatePath;
+        public string GoogleDriveTemplatePath
         {
             get
             {
@@ -96,8 +115,8 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
-        private static string googleDrivePath;
-        public static string GoogleDrivePath
+        private string googleDrivePath;
+        public string GoogleDrivePath
         {
             get
             {
@@ -109,8 +128,8 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
-        private static string googleClientId;
-        public static string GoogleClientId
+        private string googleClientId;
+        public string GoogleClientId
         {
             get
             {
@@ -122,8 +141,8 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
-        private static string googleClientSecret;
-        public static string GoogleClientSecret
+        private string googleClientSecret;
+        public string GoogleClientSecret
         {
             get
             {
@@ -135,8 +154,8 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
-        private static string googleRefreshToken;
-        public static string GoogleRefreshToken
+        private string googleRefreshToken;
+        public string GoogleRefreshToken
         {
             get
             {
@@ -148,9 +167,22 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
+        private string googleLocalUserId;
+        public string GoogleLocalUserId
+        {
+            get
+            {
+                if (googleLocalUserId == null)
+                {
+                    googleLocalUserId = ConfigurationManager.AppSettings["GoogleLocalUserId"];
+                }
+                return googleLocalUserId;
+            }
+        }
 
-        private static CustomErrorsMode? redirectOnError;
-        public static CustomErrorsMode ErrorMode
+
+        private CustomErrorsMode? redirectOnError;
+        public CustomErrorsMode ErrorMode
         {
             get
             {

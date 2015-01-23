@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Jarboo.Admin.BL.Other;
 
-using Jarboo.Admin.BL.Other;
-
-namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
+namespace Jarboo.Admin.Integration.Noop
 {
     public class NoopFolderCrator : IFolderCreator
     {

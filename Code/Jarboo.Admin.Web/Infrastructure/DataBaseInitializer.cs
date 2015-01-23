@@ -28,7 +28,7 @@ namespace Jarboo.Admin.Web.Infrastructure
 
         private void EnsureCustomers(Context context)
         {
-            foreach (var customer in Configuration.PredefinedCustomers)
+            foreach (var customer in Configuration.Instance.PredefinedCustomers)
             {
                 if (context.Customers.Any(x => x.Name == customer))
                 {

@@ -44,13 +44,13 @@ namespace Jarboo.Admin.Web.Controllers
 
         public virtual ActionResult TrelloId(string id)
         {
-            if (string.IsNullOrEmpty(Configuration.TrelloApiKey) || string.IsNullOrEmpty(Configuration.TrelloToken))
+            if (string.IsNullOrEmpty(Configuration.Instance.TrelloApiKey) || string.IsNullOrEmpty(Configuration.Instance.TrelloToken))
             {
                 throw new ApplicationException("Missing trello configuration");
             }
 
-            var trello = new Trello(Configuration.TrelloApiKey);
-            trello.Authorize(Configuration.TrelloToken);
+            var trello = new Trello(Configuration.Instance.TrelloApiKey);
+            trello.Authorize(Configuration.Instance.TrelloToken);
 
             var members = trello.Members.Search(id);
             if (members == null)

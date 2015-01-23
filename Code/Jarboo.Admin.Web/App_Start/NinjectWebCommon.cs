@@ -1,8 +1,11 @@
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL;
+using Jarboo.Admin.Integration;
+using Jarboo.Admin.Integration.GoogleDrive;
+using Jarboo.Admin.Integration.Noop;
+using Jarboo.Admin.Integration.Trello;
 using Jarboo.Admin.Web.Infrastructure;
-using Jarboo.Admin.Web.Infrastructure.BLExternals;
 using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Jarboo.Admin.Web.App_Start.NinjectWebCommon), "Start")]
@@ -68,8 +71,9 @@ namespace Jarboo.Admin.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            if (Configuration.UseTrello)
+            if (Configuration.Instance.UseTrello)
             {
+                kernel.Bind<ITrelloConfiguration>().ToConstant(Configuration.Instance);
                 kernel.Bind<ITaskRegister>().To<TrelloTaskRegister>().InRequestScope();
             }
             else
@@ -77,9 +81,10 @@ namespace Jarboo.Admin.Web.App_Start
                 kernel.Bind<ITaskRegister>().To<NoopTaskRegister>().InRequestScope();
             }
 
-            if (Configuration.UseGoogleDrive)
+            if (Configuration.Instance.UseGoogleDrive)
             {
-                kernel.Bind<IFolderCreator>().To<GoogleFolderCreator>().InRequestScope();
+                kernel.Bind<IGoogleDriveConfiguration>().ToConstant(Configuration.Instance);
+                kernel.Bind<IFolderCreator>().To<GoogleDriveFolderCreator>().InRequestScope();
             }
             else
             {

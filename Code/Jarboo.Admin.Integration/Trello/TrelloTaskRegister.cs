@@ -5,10 +5,16 @@ using Jarboo.Admin.BL.Other;
 
 using TrelloNet;
 
-namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
+namespace Jarboo.Admin.Integration.Trello
 {
     public class TrelloTaskRegister : ITaskRegister
     {
+        public TrelloTaskRegister(ITrelloConfiguration configuration)
+        {
+            this.Configuration = configuration;
+        }
+
+        private ITrelloConfiguration Configuration { get; set; }
         private ITrello trello = null;
 
         private void EnsureTrello()
@@ -18,15 +24,15 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 return;
             }
 
-            if (string.IsNullOrEmpty(Configuration.TrelloApiKey) || string.IsNullOrEmpty(Configuration.TrelloToken))
+            if (string.IsNullOrEmpty(this.Configuration.TrelloApiKey) || string.IsNullOrEmpty(this.Configuration.TrelloToken))
             {
                 throw new ApplicationException("Missing trello configuration");
             }
 
             try
             {
-                this.trello = new Trello(Configuration.TrelloApiKey);
-                this.trello.Authorize(Configuration.TrelloToken);
+                this.trello = new TrelloNet.Trello(this.Configuration.TrelloApiKey);
+                this.trello.Authorize(this.Configuration.TrelloToken);
             }
             catch (Exception ex)
             {

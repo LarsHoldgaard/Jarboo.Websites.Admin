@@ -133,11 +133,11 @@ namespace Jarboo.Admin.Web.Controllers
             if (filterContext == null)
                 return;
 
-            if (Configuration.ErrorMode == CustomErrorsMode.Off)
+            if (Configuration.Instance.ErrorMode == CustomErrorsMode.Off)
             {
                 return;
             }
-            else if ((Configuration.ErrorMode == CustomErrorsMode.RemoteOnly) && HttpContext.Request.IsLocal)
+            else if ((Configuration.Instance.ErrorMode == CustomErrorsMode.RemoteOnly) && HttpContext.Request.IsLocal)
             {
                 return;
             }

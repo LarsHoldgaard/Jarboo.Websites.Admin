@@ -14,8 +14,6 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 {
     public class AppFlowMetadata : FlowMetadata
     {
-        public static string UserId = "user";
-
         private static readonly IAuthorizationCodeFlow flow =
             new GoogleAuthorizationCodeFlow(
                 new GoogleAuthorizationCodeFlow.Initializer
@@ -23,8 +21,8 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                         ClientSecrets =
                             new ClientSecrets
                                 {
-                                    ClientId = Configuration.GoogleClientId,
-                                    ClientSecret = Configuration.GoogleClientSecret
+                                    ClientId = Configuration.Instance.GoogleClientId,
+                                    ClientSecret = Configuration.Instance.GoogleClientSecret
                                 },
                         Scopes = new[] { DriveService.Scope.Drive },
                         DataStore = MemoryDataStore.Instance
@@ -32,7 +30,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 
         public override string GetUserId(Controller controller)
         {
-            return UserId;
+            return Configuration.Instance.GoogleLocalUserId;
         }
 
         public override string AuthCallback

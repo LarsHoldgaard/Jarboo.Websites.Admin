@@ -5,11 +5,13 @@ using System.Web;
 
 using Google.Apis.Drive.v2.Data;
 
+using Jarboo.Admin.Integration.GoogleDrive;
+
 namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 {
-    public class GoogleDriveFolderHierarchy
+    public class FolderHierarchy
     {
-        public GoogleDriveFolderHierarchy(string rootFolderId, FileList files)
+        public FolderHierarchy(string rootFolderId, FileList files)
         {
             CreateRoot(rootFolderId);
             CreateHierarchy(files);
@@ -30,7 +32,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 
             foreach (var file in files.Items)
             {
-                if (file.MimeType != GoogleFolderCreator.FOLDER_MIME_TYPE || file.ExplicitlyTrashed == true)
+                if (file.MimeType != GoogleDriveFolderCreator.FOLDER_MIME_TYPE || file.ExplicitlyTrashed == true)
                 {
                     continue;
                 }
@@ -52,7 +54,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                         continue;
                     }
 
-                    if (file.MimeType == GoogleFolderCreator.FOLDER_MIME_TYPE)
+                    if (file.MimeType == GoogleDriveFolderCreator.FOLDER_MIME_TYPE)
                     {
                         folders[parent.Id].NestedFolders.Add(folders[file.Id]);
                     }

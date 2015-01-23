@@ -1028,12 +1028,8 @@
     <Compile Include="Infrastructure\Helper.cs" />
     <Compile Include="Infrastructure\HtmlExtensions.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\AppFlowMetadata.cs" />
-    <Compile Include="Infrastructure\ThirdPartyIntegration\GoogleDriveFolderHierarchy.cs" />
-    <Compile Include="Infrastructure\ThirdPartyIntegration\GoogleFolderCreator.cs" />
+    <Compile Include="Infrastructure\ThirdPartyIntegration\MandrillaMailService.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\MemoryDataStore.cs" />
-    <Compile Include="Infrastructure\ThirdPartyIntegration\NoopFolderCrator.cs" />
-    <Compile Include="Infrastructure\ThirdPartyIntegration\NoopTaskRegister.cs" />
-    <Compile Include="Infrastructure\ThirdPartyIntegration\TrelloTaskRegister.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
     <Compile Include="Models\DataTable\Column.cs" />
     <Compile Include="Models\DataTable\DataTableConfig.cs" />
@@ -1130,6 +1126,10 @@
     <ProjectReference Include="..\Jarboo.Admin.DAL\Jarboo.Admin.DAL.csproj">
       <Project>{286ff3f8-7581-4bf0-af2c-47a88b50ff3a}</Project>
       <Name>Jarboo.Admin.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jarboo.Admin.Integration\Jarboo.Admin.Integration.csproj">
+      <Project>{075fbb12-36af-4077-a70c-36158f2ff81c}</Project>
+      <Name>Jarboo.Admin.Integration</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Web;
 
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Flows;
@@ -13,16 +12,23 @@ using Google.Apis.Drive.v2.Data;
 using Google.Apis.Services;
 
 using Jarboo.Admin.BL.Other;
+using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
 
 using File = Google.Apis.Drive.v2.Data.File;
 
-namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
+namespace Jarboo.Admin.Integration.GoogleDrive
 {
-    public class GoogleFolderCreator : IFolderCreator
+    public class GoogleDriveFolderCreator : IFolderCreator
     {
         public const string FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
         public const string DOC_MIME_TYPE = "application/vnd.google-apps.document";
 
+        public GoogleDriveFolderCreator(IGoogleDriveConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        private IGoogleDriveConfiguration Configuration { get; set; }
         private DriveService driveService = null;
 
         private void EnsureService()
@@ -52,9 +58,9 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 //flow.RefreshTokenAsync("user", Configuration.GoogleRefreshToken, new CancellationTokenSource().Token);
 
                 var tokenResponse = new TokenResponse { RefreshToken = Configuration.GoogleRefreshToken };
-                var userCredential = new UserCredential(flow, AppFlowMetadata.UserId, tokenResponse);
+                var userCredential = new UserCredential(flow, Configuration.GoogleLocalUserId, tokenResponse);
 
-                driveService = new DriveService(new BaseClientService.Initializer()
+                this.driveService = new DriveService(new BaseClientService.Initializer()
                 {
                     HttpClientInitializer = userCredential,
                     ApplicationName = "Jarboo.Admin",
@@ -70,20 +76,20 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 
         public string Create(string customerName, string taskIdentifier)
         {
-            EnsureService();
+            this.EnsureService();
 
             var driveFolders = this.LoadGoogleDriveFolderHierarchy();
 
-            var newFolder = CreateFolders(CreateFolderPath(customerName, taskIdentifier), driveFolders);
-            CopyTemplate(taskIdentifier, driveFolders, newFolder);
+            var newFolder = this.CreateFolders(this.CreateFolderPath(customerName, taskIdentifier), driveFolders);
+            this.CopyTemplate(taskIdentifier, driveFolders, newFolder);
 
             return newFolder.File.AlternateLink;
         }
         public void Delete(string customerName, string taskIdentifier)
         {
-            EnsureService();
+            this.EnsureService();
 
-            DeleteFolder(CreateFolderPath(customerName, taskIdentifier));
+            this.DeleteFolder(this.CreateFolderPath(customerName, taskIdentifier));
         }
 
         private string[] CreateFolderPath(string customerName, string taskIdentifier)
@@ -95,7 +101,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(date.Month),
                 taskIdentifier).Split('\\');
         }
-        private GoogleDriveFolderHierarchy LoadGoogleDriveFolderHierarchy()
+        private FolderHierarchy LoadGoogleDriveFolderHierarchy()
         {
             var files = this.driveService.Files.List();
             files.MaxResults = int.MaxValue;
@@ -103,10 +109,10 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 
             var about = this.driveService.About.Get().Execute();
 
-            return new GoogleDriveFolderHierarchy(about.RootFolderId, driveFiles);
+            return new FolderHierarchy(about.RootFolderId, driveFiles);
         }
 
-        private GoogleDriveFolderHierarchy.Folder CreateFolders(IEnumerable<string> folders, GoogleDriveFolderHierarchy driveFolders)
+        private FolderHierarchy.Folder CreateFolders(IEnumerable<string> folders, FolderHierarchy driveFolders)
         {
             var parentFolder = driveFolders.Root;
             foreach (var folderName in folders)
@@ -119,18 +125,18 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 }
 
                 var driveFile = this.CreateFolder(folderName, parentFolder.Id);
-                parentFolder = new GoogleDriveFolderHierarchy.Folder(driveFile);
+                parentFolder = new FolderHierarchy.Folder(driveFile);
             }
 
             return parentFolder;
         }
         private File CreateFolder(string title, string parentId)
         {
-            return CreateFile(title, parentId, FOLDER_MIME_TYPE);
+            return this.CreateFile(title, parentId, FOLDER_MIME_TYPE);
         }
         private File CreateDoc(string title, string parentId)
         {
-            return CreateFile(title, parentId, DOC_MIME_TYPE);
+            return this.CreateFile(title, parentId, DOC_MIME_TYPE);
         }
         private File CreateFile(string title, string parentId, string mimeType)
         {
@@ -147,7 +153,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                               }
             };
 
-            var request = driveService.Files.Insert(body);
+            var request = this.driveService.Files.Insert(body);
             var file = request.Execute();
             if (file == null)
             {
@@ -171,7 +177,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                               }
             };
 
-            var request = driveService.Files.Copy(body, file.Id);
+            var request = this.driveService.Files.Copy(body, file.Id);
             var copy = request.Execute();
             if (copy == null)
             {
@@ -181,7 +187,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
             return copy;
         }
 
-        private void CopyTemplate(string newFileName, GoogleDriveFolderHierarchy driveFolders, GoogleDriveFolderHierarchy.Folder newFolder)
+        private void CopyTemplate(string newFileName, FolderHierarchy driveFolders, FolderHierarchy.Folder newFolder)
         {
             if (string.IsNullOrEmpty(Configuration.GoogleDriveTemplatePath))
             {
@@ -228,7 +234,7 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
                 parentFolder = driveFolder;
             }
 
-            driveService.Files.Delete(parentFolder.Id).Execute();
+            this.driveService.Files.Delete(parentFolder.Id).Execute();
         }
     }
 }
