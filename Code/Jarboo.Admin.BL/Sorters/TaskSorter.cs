@@ -9,6 +9,11 @@ namespace Jarboo.Admin.BL.Sorters
 {
     public class TaskSorter : Sorter<Task>
     {
+        public TaskSorter()
+        {
+            Title = SortDirection.Ascendant;
+        }
+
         public SortDirection? Title { get; set; }
         public SortDirection? DateModified { get; set; }
         public SortDirection? Type { get; set; }
@@ -43,6 +48,8 @@ namespace Jarboo.Admin.BL.Sorters
 
         public override IQueryable<Task> Sort(IQueryable<Task> query)
         {
+            query = base.Sort(query);
+            
             if (Title.HasValue)
             {
                 query = query.SortBy(Title.Value, x => x.Title);
@@ -68,7 +75,7 @@ namespace Jarboo.Admin.BL.Sorters
                 query = query.SortBy(Urgency.Value, x => x.Urgency);
             }
 
-            return base.Sort(query);
+            return query;
         }
     }
 }

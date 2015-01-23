@@ -16,6 +16,7 @@ namespace Jarboo.Admin.BL.Filters
         public int? ProjectId { get; set; }
         public int? EmployeeId { get; set; }
         public bool IncludeTasksWithDoneStepsForEmployee { get; set; }
+        public TaskType? Type { get; set; }
 
         public DateTime? DateModifiedFrom { get; set; }
         public DateTime? DateModifiedTo { get; set; }
@@ -43,6 +44,11 @@ namespace Jarboo.Admin.BL.Filters
         {
             this.EmployeeId = employeeId;
             this.IncludeTasksWithDoneStepsForEmployee = includeTasksWithDoneSteps;
+            return this;
+        }
+        public TaskFilter ByType(TaskType? type)
+        {
+            this.Type = type;
             return this;
         }
 
@@ -118,6 +124,11 @@ namespace Jarboo.Admin.BL.Filters
                 {
                     query = query.Where(x => x.Title.IndexOf(value) != -1);
                 }
+            }
+
+            if (Type.HasValue)
+            {
+                query = query.Where(x => x.Type == Type.Value);
             }
 
             return base.Execute(query);

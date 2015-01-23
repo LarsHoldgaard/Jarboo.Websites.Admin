@@ -25,6 +25,8 @@
         @Html.TextBoxFor(x => x.DateModifiedFrom, new { @class = "form-control", placeholder = "Date from" })
         @Html.TextBoxFor(x => x.DateModifiedTo, new { @class = "form-control", placeholder = "Date to" })
     </div>
+    
+    @Html.EnumDropDownListFor(x => x.Type, "Any type", new { @class = "form-control" })
 
     <div class="checkbox">
         <label>
