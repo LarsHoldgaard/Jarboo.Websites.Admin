@@ -65,7 +65,7 @@
                                         @if (Model.ShowProject)
                                         {
                                             <td>
-                                                @Html.LabelFor(x => doc.ProjectId, doc.Project.Name)
+                                                @Html.ActionLink(doc.Project.Name, MVC.Projects.View(doc.ProjectId))
                                             </td>
                                         }
                                         <td>

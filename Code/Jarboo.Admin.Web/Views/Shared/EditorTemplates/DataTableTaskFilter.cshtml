@@ -3,6 +3,7 @@
 
 <div class="data-table-filter">
     @Html.HiddenFor(x => x.EmployeeId)
+    @Html.HiddenFor(x => x.IncludeTasksWithDoneStepsForEmployee)
 
     @if (Model.ProjectId.HasValue || Model.CustomerId.HasValue)
     {
