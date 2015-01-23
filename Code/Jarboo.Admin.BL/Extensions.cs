@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -63,6 +64,25 @@ namespace Jarboo.Admin.BL
         public static DateTime EndOfMonth(this DateTime date)
         {
             return new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59);
+        }
+
+        private static readonly string[] PaginationPrerequisiteMehods = new[] { "OrderBy", "OrderByDescending" };
+        public static bool IsOrdered<T>(this IQueryable<T> query)
+        {
+            // WARNING! OrerBy or OrderByDescending must be called exactly before check
+            // http://stackoverflow.com/questions/10903538/how-to-check-if-iqueryablet-has-orderby-applied-before-before-attempting-skip
+            
+            if (query.Expression.NodeType != ExpressionType.Call)
+            {
+                return false;
+            }
+            var methodName = ((MethodCallExpression)query.Expression).Method.Name;
+            if (!Array.Exists(PaginationPrerequisiteMehods, s => s.Equals(methodName, StringComparison.InvariantCulture)))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

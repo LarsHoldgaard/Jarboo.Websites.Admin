@@ -19,30 +19,6 @@ namespace Jarboo.Admin.BL.Includes
         }
     }
 
-    public static class Include
-    {
-        public static CustomerInclude ForCustomer()
-        {
-            return new CustomerInclude();
-        }
-        public static ProjectInclude ForProject()
-        {
-            return new ProjectInclude();
-        }
-        public static TaskInclude ForTask()
-        {
-            return new TaskInclude();
-        }
-        public static EmployeeInclude ForEmployee()
-        {
-            return new EmployeeInclude();
-        }
-        public static DocumentationInclude ForDocumentation()
-        {
-            return new DocumentationInclude();
-        }
-    }
-
     public static class IncludeExtensions
     {
         public static IQueryable<T> Include<T>(this IQueryable<T> query, Include<T> include)

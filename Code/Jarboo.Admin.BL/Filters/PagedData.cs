@@ -90,7 +90,40 @@ namespace Jarboo.Admin.BL.Filters
         /// The <see cref="PagedData"/>.
         /// </returns>
         public static PagedData<TEntity> Create<TEntity>(int pageSize, int pageNumber, IQueryable<TEntity> source)
-            where TEntity: BaseEntity
+            where TEntity : BaseEntity
+        {
+            if (!source.IsOrdered())
+            {
+                source = source.OrderBy(x => x.DateCreated);
+            }
+
+            return new PagedData<TEntity>(
+                source.Skip(pageNumber * pageSize).Take(pageSize).ToList(),
+                pageSize,
+                pageNumber,
+                source.Count());
+        }
+
+        /// <summary>
+        ///  Creates <see cref="PagedData"/>.
+        /// </summary>
+        /// <param name="pageSize">
+        /// The page size.
+        /// </param>
+        /// <param name="pageNumber">
+        /// The page number.
+        /// </param>
+        /// <param name="source">
+        /// The source.
+        /// </param>
+        /// <typeparam name="TEntity">
+        /// Source type.
+        /// </typeparam>
+        /// <returns>
+        /// The <see cref="PagedData"/>.
+        /// </returns>
+        public static PagedData<TEntity> Create<TEntity>(int pageSize, int pageNumber, IEnumerable<TEntity> source)
+            where TEntity : BaseEntity
         {
             return new PagedData<TEntity>(
                 source.OrderBy(x => x.DateCreated).Skip(pageNumber * pageSize).Take(pageSize).ToList(),
@@ -154,6 +187,11 @@ namespace Jarboo.Admin.BL.Filters
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        public PagedData<T> Convert<T>(Func<TData, T> converter)
+        {
+            return new PagedData<T>(Data.Select(converter).ToList(), PageSize, PageNumber, TotalItems);
         }
     }
 }

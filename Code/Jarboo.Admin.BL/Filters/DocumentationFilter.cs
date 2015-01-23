@@ -18,7 +18,7 @@ namespace Jarboo.Admin.BL.Filters
             return this;
         }
 
-        public override PagedData<Documentation> Execute(IQueryable<Documentation> query)
+        public override IQueryable<Documentation> Execute(IQueryable<Documentation> query)
         {
             if (ProjectId.HasValue)
             {

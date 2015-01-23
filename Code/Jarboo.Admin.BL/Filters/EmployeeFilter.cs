@@ -18,7 +18,7 @@ namespace Jarboo.Admin.BL.Filters
             return this;
         }
 
-        public override PagedData<Employee> Execute(IQueryable<Employee> query)
+        public override IQueryable<Employee> Execute(IQueryable<Employee> query)
         {
             if (!ShowDeleted)
             {

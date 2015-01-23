@@ -8,10 +8,12 @@ using System.Web.Mvc;
 
 using DataTables.Mvc;
 
+using Jarboo.Admin.BL;
 using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
+using Jarboo.Admin.BL.Sorters;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Web.Infrastructure;
 using Jarboo.Admin.Web.Models;
@@ -23,8 +25,6 @@ using Newtonsoft.Json;
 using Ninject;
 
 using RestSharp;
-
-using Filter = Jarboo.Admin.BL.Filters.Filter;
 
 namespace Jarboo.Admin.Web.Controllers
 {
@@ -51,7 +51,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Task task = TaskService.GetByIdEx(id.Value, Include.ForTask().Project().Customer().TaskSteps());
+            Task task = TaskService.GetByIdEx(id.Value, new TaskInclude().Project().Customer().TaskSteps());
             if (task == null)
             {
                 return HttpNotFound();
@@ -69,8 +69,8 @@ namespace Jarboo.Admin.Web.Controllers
                 task.ProjectId = projectId.Value;
             }
 
-            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Include.ForEmployee(), Filter.ForEmployee()), "EmployeeId", "FullName");
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(Include.ForProject().Customer(), Filter.ForProject()), "ProjectId", "Name", "Customer.Name", task.ProjectId);
+            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee()), "EmployeeId", "FullName");
+            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(Query.ForProject().Include(x => x.Customer())), "ProjectId", "Name", "Customer.Name", task.ProjectId);
             return View(task);
         }
 
@@ -94,13 +94,13 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Task task = TaskService.GetByIdEx(id.Value, Include.ForTask().Project().Customer().TaskSteps().Employee());
+            Task task = TaskService.GetByIdEx(id.Value, new TaskInclude().Project().Customer().TaskSteps().Employee());
             if (task == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(new EmployeeInclude(), new EmployeeFilter()), "EmployeeId", "FullName");
+            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee()), "EmployeeId", "FullName");
             return View(task);
         }
 
@@ -136,8 +136,8 @@ namespace Jarboo.Admin.Web.Controllers
 
         public virtual ActionResult List(TasksListViewModel model)
         {
-            model.TaskFilter = model.TaskFilter ?? Filter.ForTask();
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(Include.ForProject().Customer(), Filter.ForProject()), "ProjectId", "Name", "Customer.Name");
+            model.TaskFilter = model.TaskFilter ?? new TaskFilter();
+            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(Query.ForProject().Include(x => x.Customer())), "ProjectId", "Name", "Customer.Name");
             return View(model);
         }
 
@@ -157,17 +157,20 @@ namespace Jarboo.Admin.Web.Controllers
             Step,
             Delete
         }
+        private static TaskListColumns[] columnsWithClientSorting = new TaskListColumns[] { TaskListColumns.Priority };
         private static List<Column<TaskVM>> columns = new List<Column<TaskVM>>()
         {
             new Column<TaskVM>()
                 {
                     Title = "Title",
                     Type = DataTableConfig.Column.ColumnSpecialType.TaskLink,
+                    Orderable = true,
                     Getter = (x) => new object[] {x.TaskId, x.Title}
                 },
             new Column<TaskVM>()
                 {
                     Title = "Date",
+                    Orderable = true,
                     Getter = (x) => x.Date()
                 },
             new Column<TaskVM>()
@@ -179,21 +182,25 @@ namespace Jarboo.Admin.Web.Controllers
             new Column<TaskVM>()
                 {
                     Title = "Priority",
+                    Orderable = true,
                     Getter = (x) => x.Priority.ToString()
                 },
             new Column<TaskVM>()
                 {
                     Title = "Type",
+                    Orderable = true,
                     Getter = (x) => x.Type.ToString()
                 },
             new Column<TaskVM>()
                 {
                     Title = "Size",
+                    Orderable = true,
                     Getter = (x) => x.Size.ToString()
                 },
             new Column<TaskVM>()
                 {
                     Title = "Urgency",
+                    Orderable = true,
                     Getter = (x) => x.Urgency.ToString()
                 },
             new Column<TaskVM>()
@@ -250,13 +257,102 @@ namespace Jarboo.Admin.Web.Controllers
         }
         public virtual ActionResult ListData([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest request, TaskFilter taskFilter = null)
         {
-            var filter = (taskFilter ?? Filter.ForTask()).WithPaging(request.Length, request.Start / request.Length).ByString(request.Search.Value);
-            var tasks = TaskService.GetAll(Include.ForTask().Project().TaskSteps(), filter);
+            var tasks = this.GetTasks(request, taskFilter);
 
             var rows = columns.ExtractRows(tasks.Decorate());
 
             //return null;
             return Json(new DataTablesResponse(request.Draw, rows, tasks.TotalItems, tasks.TotalItems));
+        }
+
+        private PagedData<Task> GetTasks(IDataTablesRequest request, TaskFilter taskFilter)
+        {
+            var filter = (taskFilter ?? new TaskFilter()).ByString(request.Search.Value);
+                //.WithPaging(request.Length, request.Start / request.Length);
+            var query = Query.ForTask(filter).Include(x => x.Project().TaskSteps());
+
+            var pageSize = request.Length;
+            var pageNumber = request.Start / request.Length;
+
+            PagedData<Task> tasks = null;
+            var sorting = request.Sortings<TaskListColumns>().FirstOrDefault();
+            if (sorting != null)
+            {
+                var column = sorting.Item1;
+                var direction = sorting.Item2;
+
+                if (columnsWithClientSorting.Contains(column))
+                {
+                    tasks = this.GetSortedOnClientTasks(query, pageSize, pageNumber, column, direction);
+                }
+                else
+                {
+                    tasks = this.GetSortedOnServerTasks(query, pageSize, pageNumber, column, direction);
+                }
+            }
+            else
+            {
+                tasks = this.GetTasksWithoutSorting(query, pageSize, pageNumber);
+            }
+            return tasks;
+        }
+        private PagedData<Task> GetSortedOnClientTasks(IQuery<Task, TaskInclude, TaskFilter, TaskSorter> query, int pageSize, int pageNumber, TaskListColumns column, SortDirection direction)
+        {
+            var allData = TaskService.GetAll(query);
+            var sortedData = allData.Data.AsEnumerable();
+            switch (column)
+            {
+                case TaskListColumns.Priority:
+                    {
+                        sortedData = sortedData.SortBy(direction, x => x.Priority);
+                        break;
+                    }
+            }
+
+            return new PagedData<Task>(
+                sortedData.Skip(pageNumber * pageSize).Take(pageSize).ToList(),
+                pageSize,
+                pageNumber,
+                allData.TotalItems);
+        }
+        private PagedData<Task> GetSortedOnServerTasks(IQuery<Task, TaskInclude, TaskFilter, TaskSorter> query, int pageSize, int pageNumber, TaskListColumns column, SortDirection direction)
+        {
+            query.WithPaging(pageSize, pageNumber);
+
+            switch (column)
+            {
+                case TaskListColumns.Title:
+                    {
+                        query.Sort(x => x.ByTitle(direction));
+                        break;
+                    }
+                case TaskListColumns.Date:
+                    {
+                        query.Sort(x => x.ByDateModified(direction));
+                        break;
+                    }
+                case TaskListColumns.Type:
+                    {
+                        query.Sort(x => x.ByType(direction));
+                        break;
+                    }
+                case TaskListColumns.Size:
+                    {
+                        query.Sort(x => x.BySize(direction));
+                        break;
+                    }
+                case TaskListColumns.Urgency:
+                    {
+                        query.Sort(x => x.ByUrgency(direction));
+                        break;
+                    }
+            }
+
+            return TaskService.GetAll(query);
+        }
+        private PagedData<Task> GetTasksWithoutSorting(IQuery<Task, TaskInclude, TaskFilter, TaskSorter> query, int pageSize, int pageNumber)
+        {
+            return TaskService.GetAll(query.WithPaging(pageSize, pageNumber));
         }
     }
 }

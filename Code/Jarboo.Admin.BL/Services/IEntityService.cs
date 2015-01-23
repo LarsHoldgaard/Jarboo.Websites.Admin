@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
+using Jarboo.Admin.BL.Sorters;
 using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Services
@@ -16,6 +17,6 @@ namespace Jarboo.Admin.BL.Services
         T GetById(int id);
         T GetByIdEx(int id, Include<T> include);
 
-        PagedData<T> GetAll(Include<T> include, Filter<T> filter);
+        PagedData<T> GetAll(IQuery<T, Include<T>, Filter<T>, Sorter<T>> query);
     }
 }

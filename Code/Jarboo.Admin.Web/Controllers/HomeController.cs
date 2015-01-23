@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using Jarboo.Admin.BL;
 using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Services;
@@ -22,7 +23,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         public virtual ActionResult Index()
         {
-            ViewBag.Customers = CustomerService.GetAll(Include.ForCustomer().Projects(), BL.Filters.Filter.ForCustomer());
+            ViewBag.Customers = CustomerService.GetAll(Query.ForCustomer().Include(x => x.Projects()));
 
             return View();
         }

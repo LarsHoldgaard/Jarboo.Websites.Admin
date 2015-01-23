@@ -38,6 +38,8 @@ namespace Jarboo.Admin.Web.Models.DataTable
             public string Title { get; set; }
             [JsonProperty("visible")]
             public bool Visible { get; set; }
+            [JsonProperty("orderable")]
+            public bool Orderable { get; set; }
             [JsonProperty("type")]
             [JsonConverter(typeof(StringEnumConverter))]
             public ColumnSpecialType? Type { get; set; }
@@ -59,6 +61,8 @@ namespace Jarboo.Admin.Web.Models.DataTable
         public List<Column> Columns { get; set; }
         [JsonProperty("searching")]
         public bool Searching { get; set; }
+        [JsonProperty("orderMulti")]
+        public bool OrderMulti { get; set; }
 
         public void AddOrder(int column, DataTables.Mvc.Column.OrderDirection direction)
         {

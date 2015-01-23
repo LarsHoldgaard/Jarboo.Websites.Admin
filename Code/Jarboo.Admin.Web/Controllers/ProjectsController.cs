@@ -32,7 +32,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Projects/
         public virtual ActionResult Index()
         {
-            return View(ProjectService.GetAll(Include.ForProject().Customer(), BL.Filters.Filter.ForProject()));
+            return View(ProjectService.GetAll(Query.ForProject().Include(x => x.Customer())));
         }
 
         // GET: /Projects/View/5
@@ -43,7 +43,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Project project = ProjectService.GetByIdEx(id.Value, Include.ForProject().Customer().Documentations());
+            Project project = ProjectService.GetByIdEx(id.Value, new ProjectInclude().Customer());
             if (project == null)
             {
                 return HttpNotFound();
@@ -83,7 +83,7 @@ namespace Jarboo.Admin.Web.Controllers
         private ActionResult CreateEditView(ProjectEdit model)
         {
             ViewBag.BoardNames = new SelectList(TaskRegister.BoardNames(), model.BoardName);
-            ViewBag.CustomersList = new SelectList(CustomerService.GetAll(Include.ForCustomer(), BL.Filters.Filter.ForCustomer()), "CustomerId", "Name", model.CustomerId);
+            ViewBag.CustomersList = new SelectList(CustomerService.GetAll(Query.ForCustomer()), "CustomerId", "Name", model.CustomerId);
             return View(model);
         }
 

@@ -37,7 +37,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Documentation documentation = DocumentationService.GetByIdEx(id.Value, Include.ForDocumentation().Project().Customer());
+            Documentation documentation = DocumentationService.GetByIdEx(id.Value, new DocumentationInclude().Project().Customer());
             if (documentation == null)
             {
                 return HttpNotFound();
@@ -76,7 +76,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         private ActionResult CreateEditView(DocumentationEdit model)
         {
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(Include.ForProject().Customer(), BL.Filters.Filter.ForProject()), "ProjectId", "Name", "Customer.Name", model.ProjectId);
+            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(Query.ForProject().Include(x => x.Customer())), "ProjectId", "Name", "Customer.Name", model.ProjectId);
             return View(model);
         }
 
@@ -114,12 +114,12 @@ namespace Jarboo.Admin.Web.Controllers
         [ChildActionOnly]
         public virtual ActionResult List(bool showProject = false, DocumentationFilter documentationFilter = null)
         {
-            documentationFilter = documentationFilter ?? BL.Filters.Filter.ForDocumentation();
+            documentationFilter = documentationFilter ?? new DocumentationFilter();
 
             var model = new DocumentationsListViewModel()
             {
                 ShowProject = showProject,
-                Documentations = DocumentationService.GetAll(Include.ForDocumentation().Project(), documentationFilter)
+                Documentations = DocumentationService.GetAll(Query.ForDocumentation(documentationFilter).Include(x => x.Project()))
             };
 
             return View(model);

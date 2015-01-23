@@ -59,7 +59,7 @@ namespace Jarboo.Admin.BL.Filters
             }
         }
 
-        public override PagedData<Task> Execute(IQueryable<Task> query)
+        public override IQueryable<Task> Execute(IQueryable<Task> query)
         {
             if (DateModifiedFrom.HasValue)
             {
