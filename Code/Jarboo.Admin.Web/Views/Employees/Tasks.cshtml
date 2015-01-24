@@ -1,8 +1,11 @@
-﻿@model Jarboo.Admin.DAL.Entities.Employee
+﻿@using Jarboo.Admin.Web.Models.Task
+@model Jarboo.Admin.DAL.Entities.Employee
 
 @{
     ViewBag.Title = Model.FullName + " tasks";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Jarboo.Admin.DAL.Entities.Task nextTask = ViewBag.NextTask;
 }
 
 <!-- RIBBON -->
@@ -32,13 +35,49 @@
             <h1 class="page-title txt-color-blueDark">
                 <!-- PAGE HEADER -->
                 <i class="fa-fw fa fa-file-text-o"></i>
+                Next task
+            </h1>
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end row -->
+
+    @if (nextTask == null)
+    {
+        <h3>No next task</h3>
+    }
+    else
+    {
+        <h3>
+            @Html.ActionLink(nextTask.Title, MVC.Tasks.View(nextTask.TaskId))
+            in @Html.ActionLink(nextTask.Project.Name, MVC.Projects.View(nextTask.ProjectId))
+            ( @Html.ActionLink(nextTask.Project.Customer.Name, MVC.Customers.View(nextTask.Project.CustomerId)) )
+        </h3>
+    }
+
+</div>
+
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
                 Upcoming tasks
             </h1>
         </div>
         <!-- end col -->
     </div>
     <!-- end row -->
-    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { employeeId = Model.EmployeeId })
+
+    @Html.Action(MVC.Tasks.List(new TasksListViewModel()
+                                             {
+                                                 ShowProject = true,
+                                                 Sorting = TaskSorting.Priority,
+                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().ByEmployeeId(Model.EmployeeId),
+                                             }))
 </div>
 
 <div id="content">
@@ -55,5 +94,10 @@
         <!-- end col -->
     </div>
     <!-- end row -->
-    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { employeeId = Model.EmployeeId, includeTasksWithDoneSteps = true })
+
+    @Html.Action(MVC.Tasks.List(new TasksListViewModel()
+                                             {
+                                                 ShowProject = true,
+                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().ByEmployeeId(Model.EmployeeId, true),
+                                             }))
 </div>

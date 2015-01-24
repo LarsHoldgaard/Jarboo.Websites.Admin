@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 
 namespace Jarboo.Admin.Web.Infrastructure
 {
@@ -144,6 +145,22 @@ namespace Jarboo.Admin.Web.Infrastructure
                     googleRefreshToken = ConfigurationManager.AppSettings["GoogleRefreshToken"];
                 }
                 return googleRefreshToken;
+            }
+        }
+
+
+        private static CustomErrorsMode? redirectOnError;
+        public static CustomErrorsMode ErrorMode
+        {
+            get
+            {
+                if (redirectOnError == null)
+                {
+                    var configuration = WebConfigurationManager.OpenWebConfiguration("~");
+                    var section = (CustomErrorsSection)configuration.GetSection("system.web/customErrors");
+                    redirectOnError = section.Mode;
+                }
+                return redirectOnError.Value;
             }
         }
     }

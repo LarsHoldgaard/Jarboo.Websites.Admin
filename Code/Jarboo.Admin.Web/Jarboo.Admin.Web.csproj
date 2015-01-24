@@ -41,6 +41,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxDropDownList">
+      <HintPath>packages\Bonnet.Mvc.AjaxDropDownList.1.0.3\lib\net45\AjaxDropDownList.dll</HintPath>
+    </Reference>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
@@ -52,6 +55,9 @@
     <Reference Include="AutoMapper.Net4, Version=3.3.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\AutoMapper.3.3.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="DataTables.Mvc">
+      <HintPath>..\..\assemblies\github.com\ALMMa\datatables.mvc\DataTables.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -115,9 +121,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\MiniProfiler.Mvc4.3.0.11\lib\net40\MiniProfiler.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
       <HintPath>packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
@@ -149,6 +154,8 @@
       <HintPath>packages\Microsoft.Net.Http.2.2.22\lib\net45\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -447,6 +454,7 @@
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Content\main.css" />
+    <Content Include="Scripts\jquery.bonnet.ajax-dropdownlist.js" />
     <Content Include="Scripts\libs\jquery-ui-1.10.3.min.js" />
     <Content Include="Scripts\notification\SmartNotification.min.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.ar.js" />
@@ -950,6 +958,7 @@
     <Content Include="Scripts\plugin\x-editable\x-editable.min.js" />
     <Content Include="Scripts\Site\jquery.validation.fix.js" />
     <Content Include="Scripts\Site\site.js" />
+    <Content Include="Scripts\Site\smartAdmin.dataTable.js" />
     <Content Include="Scripts\Site\validation.style.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.manager.min.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.ui.min.js" />
@@ -1016,6 +1025,7 @@
     <Compile Include="Infrastructure\Configuration.cs" />
     <Compile Include="Infrastructure\DataBaseInitializer.cs" />
     <Compile Include="Infrastructure\DecorationExtensions.cs" />
+    <Compile Include="Infrastructure\Helper.cs" />
     <Compile Include="Infrastructure\HtmlExtensions.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\AppFlowMetadata.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\GoogleDriveFolderHierarchy.cs" />
@@ -1025,10 +1035,13 @@
     <Compile Include="Infrastructure\ThirdPartyIntegration\NoopTaskRegister.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\TrelloTaskRegister.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
+    <Compile Include="Models\DataTable\Column.cs" />
+    <Compile Include="Models\DataTable\DataTableConfig.cs" />
     <Compile Include="Models\DeleteBtnVM.cs" />
     <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
     <Compile Include="Models\Task\TasksListViewModel.cs" />
+    <Compile Include="Models\Task\TaskSorting.cs" />
     <Compile Include="Models\Task\TaskVM.cs" />
     <Compile Include="ProjectsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -1066,7 +1079,6 @@
     <Content Include="Views\Projects\Index.cshtml" />
     <Content Include="Views\Projects\_List.cshtml" />
     <Content Include="Views\Tasks\Index.cshtml" />
-    <Content Include="Views\Tasks\List.cshtml" />
     <Content Include="Views\Tasks\Create.cshtml" />
     <Content Include="Views\Tasks\View.cshtml" />
     <Content Include="Views\Employees\Create.cshtml" />
@@ -1093,11 +1105,11 @@
     <Content Include="Views\Documentations\View.cshtml" />
     <Content Include="Views\Documentations\Edit.cshtml" />
     <Content Include="Views\Documentations\List.cshtml" />
-    <Content Include="Views\Tasks\EditorTemplates\TaskFilter.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DataTableTaskFilter.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Shared\Messages.cshtml" />
     <Content Include="Views\Shared\DeleteBtnForm.cshtml" />
-    <Content Include="Views\Tasks\_List.cshtml" />
+    <Content Include="Views\Tasks\List.cshtml" />
     <Content Include="Views\Projects\_Form.cshtml" />
     <Content Include="Views\Projects\Edit.cshtml" />
     <Content Include="Views\Employees\Tasks.cshtml" />

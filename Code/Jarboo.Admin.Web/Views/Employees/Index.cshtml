@@ -83,90 +83,77 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <div class="dataTables_wrapper form-inline no-footer">
-                                <div class="dt-toolbar"><div class="col-xs-12 col-sm-6"><div id="example_filter" class="dataTables_filter"><label><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span> <input type="search" class="form-control" placeholder="" aria-controls="example"></label></div></div><div class="col-xs-12 col-sm-6"><div class="dataTables_length" id="example_length"><label><select name="example_length" aria-controls="example" class="form-control"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select></label></div></div></div>
-                                <table class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
-                                    <thead>
+                            <table class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th class="sorting_asc">
+                                            @Html.DisplayNameFor(model => model.FullName)
+                                        </th>
+                                        <th class="sorting">
+                                            @Html.DisplayNameFor(model => model.SkypeName)
+                                        </th>
+                                        <th class="sorting">
+                                            @Html.DisplayNameFor(model => model.TrelloId)
+                                        </th>
+                                        <th class="sorting">
+                                            @Html.DisplayNameFor(model => model.Email)
+                                        </th>
+                                        <th class="sorting">
+                                            @Html.DisplayNameFor(model => model.Country)
+                                        </th>
+                                        <th class="sorting">
+                                            @Html.DisplayNameFor(model => model.HourlyPrice)
+                                        </th>
+                                        <th class="sorting">
+                                            @Html.DisplayNameFor(model => model.Positions)
+                                        </th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var employee in Model)
+                                    {
                                         <tr>
-                                            <th class="sorting_asc">
-                                                @Html.DisplayNameFor(model => model.FullName)
-                                            </th>
-                                            <th class="sorting">
-                                                @Html.DisplayNameFor(model => model.SkypeName)
-                                            </th>
-                                            <th class="sorting">
-                                                @Html.DisplayNameFor(model => model.TrelloId)
-                                            </th>
-                                            <th class="sorting">
-                                                @Html.DisplayNameFor(model => model.Email)
-                                            </th>
-                                            <th class="sorting">
-                                                @Html.DisplayNameFor(model => model.Country)
-                                            </th>
-                                            <th class="sorting">
-                                                @Html.DisplayNameFor(model => model.HourlyPrice)
-                                            </th>
-                                            <th class="sorting">
-                                                @Html.DisplayNameFor(model => model.Positions)
-                                            </th>
-                                            <th></th>
-                                            <th></th>
+                                            <td>
+                                                @Html.ActionLink(employee.FullName, MVC.Employees.View(employee.EmployeeId))
+                                            </td>
+                                            <td>
+                                                <a href="skype:@employee.SkypeName">@employee.SkypeName</a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => employee.TrelloId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => employee.Email)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => employee.Country)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => employee.HourlyPrice)
+                                            </td>
+                                            <td>
+                                                @foreach (var position in employee.Positions)
+                                                {
+                                                    <span class="label label-info">@position.Position</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Edit", MVC.Employees.Edit(employee.EmployeeId))
+                                            </td>
+                                            <td>
+                                                @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
+                                                                        {
+                                                                            Id = employee.EmployeeId,
+                                                                            Action = MVC.Employees.Delete(),
+                                                                            Small = true
+                                                                        })
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var employee in Model)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    @Html.ActionLink(employee.FullName, MVC.Employees.View(employee.EmployeeId))
-                                                </td>
-                                                <td>
-                                                    <a href="skype:@employee.SkypeName">@employee.SkypeName</a>
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => employee.TrelloId)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => employee.Email)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => employee.Country)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => employee.HourlyPrice)
-                                                </td>
-                                                <td>
-                                                    @foreach (var position in employee.Positions)
-                                                    {
-                                                        <span class="label label-info">@position.Position</span>
-                                                    }
-                                                </td>
-                                                <td>
-                                                    @Html.ActionLink("Edit", MVC.Employees.Edit(employee.EmployeeId))
-                                                </td>
-                                                <td>
-                                                    @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
-                                                                          {
-                                                                              Id = employee.EmployeeId,
-                                                                              Action = MVC.Employees.Delete(),
-                                                                              Small = true
-                                                                          })
-                                                </td>
-                                            </tr>
-                                        }
-
-                                        @if (!Model.Any())
-                                        {
-                                            <tr>
-                                                <td colspan="9">
-                                                    No employee has been created.
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                                <div class="dt-toolbar-footer"><div class="col-xs-12 col-sm-6"><div class="dataTables_info" id="example_info" role="status" aria-live="polite">Showing <span class="txt-color-darken">1</span> to <span class="txt-color-darken">15</span> of <span class="text-primary">15</span> entries</div></div><div class="col-xs-12 col-sm-6"><div class="dataTables_paginate paging_simple_numbers" id="example_paginate"><ul class="pagination pagination-sm"><li class="paginate_button previous disabled" aria-controls="example" tabindex="0" id="example_previous"><a href="#">Previous</a></li><li class="paginate_button active" aria-controls="example" tabindex="0"><a href="#">1</a></li><li class="paginate_button next disabled" aria-controls="example" tabindex="0" id="example_next"><a href="#">Next</a></li></ul></div></div></div>
-                            </div>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                         <!-- end widget content -->
                     </div>

@@ -75,6 +75,12 @@ namespace Jarboo.Admin.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult ProductListByCustomerForSelectJson()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ProductListByCustomerForSelectJson);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ProjectsController Actions { get { return MVC.Projects; } }
@@ -95,6 +101,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string View = "View";
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
+            public readonly string ProductListByCustomerForSelectJson = "ProductListByCustomerForSelectJson";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -104,6 +111,7 @@ namespace Jarboo.Admin.Web.Controllers
             public const string View = "View";
             public const string Create = "Create";
             public const string Edit = "Edit";
+            public const string ProductListByCustomerForSelectJson = "ProductListByCustomerForSelectJson";
         }
 
 
@@ -131,6 +139,14 @@ namespace Jarboo.Admin.Web.Controllers
         {
             public readonly string id = "id";
             public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_ProductListByCustomerForSelectJson s_params_ProductListByCustomerForSelectJson = new ActionParamsClass_ProductListByCustomerForSelectJson();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ProductListByCustomerForSelectJson ProductListByCustomerForSelectJsonParams { get { return s_params_ProductListByCustomerForSelectJson; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ProductListByCustomerForSelectJson
+        {
+            public readonly string value = "value";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -219,6 +235,18 @@ namespace Jarboo.Admin.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             EditOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ProductListByCustomerForSelectJsonOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? value);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ProductListByCustomerForSelectJson(int? value)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ProductListByCustomerForSelectJson);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "value", value);
+            ProductListByCustomerForSelectJsonOverride(callInfo, value);
             return callInfo;
         }
 

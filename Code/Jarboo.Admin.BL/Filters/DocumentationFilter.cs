@@ -12,13 +12,13 @@ namespace Jarboo.Admin.BL.Filters
     {
         public int? ProjectId { get; set; }
 
-        public DocumentationFilter WithProjectId(int? projectId)
+        public DocumentationFilter ByProjectId(int? projectId)
         {
             this.ProjectId = projectId;
             return this;
         }
 
-        public override PagedData<Documentation> Execute(IQueryable<Documentation> query)
+        public override IQueryable<Documentation> Execute(IQueryable<Documentation> query)
         {
             if (ProjectId.HasValue)
             {

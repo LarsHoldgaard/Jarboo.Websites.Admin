@@ -10,26 +10,45 @@ namespace Jarboo.Admin.BL.Filters
 {
     public class TaskFilter : Filter<Task>, IValidatableObject
     {
+        public string String { get; set; }
+
+        public int? CustomerId { get; set; }
         public int? ProjectId { get; set; }
         public int? EmployeeId { get; set; }
         public bool IncludeTasksWithDoneStepsForEmployee { get; set; }
+        public TaskType? Type { get; set; }
 
         public DateTime? DateModifiedFrom { get; set; }
         public DateTime? DateModifiedTo { get; set; }
 
         public bool ShowDeleted { get; set; }
-
         public bool ShowDone { get; set; }
 
-        public TaskFilter WithProjectId(int? projectId)
+        public TaskFilter ByString(string s)
+        {
+            String = s;
+            return this;
+        }
+
+        public TaskFilter ByCustomerId(int? customerId)
+        {
+            this.CustomerId = customerId;
+            return this;
+        }
+        public TaskFilter ByProjectId(int? projectId)
         {
             this.ProjectId = projectId;
             return this;
         }
-        public TaskFilter WithEmployeeId(int? employeeId, bool includeTasksWithDoneSteps = false)
+        public TaskFilter ByEmployeeId(int? employeeId, bool includeTasksWithDoneSteps = false)
         {
             this.EmployeeId = employeeId;
             this.IncludeTasksWithDoneStepsForEmployee = includeTasksWithDoneSteps;
+            return this;
+        }
+        public TaskFilter ByType(TaskType? type)
+        {
+            this.Type = type;
             return this;
         }
 
@@ -38,7 +57,6 @@ namespace Jarboo.Admin.BL.Filters
             this.ShowDone = true;
             return this;
         }
-
         public TaskFilter WithDeleted()
         {
             this.ShowDeleted = true;
@@ -53,7 +71,7 @@ namespace Jarboo.Admin.BL.Filters
             }
         }
 
-        public override PagedData<Task> Execute(IQueryable<Task> query)
+        public override IQueryable<Task> Execute(IQueryable<Task> query)
         {
             if (DateModifiedFrom.HasValue)
             {
@@ -65,6 +83,11 @@ namespace Jarboo.Admin.BL.Filters
             {
                 var date = DateModifiedTo.Value.EndOfDay();
                 query = query.Where(x => x.DateModified <= date);
+            }
+
+            if (CustomerId.HasValue)
+            {
+                query = query.Where(x => x.Project.CustomerId == CustomerId.Value);
             }
 
             if (ProjectId.HasValue)
@@ -92,6 +115,20 @@ namespace Jarboo.Admin.BL.Filters
             if (!ShowDone)
             {
                 query = query.Where(x => !x.Done);
+            }
+
+            if (!string.IsNullOrEmpty(String))
+            {
+                var values = String.Split(new [] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var value in values)
+                {
+                    query = query.Where(x => x.Title.IndexOf(value) != -1);
+                }
+            }
+
+            if (Type.HasValue)
+            {
+                query = query.Where(x => x.Type == Type.Value);
             }
 
             return base.Execute(query);

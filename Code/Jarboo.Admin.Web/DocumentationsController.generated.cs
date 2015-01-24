@@ -158,7 +158,7 @@ namespace Jarboo.Admin.Web.Controllers
         public class ActionParamsClass_List
         {
             public readonly string showProject = "showProject";
-            public readonly string projectId = "projectId";
+            public readonly string documentationFilter = "documentationFilter";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -264,15 +264,15 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool showProject, int? projectId);
+        partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool showProject, Jarboo.Admin.BL.Filters.DocumentationFilter documentationFilter);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult List(bool showProject, int? projectId)
+        public override System.Web.Mvc.ActionResult List(bool showProject, Jarboo.Admin.BL.Filters.DocumentationFilter documentationFilter)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.List);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "showProject", showProject);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "projectId", projectId);
-            ListOverride(callInfo, showProject, projectId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "documentationFilter", documentationFilter);
+            ListOverride(callInfo, showProject, documentationFilter);
             return callInfo;
         }
 

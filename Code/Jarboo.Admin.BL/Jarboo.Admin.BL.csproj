@@ -80,6 +80,7 @@
     <Compile Include="Models\TaskCreate.cs" />
     <Compile Include="Models\TaskNextStep.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query.cs" />
     <Compile Include="Services\BaseEntityService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\CustomerService.cs" />
@@ -91,6 +92,12 @@
     <Compile Include="Other\IFolderCreator.cs" />
     <Compile Include="Other\ITaskRegister.cs" />
     <Compile Include="Other\TaskStepEmployeeStrategy.cs" />
+    <Compile Include="Sorters\CustomerSorter.cs" />
+    <Compile Include="Sorters\DocumentationSorter.cs" />
+    <Compile Include="Sorters\EmployeeSorter.cs" />
+    <Compile Include="Sorters\ProjectSorter.cs" />
+    <Compile Include="Sorters\Sorter.cs" />
+    <Compile Include="Sorters\TaskSorter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

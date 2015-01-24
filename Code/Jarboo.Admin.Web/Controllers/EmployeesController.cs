@@ -23,11 +23,13 @@ namespace Jarboo.Admin.Web.Controllers
     {
         [Inject]
         public IEmployeeService EmployeeService { get; set; }
+        [Inject]
+        public ITaskService TaskService { get; set; }
 
         // GET: /Employees/
         public virtual ActionResult Index()
         {
-            return View(EmployeeService.GetAll(Include.ForEmployee().Positions(), BL.Filters.Filter.ForEmployee()));
+            return View(EmployeeService.GetAll(Query.ForEmployee().Include(x => x.Positions())));
         }
 
         // GET: /Employees/View/5
@@ -38,7 +40,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Employee employee = EmployeeService.GetByIdEx(id.Value, Include.ForEmployee().Positions());
+            Employee employee = EmployeeService.GetByIdEx(id.Value, new EmployeeInclude().Positions());
             if (employee == null)
             {
                 return HttpNotFound();
@@ -60,7 +62,7 @@ namespace Jarboo.Admin.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var employee = EmployeeService.GetByIdEx(id.Value, Include.ForEmployee().Positions());
+            var employee = EmployeeService.GetByIdEx(id.Value, new EmployeeInclude().Positions());
             if (employee == null)
             {
                 return HttpNotFound();
@@ -106,14 +108,22 @@ namespace Jarboo.Admin.Web.Controllers
         {
             if (id == null)
             {
-                return View(MVC.Employees.Views.ChooseForTasks, EmployeeService.GetAll(Include.ForEmployee(), BL.Filters.Filter.ForEmployee()).OrderBy(x => x.FullName));
+                return View(MVC.Employees.Views.ChooseForTasks, EmployeeService.GetAll(Query.ForEmployee()).OrderBy(x => x.FullName));
             }
 
-            Employee employee = EmployeeService.GetByIdEx(id.Value, Include.ForEmployee().Positions());
+            Employee employee = EmployeeService.GetByIdEx(id.Value, new EmployeeInclude().Positions());
             if (employee == null)
             {
                 return HttpNotFound();
             }
+
+            var nextTask = TaskService.GetAll(Query.ForTask()
+                    .Include(x => x.Project().Customer().TaskSteps())
+                    .Filter(x => x.ByEmployeeId(id.Value)))
+                .OrderByDescending(x => x.Priority)
+                .FirstOrDefault();
+
+            ViewBag.NextTask = nextTask;
             return View(employee);
         }
     }

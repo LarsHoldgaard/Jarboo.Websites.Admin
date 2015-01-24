@@ -27,7 +27,7 @@ namespace Jarboo.Admin.BL.Other
         public Employee SelectEmployee(TaskStepEnum step, int projectId)
         {
 
-            var employees = UnitOfWork.Employees.AsNoTracking().Include(Include.ForEmployee().Positions()).Filter(Filter.ForEmployee()).Data;
+            var employees = Query.ForEmployee().Include(x => x.Positions()).ApplyTo(UnitOfWork.Employees.AsNoTracking()).Data;
             if (employees.Count == 0)
             {
                 throw new ApplicationException("At least one employee should be created first");

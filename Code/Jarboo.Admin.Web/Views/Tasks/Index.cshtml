@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Jarboo.Admin.Web.Models.Task
+@{
     ViewBag.Title = "Tasks";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -42,35 +43,8 @@
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
         </a>
     </p>
-    @Html.Action(MVC.Tasks.ActionNames.List, MVC.Tasks.Name, new { showProject = true })
+    @Html.Action(MVC.Tasks.List(new TasksListViewModel()
+                                             {
+                                                 ShowProject = true
+                                             }))
 </div>
-
-@section pagespecific {
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            // Add event listener for opening and closing details
-            $('#example tbody').on('click', 'td.details-control', function () {
-                var tr = $(this).closest('tr');
-
-                if (tr.hasClass('shown')) {
-                    tr.next('tr').remove();
-                    tr.removeClass('shown');
-                } else {
-                    $.ajax({
-                        type: "GET",
-                        url: "/tasks/view/",
-                        data: { id: $(this).attr('id') },
-                        success: function (data) {
-                            tr.after(data);
-                        }
-                    });
-
-                    // Open this row
-                    tr.addClass('shown');
-                }
-            });
-        });
-    </script>
-}
-

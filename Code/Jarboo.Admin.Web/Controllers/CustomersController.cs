@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
+using Jarboo.Admin.BL;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
@@ -14,8 +15,6 @@ using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL;
 
 using Ninject;
-
-using Filter = Jarboo.Admin.BL.Filters.Filter;
 
 namespace Jarboo.Admin.Web.Controllers
 {
@@ -27,7 +26,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Customers/
         public virtual ActionResult Index()
         {
-            return View(CustomerService.GetAll(Include.ForCustomer(), Filter.ForCustomer()));
+            return View(CustomerService.GetAll(Query.ForCustomer()));
         }
 
         // GET: /Customers/View/5
@@ -38,7 +37,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Customer customer = CustomerService.GetByIdEx(id.Value, Include.ForCustomer().Projects());
+            Customer customer = CustomerService.GetByIdEx(id.Value, new CustomerInclude().Projects());
             if (customer == null)
             {
                 return HttpNotFound();

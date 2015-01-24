@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
+using Jarboo.Admin.BL.Sorters;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 
@@ -43,9 +44,9 @@ namespace Jarboo.Admin.BL.Services
         {
             return TableNoTracking.ToList();
         }
-        public PagedData<T> GetAll(Include<T> include, Filter<T> filter)
+        public PagedData<T> GetAll(IQuery<T, Include<T>, Filter<T>, Sorter<T>> query)
         {
-            return filter.Execute(TableNoTracking.Include(include));
+            return query.ApplyTo(TableNoTracking);
         }
 
         protected void Add<TM>(T entity, TM model)

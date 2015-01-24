@@ -9,3 +9,21 @@ a.btn i {
 form.filter .form-group:last-child {
     margin-top: -15px;
 }
+
+.data-table-filter .input-daterange input.form-control {
+    width: 100px;
+}
+
+div.dataTables_filter label {
+    float: left;
+}
+
+.data-table-filter {
+    display: none;
+    float: left;
+    margin-left: 5px;
+}
+
+.data-table-filter > * {
+    margin-left: 5px;
+}

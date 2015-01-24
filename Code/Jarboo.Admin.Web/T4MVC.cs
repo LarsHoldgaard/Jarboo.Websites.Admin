@@ -93,6 +93,7 @@ namespace Links
         public static readonly string jquery_2_1_1_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-2.1.1.min.js") ? Url("jquery-2.1.1.min.js") : Url("jquery-2.1.1.js");
         public static readonly string jquery_2_1_1_min_js = Url("jquery-2.1.1.min.js");
         public static readonly string jquery_2_1_1_min_map = Url("jquery-2.1.1.min.map");
+        public static readonly string jquery_bonnet_ajax_dropdownlist_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.bonnet.ajax-dropdownlist.min.js") ? Url("jquery.bonnet.ajax-dropdownlist.min.js") : Url("jquery.bonnet.ajax-dropdownlist.js");
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class libs {
             private const string URLPATH = "~/Scripts/libs";
@@ -1644,6 +1645,7 @@ namespace Links
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string jquery_validation_fix_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validation.fix.min.js") ? Url("jquery.validation.fix.min.js") : Url("jquery.validation.fix.js");
             public static readonly string site_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.js") ? Url("site.min.js") : Url("site.js");
+            public static readonly string smartAdmin_dataTable_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/smartAdmin.dataTable.min.js") ? Url("smartAdmin.dataTable.min.js") : Url("smartAdmin.dataTable.js");
             public static readonly string validation_style_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/validation.style.min.js") ? Url("validation.style.min.js") : Url("validation.style.js");
         }
     
@@ -1743,6 +1745,14 @@ namespace Links
             public static readonly string blank_gif = Url("blank.gif");
             public static readonly string border_png = Url("border.png");
             public static readonly string clear_png = Url("clear.png");
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class custom {
+                private const string URLPATH = "~/Content/img/custom";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string logo_png = Url("logo.png");
+            }
+        
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public static class demo {
                 private const string URLPATH = "~/Content/img/demo";
