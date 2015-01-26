@@ -10,7 +10,7 @@ namespace Jarboo.Admin.Integration.Noop
 {
     public class NoopNotifier : INotifier
     {
-        public void TaskResponsibleChanged(Task task, Employee employee)
+        public void TaskResponsibleChanged(TaskResponsibleChangedData data)
         { }
     }
 }

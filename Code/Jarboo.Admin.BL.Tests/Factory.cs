@@ -17,14 +17,16 @@ namespace Jarboo.Admin.BL.Tests
             IUnitOfWork unitOfWork = null,
             ITaskRegister taskRegister = null,
             IFolderCreator folderCreator = null,
-            ITaskStepEmployeeStrategy taskStepEmployeeStrategy = null)
+            ITaskStepEmployeeStrategy taskStepEmployeeStrategy = null,
+            INotifier notifier = null)
         {
             unitOfWork = unitOfWork ?? A.Fake<IUnitOfWork>();
             taskRegister = taskRegister ?? A.Fake<ITaskRegister>();
             folderCreator = folderCreator ?? A.Fake<IFolderCreator>();
             taskStepEmployeeStrategy = taskStepEmployeeStrategy ?? A.Fake<ITaskStepEmployeeStrategy>();
+            notifier = notifier ?? A.Fake<INotifier>();
 
-            return new TaskService(unitOfWork, taskRegister, folderCreator, taskStepEmployeeStrategy);
+            return new TaskService(unitOfWork, taskRegister, folderCreator, taskStepEmployeeStrategy, notifier);
         }
 
         public static EmployeeService CreateEmployeeService(

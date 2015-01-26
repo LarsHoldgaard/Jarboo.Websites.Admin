@@ -193,6 +193,19 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
+        private string taskResponsibleChangedNotificationSubject;
+        public string TaskResponsibleChangedNotificationSubject
+        {
+            get
+            {
+                if (taskResponsibleChangedNotificationSubject == null)
+                {
+                    taskResponsibleChangedNotificationSubject = ConfigurationManager.AppSettings["TaskResponsibleChangedNotificationSubject"];
+                }
+                return taskResponsibleChangedNotificationSubject;
+            }
+        }
+
         private string mandrillApiKey;
         public string MandrillApiKey
         {

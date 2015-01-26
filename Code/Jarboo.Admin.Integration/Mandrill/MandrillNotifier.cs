@@ -28,13 +28,13 @@ namespace Jarboo.Admin.Integration.Mandrill
             api = new MandrillApi(Configuration.MandrillApiKey);
         }
 
-        public void TaskResponsibleChanged(Task task, Employee employee)
+        public void TaskResponsibleChanged(TaskResponsibleChangedData data)
         {
             this.EnsureService();
 
-            api.SendMessage(
-                new EmailAddress[] { new EmailAddress(employee.Email) },
-                "Task was assigned to you",
+            var result = api.SendMessage(
+                new EmailAddress[] { new EmailAddress(data.EmployeeEmail) },
+                Configuration.TaskResponsibleChangedNotificationSubject,
                 new EmailAddress(Configuration.MandrillFrom),
                 Configuration.MandrillTaskResponsibleNotificationTemplate,
                 Enumerable.Empty<TemplateContent>()

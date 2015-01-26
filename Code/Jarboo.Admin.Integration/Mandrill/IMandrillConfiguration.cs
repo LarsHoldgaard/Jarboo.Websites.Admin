@@ -8,6 +8,8 @@ namespace Jarboo.Admin.Integration.Mandrill
 {
     public interface IMandrillConfiguration
     {
+        string TaskResponsibleChangedNotificationSubject { get; }
+
         string MandrillApiKey { get; }
         string MandrillTaskResponsibleNotificationTemplate { get; }
         string MandrillFrom { get; }
