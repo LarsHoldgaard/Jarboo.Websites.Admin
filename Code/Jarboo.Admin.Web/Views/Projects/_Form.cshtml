@@ -1,4 +1,5 @@
-﻿@model Jarboo.Admin.BL.Models.ProjectEdit
+﻿@using SmartAdminMvc
+@model Jarboo.Admin.BL.Models.ProjectEdit
 
 <div id="content">
     <!-- row -->
@@ -37,7 +38,7 @@
                             @Html.AntiForgeryToken()
                             @Html.HiddenFor(x => x.ProjectId)
 
-                            @Html.ValidationSummary(false)
+                            @Html.ValidationBootstrap()
                             <header>
                                 New Project
                             </header>

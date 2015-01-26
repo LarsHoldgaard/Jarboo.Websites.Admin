@@ -1,4 +1,5 @@
-﻿@model Jarboo.Admin.BL.Models.TaskCreate
+﻿@using SmartAdminMvc
+@model Jarboo.Admin.BL.Models.TaskCreate
 
 @{
     ViewBag.Title = "New task";
@@ -56,7 +57,7 @@
                         @using (Html.BeginForm("create", "tasks", FormMethod.Post, new { @id="form1", @class = "smart-form" }))
                         {
                             @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(false)
+                            @Html.ValidationBootstrap()
                             <header>
                                 New Tasks
                             </header>

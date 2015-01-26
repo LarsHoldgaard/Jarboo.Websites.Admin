@@ -1,4 +1,5 @@
-﻿@model Jarboo.Admin.BL.Models.DocumentationEdit
+﻿@using SmartAdminMvc
+@model Jarboo.Admin.BL.Models.DocumentationEdit
 
 <!-- row -->
 <div class="row">
@@ -36,7 +37,7 @@
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.DocumentationId)
 
-                        @Html.ValidationSummary(false)
+                        @Html.ValidationBootstrap()
 
                         <header>
                             Edit form

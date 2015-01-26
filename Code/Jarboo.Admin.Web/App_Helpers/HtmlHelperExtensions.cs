@@ -56,7 +56,7 @@ namespace SmartAdminMvc
             var hasController = value.Equals(currentController, StringComparison.InvariantCultureIgnoreCase);
             var hasAction = value.Equals(currentAction, StringComparison.InvariantCultureIgnoreCase);
 
-            return hasAction || hasController ? new HtmlString(attribute) : new HtmlString(string.Empty);
+            return hasController ? new HtmlString(attribute) : new HtmlString(string.Empty);
         }
 
         /// <summary>

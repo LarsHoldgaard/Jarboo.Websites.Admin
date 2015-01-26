@@ -1,4 +1,5 @@
 ﻿@using Jarboo.Admin.Web.Infrastructure
+@using SmartAdminMvc
 @model Jarboo.Admin.BL.Models.EmployeeEdit
 
 <!-- row -->
@@ -37,7 +38,7 @@
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.EmployeeId)
 
-                        @Html.ValidationSummary(false)
+                        @Html.ValidationBootstrap()
 
                         <header>
                             Edit form
