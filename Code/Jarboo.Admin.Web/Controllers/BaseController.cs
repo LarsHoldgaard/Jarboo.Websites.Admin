@@ -8,13 +8,21 @@ using System.Web.Mvc;
 
 using Jarboo.Admin.BL;
 using Jarboo.Admin.BL.Other;
+using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Web.Infrastructure;
 using Jarboo.Admin.Web.Infrastructure.BLExternals;
+
+using Microsoft.AspNet.Identity;
+
+using Ninject;
 
 namespace Jarboo.Admin.Web.Controllers
 {
     public partial class BaseController : Controller
     {
+        [Inject]
+        public UserManager<User> UserManager { get; set; }
+
         protected const string ModelStateKey = "ModelStateKey";
         protected const string TempErrorsKey = "TempErrorsKey";
         protected const string TempSuccessesKey = "TempSuccessesKey";
@@ -56,8 +64,13 @@ namespace Jarboo.Admin.Web.Controllers
                 }
             }
 
-            TempData[ModelStateKey] = ModelState;
+            this.PreserveModelState();
             return failureResult();
+        }
+
+        protected void PreserveModelState()
+        {
+            TempData[ModelStateKey] = ModelState;
         }
 
         protected void AddSuccess(string text)
@@ -120,6 +133,11 @@ namespace Jarboo.Admin.Web.Controllers
                 ModelState.Merge((ModelStateDictionary)TempData[ModelStateKey]);
             }
 
+            if (filterContext.Result is ViewResultBase)
+            {
+                ViewBag.CurrentUser = CurrentUser;
+            }
+
             base.OnActionExecuted(filterContext);
         }
 
@@ -150,6 +168,23 @@ namespace Jarboo.Admin.Web.Controllers
             filterContext.ExceptionHandled = true;
 
             filterContext.Result = RedirectToAction(MVC.Error.Index());
+        }
+
+        private User _user;
+        public User CurrentUser
+        {
+            get
+            {
+                if (_user == null)
+                {
+                    _user = UserManager.FindByName(HttpContext.User.Identity.Name) ??
+                        new User()
+                            {
+                                DisplayName = "Anonymous"
+                            };
+                }
+                return _user;
+            }
         }
     }
 }

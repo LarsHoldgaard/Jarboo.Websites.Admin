@@ -5,9 +5,11 @@ using System.Data.Entity.Validation;
 
 using Jarboo.Admin.DAL.Entities;
 
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace Jarboo.Admin.DAL
 {
-    public class Context : DbContext, IUnitOfWork
+    public class Context : IdentityDbContext<User>, IUnitOfWork
     {
         public Context()
             : this("name=Jarboo.Admin.DAL.Context")
@@ -38,6 +40,16 @@ namespace Jarboo.Admin.DAL
             }
 
             return new DbEntityValidationResult(entityEntry, errors);
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasOptional(x => x.Customer)
+                .WithOptionalDependent(x => x.User)
+                .Map(x => x.MapKey("CustomerId"));
+
+            base.OnModelCreating(modelBuilder);
         }
 
         public IDbSet<Customer> Customers { get; set; }

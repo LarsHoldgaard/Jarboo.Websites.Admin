@@ -1,6 +1,7 @@
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL;
+using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Integration;
 using Jarboo.Admin.Integration.GoogleDrive;
 using Jarboo.Admin.Integration.Mandrill;
@@ -8,6 +9,8 @@ using Jarboo.Admin.Integration.Noop;
 using Jarboo.Admin.Integration.Trello;
 using Jarboo.Admin.Web.Infrastructure;
 using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
+
+using Microsoft.AspNet.Identity;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Jarboo.Admin.Web.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Jarboo.Admin.Web.App_Start.NinjectWebCommon), "Stop")]
@@ -104,7 +107,9 @@ namespace Jarboo.Admin.Web.App_Start
 
             kernel.Bind<ITaskStepEmployeeStrategy>().To<TaskStepEmployeeStrategy>().InRequestScope();
 
-            kernel.Bind<IUnitOfWork>().To<Context>().InRequestScope();
+            kernel.Bind<IUnitOfWork, Context>().To<Context>().InRequestScope();
+            kernel.Bind<UserManager<User>>().To<UserManager>().InRequestScope();
+            kernel.Bind<IAccountService>().To<AccountService>().InRequestScope();
             kernel.Bind<ICustomerService>().To<CustomerService>().InRequestScope();
             kernel.Bind<IProjectService>().To<ProjectService>().InRequestScope();
             kernel.Bind<ITaskService>().To<TaskService>().InRequestScope();

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Xml.Serialization;
 
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
+
+using Microsoft.AspNet.Identity;
 
 namespace Jarboo.Admin.Web.Infrastructure
 {
@@ -24,6 +27,7 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
 
             EnsureCustomers(context);
+            EnsureAdmin(context);
         }
 
         private void EnsureCustomers(Context context)
@@ -42,6 +46,22 @@ namespace Jarboo.Admin.Web.Infrastructure
                                               DateModified = DateTime.Now
                                           });
             }
+            context.SaveChanges();
+        }
+        private void EnsureAdmin(Context context)
+        {
+            var userManager = new UserManager(context);
+
+            var admin = userManager.FindByNameAsync(Configuration.Instance.AdminEmail);
+            if (admin == null)
+            {
+                userManager.Create(new User()
+                                       {
+                                           UserName = Configuration.Instance.AdminEmail,
+                                           Email = Configuration.Instance.AdminEmail,
+                                       }, Configuration.Instance.AdminPassword);
+            }
+
             context.SaveChanges();
         }
     }

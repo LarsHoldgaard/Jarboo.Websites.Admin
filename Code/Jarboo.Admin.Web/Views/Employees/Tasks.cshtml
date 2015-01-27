@@ -98,6 +98,6 @@
     @Html.Action(MVC.Tasks.List(new TasksListViewModel()
                                              {
                                                  ShowProject = true,
-                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().ByEmployeeId(Model.EmployeeId, true),
+                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().ByEmployeeId(Model.EmployeeId, true).WithDone(),
                                              }))
 </div>

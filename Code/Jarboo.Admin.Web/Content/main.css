@@ -27,3 +27,11 @@ div.dataTables_filter label {
 .data-table-filter > * {
     margin-left: 5px;
 }
+
+form.logout-form {
+    margin-top: 11px;
+}
+
+form.logout-form button {
+    height: 28px;
+}

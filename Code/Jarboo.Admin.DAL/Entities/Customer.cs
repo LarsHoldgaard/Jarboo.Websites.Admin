@@ -15,6 +15,8 @@ namespace Jarboo.Admin.DAL.Entities
         [Required]
         public string Name { get; set; }
 
+        public User User { get; set; }
+
         public virtual List<Project> Projects { get; set; }
     }
 }

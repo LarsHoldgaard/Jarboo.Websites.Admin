@@ -260,5 +260,32 @@ namespace Jarboo.Admin.Web.Infrastructure
                 return redirectOnError.Value;
             }
         }
+
+
+        private string adminEmail;
+        public string AdminEmail
+        {
+            get
+            {
+                if (adminEmail == null)
+                {
+                    adminEmail = ConfigurationManager.AppSettings["AdminEmail"];
+                }
+                return adminEmail;
+            }
+        }
+
+        private string adminPassword;
+        public string AdminPassword
+        {
+            get
+            {
+                if (adminPassword == null)
+                {
+                    adminPassword = ConfigurationManager.AppSettings["AdminPassword"];
+                }
+                return adminPassword;
+            }
+        }
     }
 }

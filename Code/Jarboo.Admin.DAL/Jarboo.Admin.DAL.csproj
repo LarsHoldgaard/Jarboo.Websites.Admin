@@ -38,6 +38,12 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\Jarboo.Admin.Web\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -58,6 +64,7 @@
     <Compile Include="Entities\Task.cs" />
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\TaskStep.cs" />
+    <Compile Include="Entities\User.cs" />
     <Compile Include="Extensions\CustomerExtensions.cs" />
     <Compile Include="Extensions\EmployeeExtensions.cs" />
     <Compile Include="Extensions\ProjectExtensions.cs" />
@@ -84,8 +91,17 @@
     <Compile Include="Migrations\201501161521300_Task_ForcedPriority.Designer.cs">
       <DependentUpon>201501161521300_Task_ForcedPriority.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501270933520_Users.cs" />
+    <Compile Include="Migrations\201501270933520_Users.Designer.cs">
+      <DependentUpon>201501270933520_Users.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501270934509_CustomerUser.cs" />
+    <Compile Include="Migrations\201501270934509_CustomerUser.Designer.cs">
+      <DependentUpon>201501270934509_CustomerUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -105,6 +121,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501161521300_Task_ForcedPriority.resx">
       <DependentUpon>201501161521300_Task_ForcedPriority.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501270933520_Users.resx">
+      <DependentUpon>201501270933520_Users.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501270934509_CustomerUser.resx">
+      <DependentUpon>201501270934509_CustomerUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
