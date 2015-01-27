@@ -65,6 +65,7 @@
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\TaskStep.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserRole.cs" />
     <Compile Include="Extensions\CustomerExtensions.cs" />
     <Compile Include="Extensions\EmployeeExtensions.cs" />
     <Compile Include="Extensions\ProjectExtensions.cs" />
@@ -99,8 +100,13 @@
     <Compile Include="Migrations\201501270934509_CustomerUser.Designer.cs">
       <DependentUpon>201501270934509_CustomerUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501271149119_UserRoles.cs" />
+    <Compile Include="Migrations\201501271149119_UserRoles.Designer.cs">
+      <DependentUpon>201501271149119_UserRoles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleManager.cs" />
     <Compile Include="UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501270934509_CustomerUser.resx">
       <DependentUpon>201501270934509_CustomerUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501271149119_UserRoles.resx">
+      <DependentUpon>201501271149119_UserRoles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

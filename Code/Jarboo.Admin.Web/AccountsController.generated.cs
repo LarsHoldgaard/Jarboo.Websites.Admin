@@ -76,6 +76,10 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Login = "Login";
             public readonly string Register = "Register";
             public readonly string Logout = "Logout";
+            public readonly string View = "View";
+            public readonly string Edit = "Edit";
+            public readonly string ChangePassword = "ChangePassword";
+            public readonly string SetPassword = "SetPassword";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -84,6 +88,10 @@ namespace Jarboo.Admin.Web.Controllers
             public const string Login = "Login";
             public const string Register = "Register";
             public const string Logout = "Logout";
+            public const string View = "View";
+            public const string Edit = "Edit";
+            public const string ChangePassword = "ChangePassword";
+            public const string SetPassword = "SetPassword";
         }
 
 
@@ -105,6 +113,41 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string returnUrl = "returnUrl";
             public readonly string model = "model";
         }
+        static readonly ActionParamsClass_View s_params_View = new ActionParamsClass_View();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_View ViewParams { get { return s_params_View; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_View
+        {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Edit
+        {
+            public readonly string id = "id";
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_ChangePassword s_params_ChangePassword = new ActionParamsClass_ChangePassword();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ChangePassword ChangePasswordParams { get { return s_params_ChangePassword; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ChangePassword
+        {
+            public readonly string id = "id";
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_SetPassword s_params_SetPassword = new ActionParamsClass_SetPassword();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_SetPassword SetPasswordParams { get { return s_params_SetPassword; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_SetPassword
+        {
+            public readonly string id = "id";
+            public readonly string model = "model";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -115,11 +158,19 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string ChangePassword = "ChangePassword";
+                public readonly string Edit = "Edit";
                 public readonly string Login = "Login";
                 public readonly string Register = "Register";
+                public readonly string SetPassword = "SetPassword";
+                public readonly string View = "View";
             }
+            public readonly string ChangePassword = "~/Views/Accounts/ChangePassword.cshtml";
+            public readonly string Edit = "~/Views/Accounts/Edit.cshtml";
             public readonly string Login = "~/Views/Accounts/Login.cshtml";
             public readonly string Register = "~/Views/Accounts/Register.cshtml";
+            public readonly string SetPassword = "~/Views/Accounts/SetPassword.cshtml";
+            public readonly string View = "~/Views/Accounts/View.cshtml";
         }
     }
 
@@ -166,10 +217,10 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.Register model, string returnUrl);
+        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.UserCreate model, string returnUrl);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Register(Jarboo.Admin.BL.Models.Register model, string returnUrl)
+        public override System.Web.Mvc.ActionResult Register(Jarboo.Admin.BL.Models.UserCreate model, string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -186,6 +237,90 @@ namespace Jarboo.Admin.Web.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Logout);
             LogoutOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ViewOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult View(string id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.View);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ViewOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Edit(string id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            EditOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.UserEdit model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Edit(Jarboo.Admin.BL.Models.UserEdit model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            EditOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ChangePasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ChangePassword(string id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangePassword);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ChangePasswordOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ChangePasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.UserPasswordChange model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ChangePassword(Jarboo.Admin.BL.Models.UserPasswordChange model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangePassword);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            ChangePasswordOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void SetPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult SetPassword(string id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SetPassword);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            SetPasswordOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void SetPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.UserPasswordSet model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult SetPassword(Jarboo.Admin.BL.Models.UserPasswordSet model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SetPassword);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            SetPasswordOverride(callInfo, model);
             return callInfo;
         }
 

@@ -1,3 +1,7 @@
+using Jarboo.Admin.DAL.Entities;
+
+using Microsoft.AspNet.Identity;
+
 namespace Jarboo.Admin.DAL.Migrations
 {
     using System;
@@ -15,18 +19,22 @@ namespace Jarboo.Admin.DAL.Migrations
 
         protected override void Seed(Jarboo.Admin.DAL.Context context)
         {
-            //  This method will be called after migrating to the latest version.
+            var roleManager = new RoleManager(context);
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            foreach (var roleName in Enum.GetNames(typeof(Entities.UserRoles)))
+            {
+                if (roleManager.RoleExists(roleName))
+                {
+                    continue;
+                }
+
+                roleManager.Create(new UserRole()
+                                       {
+                                           Name = roleName,
+                                       });
+            }
+
+            context.SaveChanges();
         }
     }
 }

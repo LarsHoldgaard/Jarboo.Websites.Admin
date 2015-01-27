@@ -52,14 +52,25 @@ namespace Jarboo.Admin.Web.Infrastructure
         {
             var userManager = new UserManager(context);
 
-            var admin = userManager.FindByNameAsync(Configuration.Instance.AdminEmail);
+            var admin = userManager.FindByName(Configuration.Instance.AdminEmail);
             if (admin == null)
             {
-                userManager.Create(new User()
-                                       {
-                                           UserName = Configuration.Instance.AdminEmail,
-                                           Email = Configuration.Instance.AdminEmail,
-                                       }, Configuration.Instance.AdminPassword);
+                admin = new User()
+                               {
+                                   DisplayName = "Administrator",
+                                   UserName = Configuration.Instance.AdminEmail,
+                                   Email = Configuration.Instance.AdminEmail,
+                               };
+                var result = userManager.Create(admin, Configuration.Instance.AdminPassword);
+                if (!result.Succeeded)
+                {
+                    throw new Exception("Errors: " + String.Join(";", result.Errors));
+                }
+            }
+
+            if (!userManager.IsInRole(admin.Id, UserRoles.Admin.ToString()))
+            {
+                userManager.AddToRole(admin.Id, UserRoles.Admin.ToString());
             }
 
             context.SaveChanges();

@@ -47,6 +47,14 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\Jarboo.Admin.Web\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -68,6 +76,10 @@
     <Compile Include="Filters\TaskFilter.cs" />
     <Compile Include="Includes\DocumentationInclude.cs" />
     <Compile Include="Models\DocumentationEdit.cs" />
+    <Compile Include="Models\UserCreate.cs" />
+    <Compile Include="Models\UserEdit.cs" />
+    <Compile Include="Models\UserPasswordChange.cs" />
+    <Compile Include="Models\UserPasswordSet.cs" />
     <Compile Include="Other\IBusinessErrorCollection.cs" />
     <Compile Include="Includes\CustomerInclude.cs" />
     <Compile Include="Includes\EmployeeInclude.cs" />
@@ -82,6 +94,7 @@
     <Compile Include="Other\INotifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
+    <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\BaseEntityService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\CustomerService.cs" />

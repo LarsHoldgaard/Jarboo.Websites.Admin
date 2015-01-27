@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
+using Jarboo.Admin.BL;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
@@ -74,11 +76,11 @@ namespace Jarboo.Admin.Web.Controllers
         public virtual ActionResult Register(string returnUrl = "")
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View(new Register());
+            return View(new UserCreate());
         }
 
         [HttpPost]
-        public virtual ActionResult Register(Register model, string returnUrl = "")
+        public virtual ActionResult Register(UserCreate model, string returnUrl = "")
         {
             return Handle(model, AccountService.Register,
                 () => this.Login(new LoginVM()
@@ -96,6 +98,101 @@ namespace Jarboo.Admin.Web.Controllers
             AuthenticationManager.SignOut();
 
             return RedirectToAction(MVC.Home.Index());
+        }
+
+        public virtual ActionResult View(string id = null)
+        {
+            id = id ?? CurrentUser.Id;
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var user = UserManager.FindById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(user);
+        }
+
+        public virtual ActionResult Edit(string id = null)
+        {
+            id = id ?? CurrentUser.Id;
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var user = UserManager.FindById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            var userEdit = user.MapTo<UserEdit>();
+            return View(userEdit);
+        }
+
+        [HttpPost]
+        public virtual ActionResult Edit(UserEdit model)
+        {
+            return Handle(model, AccountService.Edit,
+                RedirectToAction(MVC.Accounts.View(model.UserId)),
+                RedirectToAction(MVC.Accounts.Edit(model.UserId)));
+        }
+
+        public virtual ActionResult ChangePassword(string id = null)
+        {
+            id = id ?? CurrentUser.Id;
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var user = UserManager.FindById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            var userEdit = user.MapTo<UserPasswordChange>();
+            return View(userEdit);
+        }
+
+        [HttpPost]
+        public virtual ActionResult ChangePassword(UserPasswordChange model)
+        {
+            return Handle(model, AccountService.ChangePassword,
+                RedirectToAction(MVC.Accounts.View(model.UserId)),
+                RedirectToAction(MVC.Accounts.ChangePassword(model.UserId)));
+        }
+
+        public virtual ActionResult SetPassword(string id = null)
+        {
+            id = id ?? CurrentUser.Id;
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var user = UserManager.FindById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            var userEdit = user.MapTo<UserPasswordSet>();
+            return View(userEdit);
+        }
+
+        [HttpPost]
+        public virtual ActionResult SetPassword(UserPasswordSet model)
+        {
+            return Handle(model, AccountService.SetPassword,
+                RedirectToAction(MVC.Accounts.View(model.UserId)),
+                RedirectToAction(MVC.Accounts.SetPassword(model.UserId)));
         }
     }
 }

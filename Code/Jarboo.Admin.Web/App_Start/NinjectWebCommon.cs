@@ -109,6 +109,7 @@ namespace Jarboo.Admin.Web.App_Start
 
             kernel.Bind<IUnitOfWork, Context>().To<Context>().InRequestScope();
             kernel.Bind<UserManager<User>>().To<UserManager>().InRequestScope();
+            kernel.Bind<RoleManager<UserRole>>().To<RoleManager>().InRequestScope();
             kernel.Bind<IAccountService>().To<AccountService>().InRequestScope();
             kernel.Bind<ICustomerService>().To<CustomerService>().InRequestScope();
             kernel.Bind<IProjectService>().To<ProjectService>().InRequestScope();
