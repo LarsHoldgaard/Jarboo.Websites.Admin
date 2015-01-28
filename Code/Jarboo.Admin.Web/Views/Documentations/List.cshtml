@@ -54,7 +54,14 @@
                                         Link
                                     </th>
                                     <th></th>
-                                    <th></th>
+                                    @if (this.Can(MVC.Documentations.Edit()))
+                                    {
+                                        <th></th>
+                                    }
+                                    @if (this.Can(MVC.Documentations.Delete()))
+                                    {
+                                        <th></th>
+                                    }
                                 </tr>
 
                             </thead>
@@ -75,18 +82,20 @@
                                             <a target="_blank" href="@doc.DocumentLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
                                         </td>
                                         <td>
-                                            @Html.ActionLink(MVC.Documentations.ActionNames.Edit, MVC.Documentations.Edit(doc.DocumentationId), new { @class = "pull-left" })
-                                            <span class="pull-left"> | </span>
                                             @Html.ActionLink(MVC.Documentations.ActionNames.View, MVC.Documentations.View(doc.DocumentationId), new { @class = "pull-left" })
                                         </td>
-                                        <td>
-                                            @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
-                                                                    {
-                                                                        Id = doc.DocumentationId,
-                                                                        Action = MVC.Documentations.Delete(),
-                                                                        Small = true
-                                                                    })
-                                        </td>
+                                        @if (this.Can(MVC.Documentations.Edit()))
+                                        {
+                                            <td>
+                                                @Html.ActionLink(MVC.Documentations.ActionNames.Edit, MVC.Documentations.Edit(doc.DocumentationId), new { @class = "pull-left" })
+                                            </td>
+                                        }
+                                        @if (this.Can(MVC.Documentations.Delete()))
+                                        {
+                                            <td>
+                                                @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM() { Id = doc.DocumentationId, Action = MVC.Documentations.Delete(), Small = true })
+                                            </td>
+                                        }
                                     </tr>
                                 }
                             </tbody>

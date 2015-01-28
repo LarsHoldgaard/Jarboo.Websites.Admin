@@ -121,13 +121,18 @@ namespace Jarboo.Admin.BL
             return query;
         }
 
-        public static PagedData<TEntity> ApplyTo<TEntity, TInclude, TFilter, TSorter>(this IQuery<TEntity, TInclude, TFilter, TSorter> query, IQueryable<TEntity> data)
+        public static PagedData<TEntity> ApplyTo<TEntity, TInclude, TFilter, TSorter>(this IQuery<TEntity, TInclude, TFilter, TSorter> query, IQueryable<TEntity> data, Func<IQueryable<TEntity>, IQueryable<TEntity>> securityFilter = null)
             where TEntity : BaseEntity
             where TFilter : Filter<TEntity>, new()
             where TInclude : Include<TEntity>, new()
             where TSorter : Sorter<TEntity>, new()
         {
-            return data.Include(query.Include).FilterBy(query.Filter).SortBy(query.Sorter).Paginate(query);
+            var filteredData = data.Include(query.Include).FilterBy(query.Filter);
+            if (securityFilter != null)
+            {
+                filteredData = securityFilter(filteredData);
+            }
+            return filteredData.SortBy(query.Sorter).Paginate(query);
         }
     }
 }

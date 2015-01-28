@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EntityFramework.Extensions;
 
+using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
@@ -26,8 +27,8 @@ namespace Jarboo.Admin.BL.Services
         protected ITaskRegister TaskRegister { get; set; }
         protected ITaskStepEmployeeStrategy TaskStepEmployeeStrategy { get; set; }
 
-        public EmployeeService(IUnitOfWork unitOfWork, ITaskRegister taskRegister, ITaskStepEmployeeStrategy taskStepEmployeeStrategy)
-            : base(unitOfWork)
+        public EmployeeService(IUnitOfWork unitOfWork, IAuth auth, ITaskRegister taskRegister, ITaskStepEmployeeStrategy taskStepEmployeeStrategy)
+            : base(unitOfWork, auth)
         {
             TaskStepEmployeeStrategy = taskStepEmployeeStrategy;
             TaskRegister = taskRegister;
@@ -40,6 +41,11 @@ namespace Jarboo.Admin.BL.Services
         protected override Employee Find(int id, IQueryable<Employee> query)
         {
             return query.ById(id);
+        }
+
+        protected override string SecurityEntities
+        {
+            get { return Rights.Employees.Name; }
         }
 
         public void Save(EmployeeEdit model, IBusinessErrorCollection errors)

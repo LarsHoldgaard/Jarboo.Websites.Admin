@@ -1,4 +1,5 @@
-﻿using Jarboo.Admin.BL.Models;
+﻿using Jarboo.Admin.BL.Authorization;
+using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
@@ -19,8 +20,8 @@ namespace Jarboo.Admin.BL.Services
 
     public class DocumentationService : BaseEntityService<Documentation>, IDocumentationService
     {
-        public DocumentationService(IUnitOfWork UnitOfWork)
-            : base(UnitOfWork)
+        public DocumentationService(IUnitOfWork unitOfWork, IAuth auth)
+            : base(unitOfWork, auth)
         { }
 
         protected override IDbSet<Documentation> Table
@@ -30,6 +31,30 @@ namespace Jarboo.Admin.BL.Services
         protected override Documentation Find(int id, IQueryable<Documentation> query)
         {
             return query.FirstOrDefault(x => x.DocumentationId == id);
+        }
+
+        protected override string SecurityEntities
+        {
+            get { return Rights.Documentations.Name; }
+        }
+        protected override IQueryable<Documentation> FilterCanView(IQueryable<Documentation> query)
+        {
+            return query.Where(x => x.Project.CustomerId == UserCustomerId);
+        }
+        protected override bool CanAEDSpecial(Documentation entity)
+        {
+            if (entity.ProjectId != 0)
+            {
+                return UnitOfWork.Projects.Any(x => x.ProjectId == entity.ProjectId && x.CustomerId == UserCustomerId);
+            }
+            else if (entity.DocumentationId != 0)
+            {
+                return UnitOfWork.Documentations.Any(x => x.DocumentationId == entity.DocumentationId && x.Project.CustomerId == UserCustomerId);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void Save(DocumentationEdit model, IBusinessErrorCollection errors)

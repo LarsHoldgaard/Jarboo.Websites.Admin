@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
@@ -28,8 +29,8 @@ namespace Jarboo.Admin.BL.Services
     {
         public UserManager<User> UserManager { get; set; }
 
-        public AccountService(IUnitOfWork UnitOfWork, UserManager<User> userManager)
-            :base(UnitOfWork)
+        public AccountService(IUnitOfWork unitOfWork, IAuth auth, UserManager<User> userManager)
+            : base(unitOfWork, auth)
         {
             UserManager = userManager;
         }

@@ -22,5 +22,10 @@ namespace Jarboo.Admin.Web.Controllers
         {
             return View();
         }
+
+        public virtual ActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

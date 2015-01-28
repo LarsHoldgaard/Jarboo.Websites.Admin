@@ -47,7 +47,7 @@
                                 continue;
                             }
 
-                            column.render = getColumnRender(column.type);
+                            column.render = getColumnRender(column.type, token);
                         }
                     }
 
@@ -77,7 +77,7 @@
         }
     });
 
-    function getColumnRender(columnType) {
+    function getColumnRender(columnType, token) {
         switch (columnType) {
             case "TaskLink":
                 {
@@ -125,9 +125,7 @@
                         if (type != "display") {
                             return null;
                         }
-
-                        var token = $('.dataTables_wrapper > input[name="__RequestVerificationToken"]').val();
-
+                        
                         return "\
 <form method='post' class='delete-btn-form pull-left' action='" + data[1] + "'>\
     <input type='hidden' value='" + token + "' name='__RequestVerificationToken'>\

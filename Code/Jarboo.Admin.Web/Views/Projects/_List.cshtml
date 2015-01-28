@@ -49,7 +49,10 @@
                                             Customer name
                                         </th>
                                     }
-                                    <th></th>
+                                    @if (this.Can(MVC.Projects.Edit()))
+                                    {
+                                        <th></th>
+                                    }
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,10 +68,12 @@
                                             <td>@Html.ActionLink(project.Customer.Name, MVC.Customers.View(project.CustomerId))
                                             </td>
                                         }
-                                        <td>
-                                            @Html.ActionLink("View", MVC.Projects.View(project.ProjectId)) |
-                                            @Html.ActionLink("Edit", MVC.Projects.Edit(project.ProjectId))
-                                        </td>
+                                        @if (this.Can(MVC.Projects.Edit()))
+                                        {
+                                            <td>
+                                                @Html.ActionLink("Edit", MVC.Projects.Edit(project.ProjectId))
+                                            </td>
+                                        }
                                     </tr>
                                 }
                             </tbody>

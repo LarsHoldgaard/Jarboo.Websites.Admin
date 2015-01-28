@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
+using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
@@ -32,8 +33,8 @@ namespace Jarboo.Admin.BL.Services
         protected ITaskStepEmployeeStrategy TaskStepEmployeeStrategy { get; set; }
         protected INotifier Notifier { get; set; }
 
-        public TaskService(IUnitOfWork unitOfWork, ITaskRegister taskRegister, IFolderCreator folderCreator, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, INotifier notifier)
-            : base(unitOfWork)
+        public TaskService(IUnitOfWork unitOfWork, IAuth auth, ITaskRegister taskRegister, IFolderCreator folderCreator, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, INotifier notifier)
+            : base(unitOfWork, auth)
         {
             TaskRegister = taskRegister;
             FolderCreator = folderCreator;
@@ -48,6 +49,19 @@ namespace Jarboo.Admin.BL.Services
         protected override Task Find(int id, IQueryable<Task> query)
         {
             return query.ById(id);
+        }
+
+        protected override string SecurityEntities
+        {
+            get { return Rights.Tasks.Name; }
+        }
+        protected override IQueryable<Task> FilterCanView(IQueryable<Task> query)
+        {
+            return query.Where(x => x.Project.CustomerId == UserCustomerId);
+        }
+        protected override bool CanAEDSpecial(Task entity)
+        {
+            return UnitOfWork.Projects.Any(x => x.ProjectId == entity.ProjectId && x.CustomerId == UserCustomerId);
         }
 
         public void Create(TaskCreate model, IBusinessErrorCollection errors)
@@ -192,6 +206,8 @@ namespace Jarboo.Admin.BL.Services
             var task = Table.Include(x => x.Steps.Select(y => y.Employee)).Include(x => x.Project).ByIdMust(model.TaskId);
             task.DateModified = now;
 
+            CheckCanEdit(task);
+
             var lastStep = task.Steps.Last();
             lastStep.DateModified = now;
             lastStep.DateEnd = now;
@@ -243,6 +259,8 @@ namespace Jarboo.Admin.BL.Services
         {
             var entity = Table.Include(x => x.Project).ByIdMust(taskId);
             var customer = UnitOfWork.Customers.ByProjectMust(entity.ProjectId);
+
+            CheckCanEdit(entity);
 
             entity.DateModified = DateTime.Now;
             entity.DateDeleted = DateTime.Now;

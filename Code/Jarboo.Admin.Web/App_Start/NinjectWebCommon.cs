@@ -1,3 +1,4 @@
+using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL;
@@ -107,6 +108,7 @@ namespace Jarboo.Admin.Web.App_Start
 
             kernel.Bind<ITaskStepEmployeeStrategy>().To<TaskStepEmployeeStrategy>().InRequestScope();
 
+            kernel.Bind<IAuth>().To<BLAuth>().InRequestScope();
             kernel.Bind<IUnitOfWork, Context>().To<Context>().InRequestScope();
             kernel.Bind<UserManager<User>>().To<UserManager>().InRequestScope();
             kernel.Bind<RoleManager<UserRole>>().To<RoleManager>().InRequestScope();

@@ -14,7 +14,7 @@ namespace Jarboo.Admin.DAL
     public class UserManager : UserManager<User>
     {
         public UserManager(Context context)
-            : base(new UserStore<User>(context))
+            : base(new UserStore(context))
         {
             UserValidator = new UserValidator<User>(this)
             {
@@ -55,6 +55,11 @@ namespace Jarboo.Admin.DAL
         public override Task<User> FindAsync(UserLoginInfo login)
         {
             return base.FindAsync(login);
+        }
+
+        public override Task<bool> IsInRoleAsync(string userId, string role)
+        {
+            return base.IsInRoleAsync(userId, role);
         }
     }
 }

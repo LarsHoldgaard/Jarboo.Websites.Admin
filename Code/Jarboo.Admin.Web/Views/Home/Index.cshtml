@@ -44,7 +44,7 @@
 
                     -->
                     <header>
-                        <h2><strong>@customer.Name</strong></h2>
+                        <h2><strong>@Html.ActionLink(customer.Name, MVC.Customers.View(customer.CustomerId))</strong></h2>
                         <div class="widget-toolbar">
                             <a class="btn btn-success" href="@Url.Action(MVC.Projects.Create(customer.CustomerId))">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Project

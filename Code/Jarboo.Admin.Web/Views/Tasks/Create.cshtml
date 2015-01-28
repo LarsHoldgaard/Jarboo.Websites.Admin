@@ -56,7 +56,7 @@
                     <!-- end widget edit box -->
                     <!-- widget content -->
                     <div class="widget-body no-padding">
-                        @using (Html.BeginForm("create", "tasks", FormMethod.Post, new { @id="form1", @class = "smart-form" }))
+                        @using (Html.BeginForm(MVC.Tasks.Create(), FormMethod.Post, new { @id="form1", @class = "smart-form" }))
                         {
                             @Html.AntiForgeryToken()
                             @Html.ValidationBootstrap()

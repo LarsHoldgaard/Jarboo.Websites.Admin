@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorization\Rights.cs" />
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Filters\CustomerFilter.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Models\UserEdit.cs" />
     <Compile Include="Models\UserPasswordChange.cs" />
     <Compile Include="Models\UserPasswordSet.cs" />
+    <Compile Include="Authorization\IAuth.cs" />
     <Compile Include="Other\IBusinessErrorCollection.cs" />
     <Compile Include="Includes\CustomerInclude.cs" />
     <Compile Include="Includes\EmployeeInclude.cs" />

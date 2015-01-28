@@ -1,6 +1,6 @@
 ﻿@using SmartAdminMvc
 
-    <!-- Left panel : Navigation area -->
+<!-- Left panel : Navigation area -->
 <!-- Note: This width of the aside area can be adjusted through LESS variables -->
 <aside id="left-panel">
 
@@ -20,30 +20,60 @@
         -->
 
         <ul>
-            <li class="@Html.RouteIf("home", "active")">
-                <a href="@Url.Action(MVC.Home.Index())" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
-            </li>
-            <li class="@Html.RouteIf("employees", "tasks")">
-                <a href="@Url.Action(MVC.Employees.Tasks(null))"><i class="fa fa-lg fa-fw fa-play"></i> <span class="menu-item-parent">Next task</span></a>
-            </li>
-            <li class="@Html.RouteIf("customers", "active")">
-                <a href="@Url.Action(MVC.Customers.Index())"><i class="fa fa-lg fa-fw fa-group"></i> <span class="menu-item-parent">Customers</span></a>
-            </li>
-            <li class="@Html.RouteIf("projects", "active")">
-                <a href="@Url.Action(MVC.Projects.Index())"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Projects</span></a>
-            </li>
-            <li class="@Html.RouteIf("tasks", "active")">
-                <a href="@Url.Action(MVC.Tasks.Index())"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent">Tasks</span></a>
-            </li>
-            <li class="@Html.RouteIf("employees", "active")">
-                <a href="@Url.Action(MVC.Employees.Index())"><i class="fa fa-lg fa-fw fa-list-alt"></i> <span class="menu-item-parent">Employees</span></a>
-            </li>
-            <li class="@Html.RouteIf("documentations", "active")">
-                <a href="@Url.Action(MVC.Documentations.Index())"><i class="fa fa-lg fa-fw fa-stack-overflow"></i> <span class="menu-item-parent">Documentations</span></a>
-            </li>
-            <li class="@Html.RouteIf("guides", "active")">
-                <a href="@Url.Action(MVC.Guides.Index())"><i class="fa fa-lg fa-fw fa-book"></i> <span class="menu-item-parent">Guide</span></a>
-            </li>
+            @if (this.Can(MVC.Accounts.Login()))
+            {
+                <li class="@Html.RouteIf("accounts", "login")">
+                    <a href="@Url.Action(MVC.Accounts.Login())" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Login</span></a>
+                </li>
+            }
+            @if (this.Can(MVC.Home.Index()))
+            {
+                <li class="@Html.RouteIf("home", "active")">
+                    <a href="@Url.Action(MVC.Home.Index())" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Dashboard</span></a>
+                </li>
+            }
+            @if (this.Can(MVC.Employees.Tasks(null)))
+            {
+                <li class="@Html.RouteIf("employees", "tasks")">
+                    <a href="@Url.Action(MVC.Employees.Tasks(null))"><i class="fa fa-lg fa-fw fa-play"></i><span class="menu-item-parent">Next task</span></a>
+                </li>
+            }
+            @if (this.Can(MVC.Customers.Index()))
+            {
+                <li class="@Html.RouteIf("customers", "active")">
+                    <a href="@Url.Action(MVC.Customers.Index())"><i class="fa fa-lg fa-fw fa-group"></i><span class="menu-item-parent">Customers</span></a>
+                </li>
+            }
+            @if (this.Can(MVC.Projects.Index()))
+            {
+                <li class="@Html.RouteIf("projects", "active")">
+                    <a href="@Url.Action(MVC.Projects.Index())"><i class="fa fa-lg fa-fw fa-file-text-o"></i><span class="menu-item-parent">Projects</span></a>
+                </li>
+            }
+            @if (this.Can(MVC.Tasks.Index()))
+            {
+                <li class="@Html.RouteIf("tasks", "active")">
+                    <a href="@Url.Action(MVC.Tasks.Index())"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i><span class="menu-item-parent">Tasks</span></a>
+                </li>
+            }
+            @if (this.Can(MVC.Employees.Index()))
+            {
+                <li class="@Html.RouteIf("employees", "active")">
+                    <a href="@Url.Action(MVC.Employees.Index())"><i class="fa fa-lg fa-fw fa-list-alt"></i><span class="menu-item-parent">Employees</span></a>
+                </li>
+            }
+            @if (this.Can(MVC.Documentations.Index()))
+            {
+                <li class="@Html.RouteIf("documentations", "active")">
+                    <a href="@Url.Action(MVC.Documentations.Index())"><i class="fa fa-lg fa-fw fa-stack-overflow"></i><span class="menu-item-parent">Documentations</span></a>
+                </li>
+            }
+            @if (this.Can(MVC.Guides.Index()))
+            {
+                <li class="@Html.RouteIf("guides", "active")">
+                    <a href="@Url.Action(MVC.Guides.Index())"><i class="fa fa-lg fa-fw fa-book"></i><span class="menu-item-parent">Guide</span></a>
+                </li>
+            }
         </ul>
     </nav>
     <span class="minifyme" data-action="minifyMenu">

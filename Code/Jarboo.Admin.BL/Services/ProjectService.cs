@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
@@ -22,8 +23,8 @@ namespace Jarboo.Admin.BL.Services
     {
         protected ITaskRegister TaskRegister { get; set; }
 
-        public ProjectService(IUnitOfWork unitOfWork, ITaskRegister taskRegister)
-            : base(unitOfWork)
+        public ProjectService(IUnitOfWork unitOfWork, IAuth auth, ITaskRegister taskRegister)
+            : base(unitOfWork, auth)
         {
             TaskRegister = taskRegister;
         }
@@ -35,6 +36,19 @@ namespace Jarboo.Admin.BL.Services
         protected override Project Find(int id, IQueryable<Project> query)
         {
             return query.ByIdMust(id);
+        }
+
+        protected override string SecurityEntities
+        {
+            get { return Rights.Projects.Name; }
+        }
+        protected override IQueryable<Project> FilterCanView(IQueryable<Project> query)
+        {
+            return query.Where(x => x.CustomerId == UserCustomerId);
+        }
+        protected override bool CanAEDSpecial(Project entity)
+        {
+            return entity.CustomerId == UserCustomerId;
         }
 
         public void Save(ProjectEdit model, IBusinessErrorCollection errors)

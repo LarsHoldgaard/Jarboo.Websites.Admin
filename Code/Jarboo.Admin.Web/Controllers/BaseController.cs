@@ -141,9 +141,15 @@ namespace Jarboo.Admin.Web.Controllers
             base.OnActionExecuted(filterContext);
         }
 
-        protected new HttpNotFoundResult HttpNotFound()
+        protected new ActionResult HttpNotFound()
         {
-            throw new HttpException(404, "Not found");
+            //throw new HttpException(404, "Not found");
+            return RedirectToAction(MVC.Error.NotFound());
+        }
+        protected new ActionResult HttpAccessDenied()
+        {
+            //throw new HttpException(404, "Not found");
+            return RedirectToAction(MVC.Error.AccessDenied());
         }
 
         protected override void OnException(ExceptionContext filterContext)
@@ -160,7 +166,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return;
             }
 
-            if (filterContext.Exception != null)
+            if (filterContext.Exception is ApplicationException)
             {
                 AddError(filterContext.Exception.Message);
             }

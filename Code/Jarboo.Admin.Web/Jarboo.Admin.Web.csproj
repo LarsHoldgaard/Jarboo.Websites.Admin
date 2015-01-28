@@ -234,12 +234,6 @@
     <Reference Include="T4MVCExtensions">
       <HintPath>packages\T4MVCExtensions.3.10.0\lib\net40\T4MVCExtensions.dll</HintPath>
     </Reference>
-    <Reference Include="Thinktecture.IdentityModel.Core">
-      <HintPath>packages\Thinktecture.IdentityModel.Core.1.1.0\lib\net45\Thinktecture.IdentityModel.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Thinktecture.IdentityModel.SystemWeb">
-      <HintPath>packages\Thinktecture.IdentityModel.SystemWeb.1.1.0\lib\net45\Thinktecture.IdentityModel.SystemWeb.dll</HintPath>
-    </Reference>
     <Reference Include="TrelloNet">
       <HintPath>packages\TrelloNet.Temp.Fork.0.6.2\lib\net40-Client\TrelloNet.dll</HintPath>
     </Reference>
@@ -1067,10 +1061,11 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\AuthorizationManager.cs" />
+    <Compile Include="Infrastructure\BLAuth.cs" />
     <Compile Include="Infrastructure\BLExternals\BusinessErrorCollection.cs" />
     <Compile Include="Infrastructure\BreadCrumbsBuilder.cs" />
     <Compile Include="Infrastructure\Configuration.cs" />
+    <Compile Include="Infrastructure\CustomAuthorizeAttribute.cs" />
     <Compile Include="Infrastructure\DataBaseInitializer.cs" />
     <Compile Include="Infrastructure\DecorationExtensions.cs" />
     <Compile Include="Infrastructure\Helper.cs" />
@@ -1164,6 +1159,7 @@
     <Content Include="Views\Accounts\View.cshtml" />
     <Content Include="Views\Accounts\ChangePassword.cshtml" />
     <Content Include="Views\Accounts\SetPassword.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

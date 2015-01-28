@@ -16,6 +16,7 @@ namespace Jarboo.Admin.Web.App_Start
         {
             filters.Add(new ValidateAntiForgeryTokenWrapperAttribute(HttpVerbs.Post));
             filters.Add(new ProfilingActionFilter());
+            filters.Add(new CustomAuthorizeAttribute());
         }
     }
 }
