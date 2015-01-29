@@ -15,8 +15,7 @@
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
-            .Add(Url.Action(MVC.Customers.Index()), "Customers")
+        @(new BreadCrumbsBuilder(this)
             .Add(Model.Name)
             .Done())
     </ol>
@@ -41,11 +40,15 @@
         <!-- end col -->
     </div>
     <!-- end row -->
-    <p>
-        <a class="btn btn-success" href="@Url.Action(MVC.Projects.Create(Model.CustomerId))">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add project
-        </a>
-    </p>
+    
+    @if (this.Can(MVC.Projects.Create()))
+    {
+        <p>
+            <a class="btn btn-success" href="@Url.Action(MVC.Projects.Create(Model.CustomerId))">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add project
+            </a>
+        </p>
+    }
 
     @Html.Partial(MVC.Projects.Views._List, new ProjectsListViewModel()
                                             {

@@ -14,8 +14,8 @@
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
-            .Add(Url.Action(MVC.Projects.Index()), "Projects")
+        @(new BreadCrumbsBuilder(this)
+            .Add(MVC.Customers.View(Model.CustomerId), ViewBag.Customer.Name)
             .Add(Model.Name)
             .Done())
     </ol>

@@ -96,6 +96,16 @@ namespace Jarboo.Admin.Web.Infrastructure
         {
             return view.User.Can(controller, action);
         }
+        public static bool Can(this Controller ctrl, ActionResult action)
+        {
+            var call = action as T4MVC_System_Web_Mvc_ActionResult;
+            if (call == null)
+            {
+                throw new ArgumentException("Action must be T4MVC_System_Web_Mvc_ActionResult");
+            }
+
+            return ctrl.User.Can(call.Controller, call.Action);
+        }
         public static bool Can(this Controller ctrl, string controller, string action)
         {
             return ctrl.User.Can(controller, action);

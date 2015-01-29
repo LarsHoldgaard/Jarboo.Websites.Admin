@@ -13,7 +13,7 @@
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
+        @(new BreadCrumbsBuilder(this)
             .Add("Dashboard")
             .Done())
     </ol>

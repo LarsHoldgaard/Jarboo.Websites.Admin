@@ -11,20 +11,28 @@ namespace Jarboo.Admin.Web.Infrastructure
     public class BreadCrumbsBuilder
     {
         private StringBuilder stringBuilder;
+        private WebViewPage page;
 
-        public BreadCrumbsBuilder()
+        public BreadCrumbsBuilder(WebViewPage page)
         {
+            this.page = page;
+
             stringBuilder = new StringBuilder();
             stringBuilder.Append("");
         }
 
-        public BreadCrumbsBuilder Add(string url, string label)
+        public BreadCrumbsBuilder Add(ActionResult action, string label)
         {
+            if (!page.Can(action))
+            {
+                return this;
+            }
+
             stringBuilder.Append(string.Format(@"<li>
                     <strong>
                         <a href='{0}'>{1}</a>
                     </strong>
-                </li>", url, label));
+                </li>", page.Url.Action(action), label));
             return this;
         }
         public BreadCrumbsBuilder Add(string label)
@@ -37,11 +45,6 @@ namespace Jarboo.Admin.Web.Infrastructure
         {
             stringBuilder.Append("");
             return MvcHtmlString.Create(stringBuilder.ToString());
-        }
-
-        public static BreadCrumbsBuilder Start()
-        {
-            return new BreadCrumbsBuilder();
         }
     }
 }

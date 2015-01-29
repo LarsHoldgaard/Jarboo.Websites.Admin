@@ -15,12 +15,11 @@
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
-        .Add(Url.Action(MVC.Customers.Index()), "Customers")
-        .Add(Url.Action(MVC.Customers.View(Model.Project.CustomerId)), Model.Project.Customer.Name)
-        .Add(Url.Action(MVC.Projects.View(Model.ProjectId)), Model.Project.Name)
-        .Add(Model.FullTitle())
-        .Done())
+        @(new BreadCrumbsBuilder(this)
+            .Add(MVC.Customers.View(Model.Project.CustomerId), Model.Project.Customer.Name)
+            .Add(MVC.Projects.View(Model.ProjectId), Model.Project.Name)
+            .Add(Model.FullTitle())
+            .Done())
     </ol>
     <!-- end breadcrumb -->
 </div>

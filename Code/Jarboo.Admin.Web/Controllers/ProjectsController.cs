@@ -54,11 +54,13 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Projects/Create
         public virtual ActionResult Create(int? customerId)
         {
-            var projectEdit = new ProjectEdit();
-            if (customerId.HasValue)
+            if (customerId == null)
             {
-                projectEdit.CustomerId = customerId.Value;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            var projectEdit = new ProjectEdit();
+            projectEdit.CustomerId = customerId.Value;
 
             return this.CreateEditView(projectEdit);
         }
@@ -83,7 +85,7 @@ namespace Jarboo.Admin.Web.Controllers
         private ActionResult CreateEditView(ProjectEdit model)
         {
             ViewBag.BoardNames = new SelectList(TaskRegister.BoardNames(), model.BoardName);
-            ViewBag.CustomersList = new SelectList(CustomerService.GetAll(Query.ForCustomer()), "CustomerId", "Name", model.CustomerId);
+            ViewBag.Customer = CustomerService.GetById(model.CustomerId);
             return View(model);
         }
 

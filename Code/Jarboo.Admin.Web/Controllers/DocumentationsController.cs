@@ -48,11 +48,13 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Documentations/Create
         public virtual ActionResult Create(int? projectId)
         {
-            var documentationEdit = new DocumentationEdit();
-            if (projectId.HasValue)
+            if (projectId == null)
             {
-                documentationEdit.ProjectId = projectId.Value;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            var documentationEdit = new DocumentationEdit();
+            documentationEdit.ProjectId = projectId.Value;
 
             return this.CreateEditView(documentationEdit);
         }
@@ -76,7 +78,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         private ActionResult CreateEditView(DocumentationEdit model)
         {
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(Query.ForProject().Include(x => x.Customer())), "ProjectId", "Name", "Customer.Name", model.ProjectId);
+            ViewBag.Project = ProjectService.GetByIdEx(model.ProjectId, new ProjectInclude().Customer());
             return View(model);
         }
 

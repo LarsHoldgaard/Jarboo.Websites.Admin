@@ -15,9 +15,9 @@
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
-        .Add(ViewBag.Title)
-        .Done())
+        @(new BreadCrumbsBuilder(this)
+            .Add(ViewBag.Title)
+            .Done())
     </ol>
     <!-- end breadcrumb -->
 </div>

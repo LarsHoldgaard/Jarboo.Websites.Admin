@@ -15,8 +15,9 @@
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
-            .Add(Url.Action(MVC.Tasks.Index()), "Tasks")
+        @(new BreadCrumbsBuilder(this)
+            .Add(MVC.Customers.View(ViewBag.Project.CustomerId), ViewBag.Project.Customer.Name)
+            .Add(MVC.Projects.View(ViewBag.Project.ProjectId), ViewBag.Project.Name)
             .Add("New task")
             .Done())
     </ol>
@@ -60,6 +61,8 @@
                         {
                             @Html.AntiForgeryToken()
                             @Html.ValidationBootstrap()
+                            @Html.HiddenFor(x => x.ProjectId)
+                            
                             <header>
                                 New Tasks
                             </header>
@@ -68,12 +71,6 @@
                                     @Html.LabelFor(model => model.Title, new { @class = "label" })
                                     <label class="input">
                                         @Html.TextBoxFor(x => x.Title, new { @placeholder = "Title", @class="form-control" })
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.ProjectId, new { @class = "select" })
-                                    <label class="select select-multiple">
-                                        @Html.DropDownListFor(x => x.ProjectId, (SelectList)ViewBag.ProjectsList)
                                     </label>
                                 </section>
                                 <section>

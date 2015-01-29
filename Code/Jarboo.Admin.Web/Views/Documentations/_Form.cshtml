@@ -36,6 +36,7 @@
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.DocumentationId)
+                        @Html.HiddenFor(x => x.ProjectId)
 
                         @Html.ValidationBootstrap()
 
@@ -43,12 +44,6 @@
                             Edit form
                         </header>
                         <fieldset>
-                            <section>
-                                @Html.LabelFor(model => model.ProjectId, new { @class = "label" })
-                                <label class="input">
-                                    @Html.DropDownListFor(x => x.ProjectId, (SelectList)ViewBag.ProjectsList, new { @class = "form-control" })
-                                </label>
-                            </section>
                             <section>
                                 @Html.LabelFor(model => model.Type, new { @class = "label" })
                                 <label class="input">

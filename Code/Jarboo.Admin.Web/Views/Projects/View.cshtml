@@ -17,9 +17,8 @@
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
-            .Add(Url.Action(MVC.Customers.Index()), "Customers")
-            .Add(Url.Action(MVC.Customers.View(Model.CustomerId)), Model.Customer.Name)
+        @(new BreadCrumbsBuilder(this)
+            .Add(MVC.Customers.View(Model.CustomerId), Model.Customer.Name)
             .Add(Model.Name)
             .Done())
     </ol>
@@ -109,6 +108,16 @@
                                                 @Model.Customer.Name
                                             </td>
                                         </tr>
+                                        @if (this.Can(MVC.Projects.Edit()))
+                                        {
+                                            <tr>
+                                                <td colspan="2">
+                                                    <a class="btn btn-success" href="@Url.Action(MVC.Projects.Edit(Model.ProjectId))">
+                                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Edit
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -149,15 +158,17 @@
 
         </div>
     </div>
-    <p>
-        <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create(Model.ProjectId))">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
-        </a>
-    </p>
-
+    @if (this.Can(MVC.Tasks.Create()))
+    {
+        <p>
+            <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create(Model.ProjectId))">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
+            </a>
+        </p>
+    }
     @Html.Action(MVC.Tasks.List(new TasksListViewModel()
                                              {
-                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().ByProjectId(Model.ProjectId)
+                                                 TaskFilter = new TaskFilter().ByProjectId(Model.ProjectId)
                                              }))
 
     <!-- end row -->
@@ -178,11 +189,14 @@
 
         </div>
     </div>
-    <p>
-        <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create(Model.ProjectId))">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
-        </a>
-    </p>
+    @if (this.Can(MVC.Documentations.Create()))
+    {
+        <p>
+            <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create(Model.ProjectId))">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
+            </a>
+        </p>
+    }
     @Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new
                                                                                    {
                                                                                        documentationFilter = new DocumentationFilter().ByProjectId(Model.ProjectId)

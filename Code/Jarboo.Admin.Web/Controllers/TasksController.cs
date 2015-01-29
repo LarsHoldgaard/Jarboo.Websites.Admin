@@ -65,14 +65,16 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Tasks/Create
         public virtual ActionResult Create(int? projectId)
         {
-            var task = new TaskCreate();
-            if (projectId.HasValue)
+            if (projectId == null)
             {
-                task.ProjectId = projectId.Value;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            var task = new TaskCreate();
+            task.ProjectId = projectId.Value;
+
             ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee()), "EmployeeId", "FullName");
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(Query.ForProject().Include(x => x.Customer())), "ProjectId", "Name", "Customer.Name", task.ProjectId);
+            ViewBag.Project = ProjectService.GetByIdEx(task.ProjectId, new ProjectInclude().Customer());
             return View(task);
         }
 
@@ -148,7 +150,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         public enum TaskListColumns
         {
-            Title,
+            Title = 0,
             Date,
             ProjectName,
             Priority,
@@ -239,7 +241,8 @@ namespace Jarboo.Admin.Web.Controllers
             config.Searching = true;
             config.SetupServerDataSource(Url.Action(MVC.Tasks.ListData()), FormMethod.Post);
             config.Columns = new List<DataTableConfig.Column>(columns);
-            config.Columns[1].Visible = showProject;
+            config.Columns[(int)TaskListColumns.ProjectName].Visible = showProject;
+            config.Columns[(int)TaskListColumns.Delete].Visible = this.Can(MVC.Tasks.Delete());
 
             switch (sorting)
             {
