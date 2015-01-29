@@ -17,7 +17,7 @@ using Task = Jarboo.Admin.DAL.Entities.Task;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface ITaskService : IEntityService<Task>
+    public interface ITaskService : IEntityService<int, Task>
     {
         void Create(TaskCreate model, IBusinessErrorCollection errors);
 
@@ -26,7 +26,7 @@ namespace Jarboo.Admin.BL.Services
         void Delete(int taskId, IBusinessErrorCollection errors);
     }
 
-    public class TaskService : BaseEntityService<Task>, ITaskService
+    public class TaskService : BaseEntityService<int, Task>, ITaskService
     {
         protected ITaskRegister TaskRegister { get; set; }
         protected IFolderCreator FolderCreator { get; set; }

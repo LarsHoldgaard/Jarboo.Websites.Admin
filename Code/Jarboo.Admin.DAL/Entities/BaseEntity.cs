@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Jarboo.Admin.DAL.Entities
 {
-    public class BaseEntity
+    public interface IBaseEntity
+    {
+        DateTime DateCreated { get; set; }
+        DateTime DateModified { get; set; }
+    }
+
+    public class BaseEntity : IBaseEntity
     {
         public BaseEntity()
         {

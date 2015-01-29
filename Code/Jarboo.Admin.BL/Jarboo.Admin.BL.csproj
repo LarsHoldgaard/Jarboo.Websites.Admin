@@ -108,6 +108,7 @@
     <Compile Include="Other\IFolderCreator.cs" />
     <Compile Include="Other\ITaskRegister.cs" />
     <Compile Include="Other\TaskStepEmployeeStrategy.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Sorters\CustomerSorter.cs" />
     <Compile Include="Sorters\DocumentationSorter.cs" />
     <Compile Include="Sorters\EmployeeSorter.cs" />

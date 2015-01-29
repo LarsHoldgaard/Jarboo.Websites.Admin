@@ -23,6 +23,8 @@ namespace Jarboo.Admin.Web.Controllers
     {
         [Inject]
         public IAccountService AccountService { get; set; }
+        [Inject]
+        public IUserService UserService { get; set; }
 
         public virtual IAuthenticationManager AuthenticationManager
         {
@@ -138,7 +140,7 @@ namespace Jarboo.Admin.Web.Controllers
         [HttpPost]
         public virtual ActionResult Edit(UserEdit model)
         {
-            return Handle(model, AccountService.Edit,
+            return Handle(model, UserService.Edit,
                 RedirectToAction(MVC.Accounts.View(model.UserId)),
                 RedirectToAction(MVC.Accounts.Edit(model.UserId)));
         }
@@ -164,7 +166,7 @@ namespace Jarboo.Admin.Web.Controllers
         [HttpPost]
         public virtual ActionResult ChangePassword(UserPasswordChange model)
         {
-            return Handle(model, AccountService.ChangePassword,
+            return Handle(model, UserService.ChangePassword,
                 RedirectToAction(MVC.Accounts.View(model.UserId)),
                 RedirectToAction(MVC.Accounts.ChangePassword(model.UserId)));
         }
@@ -190,7 +192,7 @@ namespace Jarboo.Admin.Web.Controllers
         [HttpPost]
         public virtual ActionResult SetPassword(UserPasswordSet model)
         {
-            return Handle(model, AccountService.SetPassword,
+            return Handle(model, UserService.SetPassword,
                 RedirectToAction(MVC.Accounts.View(model.UserId)),
                 RedirectToAction(MVC.Accounts.SetPassword(model.UserId)));
         }

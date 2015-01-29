@@ -50,6 +50,13 @@ namespace Jarboo.Admin.BL.Authorization
             public const string NextStepAny = "NextStepAny";
             public const string NextStepSpecial = "NextStepSpecial";
         }
+        public class Users
+        {
+            public static readonly string Name = typeof(Users).Name;
+
+            public const string SetPasswordAny = "SetPasswordAny";
+            public const string SetPasswordSpecial = "SetPasswordSpecial";
+        }
 
         private static readonly Dictionary<UserRoles, Dictionary<string, HashSet<string>>> rightsByRoles = new Dictionary<UserRoles, Dictionary<string, HashSet<string>>>();
         private static readonly Dictionary<string, HashSet<string>> anonymousRights = new Dictionary<string, HashSet<string>>();
@@ -76,11 +83,12 @@ namespace Jarboo.Admin.BL.Authorization
         }
         private static void FillAnonymousRights(Dictionary<string, HashSet<string>> anonymousRights)
         {
-            anonymousRights.Add(Customers.Name, AddAny);
+            anonymousRights.Add(Accounts.Name, Accounts.Register);
         }
         private static void FillAuthorizedUserRights(Dictionary<string, HashSet<string>> authorizedUserRights)
         {
-
+            authorizedUserRights.Add(Users.Name, ViewSpecial);
+            authorizedUserRights.Add(Users.Name, EditSpecial);
         }
         private static void FillCustomerRights(Dictionary<string, HashSet<string>> customerRights)
         {

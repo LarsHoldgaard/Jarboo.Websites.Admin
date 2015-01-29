@@ -14,12 +14,12 @@ using Jarboo.Admin.DAL.Extensions;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface IProjectService : IEntityService<Project>
+    public interface IProjectService : IEntityService<int, Project>
     {
         void Save(ProjectEdit model, IBusinessErrorCollection errors);
     }
 
-    public class ProjectService : BaseEntityService<Project>, IProjectService
+    public class ProjectService : BaseEntityService<int, Project>, IProjectService
     {
         protected ITaskRegister TaskRegister { get; set; }
 

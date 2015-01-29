@@ -15,14 +15,14 @@ using Jarboo.Admin.DAL.Extensions;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface IEmployeeService : IEntityService<Employee>
+    public interface IEmployeeService : IEntityService<int, Employee>
     {
         void Save(EmployeeEdit model, IBusinessErrorCollection errors);
 
         void Delete(int employeeId, IBusinessErrorCollection errors);
     }
 
-    public class EmployeeService : BaseEntityService<Employee>, IEmployeeService
+    public class EmployeeService : BaseEntityService<int, Employee>, IEmployeeService
     {
         protected ITaskRegister TaskRegister { get; set; }
         protected ITaskStepEmployeeStrategy TaskStepEmployeeStrategy { get; set; }

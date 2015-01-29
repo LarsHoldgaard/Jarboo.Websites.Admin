@@ -20,9 +20,6 @@ namespace Jarboo.Admin.BL.Services
     public interface IAccountService
     {
         void Register(UserCreate model, IBusinessErrorCollection errors);
-        void Edit(UserEdit model, IBusinessErrorCollection errors);
-        void ChangePassword(UserPasswordChange model, IBusinessErrorCollection errors);
-        void SetPassword(UserPasswordSet model, IBusinessErrorCollection errors);
     }
 
     public class AccountService : BaseService, IAccountService
@@ -66,7 +63,7 @@ namespace Jarboo.Admin.BL.Services
                     var result = UserManager.Create(user, model.Password);
                     if (!result.Succeeded)
                     {
-                        AddErrorsFromResult(result, errors);
+                        errors.AddErrorsFromResult(result);
                         transaction.Rollback();
                         return;
                     }
@@ -74,7 +71,7 @@ namespace Jarboo.Admin.BL.Services
                     result = UserManager.AddToRole(user.Id, UserRoles.Customer.ToString());
                     if (!result.Succeeded)
                     {
-                        AddErrorsFromResult(result, errors);
+                        errors.AddErrorsFromResult(result);
                         transaction.Rollback();
                         return;
                     }
@@ -93,116 +90,6 @@ namespace Jarboo.Admin.BL.Services
                     transaction.Rollback();
                     throw;
                 }
-            }
-        }
-
-        public void Edit(UserEdit model, IBusinessErrorCollection errors)
-        {
-            if (!model.Validate(errors))
-            {
-                return;
-            }
-
-            var user = UserManager.FindById(model.UserId);
-            if (user == null)
-            {
-                throw new ApplicationException("User not found");
-            }
-
-            model.MapTo(user);
-            var result = UserManager.UserValidator.ValidateAsync(user).GetAwaiter().GetResult();
-            if (!result.Succeeded)
-            {
-                this.AddErrorsFromResult(result, errors);
-                return;
-            }
-
-            using (var transaction = UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    result = UserManager.Update(user);
-                    if (!result.Succeeded)
-                    {
-                        this.AddErrorsFromResult(result, errors);
-                        transaction.Rollback();
-                        return;
-                    }
-
-                    var customer = UnitOfWork.Customers.ByUserId(user.Id);
-                    if (customer != null)
-                    {
-                        customer.Name = user.DisplayName;
-                    }
-
-                    UnitOfWork.SaveChanges();
-
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    transaction.Rollback();
-                    throw;
-                }
-            }
-        }
-
-        public void ChangePassword(UserPasswordChange model, IBusinessErrorCollection errors)
-        {
-            if (!model.Validate(errors))
-            {
-                return;
-            }
-
-            var user = UserManager.FindById(model.UserId);
-            if (user == null)
-            {
-                throw new ApplicationException("User not found");
-            }
-
-            var result = UserManager.ChangePassword(user.Id, model.OldPassword, model.NewPassword);
-            if (!result.Succeeded)
-            {
-                this.AddErrorsFromResult(result, errors);
-                return;
-            }
-        }
-
-        public void SetPassword(UserPasswordSet model, IBusinessErrorCollection errors)
-        {
-            if (!model.Validate(errors))
-            {
-                return;
-            }
-
-            var user = UserManager.FindById(model.UserId);
-            if (user == null)
-            {
-                throw new ApplicationException("User not found");
-            }
-
-            var result = UserManager.PasswordValidator.ValidateAsync(model.Password).GetAwaiter().GetResult();
-            if (!result.Succeeded)
-            {
-                this.AddErrorsFromResult(result, errors);
-                return;
-            }
-
-            user.PasswordHash = UserManager.PasswordHasher.HashPassword(model.Password);
-
-            result = UserManager.Update(user);
-            if (!result.Succeeded)
-            {
-                this.AddErrorsFromResult(result, errors);
-                return;
-            }
-        }
-
-        private void AddErrorsFromResult(IdentityResult result, IBusinessErrorCollection errors)
-        {
-            foreach (var error in result.Errors)
-            {
-                errors.Add("", error);
             }
         }
     }

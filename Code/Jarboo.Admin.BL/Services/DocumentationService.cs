@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface IDocumentationService : IEntityService<Documentation>
+    public interface IDocumentationService : IEntityService<int, Documentation>
     {
         void Save(DocumentationEdit model, IBusinessErrorCollection errors);
         void Delete(int documentationId, IBusinessErrorCollection errors);
     }
 
-    public class DocumentationService : BaseEntityService<Documentation>, IDocumentationService
+    public class DocumentationService : BaseEntityService<int, Documentation>, IDocumentationService
     {
         public DocumentationService(IUnitOfWork unitOfWork, IAuth auth)
             : base(unitOfWork, auth)

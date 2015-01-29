@@ -12,12 +12,12 @@ using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface ICustomerService : IEntityService<Customer>
+    public interface ICustomerService : IEntityService<int, Customer>
     {
         void Create(CustomerCreate model, IBusinessErrorCollection errors);
     }
 
-    public class CustomerService : BaseEntityService<Customer>, ICustomerService
+    public class CustomerService : BaseEntityService<int, Customer>, ICustomerService
     {
         public CustomerService(IUnitOfWork unitOfWork, IAuth auth)
             : base(unitOfWork, auth)

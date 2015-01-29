@@ -15,8 +15,8 @@ using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public abstract class BaseEntityService<T> : BaseService
-        where T : BaseEntity, new()
+    public abstract class BaseEntityService<TKey, T> : BaseService, IEntityService<TKey, T>
+        where T : class, IBaseEntity, new()
     {
         public BaseEntityService(IUnitOfWork unitOfWork, IAuth auth)
             : base(unitOfWork, auth)
@@ -36,11 +36,11 @@ namespace Jarboo.Admin.BL.Services
             return query.Where(x => false);
         }
 
-        public T GetById(int id)
+        public T GetById(TKey id)
         {
             return this.GetByIdEx(id, Include<T>.None);
         }
-        public T GetByIdEx(int id, Include<T> include)
+        public T GetByIdEx(TKey id, Include<T> include)
         {
             if (Cannot(Rights.ViewAll) && Cannot(Rights.ViewSpecial))
             {
@@ -55,7 +55,7 @@ namespace Jarboo.Admin.BL.Services
 
             return Find(id, query);
         }
-        protected abstract T Find(int id, IQueryable<T> query);
+        protected abstract T Find(TKey id, IQueryable<T> query);
 
         public PagedData<T> GetAll(IQuery<T, Include<T>, Filter<T>, Sorter<T>> query)
         {

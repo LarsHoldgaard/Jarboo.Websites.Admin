@@ -17,7 +17,7 @@ namespace Jarboo.Admin.BL
         int? PageNumber { get; set; }
     }
     public interface IQuery<TEntity, out TInclude, out TFilter, out TSorter> : IQuery
-        where TEntity : BaseEntity
+        where TEntity : IBaseEntity
         where TFilter : Filter<TEntity>, new()
         where TInclude : Include<TEntity>, new()
         where TSorter : Sorter<TEntity>, new()
@@ -28,7 +28,7 @@ namespace Jarboo.Admin.BL
     }
 
     public class Query<TEntity, TInclude, TFilter, TSorter> : IQuery<TEntity, TInclude, TFilter, TSorter>
-        where TEntity: BaseEntity
+        where TEntity: IBaseEntity
         where TFilter : Filter<TEntity>, new()
         where TInclude : Include<TEntity>, new()
         where TSorter : Sorter<TEntity>, new()
@@ -83,18 +83,23 @@ namespace Jarboo.Admin.BL
             return query;
         }
         public static PagedData<T> Paginate<T>(this IQueryable<T> query, IQuery paging)
-            where T : BaseEntity
+            where T : class, IBaseEntity
         {
             if (!paging.PageNumber.HasValue || !paging.PageSize.HasValue)
             {
                 return PagedData.AllOnOnePage(query);
             }
 
+            if (!query.IsOrdered())
+            {
+                query = query.OrderBy(x => x.DateCreated);
+            }
+
             return PagedData.Create(paging.PageSize.Value, paging.PageNumber.Value, query);
         }
 
         public static IQuery<TEntity, TInclude, TFilter, TSorter> Filter<TEntity, TInclude, TFilter, TSorter>(this IQuery<TEntity, TInclude, TFilter, TSorter> query, Action<TFilter> action)
-            where TEntity : BaseEntity
+            where TEntity : IBaseEntity
             where TFilter : Filter<TEntity>, new()
             where TInclude : Include<TEntity>, new()
             where TSorter : Sorter<TEntity>, new()
@@ -103,7 +108,7 @@ namespace Jarboo.Admin.BL
             return query;
         }
         public static IQuery<TEntity, TInclude, TFilter, TSorter> Include<TEntity, TInclude, TFilter, TSorter>(this IQuery<TEntity, TInclude, TFilter, TSorter> query, Action<TInclude> action)
-            where TEntity : BaseEntity
+            where TEntity : IBaseEntity
             where TFilter : Filter<TEntity>, new()
             where TInclude : Include<TEntity>, new()
             where TSorter : Sorter<TEntity>, new()
@@ -112,7 +117,7 @@ namespace Jarboo.Admin.BL
             return query;
         }
         public static IQuery<TEntity, TInclude, TFilter, TSorter> Sort<TEntity, TInclude, TFilter, TSorter>(this IQuery<TEntity, TInclude, TFilter, TSorter> query, Action<TSorter> action)
-            where TEntity : BaseEntity
+            where TEntity : IBaseEntity
             where TFilter : Filter<TEntity>, new()
             where TInclude : Include<TEntity>, new()
             where TSorter : Sorter<TEntity>, new()
@@ -122,7 +127,7 @@ namespace Jarboo.Admin.BL
         }
 
         public static PagedData<TEntity> ApplyTo<TEntity, TInclude, TFilter, TSorter>(this IQuery<TEntity, TInclude, TFilter, TSorter> query, IQueryable<TEntity> data, Func<IQueryable<TEntity>, IQueryable<TEntity>> securityFilter = null)
-            where TEntity : BaseEntity
+            where TEntity : class, IBaseEntity
             where TFilter : Filter<TEntity>, new()
             where TInclude : Include<TEntity>, new()
             where TSorter : Sorter<TEntity>, new()

@@ -30,6 +30,13 @@ namespace Jarboo.Admin.BL.Services
         protected IUnitOfWork UnitOfWork { get; set; }
         protected IAuth Auth { get; set; }
 
+        protected string UserId
+        {
+            get
+            {
+                return Auth.User.Id;
+            }
+        }
         protected int? UserCustomerId
         {
             get

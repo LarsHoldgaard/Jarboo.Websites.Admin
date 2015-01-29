@@ -10,6 +10,8 @@ using AutoMapper;
 
 using Jarboo.Admin.BL.Other;
 
+using Microsoft.AspNet.Identity;
+
 namespace Jarboo.Admin.BL
 {
     public static class Extensions
@@ -83,6 +85,14 @@ namespace Jarboo.Admin.BL
             }
 
             return true;
+        }
+
+        public static void AddErrorsFromResult(this IBusinessErrorCollection errors, IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                errors.Add("", error);
+            }
         }
     }
 }
