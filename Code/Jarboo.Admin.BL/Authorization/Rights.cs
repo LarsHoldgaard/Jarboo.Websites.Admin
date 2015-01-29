@@ -18,7 +18,15 @@ namespace Jarboo.Admin.BL.Authorization
         public const string EditSpecial = "EditSpecial";
         public const string DeleteAny = "DeleteAny";
         public const string DeleteSpecial = "DeleteSpecial";
+        public const string DisableAny = "DisableAny";
+        public const string DisableSpecial = "DisableSpecial";
 
+        public class Accounts
+        {
+            public static readonly string Name = typeof(Accounts).Name;
+
+            public const string Register = "Register";
+        }
         public class Customers
         {
             public static readonly string Name = typeof(Customers).Name;
@@ -38,6 +46,9 @@ namespace Jarboo.Admin.BL.Authorization
         public class Tasks
         {
             public static readonly string Name = typeof(Tasks).Name;
+
+            public const string NextStepAny = "NextStepAny";
+            public const string NextStepSpecial = "NextStepSpecial";
         }
 
         private static readonly Dictionary<UserRoles, Dictionary<string, HashSet<string>>> rightsByRoles = new Dictionary<UserRoles, Dictionary<string, HashSet<string>>>();
@@ -65,7 +76,7 @@ namespace Jarboo.Admin.BL.Authorization
         }
         private static void FillAnonymousRights(Dictionary<string, HashSet<string>> anonymousRights)
         {
-
+            anonymousRights.Add(Customers.Name, AddAny);
         }
         private static void FillAuthorizedUserRights(Dictionary<string, HashSet<string>> authorizedUserRights)
         {
@@ -73,17 +84,17 @@ namespace Jarboo.Admin.BL.Authorization
         }
         private static void FillCustomerRights(Dictionary<string, HashSet<string>> customerRights)
         {
-            customerRights.Add(Customers.Name, Rights.ViewSpecial);
+            customerRights.Add(Customers.Name, ViewSpecial);
 
             customerRights.Add(Projects.Name, ViewSpecial);
             customerRights.Add(Projects.Name, AddSpecial);
             customerRights.Add(Projects.Name, EditSpecial);
-            customerRights.Add(Projects.Name, DeleteSpecial);
 
             customerRights.Add(Tasks.Name, ViewSpecial);
             customerRights.Add(Tasks.Name, AddSpecial);
             customerRights.Add(Tasks.Name, EditSpecial);
-            customerRights.Add(Tasks.Name, DeleteSpecial);
+            customerRights.Add(Tasks.Name, Tasks.NextStepSpecial);
+            customerRights.Add(Tasks.Name, DisableSpecial);
 
             customerRights.Add(Employees.Name, ViewAll);
 

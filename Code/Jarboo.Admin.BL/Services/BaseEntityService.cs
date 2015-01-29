@@ -31,19 +31,9 @@ namespace Jarboo.Admin.BL.Services
             }
         }
 
-        protected abstract string SecurityEntities { get; }
-        protected bool Can(string action)
-        {
-            return Auth.Can(SecurityEntities, action);
-        }
-        protected bool Cannot(string action)
-        {
-            return !Can(action);
-        }
-
         protected virtual IQueryable<T> FilterCanView(IQueryable<T> query)
         {
-            return query;
+            return query.Where(x => false);
         }
 
         public T GetById(int id)
@@ -83,66 +73,57 @@ namespace Jarboo.Admin.BL.Services
             return query.ApplyTo(TableNoTracking, securityFilter);
         }
 
-        protected virtual bool CanAEDSpecial(T entity)
+        protected virtual bool HasAccessTo(T entity)
         {
-            return true;
+            return false;
         }
         protected virtual bool CanAddSpecial(T entity)
         {
-            return CanAEDSpecial(entity);
+            return HasAccessTo(entity);
         }
         protected virtual bool CanEditSpecial(T entity)
         {
-            return CanAEDSpecial(entity);
+            return HasAccessTo(entity);
         }
         protected virtual bool CanDeleteSpecial(T entity)
         {
-            return CanAEDSpecial(entity);
+            return HasAccessTo(entity);
+        }
+        protected virtual bool CanDisableSpecial(T entity)
+        {
+            return HasAccessTo(entity);
+        }
+
+        protected void CheckCan(string permAny, string permSpecial, Func<T, bool> specialCan, T entity)
+        {
+            if (Cannot(permAny) && Cannot(permSpecial))
+            {
+                OnAccessDenied();
+            }
+
+            if (Cannot(permAny))
+            {
+                if (!specialCan(entity))
+                {
+                    OnAccessDenied();
+                }
+            }  
         }
         protected virtual void CheckCanAdd(T entity)
         {
-            if (Cannot(Rights.AddAny) && Cannot(Rights.AddSpecial))
-            {
-                throw new ApplicationException("Access denied");
-            }
-
-            if (Cannot(Rights.AddAny))
-            {
-                if (!CanAddSpecial(entity))
-                {
-                    throw new ApplicationException("Access denied");
-                }
-            }
+            CheckCan(Rights.AddAny, Rights.AddSpecial, CanAddSpecial, entity);
         }
         protected virtual void CheckCanEdit(T entity)
         {
-            if (Cannot(Rights.EditAny) && Cannot(Rights.EditSpecial))
-            {
-                throw new ApplicationException("Access denied");
-            }
-
-            if (Cannot(Rights.EditAny))
-            {
-                if (!CanEditSpecial(entity))
-                {
-                    throw new ApplicationException("Access denied");
-                }
-            }
+            CheckCan(Rights.EditAny, Rights.EditSpecial, CanEditSpecial, entity);
         }
         protected virtual void CheckCanDelete(T entity)
         {
-            if (Cannot(Rights.DeleteAny) && Cannot(Rights.DeleteSpecial))
-            {
-                throw new ApplicationException("Access denied");
-            }
-
-            if (Cannot(Rights.DeleteAny))
-            {
-                if (!CanDeleteSpecial(entity))
-                {
-                    throw new ApplicationException("Access denied");
-                }
-            }
+            CheckCan(Rights.DeleteAny, Rights.DeleteSpecial, CanDeleteSpecial, entity);
+        }
+        protected virtual void CheckCanDisable(T entity)
+        {
+            CheckCan(Rights.DisableAny, Rights.DisableSpecial, CanDisableSpecial, entity);
         }
 
         protected void Add<TM>(T entity, TM model)

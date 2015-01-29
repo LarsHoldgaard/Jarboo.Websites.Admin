@@ -1,4 +1,6 @@
-﻿using Jarboo.Admin.BL.Authorization;
+﻿using System;
+
+using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.DAL;
 
 namespace Jarboo.Admin.BL.Services
@@ -9,6 +11,20 @@ namespace Jarboo.Admin.BL.Services
         {
             UnitOfWork = unitOfWork;
             Auth = auth;
+        }
+
+        protected abstract string SecurityEntities { get; }
+        protected bool Can(string action)
+        {
+            return Auth.Can(SecurityEntities, action);
+        }
+        protected bool Cannot(string action)
+        {
+            return !Can(action);
+        }
+        protected void OnAccessDenied()
+        {
+            throw new ApplicationException("Access denied");
         }
 
         protected IUnitOfWork UnitOfWork { get; set; }

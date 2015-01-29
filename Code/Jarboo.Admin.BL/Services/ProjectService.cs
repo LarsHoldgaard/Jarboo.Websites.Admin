@@ -46,9 +46,20 @@ namespace Jarboo.Admin.BL.Services
         {
             return query.Where(x => x.CustomerId == UserCustomerId);
         }
-        protected override bool CanAEDSpecial(Project entity)
+        protected override bool HasAccessTo(Project entity)
         {
-            return entity.CustomerId == UserCustomerId;
+            if (entity.CustomerId != 0)
+            {
+                return entity.CustomerId == UserCustomerId;
+            }
+            else if (entity.ProjectId != 0)
+            {
+                return UnitOfWork.Projects.Any(x => x.ProjectId == entity.ProjectId && x.CustomerId == UserCustomerId);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void Save(ProjectEdit model, IBusinessErrorCollection errors)

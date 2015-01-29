@@ -35,12 +35,27 @@ namespace Jarboo.Admin.BL.Services
             UserManager = userManager;
         }
 
+        protected override string SecurityEntities
+        {
+            get { return Rights.Accounts.Name; }
+        }
+
+        private void CheckCanRegister()
+        {
+            if (this.Cannot(Rights.Accounts.Register))
+            {
+                this.OnAccessDenied();
+            }
+        }
+
         public void Register(UserCreate model, IBusinessErrorCollection errors)
         {
             if (!model.Validate(errors))
             {
                 return;
             }
+
+            CheckCanRegister();
             
             var user = model.MapTo<User>();
 

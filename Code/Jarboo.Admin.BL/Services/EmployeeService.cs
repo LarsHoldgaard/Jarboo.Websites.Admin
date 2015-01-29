@@ -75,6 +75,8 @@ namespace Jarboo.Admin.BL.Services
             entity.DateModified = DateTime.Now;
             entity.DateDeleted = DateTime.Now;
 
+            CheckCanDisable(entity);
+
             UnitOfWork.SaveChanges();
 
             try

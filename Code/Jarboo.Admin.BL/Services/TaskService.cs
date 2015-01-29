@@ -59,9 +59,20 @@ namespace Jarboo.Admin.BL.Services
         {
             return query.Where(x => x.Project.CustomerId == UserCustomerId);
         }
-        protected override bool CanAEDSpecial(Task entity)
+        protected override bool HasAccessTo(Task entity)
         {
-            return UnitOfWork.Projects.Any(x => x.ProjectId == entity.ProjectId && x.CustomerId == UserCustomerId);
+            if (entity.ProjectId != 0)
+            {
+                return UnitOfWork.Projects.Any(x => x.ProjectId == entity.ProjectId && x.CustomerId == UserCustomerId);
+            }
+            else if (entity.TaskId != 0)
+            {
+                return UnitOfWork.Tasks.Any(x => x.TaskId == entity.TaskId && x.Project.CustomerId == UserCustomerId);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void Create(TaskCreate model, IBusinessErrorCollection errors)
@@ -199,6 +210,10 @@ namespace Jarboo.Admin.BL.Services
             }
         }
 
+        private void CheckCanNextStep(Task entity)
+        {
+            CheckCan(Rights.Tasks.NextStepAny, Rights.Tasks.NextStepSpecial, HasAccessTo, entity);
+        }
         public void NextStep(TaskNextStep model, IBusinessErrorCollection errors)
         {
             var now = DateTime.Now;
@@ -206,7 +221,7 @@ namespace Jarboo.Admin.BL.Services
             var task = Table.Include(x => x.Steps.Select(y => y.Employee)).Include(x => x.Project).ByIdMust(model.TaskId);
             task.DateModified = now;
 
-            CheckCanEdit(task);
+            CheckCanNextStep(task);
 
             var lastStep = task.Steps.Last();
             lastStep.DateModified = now;
@@ -260,10 +275,10 @@ namespace Jarboo.Admin.BL.Services
             var entity = Table.Include(x => x.Project).ByIdMust(taskId);
             var customer = UnitOfWork.Customers.ByProjectMust(entity.ProjectId);
 
-            CheckCanEdit(entity);
-
             entity.DateModified = DateTime.Now;
             entity.DateDeleted = DateTime.Now;
+
+            CheckCanDisable(entity);
 
             UnitOfWork.SaveChanges();
 

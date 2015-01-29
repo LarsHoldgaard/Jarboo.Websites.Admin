@@ -41,7 +41,7 @@ namespace Jarboo.Admin.BL.Services
         {
             return query.Where(x => x.Project.CustomerId == UserCustomerId);
         }
-        protected override bool CanAEDSpecial(Documentation entity)
+        protected override bool HasAccessTo(Documentation entity)
         {
             if (entity.ProjectId != 0)
             {
