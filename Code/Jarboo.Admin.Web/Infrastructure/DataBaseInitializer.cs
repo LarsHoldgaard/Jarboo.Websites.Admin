@@ -62,9 +62,16 @@ namespace Jarboo.Admin.Web.Infrastructure
                                    Email = Configuration.Instance.AdminEmail,
                                };
                 var result = userManager.Create(admin, Configuration.Instance.AdminPassword);
-                if (!result.Succeeded)
+                CheckResult(result);
+            }
+            else
+            {
+                var newPasswordHash = userManager.PasswordHasher.HashPassword(Configuration.Instance.AdminPassword);
+                if (newPasswordHash != admin.PasswordHash)
                 {
-                    throw new Exception("Errors: " + String.Join(";", result.Errors));
+                    admin.PasswordHash = newPasswordHash;
+                    var result = userManager.Update(admin);
+                    CheckResult(result);
                 }
             }
 
@@ -74,6 +81,14 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
 
             context.SaveChanges();
+        }
+
+        private static void CheckResult(IdentityResult result)
+        {
+            if (!result.Succeeded)
+            {
+                throw new Exception("Errors: " + String.Join(";", result.Errors));
+            }
         }
     }
 }
