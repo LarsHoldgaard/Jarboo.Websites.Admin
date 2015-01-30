@@ -7,8 +7,8 @@ namespace Jarboo.Admin.DAL.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.AspNetUsers", "DateCreated", c => c.DateTime(nullable: false, defaultValue: DateTime.Now));
-            AddColumn("dbo.AspNetUsers", "DateModified", c => c.DateTime(nullable: false, defaultValue: DateTime.Now));
+            AddColumn("dbo.AspNetUsers", "DateCreated", c => c.DateTime(nullable: false, defaultValueSql: "GETDATE()"));
+            AddColumn("dbo.AspNetUsers", "DateModified", c => c.DateTime(nullable: false, defaultValueSql: "GETDATE()"));
         }
         
         public override void Down()
