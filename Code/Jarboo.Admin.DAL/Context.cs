@@ -49,6 +49,11 @@ namespace Jarboo.Admin.DAL
                 .WithOptionalDependent(x => x.User)
                 .Map(x => x.MapKey("CustomerId"));
 
+            modelBuilder.Entity<User>()
+                .HasOptional(x => x.Employee)
+                .WithOptionalDependent(x => x.User)
+                .Map(x => x.MapKey("EmployeeId"));
+
             base.OnModelCreating(modelBuilder);
         }
 

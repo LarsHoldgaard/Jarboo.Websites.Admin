@@ -15,6 +15,8 @@ using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL;
+using Jarboo.Admin.Web.Models.Documentation;
+using Jarboo.Admin.Web.Models.Project;
 
 using Ninject;
 
@@ -32,7 +34,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Projects/
         public virtual ActionResult Index()
         {
-            return View(ProjectService.GetAll(Query.ForProject().Include(x => x.Customer())));
+            return View(MVC.Projects.Views.Index);
         }
 
         // GET: /Projects/View/5
@@ -116,6 +118,20 @@ namespace Jarboo.Admin.Web.Controllers
                                            Text = "Any project"
                                        });
             return Json(projectsList, JsonRequestBehavior.AllowGet);
+        }
+
+        [ChildActionOnly]
+        public virtual ActionResult List(bool showCustomer = false, ProjectFilter projectFilter = null)
+        {
+            projectFilter = projectFilter ?? new ProjectFilter();
+
+            var model = new ProjectsListViewModel()
+            {
+                ShowCustomer = showCustomer,
+                Projects = ProjectService.GetAll(Query.ForProject(projectFilter).Include(x => x.Customer()))
+            };
+
+            return View(model);
         }
     }
 }

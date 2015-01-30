@@ -1,4 +1,9 @@
-﻿@using SmartAdminMvc
+﻿@using Jarboo.Admin.DAL.Entities
+@using SmartAdminMvc
+
+@{
+    var currentUser = (User)ViewBag.CurrentUser;
+}
 
 <!-- Left panel : Navigation area -->
 <!-- Note: This width of the aside area can be adjusted through LESS variables -->
@@ -20,23 +25,38 @@
         -->
 
         <ul>
-            @if (this.Can(MVC.Accounts.Login()))
+            @if (!User.Identity.IsAuthenticated)
             {
-                <li class="@Html.RouteIf("accounts", "login")">
+                <li class="@Html.RouteIf("accounts", "active")">
                     <a href="@Url.Action(MVC.Accounts.Login())" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Login</span></a>
                 </li>
             }
-            @if (this.Can(MVC.Home.Index()))
+            @if (this.Can(MVC.Home.Dashboard()))
             {
                 <li class="@Html.RouteIf("home", "active")">
-                    <a href="@Url.Action(MVC.Home.Index())" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Dashboard</span></a>
+                    <a href="@Url.Action(MVC.Home.Dashboard())" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Dashboard</span></a>
                 </li>
             }
-            @if (this.Can(MVC.Employees.Tasks(null)))
+            @if (currentUser.Customer != null)
             {
-                <li class="@Html.RouteIf("employees", "tasks")">
-                    <a href="@Url.Action(MVC.Employees.Tasks(null))"><i class="fa fa-lg fa-fw fa-play"></i><span class="menu-item-parent">Next task</span></a>
+                <li class="@Html.RouteIf("customers", "active")">
+                    <a href="@Url.Action(MVC.Customers.View(currentUser.Customer.CustomerId))" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Projects</span></a>
                 </li>
+            }
+            @if (this.Can(MVC.Employees.ChooseForTasks()))
+            {
+                <li class="@Html.RouteIf("", "active")">
+                    <a href="@Url.Action(MVC.Employees.ChooseForTasks())"><i class="fa fa-lg fa-fw fa-play"></i><span class="menu-item-parent">Next task</span></a>
+                </li>
+            }
+            else
+            {
+                if (this.Can(MVC.Tasks.NextTask(null)))
+                {
+                    <li class="@Html.RouteIf("tasks", "active")">
+                        <a href="@Url.Action(MVC.Tasks.NextTask(null))"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i><span class="menu-item-parent">Tasks</span></a>
+                    </li>
+                }
             }
             @if (this.Can(MVC.Customers.Index()))
             {

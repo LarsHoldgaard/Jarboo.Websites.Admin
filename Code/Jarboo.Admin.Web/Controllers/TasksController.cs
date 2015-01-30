@@ -360,5 +360,31 @@ namespace Jarboo.Admin.Web.Controllers
         {
             return TaskService.GetAll(query.WithPaging(pageSize, pageNumber));
         }
+
+        // GET: /Tasks/NextTask/5
+        public virtual ActionResult NextTask(int? id)
+        {
+            id = id ?? UserEmployeeId;
+
+            if (id == null)
+            {
+                return RedirectToAction(MVC.Employees.ChooseForTasks());
+            }
+
+            Employee employee = EmployeeService.GetByIdEx(id.Value, new EmployeeInclude().Positions());
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+
+            var nextTask = TaskService.GetAll(Query.ForTask()
+                    .Include(x => x.Project().Customer().TaskSteps())
+                    .Filter(x => x.ByEmployeeId(id.Value)))
+                .OrderByDescending(x => x.Priority)
+                .FirstOrDefault();
+
+            ViewBag.NextTask = nextTask;
+            return View(employee);
+        }
     }
 }

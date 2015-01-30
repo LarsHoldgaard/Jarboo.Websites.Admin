@@ -1104,7 +1104,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="packages.config" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt">
@@ -1116,7 +1116,7 @@
     <Content Include="Views\Projects\Create.cshtml" />
     <Content Include="Views\Projects\View.cshtml" />
     <Content Include="Views\Projects\Index.cshtml" />
-    <Content Include="Views\Projects\_List.cshtml" />
+    <Content Include="Views\Projects\List.cshtml" />
     <Content Include="Views\Tasks\Index.cshtml" />
     <Content Include="Views\Tasks\Create.cshtml" />
     <Content Include="Views\Tasks\View.cshtml" />
@@ -1151,7 +1151,7 @@
     <Content Include="Views\Tasks\List.cshtml" />
     <Content Include="Views\Projects\_Form.cshtml" />
     <Content Include="Views\Projects\Edit.cshtml" />
-    <Content Include="Views\Employees\Tasks.cshtml" />
+    <Content Include="Views\Tasks\NextTask.cshtml" />
     <Content Include="Views\Employees\ChooseForTasks.cshtml" />
     <Content Include="Views\Accounts\Login.cshtml" />
     <Content Include="Views\Accounts\Register.cshtml" />

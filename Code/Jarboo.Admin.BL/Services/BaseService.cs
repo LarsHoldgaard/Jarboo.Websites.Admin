@@ -44,5 +44,12 @@ namespace Jarboo.Admin.BL.Services
                 return Auth.User.Customer == null ? null : (int?)Auth.User.Customer.CustomerId;
             }
         }
+        protected int? UserEmployeeId
+        {
+            get
+            {
+                return Auth.User.Employee == null ? null : (int?)Auth.User.Employee.EmployeeId;
+            }
+        }
     }
 }

@@ -180,7 +180,14 @@
             <h1 class="page-title txt-color-blueDark">
                 <!-- PAGE HEADER -->
                 <i class="fa-fw fa fa-file-text-o"></i>
-                @Html.ActionLink("Tasks", MVC.Employees.Tasks(Model.EmployeeId))
+                @if (this.Can(MVC.Tasks.NextTask()))
+                {
+                    @: @Html.ActionLink("Tasks", MVC.Tasks.NextTask(Model.EmployeeId))
+                }
+                else
+                {
+                    @: Tasks
+                }
             </h1>
         </div>
         <!-- end col -->

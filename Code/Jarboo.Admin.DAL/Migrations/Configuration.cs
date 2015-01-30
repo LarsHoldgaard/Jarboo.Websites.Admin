@@ -19,6 +19,11 @@ namespace Jarboo.Admin.DAL.Migrations
 
         protected override void Seed(Jarboo.Admin.DAL.Context context)
         {
+            EnsureRoles(context);
+            EnsureEmployeeUsers(context);
+        }
+        private void EnsureRoles(Context context)
+        {
             var roleManager = new RoleManager(context);
 
             foreach (var roleName in Enum.GetNames(typeof(Entities.UserRoles)))
@@ -28,13 +33,43 @@ namespace Jarboo.Admin.DAL.Migrations
                     continue;
                 }
 
-                roleManager.Create(new UserRole()
-                                       {
-                                           Name = roleName,
-                                       });
+                var result = roleManager.Create(new UserRole() { Name = roleName, });
+                CheckResult(result);
             }
 
             context.SaveChanges();
+        }
+        private void EnsureEmployeeUsers(Context context)
+        {
+            var userManager = new UserManager(context);
+
+            foreach (var userlessEmployee in context.Employees.Where(x => x.User == null).ToList())
+            {
+                var user = new User()
+                               {
+                                   PasswordHash = userManager.PasswordHasher.HashPassword("test1234"),
+                                   UserName = userlessEmployee.Email,
+                                   Email = userlessEmployee.Email,
+                                   DisplayName = userlessEmployee.FullName,
+                                   Employee = userlessEmployee
+                               };
+
+                var result = userManager.Create(user);
+                this.CheckResult(result);
+
+                result = userManager.AddToRole(user.Id, Entities.UserRoles.Employee.ToString());
+                this.CheckResult(result);
+            }
+
+            context.SaveChanges();
+        }
+
+        private void CheckResult(IdentityResult result)
+        {
+            if (!result.Succeeded)
+            {
+                throw new Exception("Errors: " + string.Join(";", result.Errors));
+            }
         }
     }
 }

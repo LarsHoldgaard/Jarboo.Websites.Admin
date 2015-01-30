@@ -29,6 +29,8 @@ namespace Jarboo.Admin.DAL.Entities
         public double HourlyPrice { get; set; }
         public DateTime? DateDeleted { get; set; }
 
+        public User User { get; set; }
+
         public virtual List<EmployeePosition> Positions { get; set; }
         public virtual List<TaskStep> TaskSteps { get; set; }
 

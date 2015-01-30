@@ -35,3 +35,7 @@ form.logout-form {
 form.logout-form button {
     height: 28px;
 }
+
+.jarviswidget .widget-body {
+    min-height: 0 !important;
+}

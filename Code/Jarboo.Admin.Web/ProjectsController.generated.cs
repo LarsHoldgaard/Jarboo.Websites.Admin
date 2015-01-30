@@ -102,6 +102,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
             public readonly string ProductListByCustomerForSelectJson = "ProductListByCustomerForSelectJson";
+            public readonly string List = "List";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -112,6 +113,7 @@ namespace Jarboo.Admin.Web.Controllers
             public const string Create = "Create";
             public const string Edit = "Edit";
             public const string ProductListByCustomerForSelectJson = "ProductListByCustomerForSelectJson";
+            public const string List = "List";
         }
 
 
@@ -148,6 +150,15 @@ namespace Jarboo.Admin.Web.Controllers
         {
             public readonly string value = "value";
         }
+        static readonly ActionParamsClass_List s_params_List = new ActionParamsClass_List();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_List ListParams { get { return s_params_List; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_List
+        {
+            public readonly string showCustomer = "showCustomer";
+            public readonly string projectFilter = "projectFilter";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -159,17 +170,17 @@ namespace Jarboo.Admin.Web.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _Form = "_Form";
-                public readonly string _List = "_List";
                 public readonly string Create = "Create";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
+                public readonly string List = "List";
                 public readonly string View = "View";
             }
             public readonly string _Form = "~/Views/Projects/_Form.cshtml";
-            public readonly string _List = "~/Views/Projects/_List.cshtml";
             public readonly string Create = "~/Views/Projects/Create.cshtml";
             public readonly string Edit = "~/Views/Projects/Edit.cshtml";
             public readonly string Index = "~/Views/Projects/Index.cshtml";
+            public readonly string List = "~/Views/Projects/List.cshtml";
             public readonly string View = "~/Views/Projects/View.cshtml";
         }
     }
@@ -247,6 +258,19 @@ namespace Jarboo.Admin.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ProductListByCustomerForSelectJson);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "value", value);
             ProductListByCustomerForSelectJsonOverride(callInfo, value);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool showCustomer, Jarboo.Admin.BL.Filters.ProjectFilter projectFilter);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult List(bool showCustomer, Jarboo.Admin.BL.Filters.ProjectFilter projectFilter)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.List);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "showCustomer", showCustomer);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "projectFilter", projectFilter);
+            ListOverride(callInfo, showCustomer, projectFilter);
             return callInfo;
         }
 

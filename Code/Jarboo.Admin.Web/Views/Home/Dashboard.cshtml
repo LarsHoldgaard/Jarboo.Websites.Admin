@@ -45,11 +45,14 @@
                     -->
                     <header>
                         <h2><strong>@Html.ActionLink(customer.Name, MVC.Customers.View(customer.CustomerId))</strong></h2>
-                        <div class="widget-toolbar">
-                            <a class="btn btn-success" href="@Url.Action(MVC.Projects.Create(customer.CustomerId))">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Project
-                            </a>
-                        </div>
+                        @if (this.Can(MVC.Projects.Create()))
+                        {
+                            <div class="widget-toolbar">
+                                <a class="btn btn-success" href="@Url.Action(MVC.Projects.Create(customer.CustomerId))">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Project
+                                </a>
+                            </div>
+                        }
                     </header>
                     <!-- widget div-->
                     <div>
@@ -64,12 +67,15 @@
                             {
                                 <div class="row">
                                     <div class="col-md-6 col-lg-12">
-                                            <span>
-                                                <a class="btn btn-xs btn-primary" href="@Url.Action(MVC.Projects.View(project.ProjectId))">View</a>
-                                            </span>
+                                        <span>
+                                            <a class="btn btn-xs btn-primary" href="@Url.Action(MVC.Projects.View(project.ProjectId))">View</a>
+                                        </span>
+                                        @if (this.Can(MVC.Tasks.Create()))
+                                        {
                                             <span>
                                                 <a class="btn btn-xs btn-primary" href="@Url.Action(MVC.Tasks.Create(project.ProjectId))">Add Task</a>
-                                            </span> 
+                                            </span>
+                                        }
                                         <span> @project.Name</span>
                                     </div>
                                     <hr />

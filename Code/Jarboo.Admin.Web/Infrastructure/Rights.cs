@@ -13,6 +13,7 @@ namespace Jarboo.Admin.Web.Infrastructure
     public static class Rights
     {
         private static readonly Dictionary<UserRoles, Dictionary<string, HashSet<string>>> rightsByRoles = new Dictionary<UserRoles, Dictionary<string, HashSet<string>>>();
+        private static readonly Dictionary<string, HashSet<string>> authorizedUserRights = new Dictionary<string, HashSet<string>>();
         private static readonly Dictionary<string, HashSet<string>> anonymousRights = new Dictionary<string, HashSet<string>>();
         
         static Rights()
@@ -25,61 +26,85 @@ namespace Jarboo.Admin.Web.Infrastructure
             FillAllUserRights(anonymousRights);
             FillAnonymousRights(anonymousRights);
 
+            FillAllUserRights(authorizedUserRights);
+            FillAuthorizedUserRights(authorizedUserRights);
+
             rightsByRoles[UserRoles.Customer] = new Dictionary<string, HashSet<string>>();
-            FillAllUserRights(rightsByRoles[UserRoles.Customer]);
             FillCustomerRights(rightsByRoles[UserRoles.Customer]);
-            FillAuthorizedUserRights(rightsByRoles[UserRoles.Customer]);
+
+            rightsByRoles[UserRoles.Employee] = new Dictionary<string, HashSet<string>>();
+            FillEmployeeRights(rightsByRoles[UserRoles.Employee]);
         }
         private static void FillAllUserRights(Dictionary<string, HashSet<string>> rights)
         {
             rights.Add(MVC.Error.Index());
             rights.Add(MVC.Error.NotFound());
-        }
-        private static void FillAnonymousRights(Dictionary<string, HashSet<string>> anonymousRights)
-        {
-            anonymousRights.Add(MVC.Accounts.Login());
-            anonymousRights.Add(MVC.Accounts.Register());
-        }
-        private static void FillAuthorizedUserRights(Dictionary<string, HashSet<string>> authorizedUserRights)
-        {
-            authorizedUserRights.Add("Elmah", "Index");
-
             authorizedUserRights.Add(MVC.Error.AccessDenied());
-
-            authorizedUserRights.Add(MVC.Accounts.Edit());
-            authorizedUserRights.Add(MVC.Accounts.ChangePassword());
-            authorizedUserRights.Add(MVC.Accounts.View());
-            authorizedUserRights.Add(MVC.Accounts.Logout());
         }
-        private static void FillCustomerRights(Dictionary<string, HashSet<string>> customerRights)
+        private static void FillAnonymousRights(Dictionary<string, HashSet<string>> rights)
         {
-            customerRights.Add(MVC.Home.Index());
+            rights.Add(MVC.Accounts.Login());
+            rights.Add(MVC.Accounts.Register());
+        }
+        private static void FillAuthorizedUserRights(Dictionary<string, HashSet<string>> rights)
+        {
+            rights.Add("Elmah", "Index");
 
-            customerRights.Add(MVC.Customers.View());
+            rights.Add(MVC.Home.Index());
 
-            customerRights.Add(MVC.Documentations.Index());
-            customerRights.Add(MVC.Documentations.View());
-            customerRights.Add(MVC.Documentations.Create());
-            customerRights.Add(MVC.Documentations.Edit());
-            customerRights.Add(MVC.Documentations.Delete());
-            customerRights.Add(MVC.Documentations.List());
+            rights.Add(MVC.Accounts.Edit());
+            rights.Add(MVC.Accounts.ChangePassword());
+            rights.Add(MVC.Accounts.View());
+            rights.Add(MVC.Accounts.Logout());
+        }
+        private static void FillCustomerRights(Dictionary<string, HashSet<string>> rights)
+        {
+            rights.Add(MVC.Customers.View());
 
-            customerRights.Add(MVC.Employees.Index());
-            customerRights.Add(MVC.Employees.View());
+            rights.Add(MVC.Documentations.View());
+            rights.Add(MVC.Documentations.Create());
+            rights.Add(MVC.Documentations.Edit());
+            rights.Add(MVC.Documentations.Delete());
+            rights.Add(MVC.Documentations.List());
 
-            customerRights.Add(MVC.Projects.View());
-            customerRights.Add(MVC.Projects.Create());
-            customerRights.Add(MVC.Projects.Edit());
+            rights.Add(MVC.Employees.Index());
+            rights.Add(MVC.Employees.View());
 
-            customerRights.Add(MVC.Tasks.Index());
-            customerRights.Add(MVC.Tasks.View());
-            customerRights.Add(MVC.Tasks.Steps());
-            customerRights.Add(MVC.Tasks.NextStep());
-            customerRights.Add(MVC.Tasks.Create());
-            customerRights.Add(MVC.Tasks.Delete());
-            customerRights.Add(MVC.Tasks.ListConfig());
-            customerRights.Add(MVC.Tasks.ListData());
-            customerRights.Add(MVC.Tasks.List());
+            rights.Add(MVC.Projects.View());
+            rights.Add(MVC.Projects.Create());
+            rights.Add(MVC.Projects.Edit());
+
+            rights.Add(MVC.Tasks.Index());
+            rights.Add(MVC.Tasks.View());
+            rights.Add(MVC.Tasks.Steps());
+            rights.Add(MVC.Tasks.NextStep());
+            rights.Add(MVC.Tasks.Create());
+            rights.Add(MVC.Tasks.Delete());
+            rights.Add(MVC.Tasks.ListConfig());
+            rights.Add(MVC.Tasks.ListData());
+            rights.Add(MVC.Tasks.List());
+        }
+        private static void FillEmployeeRights(Dictionary<string, HashSet<string>> rights)
+        {
+            rights.Add(MVC.Customers.Index());
+            rights.Add(MVC.Customers.View());
+
+            rights.Add(MVC.Documentations.View());
+            rights.Add(MVC.Documentations.List());
+
+            rights.Add(MVC.Employees.Index());
+            rights.Add(MVC.Employees.View());
+
+            rights.Add(MVC.Projects.Index());
+            rights.Add(MVC.Projects.View());
+
+            rights.Add(MVC.Tasks.View());
+            rights.Add(MVC.Tasks.Steps());
+            rights.Add(MVC.Tasks.NextStep());
+            rights.Add(MVC.Tasks.ListConfig());
+            rights.Add(MVC.Tasks.ListData());
+            rights.Add(MVC.Tasks.List());
+            rights.Add(MVC.Tasks.NextTask());
         }
 
         public static bool Can(this WebViewPage view, ActionResult action)
@@ -115,6 +140,11 @@ namespace Jarboo.Admin.Web.Infrastructure
             if (!principal.Identity.IsAuthenticated)
             {
                 return anonymousRights.Can(controller, action);
+            }
+
+            if (authorizedUserRights.Can(controller, action))
+            {
+                return true;
             }
 
             foreach (var userRole in BL.Authorization.Rights.Roles)

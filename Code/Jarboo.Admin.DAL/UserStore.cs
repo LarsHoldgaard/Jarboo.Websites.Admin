@@ -24,6 +24,7 @@ namespace Jarboo.Admin.DAL
         {
             return
                 Users.Include(u => u.Customer)
+                    .Include(u => u.Employee)
                     .Include(u => u.Roles)
                     .Include(u => u.Claims)
                     .Include(u => u.Logins)

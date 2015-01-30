@@ -13,6 +13,7 @@ using Jarboo.Admin.Web.Infrastructure;
 using Jarboo.Admin.Web.Infrastructure.BLExternals;
 
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 
 using Ninject;
 
@@ -22,6 +23,14 @@ namespace Jarboo.Admin.Web.Controllers
     {
         [Inject]
         public UserManager<User> UserManager { get; set; }
+
+        public virtual IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
 
         protected const string ModelStateKey = "ModelStateKey";
         protected const string TempErrorsKey = "TempErrorsKey";
@@ -114,6 +123,16 @@ namespace Jarboo.Admin.Web.Controllers
             ViewBag.Sucesses.Add(text);
         }
 
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (!SetCurrentUser() && HttpContext.User.Identity.IsAuthenticated)
+            {
+                AuthenticationManager.SignOut();
+                filterContext.Result = new RedirectResult(HttpContext.Request.Url.ToString());
+            }
+
+            base.OnActionExecuting(filterContext);
+        }
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var errors = TempData[TempErrorsKey] as List<string> ?? new List<string>();
@@ -176,20 +195,34 @@ namespace Jarboo.Admin.Web.Controllers
             filterContext.Result = RedirectToAction(MVC.Error.Index());
         }
 
-        private User _user;
-        public User CurrentUser
+        private bool SetCurrentUser()
+        {
+            CurrentUser = UserManager.FindByName(HttpContext.User.Identity.Name);
+            if (CurrentUser != null)
+            {
+                return true;
+            }
+
+            CurrentUser = new User()
+                {
+                    DisplayName = "Anonymous"
+                };
+
+            return false;
+        }
+        public User CurrentUser { get; set; }
+        protected int? UserEmployeeId
         {
             get
             {
-                if (_user == null)
-                {
-                    _user = UserManager.FindByName(HttpContext.User.Identity.Name) ??
-                        new User()
-                            {
-                                DisplayName = "Anonymous"
-                            };
-                }
-                return _user;
+                return CurrentUser.Employee == null ? null : (int?)CurrentUser.Employee.EmployeeId;
+            }
+        }
+        protected int? UserCustomerId
+        {
+            get
+            {
+                return CurrentUser.Customer == null ? null : (int?)CurrentUser.Customer.CustomerId;
             }
         }
     }

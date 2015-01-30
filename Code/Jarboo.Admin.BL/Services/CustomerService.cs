@@ -38,7 +38,7 @@ namespace Jarboo.Admin.BL.Services
         }
         protected override IQueryable<Customer> FilterCanView(IQueryable<Customer> query)
         {
-            return query.Where(x => x.CustomerId == UserCustomerId);
+            return query.Where(x => x.CustomerId == UserCustomerId || x.Projects.Any(y => y.Tasks.Any(z => z.Steps.Any(a => a.EmployeeId == UserEmployeeId))));
         }
 
         public void Create(CustomerCreate model, IBusinessErrorCollection errors)

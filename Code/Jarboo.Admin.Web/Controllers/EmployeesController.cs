@@ -103,28 +103,9 @@ namespace Jarboo.Admin.Web.Controllers
             return Handle(id, EmployeeService.Delete, result, result, "Employee successfully deleted");
         }
 
-        // GET: /Employees/View/5
-        public virtual ActionResult Tasks(int? id)
+        public virtual ActionResult ChooseForTasks()
         {
-            if (id == null)
-            {
-                return View(MVC.Employees.Views.ChooseForTasks, EmployeeService.GetAll(Query.ForEmployee()).OrderBy(x => x.FullName));
-            }
-
-            Employee employee = EmployeeService.GetByIdEx(id.Value, new EmployeeInclude().Positions());
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
-
-            var nextTask = TaskService.GetAll(Query.ForTask()
-                    .Include(x => x.Project().Customer().TaskSteps())
-                    .Filter(x => x.ByEmployeeId(id.Value)))
-                .OrderByDescending(x => x.Priority)
-                .FirstOrDefault();
-
-            ViewBag.NextTask = nextTask;
-            return View(employee);
+            return this.View(EmployeeService.GetAll(Query.ForEmployee()).OrderBy(x => x.FullName));
         }
     }
 }

@@ -59,6 +59,7 @@ namespace Jarboo.Admin.BL.Authorization
         }
 
         private static readonly Dictionary<UserRoles, Dictionary<string, HashSet<string>>> rightsByRoles = new Dictionary<UserRoles, Dictionary<string, HashSet<string>>>();
+        private static readonly Dictionary<string, HashSet<string>> authorizedUserRights = new Dictionary<string, HashSet<string>>();
         private static readonly Dictionary<string, HashSet<string>> anonymousRights = new Dictionary<string, HashSet<string>>();
         public static List<UserRoles> Roles = Enum.GetValues(typeof(UserRoles)).OfType<UserRoles>().ToList();
 
@@ -72,44 +73,61 @@ namespace Jarboo.Admin.BL.Authorization
             FillAllUserRights(anonymousRights);
             FillAnonymousRights(anonymousRights);
 
+            FillAllUserRights(authorizedUserRights);
+            FillAuthorizedUserRights(authorizedUserRights);
+
             rightsByRoles[UserRoles.Customer] = new Dictionary<string, HashSet<string>>();
-            FillAllUserRights(rightsByRoles[UserRoles.Customer]);
             FillCustomerRights(rightsByRoles[UserRoles.Customer]);
-            FillAuthorizedUserRights(rightsByRoles[UserRoles.Customer]);
+
+            rightsByRoles[UserRoles.Employee] = new Dictionary<string, HashSet<string>>();
+            FillEmployeeRights(rightsByRoles[UserRoles.Employee]);
         }
         private static void FillAllUserRights(Dictionary<string, HashSet<string>> rights)
         {
 
         }
-        private static void FillAnonymousRights(Dictionary<string, HashSet<string>> anonymousRights)
+        private static void FillAnonymousRights(Dictionary<string, HashSet<string>> rights)
         {
-            anonymousRights.Add(Accounts.Name, Accounts.Register);
+            rights.Add(Accounts.Name, Accounts.Register);
         }
-        private static void FillAuthorizedUserRights(Dictionary<string, HashSet<string>> authorizedUserRights)
+        private static void FillAuthorizedUserRights(Dictionary<string, HashSet<string>> rights)
         {
-            authorizedUserRights.Add(Users.Name, ViewSpecial);
-            authorizedUserRights.Add(Users.Name, EditSpecial);
+            rights.Add(Users.Name, ViewSpecial);
+            rights.Add(Users.Name, EditSpecial);
         }
-        private static void FillCustomerRights(Dictionary<string, HashSet<string>> customerRights)
+        private static void FillCustomerRights(Dictionary<string, HashSet<string>> rights)
         {
-            customerRights.Add(Customers.Name, ViewSpecial);
+            rights.Add(Customers.Name, ViewSpecial);
 
-            customerRights.Add(Projects.Name, ViewSpecial);
-            customerRights.Add(Projects.Name, AddSpecial);
-            customerRights.Add(Projects.Name, EditSpecial);
+            rights.Add(Projects.Name, ViewSpecial);
+            rights.Add(Projects.Name, AddSpecial);
+            rights.Add(Projects.Name, EditSpecial);
 
-            customerRights.Add(Tasks.Name, ViewSpecial);
-            customerRights.Add(Tasks.Name, AddSpecial);
-            customerRights.Add(Tasks.Name, EditSpecial);
-            customerRights.Add(Tasks.Name, Tasks.NextStepSpecial);
-            customerRights.Add(Tasks.Name, DisableSpecial);
+            rights.Add(Tasks.Name, ViewSpecial);
+            rights.Add(Tasks.Name, AddSpecial);
+            rights.Add(Tasks.Name, EditSpecial);
+            rights.Add(Tasks.Name, Tasks.NextStepSpecial);
+            rights.Add(Tasks.Name, DisableSpecial);
 
-            customerRights.Add(Employees.Name, ViewAll);
+            rights.Add(Employees.Name, ViewAll);
 
-            customerRights.Add(Documentations.Name, ViewSpecial);
-            customerRights.Add(Documentations.Name, AddSpecial);
-            customerRights.Add(Documentations.Name, EditSpecial);
-            customerRights.Add(Documentations.Name, DeleteSpecial);
+            rights.Add(Documentations.Name, ViewSpecial);
+            rights.Add(Documentations.Name, AddSpecial);
+            rights.Add(Documentations.Name, EditSpecial);
+            rights.Add(Documentations.Name, DeleteSpecial);
+        }
+        private static void FillEmployeeRights(Dictionary<string, HashSet<string>> rights)
+        {
+            rights.Add(Customers.Name, ViewSpecial);
+
+            rights.Add(Projects.Name, ViewSpecial);
+
+            rights.Add(Tasks.Name, ViewSpecial);
+            rights.Add(Tasks.Name, Tasks.NextStepSpecial);
+
+            rights.Add(Employees.Name, ViewAll);
+
+            rights.Add(Documentations.Name, ViewSpecial);
         }
 
         public static void Add(this Dictionary<string, HashSet<string>> dict, string s1, string s2)
@@ -127,6 +145,11 @@ namespace Jarboo.Admin.BL.Authorization
             if (user == null)
             {
                 return anonymousRights.Can(entities, action);
+            }
+
+            if (authorizedUserRights.Can(entities, action))
+            {
+                return true;
             }
 
             foreach (var userRole in Rights.Roles)

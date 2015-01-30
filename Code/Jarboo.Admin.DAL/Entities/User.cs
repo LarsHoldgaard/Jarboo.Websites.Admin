@@ -21,5 +21,6 @@ namespace Jarboo.Admin.DAL.Entities
         public DateTime DateModified { get; set; }
 
         public Customer Customer { get; set; }
+        public Employee Employee { get; set; }
     }
 }

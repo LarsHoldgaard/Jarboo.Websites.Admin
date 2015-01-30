@@ -74,12 +74,14 @@ namespace Jarboo.Admin.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string Dashboard = "Dashboard";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string Dashboard = "Dashboard";
         }
 
 
@@ -93,9 +95,9 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string Index = "Index";
+                public readonly string Dashboard = "Dashboard";
             }
-            public readonly string Index = "~/Views/Home/Index.cshtml";
+            public readonly string Dashboard = "~/Views/Home/Dashboard.cshtml";
         }
     }
 
@@ -112,6 +114,17 @@ namespace Jarboo.Admin.Web.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             IndexOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DashboardOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Dashboard()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Dashboard);
+            DashboardOverride(callInfo);
             return callInfo;
         }
 

@@ -57,7 +57,7 @@ namespace Jarboo.Admin.BL.Services
         }
         protected override IQueryable<Task> FilterCanView(IQueryable<Task> query)
         {
-            return query.Where(x => x.Project.CustomerId == UserCustomerId);
+            return query.Where(x => x.Project.CustomerId == UserCustomerId || x.Steps.Any(y => y.EmployeeId == UserEmployeeId));
         }
         protected override bool HasAccessTo(Task entity)
         {
@@ -67,7 +67,9 @@ namespace Jarboo.Admin.BL.Services
             }
             else if (entity.TaskId != 0)
             {
-                return UnitOfWork.Tasks.Any(x => x.TaskId == entity.TaskId && x.Project.CustomerId == UserCustomerId);
+                return UnitOfWork.Tasks.Any(x => x.TaskId == entity.TaskId && (
+                    x.Project.CustomerId == UserCustomerId ||
+                    x.Steps.Any(y => y.EmployeeId == UserEmployeeId)));
             }
             else
             {

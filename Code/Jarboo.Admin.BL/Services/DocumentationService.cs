@@ -39,7 +39,7 @@ namespace Jarboo.Admin.BL.Services
         }
         protected override IQueryable<Documentation> FilterCanView(IQueryable<Documentation> query)
         {
-            return query.Where(x => x.Project.CustomerId == UserCustomerId);
+            return query.Where(x => x.Project.CustomerId == UserCustomerId || x.Project.Tasks.Any(y => y.Steps.Any(z => z.EmployeeId == UserEmployeeId)));
         }
         protected override bool HasAccessTo(Documentation entity)
         {

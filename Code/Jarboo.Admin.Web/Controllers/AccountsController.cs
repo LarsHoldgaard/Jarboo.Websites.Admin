@@ -26,14 +26,6 @@ namespace Jarboo.Admin.Web.Controllers
         [Inject]
         public IUserService UserService { get; set; }
 
-        public virtual IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
-
         public virtual ActionResult Login(string returnUrl = "")
         {
             ViewBag.ReturnUrl = returnUrl;
