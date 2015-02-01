@@ -24,8 +24,6 @@ namespace Jarboo.Admin.BL.Authorization
         public class Accounts
         {
             public static readonly string Name = typeof(Accounts).Name;
-
-            public const string Register = "Register";
         }
         public class Customers
         {
@@ -55,7 +53,7 @@ namespace Jarboo.Admin.BL.Authorization
             public static readonly string Name = typeof(Users).Name;
 
             public const string SetPasswordAny = "SetPasswordAny";
-            public const string SetPasswordSpecial = "SetPasswordSpecial";
+            //public const string SetPasswordSpecial = "SetPasswordSpecial";
         }
 
         private static readonly Dictionary<UserRoles, Dictionary<string, HashSet<string>>> rightsByRoles = new Dictionary<UserRoles, Dictionary<string, HashSet<string>>>();
@@ -88,7 +86,6 @@ namespace Jarboo.Admin.BL.Authorization
         }
         private static void FillAnonymousRights(Dictionary<string, HashSet<string>> rights)
         {
-            rights.Add(Accounts.Name, Accounts.Register);
         }
         private static void FillAuthorizedUserRights(Dictionary<string, HashSet<string>> rights)
         {

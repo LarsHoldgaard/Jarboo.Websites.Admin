@@ -14,8 +14,14 @@ namespace Jarboo.Admin.DAL
     public class UserManager : UserManager<User>
     {
         public UserManager(Context context)
+            : this(context, null)
+        {
+        }
+        public UserManager(Context context, IUserTokenProvider<User, string> tokenProvider)
             : base(new UserStore(context))
         {
+            UserTokenProvider = tokenProvider;
+
             UserValidator = new UserValidator<User>(this)
             {
                 AllowOnlyAlphanumericUserNames = false,

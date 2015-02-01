@@ -139,7 +139,10 @@ namespace Jarboo.Admin.BL.Services
 
         private void CheckCanSetPassword(User entity)
         {
-            CheckCan(Rights.Users.SetPasswordAny, Rights.Users.SetPasswordSpecial, HasAccessTo, entity);
+            if (Cannot(Rights.Users.SetPasswordAny))
+            {
+                OnAccessDenied();
+            }
         }
         public void SetPassword(UserPasswordSet model, IBusinessErrorCollection errors)
         {

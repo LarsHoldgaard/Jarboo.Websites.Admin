@@ -80,6 +80,8 @@
     <Compile Include="Includes\UserInclude.cs" />
     <Compile Include="Models\DocumentationEdit.cs" />
     <Compile Include="Models\EmployeeCreate.cs" />
+    <Compile Include="Models\PasswordRecover.cs" />
+    <Compile Include="Models\ResetPassword.cs" />
     <Compile Include="Models\UserCreate.cs" />
     <Compile Include="Models\UserEdit.cs" />
     <Compile Include="Models\UserPasswordChange.cs" />

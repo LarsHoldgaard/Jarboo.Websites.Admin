@@ -37,14 +37,6 @@ namespace Jarboo.Admin.BL.Services
             get { return Rights.Accounts.Name; }
         }
 
-        private void CheckCanRegister()
-        {
-            if (this.Cannot(Rights.Accounts.Register))
-            {
-                this.OnAccessDenied();
-            }
-        }
-
         public void Register(UserCreate model, IBusinessErrorCollection errors)
         {
             if (!model.Validate(errors))
@@ -52,8 +44,6 @@ namespace Jarboo.Admin.BL.Services
                 return;
             }
 
-            CheckCanRegister();
-            
             var user = model.MapTo<User>();
 
             using (var transaction = UnitOfWork.BeginTransaction())

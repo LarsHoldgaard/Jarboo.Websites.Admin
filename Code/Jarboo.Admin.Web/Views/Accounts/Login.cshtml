@@ -11,7 +11,9 @@
         <div class="panel panel-info">
             <div class="panel-heading">
                 <div class="panel-title">Sign In</div>
-                <div style="float: right; font-size: 80%; position: relative; top: -10px"><a href="#">Forgot password?</a></div>
+                <div style="float: right; font-size: 80%; position: relative; top: -10px">
+                    @Html.ActionLink("Forgot password?", MVC.Accounts.RecoverPassword())
+                </div>
             </div>
 
             <div style="padding-top: 30px" class="panel-body">
@@ -33,8 +35,6 @@
                         @Html.TextBoxFor(x => x.Password, new { type="password", @class="form-control", placeholder="password" })
                     </div>
 
-
-
                     <div class="input-group">
                         <div class="checkbox">
                             <label>
@@ -43,7 +43,6 @@
                             </label>
                         </div>
                     </div>
-
 
                     <div style="margin-top: 10px" class="form-group">
                         <!-- Button -->

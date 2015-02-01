@@ -204,5 +204,53 @@ namespace Jarboo.Admin.Web.Controllers
 
             return View(users);
         }
+
+        public virtual ActionResult RecoverPassword()
+        {
+            return base.View(new PasswordRecover());
+        }
+
+        [HttpPost]
+        public virtual ActionResult RecoverPassword(PasswordRecover model)
+        {
+            if (!ModelState.IsValid)
+            {
+                PreserveModelState();
+                return RedirectToAction(MVC.Accounts.RecoverPassword());
+            }
+
+            var user = UserManager.FindByEmail(model.Email);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Invalid email");
+                PreserveModelState();
+                return RedirectToAction(MVC.Accounts.RecoverPassword());
+            }
+
+            var code = UserManager.GeneratePasswordResetToken(user.Id);
+
+            var recoverUrl = Url.Action(MVC.Accounts.ResetPassword(new BL.Models.ResetPassword()
+                {
+                    UserId = user.Id,
+                    Code = code
+                }));
+
+            UserManager.SendEmail(user.Id, "Reset Password",
+                "Please reset your password by clicking here: <a href=\"" + recoverUrl + "\">link</a>");
+
+            AddSuccess("Check your email for recovery password link.");
+            return RedirectToAction(MVC.Accounts.Login());
+        }
+
+        public virtual ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public virtual ActionResult ResetPassword(ResetPassword model)
+        {
+            return View();
+        }
     }
 }

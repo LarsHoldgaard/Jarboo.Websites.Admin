@@ -81,6 +81,8 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string ChangePassword = "ChangePassword";
             public readonly string SetPassword = "SetPassword";
             public readonly string Index = "Index";
+            public readonly string RecoverPassword = "RecoverPassword";
+            public readonly string ResetPassword = "ResetPassword";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -94,6 +96,8 @@ namespace Jarboo.Admin.Web.Controllers
             public const string ChangePassword = "ChangePassword";
             public const string SetPassword = "SetPassword";
             public const string Index = "Index";
+            public const string RecoverPassword = "RecoverPassword";
+            public const string ResetPassword = "ResetPassword";
         }
 
 
@@ -150,6 +154,22 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string id = "id";
             public readonly string model = "model";
         }
+        static readonly ActionParamsClass_RecoverPassword s_params_RecoverPassword = new ActionParamsClass_RecoverPassword();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_RecoverPassword RecoverPasswordParams { get { return s_params_RecoverPassword; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_RecoverPassword
+        {
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_ResetPassword s_params_ResetPassword = new ActionParamsClass_ResetPassword();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ResetPassword ResetPasswordParams { get { return s_params_ResetPassword; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ResetPassword
+        {
+            public readonly string model = "model";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -164,6 +184,7 @@ namespace Jarboo.Admin.Web.Controllers
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
                 public readonly string Login = "Login";
+                public readonly string RecoverPassword = "RecoverPassword";
                 public readonly string Register = "Register";
                 public readonly string SetPassword = "SetPassword";
                 public readonly string View = "View";
@@ -172,6 +193,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Edit = "~/Views/Accounts/Edit.cshtml";
             public readonly string Index = "~/Views/Accounts/Index.cshtml";
             public readonly string Login = "~/Views/Accounts/Login.cshtml";
+            public readonly string RecoverPassword = "~/Views/Accounts/RecoverPassword.cshtml";
             public readonly string Register = "~/Views/Accounts/Register.cshtml";
             public readonly string SetPassword = "~/Views/Accounts/SetPassword.cshtml";
             public readonly string View = "~/Views/Accounts/View.cshtml";
@@ -336,6 +358,52 @@ namespace Jarboo.Admin.Web.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             IndexOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void RecoverPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult RecoverPassword()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RecoverPassword);
+            RecoverPasswordOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void RecoverPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.PasswordRecover model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult RecoverPassword(Jarboo.Admin.BL.Models.PasswordRecover model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RecoverPassword);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            RecoverPasswordOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ResetPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ResetPassword()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPassword);
+            ResetPasswordOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ResetPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.ResetPassword model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ResetPassword(Jarboo.Admin.BL.Models.ResetPassword model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPassword);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            ResetPasswordOverride(callInfo, model);
             return callInfo;
         }
 

@@ -16,6 +16,7 @@
     <!-- breadcrumb -->
     <ol class="breadcrumb">
         @(new BreadCrumbsBuilder(this)
+            .Add(MVC.Accounts.Index(), "Users")
             .Add(ViewBag.Title)
             .Done())
     </ol>

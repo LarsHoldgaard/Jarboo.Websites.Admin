@@ -25,6 +25,8 @@ namespace Jarboo.Admin.Web.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security.DataProtection;
 
     public static class NinjectWebCommon 
     {
@@ -108,6 +110,11 @@ namespace Jarboo.Admin.Web.App_Start
 
             kernel.Bind<ITaskStepEmployeeStrategy>().To<TaskStepEmployeeStrategy>().InRequestScope();
 
+            kernel.Bind<IUserTokenProvider<User, string>>().ToMethod((x) =>
+            {
+                var provider = new DpapiDataProtectionProvider("Sample");
+                return new DataProtectorTokenProvider<User>(provider.Create("EmailConfirmation"));
+            }).InRequestScope();
             kernel.Bind<IAuth>().To<BLAuth>().InRequestScope();
             kernel.Bind<IUnitOfWork, Context>().To<Context>().InRequestScope();
             kernel.Bind<UserManager<User>>().To<UserManager>().InRequestScope();
