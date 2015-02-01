@@ -32,7 +32,7 @@
                 <!-- end widget edit box -->
                 <!-- widget content -->
                 <div class="widget-body no-padding">
-                    @using (Html.BeginForm(MVC.Documentations.Edit(), FormMethod.Post, new { @id = "form1", @class = "smart-form" }))
+                    @using (Html.BeginForm(MVC.Documentations.Edit(), FormMethod.Post, new { @class = "smart-form" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(x => x.DocumentationId)

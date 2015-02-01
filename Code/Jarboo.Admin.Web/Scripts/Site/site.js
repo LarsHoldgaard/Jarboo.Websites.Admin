@@ -130,7 +130,7 @@
 <form method='post' class='delete-btn-form pull-left' action='" + data[1] + "'>\
     <input type='hidden' value='" + token + "' name='__RequestVerificationToken'>\
     <input type='hidden' value='" + data[0] + "' name='id'>\
-    <input type='hidden' value='" + window.location + "' name='returnUrl'>\
+    <input type='hidden' value='" + window.location.pathname + window.location.search + "' name='returnUrl'>\
     <button type='submit' class='btn btn-danger btn-xs'><span aria-hidden='true' class='glyphicon glyphicon-remove-sign'></span> Delete</button>\
 </form>";
                     }

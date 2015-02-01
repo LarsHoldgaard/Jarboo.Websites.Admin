@@ -91,7 +91,7 @@ namespace Jarboo.Admin.Web.Controllers
                 model, DocumentationService.Save,
                 () => RedirectToAction(MVC.Documentations.View(model.DocumentationId)),
                 () => model.DocumentationId == 0 ?
-                    RedirectToAction(MVC.Documentations.Create()) :
+                    RedirectToAction(MVC.Documentations.Create(model.ProjectId)) :
                     RedirectToAction(MVC.Documentations.Edit(model.DocumentationId)));
         }
 

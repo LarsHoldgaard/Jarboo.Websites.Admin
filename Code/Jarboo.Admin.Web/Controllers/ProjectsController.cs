@@ -99,7 +99,7 @@ namespace Jarboo.Admin.Web.Controllers
             return Handle(model, ProjectService.Save,
                 () => RedirectToAction(MVC.Projects.View(model.ProjectId)),
                 () => model.ProjectId == 0 ?
-                    RedirectToAction(MVC.Projects.Create()) :
+                    RedirectToAction(MVC.Projects.Create(model.CustomerId)) :
                     RedirectToAction(MVC.Projects.Edit(model.ProjectId)));
         }
 

@@ -87,7 +87,7 @@ namespace Jarboo.Admin.Web.Controllers
                 model,
                 TaskService.Create,
                 () => RedirectToAction(MVC.Tasks.View(model.TaskId)),
-                RedirectToAction(MVC.Tasks.Create()));
+                RedirectToAction(MVC.Tasks.Create(model.ProjectId)));
         }
 
         // GET: /Tasks/Steps/5
