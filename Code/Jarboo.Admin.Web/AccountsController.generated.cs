@@ -80,6 +80,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Edit = "Edit";
             public readonly string ChangePassword = "ChangePassword";
             public readonly string SetPassword = "SetPassword";
+            public readonly string Index = "Index";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -92,6 +93,7 @@ namespace Jarboo.Admin.Web.Controllers
             public const string Edit = "Edit";
             public const string ChangePassword = "ChangePassword";
             public const string SetPassword = "SetPassword";
+            public const string Index = "Index";
         }
 
 
@@ -160,6 +162,7 @@ namespace Jarboo.Admin.Web.Controllers
             {
                 public readonly string ChangePassword = "ChangePassword";
                 public readonly string Edit = "Edit";
+                public readonly string Index = "Index";
                 public readonly string Login = "Login";
                 public readonly string Register = "Register";
                 public readonly string SetPassword = "SetPassword";
@@ -167,6 +170,7 @@ namespace Jarboo.Admin.Web.Controllers
             }
             public readonly string ChangePassword = "~/Views/Accounts/ChangePassword.cshtml";
             public readonly string Edit = "~/Views/Accounts/Edit.cshtml";
+            public readonly string Index = "~/Views/Accounts/Index.cshtml";
             public readonly string Login = "~/Views/Accounts/Login.cshtml";
             public readonly string Register = "~/Views/Accounts/Register.cshtml";
             public readonly string SetPassword = "~/Views/Accounts/SetPassword.cshtml";
@@ -321,6 +325,17 @@ namespace Jarboo.Admin.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SetPassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             SetPasswordOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Index()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            IndexOverride(callInfo);
             return callInfo;
         }
 

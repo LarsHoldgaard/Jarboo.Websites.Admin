@@ -1075,6 +1075,7 @@
     <Compile Include="Infrastructure\ThirdPartyIntegration\MemoryDataStore.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
     <Compile Include="Models\Account\LoginVM.cs" />
+    <Compile Include="Models\Account\UserVM.cs" />
     <Compile Include="Models\DataTable\Column.cs" />
     <Compile Include="Models\DataTable\DataTableConfig.cs" />
     <Compile Include="Models\DeleteBtnVM.cs" />
@@ -1159,6 +1160,7 @@
     <Content Include="Views\Accounts\ChangePassword.cshtml" />
     <Content Include="Views\Accounts\SetPassword.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Accounts\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

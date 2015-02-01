@@ -70,6 +70,10 @@ namespace Jarboo.Admin.BL
         {
             return new Query<Documentation, DocumentationInclude, DocumentationFilter, DocumentationSorter>(filter);
         }
+        public static IQuery<User, UserInclude, UserFilter, UserSorter> ForUser(UserFilter filter = null)
+        {
+            return new Query<User, UserInclude, UserFilter, UserSorter>(filter);
+        }
     }
 
     public static class QueryExtensions

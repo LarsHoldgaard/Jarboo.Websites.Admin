@@ -1,0 +1,157 @@
+﻿@model System.Collections.Generic.IEnumerable<Jarboo.Admin.Web.Models.Account.UserVM>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- RIBBON -->
+<div id="ribbon">
+    <span class="ribbon-button-alignment">
+        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
+						<i class="fa fa-refresh"></i>
+					</span>
+    </span>
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @(new BreadCrumbsBuilder(this)
+            .Add("Users")
+            .Done())
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
+                Customers
+                @*<span>
+                        >
+                        Overview
+                    </span>*@
+            </h1>
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end row -->
+    <!--
+        The ID "widget-grid" will start to initialize all widgets below
+        You do not need to use widgets if you dont want to. Simply remove
+        the <section></section> and you can use wells or panels instead
+        -->
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                @*<div class="alert alert-info">
+                        <strong>NOTE:</strong> All the data is loaded from a seperate JSON file
+                    </div>*@
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget well" id="wid-id-0">
+                    <!-- widget options:
+                        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                        data-widget-colorbutton="false"
+                        data-widget-editbutton="false"
+                        data-widget-togglebutton="false"
+                        data-widget-deletebutton="false"
+                        data-widget-fullscreenbutton="false"
+                        data-widget-custombutton="false"
+                        data-widget-collapsed="true"
+                        data-widget-sortable="false"
+                        -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
+                        <h2>Widget Title </h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                            <input class="form-control" type="text">
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <table class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th class="sorting">
+                                            Name
+                                        </th>
+                                        <th class="sorting">
+                                            Email
+                                        </th>
+                                        <th class="sorting">
+                                            Roles
+                                        </th>
+                                        <th>Employee</th>
+                                        <th>Customer</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @user.DisplayName
+                                            </td>
+                                            <td>
+                                                <a href="mailto:@user.Email">@user.Email</a>
+                                            </td>
+                                            <td>
+                                                @if (user.Employee != null)
+                                                {
+                                                    @: @Html.ActionLink("Link", MVC.Employees.View(user.Employee.EmployeeId))
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (user.Customer != null)
+                                                {
+                                                    @: @Html.ActionLink("Link", MVC.Customers.View(user.Customer.CustomerId))
+                                                }
+                                            </td>
+                                            <td>
+                                                @user.RoleNames
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("View", MVC.Accounts.View(user.Id))
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Set password", MVC.Accounts.SetPassword(user.Id))
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+        <!-- row -->
+        <div class="row">
+            <!-- a blank row to get started -->
+            <div class="col-sm-12">
+                <!-- your contents here -->
+            </div>
+        </div>
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>

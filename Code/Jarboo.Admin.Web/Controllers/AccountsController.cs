@@ -11,6 +11,7 @@ using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Web.Models.Account;
+using Jarboo.Admin.Web.Infrastructure;
 
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
@@ -25,6 +26,8 @@ namespace Jarboo.Admin.Web.Controllers
         public IAccountService AccountService { get; set; }
         [Inject]
         public IUserService UserService { get; set; }
+        [Inject]
+        public RoleManager<UserRole> RoleManager { get; set; }
 
         public virtual ActionResult Login(string returnUrl = "")
         {
@@ -187,6 +190,19 @@ namespace Jarboo.Admin.Web.Controllers
             return Handle(model, UserService.SetPassword,
                 RedirectToAction(MVC.Accounts.View(model.UserId)),
                 RedirectToAction(MVC.Accounts.SetPassword(model.UserId)));
+        }
+
+        public virtual ActionResult Index()
+        {
+            var users = UserService.GetAll(Query.ForUser().Include(x => x.Customer().Employee().Roles())).Decorate<User, UserVM>();
+            var roles = RoleManager.Roles.ToList();
+            foreach (var user in users)
+            {
+                user.RoleNames = string.Join(" ",
+                    roles.Where(x => user.Roles.Any(y => y.RoleId == x.Id)).Select(x => x.Name));
+            }
+
+            return View(users);
         }
     }
 }

@@ -75,7 +75,9 @@
     <Compile Include="Filters\PagedData.cs" />
     <Compile Include="Filters\ProjectFilter.cs" />
     <Compile Include="Filters\TaskFilter.cs" />
+    <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="Includes\DocumentationInclude.cs" />
+    <Compile Include="Includes\UserInclude.cs" />
     <Compile Include="Models\DocumentationEdit.cs" />
     <Compile Include="Models\EmployeeCreate.cs" />
     <Compile Include="Models\UserCreate.cs" />
@@ -116,6 +118,7 @@
     <Compile Include="Sorters\ProjectSorter.cs" />
     <Compile Include="Sorters\Sorter.cs" />
     <Compile Include="Sorters\TaskSorter.cs" />
+    <Compile Include="Sorters\UserSorter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

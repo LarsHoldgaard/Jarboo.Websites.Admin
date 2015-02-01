@@ -28,7 +28,7 @@
             @if (!User.Identity.IsAuthenticated)
             {
                 <li class="@Html.RouteIf("accounts", "active")">
-                    <a href="@Url.Action(MVC.Accounts.Login())" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Login</span></a>
+                    <a href="@Url.Action(MVC.Accounts.Login())" title="Login"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Login</span></a>
                 </li>
             }
             @if (this.Can(MVC.Home.Dashboard()))
@@ -37,16 +37,22 @@
                     <a href="@Url.Action(MVC.Home.Dashboard())" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Dashboard</span></a>
                 </li>
             }
+            @if (this.Can(MVC.Accounts.Index()))
+            {
+                <li class="@Html.RouteIf("accounts", "active")">
+                    <a href="@Url.Action(MVC.Accounts.Index())" title="Users"><i class="fa fa-lg fa-fw fa-user"></i><span class="menu-item-parent">Users</span></a>
+                </li>
+            }
             @if (currentUser.Customer != null)
             {
                 <li class="@Html.RouteIf("customers", "active")">
-                    <a href="@Url.Action(MVC.Customers.View(currentUser.Customer.CustomerId))" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Projects</span></a>
+                    <a href="@Url.Action(MVC.Customers.View(currentUser.Customer.CustomerId))" title="Projects"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Projects</span></a>
                 </li>
             }
             @if (this.Can(MVC.Employees.ChooseForTasks()))
             {
                 <li class="@Html.RouteIf("", "active")">
-                    <a href="@Url.Action(MVC.Employees.ChooseForTasks())"><i class="fa fa-lg fa-fw fa-play"></i><span class="menu-item-parent">Next task</span></a>
+                    <a href="@Url.Action(MVC.Employees.ChooseForTasks())" title="Next task"><i class="fa fa-lg fa-fw fa-play"></i><span class="menu-item-parent">Next task</span></a>
                 </li>
             }
             else
@@ -54,44 +60,44 @@
                 if (this.Can(MVC.Tasks.NextTask(null)))
                 {
                     <li class="@Html.RouteIf("tasks", "active")">
-                        <a href="@Url.Action(MVC.Tasks.NextTask(null))"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i><span class="menu-item-parent">Tasks</span></a>
+                        <a href="@Url.Action(MVC.Tasks.NextTask(null))" title="Tasks"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i><span class="menu-item-parent">Tasks</span></a>
                     </li>
                 }
             }
             @if (this.Can(MVC.Customers.Index()))
             {
                 <li class="@Html.RouteIf("customers", "active")">
-                    <a href="@Url.Action(MVC.Customers.Index())"><i class="fa fa-lg fa-fw fa-group"></i><span class="menu-item-parent">Customers</span></a>
+                    <a href="@Url.Action(MVC.Customers.Index()) title="Customers"><i class="fa fa-lg fa-fw fa-group"></i><span class="menu-item-parent">Customers</span></a>
                 </li>
             }
             @if (this.Can(MVC.Projects.Index()))
             {
                 <li class="@Html.RouteIf("projects", "active")">
-                    <a href="@Url.Action(MVC.Projects.Index())"><i class="fa fa-lg fa-fw fa-file-text-o"></i><span class="menu-item-parent">Projects</span></a>
+                    <a href="@Url.Action(MVC.Projects.Index())" title="Projects"><i class="fa fa-lg fa-fw fa-file-text-o"></i><span class="menu-item-parent">Projects</span></a>
                 </li>
             }
             @if (this.Can(MVC.Tasks.Index()))
             {
                 <li class="@Html.RouteIf("tasks", "active")">
-                    <a href="@Url.Action(MVC.Tasks.Index())"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i><span class="menu-item-parent">Tasks</span></a>
+                    <a href="@Url.Action(MVC.Tasks.Index())" title="Tasks"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i><span class="menu-item-parent">Tasks</span></a>
                 </li>
             }
             @if (this.Can(MVC.Employees.Index()))
             {
                 <li class="@Html.RouteIf("employees", "active")">
-                    <a href="@Url.Action(MVC.Employees.Index())"><i class="fa fa-lg fa-fw fa-list-alt"></i><span class="menu-item-parent">Employees</span></a>
+                    <a href="@Url.Action(MVC.Employees.Index())" title="Employees"><i class="fa fa-lg fa-fw fa-list-alt"></i><span class="menu-item-parent">Employees</span></a>
                 </li>
             }
             @if (this.Can(MVC.Documentations.Index()))
             {
                 <li class="@Html.RouteIf("documentations", "active")">
-                    <a href="@Url.Action(MVC.Documentations.Index())"><i class="fa fa-lg fa-fw fa-stack-overflow"></i><span class="menu-item-parent">Documentations</span></a>
+                    <a href="@Url.Action(MVC.Documentations.Index())" title="Documentations"><i class="fa fa-lg fa-fw fa-stack-overflow"></i><span class="menu-item-parent">Documentations</span></a>
                 </li>
             }
             @if (this.Can(MVC.Guides.Index()))
             {
                 <li class="@Html.RouteIf("guides", "active")">
-                    <a href="@Url.Action(MVC.Guides.Index())"><i class="fa fa-lg fa-fw fa-book"></i><span class="menu-item-parent">Guide</span></a>
+                    <a href="@Url.Action(MVC.Guides.Index())" title="Guide"><i class="fa fa-lg fa-fw fa-book"></i><span class="menu-item-parent">Guide</span></a>
                 </li>
             }
         </ul>
