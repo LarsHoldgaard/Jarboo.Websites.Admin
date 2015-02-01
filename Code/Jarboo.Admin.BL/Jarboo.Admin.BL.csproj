@@ -77,6 +77,7 @@
     <Compile Include="Filters\TaskFilter.cs" />
     <Compile Include="Includes\DocumentationInclude.cs" />
     <Compile Include="Models\DocumentationEdit.cs" />
+    <Compile Include="Models\EmployeeCreate.cs" />
     <Compile Include="Models\UserCreate.cs" />
     <Compile Include="Models\UserEdit.cs" />
     <Compile Include="Models\UserPasswordChange.cs" />

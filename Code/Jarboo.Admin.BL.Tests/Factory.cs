@@ -1,9 +1,10 @@
 ﻿using FakeItEasy;
-
 using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL;
+using Jarboo.Admin.DAL.Entities;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,15 +38,17 @@ namespace Jarboo.Admin.BL.Tests
             IUnitOfWork unitOfWork = null,
             IAuth auth = null,
             ITaskRegister taskRegister = null,
-            ITaskStepEmployeeStrategy taskStepEmployeeStrategy = null)
+            ITaskStepEmployeeStrategy taskStepEmployeeStrategy = null,
+            UserManager<User> userManager = null)
         {
             unitOfWork = unitOfWork ?? A.Fake<IUnitOfWork>();
             auth = auth ?? A.Fake<IAuth>();
             A.CallTo(() => auth.Can(A<string>._, A<string>._)).Returns(true);
             taskRegister = taskRegister ?? A.Fake<ITaskRegister>();
             taskStepEmployeeStrategy = taskStepEmployeeStrategy ?? A.Fake<ITaskStepEmployeeStrategy>();
+            userManager = userManager ?? A.Fake<UserManager<User>>();
 
-            return new EmployeeService(unitOfWork, auth, taskRegister, taskStepEmployeeStrategy);
+            return new EmployeeService(unitOfWork, auth, taskRegister, taskStepEmployeeStrategy, userManager);
         }
 
         public static ProjectService CreateProjectService(

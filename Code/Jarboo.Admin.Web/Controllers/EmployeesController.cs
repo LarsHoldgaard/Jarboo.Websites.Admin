@@ -51,8 +51,19 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Employees/Create
         public virtual ActionResult Create()
         {
-            var employee = new EmployeeEdit();
+            var employee = new EmployeeCreate();
             return View(employee);
+        }
+
+        // POST: /Employees/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Create(EmployeeCreate model)
+        {
+            return Handle(
+                model, EmployeeService.Create,
+                () => RedirectToAction(MVC.Employees.View(model.EmployeeId)),
+                RedirectToAction(MVC.Employees.Create()));
         }
         
         // GET: /Employees/Edit/5
@@ -78,11 +89,9 @@ namespace Jarboo.Admin.Web.Controllers
         public virtual ActionResult Edit(EmployeeEdit model)
         {
             return Handle(
-                model, EmployeeService.Save,
-                () => RedirectToAction(MVC.Employees.View(model.EmployeeId)),
-                () => model.EmployeeId == 0 ? 
-                    RedirectToAction(MVC.Employees.Create()) :
-                    RedirectToAction(MVC.Employees.Edit(model.EmployeeId)));
+                model, EmployeeService.Edit,
+                RedirectToAction(MVC.Employees.View(model.EmployeeId)),
+                RedirectToAction(MVC.Employees.Edit(model.EmployeeId)));
         }
 
         // POST: /Employees/Delete/5

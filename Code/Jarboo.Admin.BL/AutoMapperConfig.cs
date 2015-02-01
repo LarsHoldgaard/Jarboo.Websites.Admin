@@ -60,12 +60,24 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<Employee, EmployeeEdit>()
                 .ForMember(x => x.Positions, x => x.MapFrom(y => y.Positions.Select(z => z.Position).ToList()));
             Mapper.CreateMap<EmployeeEdit, Employee>()
+                .ForMember(x => x.FullName, x => x.Ignore())
                 .ForMember(x => x.Positions, x => x.MapFrom(y =>
                     y.Positions.Select(z => new EmployeePosition()
-                                                {
-                                                    EmployeeId = y.EmployeeId,
-                                                    Position = z
-                                                })));
+                    {
+                        EmployeeId = y.EmployeeId,
+                        Position = z
+                    })));
+
+            Mapper.CreateMap<Employee, EmployeeCreate>()
+                .ForMember(x => x.Positions, x => x.MapFrom(y => y.Positions.Select(z => z.Position).ToList()));
+            Mapper.CreateMap<EmployeeCreate, Employee>()
+                .ForMember(x => x.EmployeeId, x => x.Ignore())
+                .ForMember(x => x.Positions, x => x.MapFrom(y =>
+                    y.Positions.Select(z => new EmployeePosition()
+                    {
+                        EmployeeId = y.EmployeeId,
+                        Position = z
+                    })));
 
             Mapper.CreateMap<Documentation, DocumentationEdit>();
             Mapper.CreateMap<DocumentationEdit, Documentation>();

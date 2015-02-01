@@ -12,12 +12,14 @@ using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
+using Microsoft.AspNet.Identity;
 
 namespace Jarboo.Admin.BL.Services
 {
     public interface IEmployeeService : IEntityService<int, Employee>
     {
-        void Save(EmployeeEdit model, IBusinessErrorCollection errors);
+        void Create(EmployeeCreate model, IBusinessErrorCollection errors);
+        void Edit(EmployeeEdit model, IBusinessErrorCollection errors);
 
         void Delete(int employeeId, IBusinessErrorCollection errors);
     }
@@ -26,12 +28,14 @@ namespace Jarboo.Admin.BL.Services
     {
         protected ITaskRegister TaskRegister { get; set; }
         protected ITaskStepEmployeeStrategy TaskStepEmployeeStrategy { get; set; }
+        public UserManager<User> UserManager { get; set; }
 
-        public EmployeeService(IUnitOfWork unitOfWork, IAuth auth, ITaskRegister taskRegister, ITaskStepEmployeeStrategy taskStepEmployeeStrategy)
+        public EmployeeService(IUnitOfWork unitOfWork, IAuth auth, ITaskRegister taskRegister, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, UserManager<User> userManager)
             : base(unitOfWork, auth)
         {
             TaskStepEmployeeStrategy = taskStepEmployeeStrategy;
             TaskRegister = taskRegister;
+            UserManager = userManager;
         }
 
         protected override IDbSet<Employee> Table
@@ -48,25 +52,66 @@ namespace Jarboo.Admin.BL.Services
             get { return Rights.Employees.Name; }
         }
 
-        public void Save(EmployeeEdit model, IBusinessErrorCollection errors)
+        public void Create(EmployeeCreate model, IBusinessErrorCollection errors)
         {
             if (!model.Validate(errors))
             {
                 return;
             }
 
-            if (model.EmployeeId == 0)
+            using (var transaction = UnitOfWork.BeginTransaction())
             {
-                var entity = new Employee();
-                Add(entity, model);
-            }
-            else
-            {
-                UnitOfWork.EmployeePositions.Where(x => x.EmployeeId == model.EmployeeId).Delete();
+                try
+                {
+                    var user = new User()
+                    {
+                        Email = model.Email,
+                        UserName = model.Email,
+                        DisplayName = model.FullName
+                    };
 
-                var entity = new Employee { EmployeeId = model.EmployeeId };
-                Edit(entity, model);
+                    var result = UserManager.Create(user, model.Password);
+                    if (!result.Succeeded)
+                    {
+                        errors.AddErrorsFromResult(result);
+                        transaction.Rollback();
+                        return;
+                    }
+
+                    result = UserManager.AddToRole(user.Id, UserRoles.Employee.ToString());
+                    if (!result.Succeeded)
+                    {
+                        errors.AddErrorsFromResult(result);
+                        transaction.Rollback();
+                        return;
+                    }
+
+                    var entity = new Employee()
+                    {
+                        User = user
+                    };
+                    Add(entity, model);
+
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
             }
+        }
+        public void Edit(EmployeeEdit model, IBusinessErrorCollection errors)
+        {
+            if (!model.Validate(errors))
+            {
+                return;
+            }
+
+            UnitOfWork.EmployeePositions.Where(x => x.EmployeeId == model.EmployeeId).Delete();
+
+            var entity = new Employee { EmployeeId = model.EmployeeId };
+            Edit(entity, model);
         }
 
         public void Delete(int employeeId, IBusinessErrorCollection errors)

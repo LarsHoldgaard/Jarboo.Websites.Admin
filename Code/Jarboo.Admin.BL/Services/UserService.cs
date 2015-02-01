@@ -95,6 +95,13 @@ namespace Jarboo.Admin.BL.Services
                         customer.Name = user.DisplayName;
                     }
 
+                    var employee = UnitOfWork.Employees.ByUserId(user.Id);
+                    if (employee != null)
+                    {
+                        employee.FullName = user.DisplayName;
+                        employee.Email = user.Email;
+                    }
+
                     UnitOfWork.SaveChanges();
 
                     transaction.Commit();
