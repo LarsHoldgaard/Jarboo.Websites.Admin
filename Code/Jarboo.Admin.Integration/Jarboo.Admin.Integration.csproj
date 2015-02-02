@@ -102,6 +102,7 @@
     <Compile Include="GoogleDrive\IGoogleDriveConfiguration.cs" />
     <Compile Include="Mandrill\IMandrillConfiguration.cs" />
     <Compile Include="Mandrill\MandrillNotifier.cs" />
+    <Compile Include="Noop\NoopEmailer.cs" />
     <Compile Include="Noop\NoopFolderCrator.cs" />
     <Compile Include="Noop\NoopNotifier.cs" />
     <Compile Include="Noop\NoopTaskRegister.cs" />

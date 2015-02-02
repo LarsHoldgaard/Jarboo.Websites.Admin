@@ -136,7 +136,24 @@ namespace Jarboo.Admin.Web.Controllers
         public virtual ActionResult Edit(UserEdit model)
         {
             return Handle(model, UserService.Edit,
-                RedirectToAction(MVC.Accounts.View(model.UserId)),
+                () =>
+                    {
+                        var user = UserManager.FindByEmail(model.Email);
+                        if (user == null)
+                        {
+                            return RedirectToAction(MVC.Accounts.Login());
+                        }
+
+                        var identity = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+
+                        AuthenticationManager.SignOut();
+                        AuthenticationManager.SignIn(new AuthenticationProperties()
+                        {
+                            IsPersistent = true,
+                        }, identity);
+
+                        return RedirectToAction(MVC.Accounts.View(model.UserId));
+                    },
                 RedirectToAction(MVC.Accounts.Edit(model.UserId)));
         }
 
@@ -207,50 +224,45 @@ namespace Jarboo.Admin.Web.Controllers
 
         public virtual ActionResult RecoverPassword()
         {
-            return base.View(new PasswordRecover());
+            return base.View(new PasswordRecoverVM());
         }
 
         [HttpPost]
-        public virtual ActionResult RecoverPassword(PasswordRecover model)
+        public virtual ActionResult RecoverPassword(PasswordRecoverVM model)
         {
-            if (!ModelState.IsValid)
-            {
-                PreserveModelState();
-                return RedirectToAction(MVC.Accounts.RecoverPassword());
-            }
+            var recoverUlrTemplate = string.Format("{0}?userId={{0}}&code={{1}}", this.Url.ActionAbsolute(MVC.Accounts.ResetPassword()));
 
-            var user = UserManager.FindByEmail(model.Email);
-            if (user == null)
-            {
-                ModelState.AddModelError("", "Invalid email");
-                PreserveModelState();
-                return RedirectToAction(MVC.Accounts.RecoverPassword());
-            }
+            var blModel = new PasswordRecover()
+                              {
+                                  Email = model.Email,
+                                  LinkTemplate = recoverUlrTemplate
+                              };
 
-            var code = UserManager.GeneratePasswordResetToken(user.Id);
-
-            var recoverUrl = Url.Action(MVC.Accounts.ResetPassword(new BL.Models.ResetPassword()
-                {
-                    UserId = user.Id,
-                    Code = code
-                }));
-
-            UserManager.SendEmail(user.Id, "Reset Password",
-                "Please reset your password by clicking here: <a href=\"" + recoverUrl + "\">link</a>");
-
-            AddSuccess("Check your email for recovery password link.");
-            return RedirectToAction(MVC.Accounts.Login());
+            return Handle(blModel, AccountService.RecoverPassword,
+                RedirectToAction(MVC.Accounts.Login()),
+                RedirectToAction(MVC.Accounts.RecoverPassword()),
+                "Check your email for recovery password link");
         }
 
-        public virtual ActionResult ResetPassword()
+        public virtual ActionResult ResetPassword(string userId, string code)
         {
-            return View();
+            return View(new ResetPassword()
+                            {
+                                UserId = userId,
+                                Code = code
+                            });
         }
 
         [HttpPost]
-        public virtual ActionResult ResetPassword(ResetPassword model)
+        [ActionName("ResetPassword")]
+        public virtual ActionResult ResetPasswordPost(ResetPassword model)
         {
-            return View();
+            return Handle(model, AccountService.ResetPassword,
+                RedirectToAction(MVC.Accounts.Login()),
+                RedirectToAction(MVC.Accounts.ResetPassword(model.UserId, model.Code)),
+                "Password changed");
+
+            return View(model);
         }
     }
 }

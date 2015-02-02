@@ -100,14 +100,15 @@ namespace Jarboo.Admin.Web.App_Start
 
             if (Configuration.Instance.UseNotifier)
             {
-                kernel.Bind<IMandrillConfiguration>().ToConstant(Configuration.Instance);
-                kernel.Bind<INotifier>().To<MandrillNotifier>().InRequestScope();
+                kernel.Bind<INotifier>().To<MandrillNotifierEmailer>().InRequestScope();
             }
             else
             {
                 kernel.Bind<INotifier>().To<NoopNotifier>().InRequestScope();
             }
 
+            kernel.Bind<IMandrillConfiguration>().ToConstant(Configuration.Instance);
+            kernel.Bind<IEmailer>().To<MandrillNotifierEmailer>().InRequestScope();
             kernel.Bind<ITaskStepEmployeeStrategy>().To<TaskStepEmployeeStrategy>().InRequestScope();
 
             kernel.Bind<IUserTokenProvider<User, string>>().ToMethod((x) =>

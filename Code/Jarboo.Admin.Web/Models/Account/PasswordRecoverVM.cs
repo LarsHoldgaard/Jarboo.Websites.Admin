@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Jarboo.Admin.BL.Models
+namespace Jarboo.Admin.Web.Models.Account
 {
-    public class PasswordRecover
+    public class PasswordRecoverVM
     {
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-
-        public string LinkTemplate { get; set; }
     }
 }

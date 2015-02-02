@@ -1075,6 +1075,7 @@
     <Compile Include="Infrastructure\ThirdPartyIntegration\MemoryDataStore.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
     <Compile Include="Models\Account\LoginVM.cs" />
+    <Compile Include="Models\Account\PasswordRecoverVM.cs" />
     <Compile Include="Models\Account\UserVM.cs" />
     <Compile Include="Models\DataTable\Column.cs" />
     <Compile Include="Models\DataTable\DataTableConfig.cs" />
@@ -1162,6 +1163,7 @@
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Accounts\Index.cshtml" />
     <Content Include="Views\Accounts\RecoverPassword.cshtml" />
+    <Content Include="Views\Accounts\ResetPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

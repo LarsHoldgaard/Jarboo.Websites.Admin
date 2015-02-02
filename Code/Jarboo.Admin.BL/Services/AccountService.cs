@@ -20,16 +20,20 @@ namespace Jarboo.Admin.BL.Services
     public interface IAccountService
     {
         void Register(UserCreate model, IBusinessErrorCollection errors);
+        void RecoverPassword(PasswordRecover model, IBusinessErrorCollection errors);
+        void ResetPassword(ResetPassword model, IBusinessErrorCollection errors);
     }
 
     public class AccountService : BaseService, IAccountService
     {
         public UserManager<User> UserManager { get; set; }
+        public IEmailer Emailer { get; set; }
 
-        public AccountService(IUnitOfWork unitOfWork, IAuth auth, UserManager<User> userManager)
+        public AccountService(IUnitOfWork unitOfWork, IAuth auth, UserManager<User> userManager, IEmailer emailer)
             : base(unitOfWork, auth)
         {
             UserManager = userManager;
+            Emailer = emailer;
         }
 
         protected override string SecurityEntities
@@ -80,6 +84,51 @@ namespace Jarboo.Admin.BL.Services
                     transaction.Rollback();
                     throw;
                 }
+            }
+        }
+
+        public void RecoverPassword(PasswordRecover model, IBusinessErrorCollection errors)
+        {
+            if (!model.Validate(errors))
+            {
+                return;
+            }
+
+            var user = UserManager.FindByEmail(model.Email);
+            if (user == null)
+            {
+                errors.Add("", "Invalid email");
+                return;
+            }
+
+            var code = UserManager.GeneratePasswordResetToken(user.Id);
+
+            var recoverUrl = string.Format(model.LinkTemplate,
+                Uri.EscapeDataString(user.Id),
+                Uri.EscapeDataString(code));
+
+            Emailer.SendPasswordRecoveryEmail(user.Email, recoverUrl);
+        }
+
+        public void ResetPassword(ResetPassword model, IBusinessErrorCollection errors)
+        {
+            if (!model.Validate(errors))
+            {
+                return;
+            }
+
+            var result = UserManager.PasswordValidator.ValidateAsync(model.Password).GetAwaiter().GetResult();
+            if (!result.Succeeded)
+            {
+                errors.AddErrorsFromResult(result);
+                return;
+            }
+
+            result = UserManager.ResetPassword(model.UserId, model.Code, model.Password);
+            if (!result.Succeeded)
+            {
+                errors.AddErrorsFromResult(result);
+                return;
             }
         }
     }

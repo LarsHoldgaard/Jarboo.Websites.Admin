@@ -57,6 +57,18 @@ namespace Jarboo.Admin.Web.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult ResetPassword()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPassword);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult ResetPasswordPost()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPasswordPost);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public AccountsController Actions { get { return MVC.Accounts; } }
@@ -83,6 +95,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Index = "Index";
             public readonly string RecoverPassword = "RecoverPassword";
             public readonly string ResetPassword = "ResetPassword";
+            public readonly string ResetPasswordPost = "ResetPassword";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -98,6 +111,7 @@ namespace Jarboo.Admin.Web.Controllers
             public const string Index = "Index";
             public const string RecoverPassword = "RecoverPassword";
             public const string ResetPassword = "ResetPassword";
+            public const string ResetPasswordPost = "ResetPassword";
         }
 
 
@@ -168,6 +182,15 @@ namespace Jarboo.Admin.Web.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_ResetPassword
         {
+            public readonly string userId = "userId";
+            public readonly string code = "code";
+        }
+        static readonly ActionParamsClass_ResetPasswordPost s_params_ResetPasswordPost = new ActionParamsClass_ResetPasswordPost();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ResetPasswordPost ResetPasswordPostParams { get { return s_params_ResetPasswordPost; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ResetPasswordPost
+        {
             public readonly string model = "model";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -186,6 +209,7 @@ namespace Jarboo.Admin.Web.Controllers
                 public readonly string Login = "Login";
                 public readonly string RecoverPassword = "RecoverPassword";
                 public readonly string Register = "Register";
+                public readonly string ResetPassword = "ResetPassword";
                 public readonly string SetPassword = "SetPassword";
                 public readonly string View = "View";
             }
@@ -195,6 +219,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Login = "~/Views/Accounts/Login.cshtml";
             public readonly string RecoverPassword = "~/Views/Accounts/RecoverPassword.cshtml";
             public readonly string Register = "~/Views/Accounts/Register.cshtml";
+            public readonly string ResetPassword = "~/Views/Accounts/ResetPassword.cshtml";
             public readonly string SetPassword = "~/Views/Accounts/SetPassword.cshtml";
             public readonly string View = "~/Views/Accounts/View.cshtml";
         }
@@ -373,10 +398,10 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void RecoverPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.PasswordRecover model);
+        partial void RecoverPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Account.PasswordRecoverVM model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult RecoverPassword(Jarboo.Admin.BL.Models.PasswordRecover model)
+        public override System.Web.Mvc.ActionResult RecoverPassword(Jarboo.Admin.Web.Models.Account.PasswordRecoverVM model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RecoverPassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -385,25 +410,27 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void ResetPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void ResetPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string userId, string code);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult ResetPassword()
+        public override System.Web.Mvc.ActionResult ResetPassword(string userId, string code)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPassword);
-            ResetPasswordOverride(callInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userId", userId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "code", code);
+            ResetPasswordOverride(callInfo, userId, code);
             return callInfo;
         }
 
         [NonAction]
-        partial void ResetPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.ResetPassword model);
+        partial void ResetPasswordPostOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.ResetPassword model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult ResetPassword(Jarboo.Admin.BL.Models.ResetPassword model)
+        public override System.Web.Mvc.ActionResult ResetPasswordPost(Jarboo.Admin.BL.Models.ResetPassword model)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPassword);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPasswordPost);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            ResetPasswordOverride(callInfo, model);
+            ResetPasswordPostOverride(callInfo, model);
             return callInfo;
         }
 

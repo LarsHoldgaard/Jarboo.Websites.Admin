@@ -67,7 +67,7 @@
             @if (this.Can(MVC.Customers.Index()))
             {
                 <li class="@Html.RouteIf("customers", "active")">
-                    <a href="@Url.Action(MVC.Customers.Index()) title="Customers"><i class="fa fa-lg fa-fw fa-group"></i><span class="menu-item-parent">Customers</span></a>
+                    <a href="@Url.Action(MVC.Customers.Index())" title="Customers"><i class="fa fa-lg fa-fw fa-group"></i><span class="menu-item-parent">Customers</span></a>
                 </li>
             }
             @if (this.Can(MVC.Projects.Index()))

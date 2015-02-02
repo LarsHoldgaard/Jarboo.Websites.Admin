@@ -13,9 +13,9 @@ using Task = Jarboo.Admin.DAL.Entities.Task;
 
 namespace Jarboo.Admin.Integration.Mandrill
 {
-    public class MandrillNotifier : INotifier
+    public class MandrillNotifierEmailer : INotifier, IEmailer
     {
-        public MandrillNotifier(IMandrillConfiguration configuration)
+        public MandrillNotifierEmailer(IMandrillConfiguration configuration)
         {
             this.Configuration = configuration;
         }
@@ -38,6 +38,18 @@ namespace Jarboo.Admin.Integration.Mandrill
                 new EmailAddress(Configuration.MandrillFrom),
                 Configuration.MandrillTaskResponsibleNotificationTemplate,
                 Enumerable.Empty<TemplateContent>()
+                );
+        }
+
+        public void SendPasswordRecoveryEmail(string email, string link)
+        {
+            this.EnsureService();
+
+            var result = api.SendMessage(
+                new EmailAddress[] { new EmailAddress(email) },
+                "Jarbo password recovery",
+                "You can reset your password <a href='" +link + "'>here</a>",
+                new EmailAddress(Configuration.MandrillFrom)
                 );
         }
     }
