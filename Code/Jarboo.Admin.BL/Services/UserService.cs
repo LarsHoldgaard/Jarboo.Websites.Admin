@@ -69,6 +69,12 @@ namespace Jarboo.Admin.BL.Services
 
             CheckCanEdit(user);
 
+            if (UnitOfWork.Users.Any(x => x.DisplayName == model.Name && x.Id != user.Id))
+            {
+                errors.Add("Name", "Name already taken");
+                return;
+            }
+
             model.MapTo(user);
             var result = UserManager.UserValidator.ValidateAsync(user).GetAwaiter().GetResult();
             if (!result.Succeeded)

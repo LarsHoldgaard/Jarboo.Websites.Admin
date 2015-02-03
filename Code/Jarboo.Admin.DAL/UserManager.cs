@@ -33,39 +33,9 @@ namespace Jarboo.Admin.DAL
                                         RequireDigit = true,
                                         RequireLowercase = true,
                                         RequireNonLetterOrDigit = true,
-                                        RequireUppercase = true,
+                                        RequireUppercase = false,
                                         RequiredLength = 8,
                                     };
-        }
-
-        public override Task<User> FindByIdAsync(string userId)
-        {
-            return base.FindByIdAsync(userId);
-        }
-
-        public override Task<User> FindByEmailAsync(string email)
-        {
-            return base.FindByEmailAsync(email);
-        }
-
-        public override Task<User> FindByNameAsync(string userName)
-        {
-            return base.FindByNameAsync(userName);
-        }
-
-        public override Task<User> FindAsync(string userName, string password)
-        {
-            return base.FindAsync(userName, password);
-        }
-
-        public override Task<User> FindAsync(UserLoginInfo login)
-        {
-            return base.FindAsync(login);
-        }
-
-        public override Task<bool> IsInRoleAsync(string userId, string role)
-        {
-            return base.IsInRoleAsync(userId, role);
         }
     }
 }

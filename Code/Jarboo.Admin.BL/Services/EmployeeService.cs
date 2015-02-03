@@ -59,6 +59,12 @@ namespace Jarboo.Admin.BL.Services
                 return;
             }
 
+            if (UnitOfWork.Users.Any(x => x.DisplayName == model.FullName))
+            {
+                errors.Add("FullName", "Name already taken");
+                return;
+            }
+
             using (var transaction = UnitOfWork.BeginTransaction())
             {
                 try

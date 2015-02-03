@@ -1,17 +1,21 @@
-﻿    <!-- HEADER -->
+﻿<!-- HEADER -->
 <header id="header">
     <div id="logo-group">
 
         <!-- PLACE YOUR LOGO HERE -->
-        <span id="logo"><img src="@Url.Content("~/Content/img/custom/logo.png")" /></span>
+        <span id="logo">
+            <img src="@Url.Content("~/Content/img/custom/logo.png")" />
+
+        </span>
         <!-- END LOGO PLACEHOLDER -->
+        @*
         @if (Request.IsAuthenticated)
         {
             <!-- Note: The activity badge color changes when clicked and resets the number to 0
             Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
-            <span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> 21 </b> </span>
+            <span id="activity" class="activity-dropdown"><i class="fa fa-user"></i><b class="badge">21 </b></span>
 
-        <!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
+            <!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
             <div class="ajax-dropdown">
 
                 <!-- the ID links are fetched via AJAX to the ajax container "ajax-notifications" -->
@@ -43,21 +47,20 @@
                 </div>
                 <!-- end notification content -->
                 <!-- footer: refresh area -->
-                <span>
-                    Last updated on: 12/12/2013 9:43AM
+                <span>Last updated on: 12/12/2013 9:43AM
                     <button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Loading..." class="btn btn-xs btn-default pull-right">
-                    <i class="fa fa-refresh"></i>
-                </button>
+                        <i class="fa fa-refresh"></i>
+                    </button>
                 </span>
                 <!-- end footer -->
 
             </div>
             <!-- END AJAX-DROPDOWN -->
-        }
+        }*@
     </div>
-    @if (Request.IsAuthenticated)
+    @*if (Request.IsAuthenticated)
     {
-    <!-- projects dropdown -->
+        <!-- projects dropdown -->
         <div class="project-context hidden-xs">
 
             <span class="label">Projects:</span>
@@ -76,14 +79,14 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="javascript:void(0);"><i class="fa fa-power-off"></i> Clear</a>
+                    <a href="javascript:void(0);"><i class="fa fa-power-off"></i>Clear</a>
                 </li>
             </ul>
             <!-- end dropdown-menu-->
 
         </div>
-    <!-- end projects dropdown -->
-    }
+        <!-- end projects dropdown -->
+    }*@
     <section id="top-right">
         @if (@Model is HelperResult)
         {

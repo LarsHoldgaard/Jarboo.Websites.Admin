@@ -48,6 +48,12 @@ namespace Jarboo.Admin.BL.Services
                 return;
             }
 
+            if (UnitOfWork.Users.Any(x => x.DisplayName == model.Name))
+            {
+                errors.Add("Name", "Name already taken");
+                return;
+            }
+
             var user = model.MapTo<User>();
 
             using (var transaction = UnitOfWork.BeginTransaction())

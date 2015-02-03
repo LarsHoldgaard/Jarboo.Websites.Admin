@@ -91,6 +91,12 @@ namespace Jarboo.Admin.BL
         {
             foreach (var error in result.Errors)
             {
+                if (error.StartsWith("Name "))
+                {
+                    // Because we do not expose this property to user.
+                    continue;
+                }
+
                 errors.Add("", error);
             }
         }

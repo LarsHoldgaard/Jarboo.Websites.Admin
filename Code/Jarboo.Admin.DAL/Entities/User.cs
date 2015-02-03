@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +18,8 @@ namespace Jarboo.Admin.DAL.Entities
             DateModified = DateTime.Now;
         }
 
+        [Index("IX_DisplayName", 1, IsUnique = true)]
+        [StringLength(450)]
         public string DisplayName { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }

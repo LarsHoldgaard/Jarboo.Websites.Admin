@@ -69,7 +69,6 @@ namespace Jarboo.Admin.Web.Infrastructure
             rights.Add(MVC.Documentations.Delete());
             rights.Add(MVC.Documentations.List());
 
-            rights.Add(MVC.Employees.Index());
             rights.Add(MVC.Employees.View());
 
             rights.Add(MVC.Projects.View());
