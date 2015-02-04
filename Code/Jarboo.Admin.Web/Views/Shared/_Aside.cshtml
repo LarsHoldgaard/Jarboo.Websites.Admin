@@ -88,6 +88,12 @@
                     <a href="@Url.Action(MVC.Employees.Index())" title="Employees"><i class="fa fa-lg fa-fw fa-list-alt"></i><span class="menu-item-parent">Employees</span></a>
                 </li>
             }
+            @if (this.Can(MVC.SpentTime.Index()))
+            {
+                <li class="@Html.RouteIf("spenttime", "active")">
+                    <a href="@Url.Action(MVC.SpentTime.Index())" title="Hours"><i class="fa fa-lg fa-fw fa-clock-o"></i><span class="menu-item-parent">Hours</span></a>
+                </li>
+            }
             @if (this.Can(MVC.Documentations.Index()))
             {
                 <li class="@Html.RouteIf("documentations", "active")">

@@ -225,5 +225,17 @@ namespace Jarboo.Admin.Web.Controllers
                 return CurrentUser.Customer == null ? null : (int?)CurrentUser.Customer.CustomerId;
             }
         }
+
+        protected ActionResult RedirectToLocalUrl(string localUrl, ActionResult def)
+        {
+            if (string.IsNullOrEmpty(localUrl) || !Url.IsLocalUrl(localUrl))
+            {
+                return RedirectToAction(def);
+            }
+            else
+            {
+                return this.Redirect(localUrl);
+            }
+        }
     }
 }

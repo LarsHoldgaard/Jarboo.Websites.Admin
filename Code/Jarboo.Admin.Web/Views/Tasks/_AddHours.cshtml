@@ -1,27 +1,45 @@
-﻿@model Jarboo.Admin.BL.Models.SpentTimeOnTask
+﻿@using Jarboo.Admin.DAL.Entities
+@model Jarboo.Admin.BL.Models.SpentTimeOnTask
 @{
     Layout = null;
+
+    var selectList = (SelectList)ViewBag.EmployeesList;
+    var employees = selectList.Items.OfType<Employee>();
+    var requiredPosition = Model.Step.GetPosition();
+    
+    if (Model.EmployeeId == 0)
+    {
+        selectList = new SelectList(
+            employees.Where(x => x.Positions.Any(y => y.Position == requiredPosition)),
+            selectList.DataValueField,
+            selectList.DataTextField,
+            selectList.DataGroupField,
+            selectList.SelectedValue);
+    }
 }
 
-@using (Html.BeginForm(MVC.Tasks.AddHours(), FormMethod.Post, new { @class = "form-inline" }))
+@if (Model.EmployeeId == 0 || employees.Any(x => x.EmployeeId == Model.EmployeeId && x.Positions.Any(y => y.Position == requiredPosition)))
 {
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(x => x.TaskId)
-    @Html.HiddenFor(x => x.Step)
+    using (Html.BeginForm(MVC.Tasks.AddHours(), FormMethod.Post, new { @class = "form-inline" }))
+     {
+         @Html.AntiForgeryToken()
+         @Html.HiddenFor(x => x.TaskId)
+         @Html.HiddenFor(x => x.Step)
 
-    if(Model.EmployeeId != 0)
-    {
-            @Html.HiddenFor(x => x.EmployeeId)
-    }
-    else
-    {
-        @Html.DropDownListFor(x => x.EmployeeId, (SelectList)ViewBag.EmployeesList, new { @class = "form-control" })
-    }
+         if (Model.EmployeeId != 0)
+         {
+             @Html.HiddenFor(x => x.EmployeeId)
+         }
+         else
+         {
+             @Html.DropDownListFor(x => x.EmployeeId, selectList, new { @class = "form-control" })
+         }
 
-    <div class="input-group">
-        @Html.TextBoxFor(x => x.Hours, new { @class = "form-control", data_hours="true" })
-        <div class="input-group-addon">hours</div>
-    </div>
+         <div class="input-group">
+             @Html.TextBoxFor(x => x.Hours, new { @class = "form-control", data_hours = "true" })
+             <div class="input-group-addon">hours</div>
+         </div>
 
-    <button type="submit" class="btn btn-primary">Add</button>
+         <button type="submit" class="btn btn-primary">Add</button>
+     }
 }

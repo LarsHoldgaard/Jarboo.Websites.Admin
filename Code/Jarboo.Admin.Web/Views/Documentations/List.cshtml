@@ -93,7 +93,11 @@
                                         @if (this.Can(MVC.Documentations.Delete()))
                                         {
                                             <td>
-                                                @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM() { Id = doc.DocumentationId, Action = MVC.Documentations.Delete(), Small = true })
+                                                @Html.Partial(MVC.Shared.Views.BtnForm, BtnFormVM.Delete(x =>
+                                                    {
+                                                        x.Id = doc.DocumentationId;
+                                                        x.Action = MVC.Documentations.Delete();
+                                                    }))
                                             </td>
                                         }
                                     </tr>

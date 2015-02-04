@@ -1083,7 +1083,7 @@
     <Compile Include="Models\Account\UserVM.cs" />
     <Compile Include="Models\DataTable\Column.cs" />
     <Compile Include="Models\DataTable\DataTableConfig.cs" />
-    <Compile Include="Models\DeleteBtnVM.cs" />
+    <Compile Include="Models\BtnFormVM.cs" />
     <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
     <Compile Include="Models\Task\TasksListViewModel.cs" />
@@ -1155,7 +1155,7 @@
     <Content Include="Views\Shared\EditorTemplates\DataTableTaskFilter.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Shared\Messages.cshtml" />
-    <Content Include="Views\Shared\DeleteBtnForm.cshtml" />
+    <Content Include="Views\Shared\BtnForm.cshtml" />
     <Content Include="Views\Tasks\List.cshtml" />
     <Content Include="Views\Projects\_Form.cshtml" />
     <Content Include="Views\Projects\Edit.cshtml" />
@@ -1174,6 +1174,8 @@
     <Content Include="Views\Tasks\_AddHours.cshtml" />
     <Content Include="Views\Projects\AddHours.cshtml" />
     <Content Include="Views\SpentTime\GroupedList.cshtml" />
+    <Content Include="Views\SpentTime\List.cshtml" />
+    <Content Include="Views\SpentTime\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

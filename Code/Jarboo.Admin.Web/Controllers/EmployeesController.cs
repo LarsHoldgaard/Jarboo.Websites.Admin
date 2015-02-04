@@ -99,16 +99,7 @@ namespace Jarboo.Admin.Web.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(int id, string returnUrl)
         {
-            ActionResult result;
-            if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
-            {
-                result = RedirectToAction(MVC.Employees.Index());
-            }
-            else
-            {
-                result = this.Redirect(returnUrl);
-            }
-
+            ActionResult result = this.RedirectToLocalUrl(returnUrl, MVC.Employees.Index());
             return Handle(id, EmployeeService.Delete, result, result, "Employee successfully deleted");
         }
 

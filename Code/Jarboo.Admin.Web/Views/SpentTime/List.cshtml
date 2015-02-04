@@ -1,0 +1,159 @@
+﻿@using Jarboo.Admin.Web.Models
+@model IEnumerable<Jarboo.Admin.DAL.Entities.SpentTime>
+@{
+    Layout = null;
+}
+
+<!-- widget grid -->
+<section id="widget-grid" class="">
+    <!-- row -->
+    <div class="row">
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            @*<div class="alert alert-info">
+                    <strong>NOTE:</strong> All the data is loaded from a seperate JSON file
+                </div>*@
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget well" id="wid-id-0">
+                <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+                    -->
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
+                    <h2>Widget Title </h2>
+                </header>
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                        <input class="form-control" type="text">
+                    </div>
+                    <!-- end widget edit box -->
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+                        <table class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="sorting">
+                                        Customer
+                                    </th>
+                                    <th class="sorting">
+                                        Project
+                                    </th>
+                                    <th class="sorting">
+                                        Task
+                                    </th>
+                                    <th class="sorting">
+                                        Employee
+                                    </th>
+                                    <th>
+                                        Hours
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    @if (this.Can(MVC.SpentTime.Accept()))
+                                    {
+                                        <th></th>
+                                    }
+                                    @if (this.Can(MVC.SpentTime.Deny()))
+                                    {
+                                        <th></th>
+                                    }
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                @foreach (var time in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink(time.GetCustomer().Name, MVC.Customers.View(time.GetCustomerId()))
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink(time.GetProject().Name, MVC.Projects.View(time.GetProjectId()))
+                                        </td>
+                                        <td>
+                                            @if (time.TaskId.HasValue)
+                                            {
+                                                @Html.ActionLink(time.TaskStep.Task.Title, MVC.Tasks.View(time.TaskId.Value))    
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink(time.Employee.FullName, MVC.Employees.View(time.EmployeeId))
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(x => time.Hours)
+                                        </td>
+                                        <td>
+                                            @if (time.Accepted == true)
+                                            {
+                                                <span class="label label-success">Accepted</span>
+                                            }
+                                            else if (time.Accepted == false)
+                                            {
+                                                <span class="label label-danger">Denied</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="label label-default">Waiting</span>
+                                            }
+                                        </td>
+                                        @if (this.Can(MVC.SpentTime.Accept()))
+                                        {
+                                            <td>
+                                                @if (!time.Accepted.HasValue)
+                                                {
+                                                    @Html.Partial(MVC.Shared.Views.BtnForm, new BtnFormVM() { Id = time.SpentTimeId, Action = MVC.SpentTime.Accept(), Text = "Accept", Style = "success", Icon = "ok" })
+                                                }
+                                            </td>
+                                        }
+                                        @if (this.Can(MVC.SpentTime.Deny()))
+                                        {
+                                            <td>
+                                                @if (!time.Accepted.HasValue)
+                                                {
+                                                    @Html.Partial(MVC.Shared.Views.BtnForm, BtnFormVM.Delete(x =>
+                                                        {
+                                                            x.Id = time.SpentTimeId;
+                                                            x.Action = MVC.SpentTime.Deny();
+                                                            x.Text = "Deny";
+                                                        }))
+                                                }
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end widget content -->
+                </div>
+                <!-- end widget div -->
+            </div>
+            <!-- end widget -->
+        </article>
+        <!-- WIDGET END -->
+    </div>
+    <!-- end row -->
+    <!-- row -->
+    <div class="row">
+        <!-- a blank row to get started -->
+        <div class="col-sm-12">
+            <!-- your contents here -->
+        </div>
+    </div>
+    <!-- end row -->
+</section>
+<!-- end widget grid -->
+

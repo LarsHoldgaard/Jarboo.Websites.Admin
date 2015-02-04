@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "Documentations";
+﻿@using Jarboo.Admin.BL.Filters
+@{
+    ViewBag.Title = "Hours";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,7 +14,7 @@
     <!-- breadcrumb -->
     <ol class="breadcrumb">
         @(new BreadCrumbsBuilder(this)
-            .Add("Documentations")
+            .Add("Hours")
             .Done())
     </ol>
     <!-- end breadcrumb -->
@@ -27,16 +28,12 @@
             <h1 class="page-title txt-color-blueDark">
                 <!-- PAGE HEADER -->
                 <i class="fa-fw fa fa-file-text-o"></i>
-                Documentations
-                @*<span>
-                        >
-                        Overview
-                    </span>*@
+                Hours
             </h1>
         </div>
         <!-- end col -->
     </div>
     <!-- end row -->
 
-    @Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new { showProject = true})
+    @Html.Action(MVC.SpentTime.List(new SpentTimeFilter()))
 </div>

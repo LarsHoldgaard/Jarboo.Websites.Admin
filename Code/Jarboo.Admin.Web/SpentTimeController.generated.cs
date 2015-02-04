@@ -57,6 +57,18 @@ namespace Jarboo.Admin.Web.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Accept()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Accept);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Deny()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Deny);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public SpentTimeController Actions { get { return MVC.SpentTime; } }
@@ -75,6 +87,9 @@ namespace Jarboo.Admin.Web.Controllers
         {
             public readonly string Index = "Index";
             public readonly string GroupedList = "GroupedList";
+            public readonly string List = "List";
+            public readonly string Accept = "Accept";
+            public readonly string Deny = "Deny";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -82,6 +97,9 @@ namespace Jarboo.Admin.Web.Controllers
         {
             public const string Index = "Index";
             public const string GroupedList = "GroupedList";
+            public const string List = "List";
+            public const string Accept = "Accept";
+            public const string Deny = "Deny";
         }
 
 
@@ -92,6 +110,32 @@ namespace Jarboo.Admin.Web.Controllers
         public class ActionParamsClass_GroupedList
         {
             public readonly string spentTimeFilter = "spentTimeFilter";
+        }
+        static readonly ActionParamsClass_List s_params_List = new ActionParamsClass_List();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_List ListParams { get { return s_params_List; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_List
+        {
+            public readonly string spentTimeFilter = "spentTimeFilter";
+        }
+        static readonly ActionParamsClass_Accept s_params_Accept = new ActionParamsClass_Accept();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Accept AcceptParams { get { return s_params_Accept; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Accept
+        {
+            public readonly string id = "id";
+            public readonly string returnUrl = "returnUrl";
+        }
+        static readonly ActionParamsClass_Deny s_params_Deny = new ActionParamsClass_Deny();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Deny DenyParams { get { return s_params_Deny; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Deny
+        {
+            public readonly string id = "id";
+            public readonly string returnUrl = "returnUrl";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -104,8 +148,12 @@ namespace Jarboo.Admin.Web.Controllers
             public class _ViewNamesClass
             {
                 public readonly string GroupedList = "GroupedList";
+                public readonly string Index = "Index";
+                public readonly string List = "List";
             }
             public readonly string GroupedList = "~/Views/SpentTime/GroupedList.cshtml";
+            public readonly string Index = "~/Views/SpentTime/Index.cshtml";
+            public readonly string List = "~/Views/SpentTime/List.cshtml";
         }
     }
 
@@ -134,6 +182,44 @@ namespace Jarboo.Admin.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.GroupedList);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "spentTimeFilter", spentTimeFilter);
             GroupedListOverride(callInfo, spentTimeFilter);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Filters.SpentTimeFilter spentTimeFilter);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult List(Jarboo.Admin.BL.Filters.SpentTimeFilter spentTimeFilter)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.List);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "spentTimeFilter", spentTimeFilter);
+            ListOverride(callInfo, spentTimeFilter);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void AcceptOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, string returnUrl);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Accept(int id, string returnUrl)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Accept);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
+            AcceptOverride(callInfo, id, returnUrl);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DenyOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, string returnUrl);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Deny(int id, string returnUrl)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Deny);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
+            DenyOverride(callInfo, id, returnUrl);
             return callInfo;
         }
 

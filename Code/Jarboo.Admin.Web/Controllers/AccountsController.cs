@@ -60,14 +60,7 @@ namespace Jarboo.Admin.Web.Controllers
                                                  IsPersistent = model.Persist,
                                              }, identity);
 
-            if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
-            {
-                return RedirectToAction(MVC.Home.Index());
-            }
-            else
-            {
-                return this.Redirect(returnUrl);
-            }
+            return this.RedirectToLocalUrl(returnUrl, MVC.Home.Index());
         }
         
         public virtual ActionResult Register(string returnUrl = "")

@@ -108,6 +108,8 @@ namespace Jarboo.Admin.Web.Infrastructure
             rights.Add(MVC.Tasks.List());
             rights.Add(MVC.Tasks.NextTask());
             rights.Add(MVC.Tasks.AddHours());
+
+            rights.Add(MVC.SpentTime.Index());
         }
 
         public static bool Can(this WebViewPage view, ActionResult action)

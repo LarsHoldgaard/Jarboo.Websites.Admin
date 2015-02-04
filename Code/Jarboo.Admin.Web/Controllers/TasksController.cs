@@ -131,16 +131,7 @@ namespace Jarboo.Admin.Web.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(int id, string returnUrl)
         {
-            ActionResult result;
-            if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
-            {
-                result = RedirectToAction(MVC.Tasks.Index());
-            }
-            else
-            {
-                result = this.Redirect(returnUrl);
-            }
-
+            ActionResult result = this.RedirectToLocalUrl(returnUrl, MVC.Tasks.Index());
             return Handle(id, TaskService.Delete, result, result, "Task successfully deleted");
         }
 

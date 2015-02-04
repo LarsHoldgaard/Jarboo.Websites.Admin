@@ -58,6 +58,9 @@ namespace Jarboo.Admin.BL.Authorization
         public class SpentTime
         {
             public static readonly string Name = typeof(SpentTime).Name;
+
+            public const string AcceptAny = "AcceptAny";
+            public const string DenyAny = "DenyAny";
         }
 
         private static readonly Dictionary<UserRoles, Dictionary<string, HashSet<string>>> rightsByRoles = new Dictionary<UserRoles, Dictionary<string, HashSet<string>>>();

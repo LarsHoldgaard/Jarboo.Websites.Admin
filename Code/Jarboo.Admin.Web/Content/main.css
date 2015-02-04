@@ -1,8 +1,11 @@
-﻿.delete-btn-form {
+﻿.btn-form {
     display: inline;
 }
 
 a.btn i {
+    margin-right: 5px;
+}
+button.btn i {
     margin-right: 5px;
 }
 
@@ -42,4 +45,9 @@ form.logout-form button {
 
 input[aria-invalid="true"].form-control {
     border: 1px solid red;
+}
+
+td span.label {
+    position: relative;
+    top: -4px;
 }

@@ -157,7 +157,11 @@
                                             @if (this.Can(MVC.Employees.Delete()))
                                             {
                                                 <td>
-                                                    @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM() { Id = employee.EmployeeId, Action = MVC.Employees.Delete(), Small = true })
+                                                    @Html.Partial(MVC.Shared.Views.BtnForm, BtnFormVM.Delete(x =>
+                                                        {
+                                                            x.Id = employee.EmployeeId;
+                                                            x.Action = MVC.Employees.Delete();
+                                                        }))
                                                 </td>
                                             }
                                         </tr>

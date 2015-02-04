@@ -19,8 +19,6 @@ namespace Jarboo.Admin.Web.Controllers
         [Inject]
         public IEmployeeService EmployeeService { get; set; }
 
-        //
-        // GET: /SpentTime/
         public virtual ActionResult Index()
         {
             return View();
@@ -29,11 +27,33 @@ namespace Jarboo.Admin.Web.Controllers
         [ChildActionOnly]
         public virtual ActionResult GroupedList(SpentTimeFilter spentTimeFilter = null)
         {
-            spentTimeFilter = spentTimeFilter ?? new SpentTimeFilter();
+            spentTimeFilter = (spentTimeFilter ?? new SpentTimeFilter()).ByAccepted(true);
             var items = SpentTimeService.GetAll(Query.ForSpentTime(spentTimeFilter));
 
             ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee().Include(x => x.Positions())), "EmployeeId", "FullName");
             return this.View(items);
+        }
+
+        [ChildActionOnly]
+        public virtual ActionResult List(SpentTimeFilter spentTimeFilter = null)
+        {
+            spentTimeFilter = spentTimeFilter ?? new SpentTimeFilter();
+            var items = SpentTimeService.GetAll(Query.ForSpentTime(spentTimeFilter).Include(x => x.Task().Project().Customer().Employee()));
+            return this.View(items);
+        }
+
+        [HttpPost]
+        public virtual ActionResult Accept(int id, string returnUrl)
+        {
+            var result = this.RedirectToLocalUrl(returnUrl, MVC.SpentTime.Index());
+            return Handle(id, SpentTimeService.Accept, result, result, "Accepted");
+        }
+
+        [HttpPost]
+        public virtual ActionResult Deny(int id, string returnUrl)
+        {
+            var result = this.RedirectToLocalUrl(returnUrl, MVC.SpentTime.Index());
+            return Handle(id, SpentTimeService.Deny, result, result, "Denied");
         }
 	}
 }

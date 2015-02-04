@@ -70,6 +70,7 @@
     <Compile Include="Extensions\CustomerExtensions.cs" />
     <Compile Include="Extensions\EmployeeExtensions.cs" />
     <Compile Include="Extensions\ProjectExtensions.cs" />
+    <Compile Include="Extensions\SpentTimeExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Extensions\TaskStepExtensions.cs" />
     <Compile Include="IUnitOfWork.cs" />
@@ -121,6 +122,10 @@
     <Compile Include="Migrations\201502040939340_SpentTime.Designer.cs">
       <DependentUpon>201502040939340_SpentTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502041320144_SpentTimeHourlyPrice.cs" />
+    <Compile Include="Migrations\201502041320144_SpentTimeHourlyPrice.Designer.cs">
+      <DependentUpon>201502041320144_SpentTimeHourlyPrice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManager.cs" />
@@ -166,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502040939340_SpentTime.resx">
       <DependentUpon>201502040939340_SpentTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502041320144_SpentTimeHourlyPrice.resx">
+      <DependentUpon>201502041320144_SpentTimeHourlyPrice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
