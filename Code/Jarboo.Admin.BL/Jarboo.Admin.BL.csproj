@@ -74,14 +74,18 @@
     <Compile Include="Filters\Filter.cs" />
     <Compile Include="Filters\PagedData.cs" />
     <Compile Include="Filters\ProjectFilter.cs" />
+    <Compile Include="Filters\SpentTimeFilter.cs" />
     <Compile Include="Filters\TaskFilter.cs" />
     <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="Includes\DocumentationInclude.cs" />
+    <Compile Include="Includes\SpentTimeInclude.cs" />
     <Compile Include="Includes\UserInclude.cs" />
     <Compile Include="Models\DocumentationEdit.cs" />
     <Compile Include="Models\EmployeeCreate.cs" />
     <Compile Include="Models\PasswordRecover.cs" />
     <Compile Include="Models\ResetPassword.cs" />
+    <Compile Include="Models\SpentTimeOnProject.cs" />
+    <Compile Include="Models\SpentTimeOnTask.cs" />
     <Compile Include="Models\UserCreate.cs" />
     <Compile Include="Models\UserEdit.cs" />
     <Compile Include="Models\UserPasswordChange.cs" />
@@ -110,6 +114,7 @@
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\IEntityService.cs" />
     <Compile Include="Services\ProjectService.cs" />
+    <Compile Include="Services\SpentTimeService.cs" />
     <Compile Include="Services\TaskService.cs" />
     <Compile Include="Other\IFolderCreator.cs" />
     <Compile Include="Other\ITaskRegister.cs" />
@@ -120,6 +125,7 @@
     <Compile Include="Sorters\EmployeeSorter.cs" />
     <Compile Include="Sorters\ProjectSorter.cs" />
     <Compile Include="Sorters\Sorter.cs" />
+    <Compile Include="Sorters\SpentTimeSorter.cs" />
     <Compile Include="Sorters\TaskSorter.cs" />
     <Compile Include="Sorters\UserSorter.cs" />
   </ItemGroup>

@@ -55,6 +55,10 @@ namespace Jarboo.Admin.BL.Authorization
             public const string SetPasswordAny = "SetPasswordAny";
             //public const string SetPasswordSpecial = "SetPasswordSpecial";
         }
+        public class SpentTime
+        {
+            public static readonly string Name = typeof(SpentTime).Name;
+        }
 
         private static readonly Dictionary<UserRoles, Dictionary<string, HashSet<string>>> rightsByRoles = new Dictionary<UserRoles, Dictionary<string, HashSet<string>>>();
         private static readonly Dictionary<string, HashSet<string>> authorizedUserRights = new Dictionary<string, HashSet<string>>();
@@ -112,12 +116,14 @@ namespace Jarboo.Admin.BL.Authorization
             rights.Add(Documentations.Name, AddSpecial);
             rights.Add(Documentations.Name, EditSpecial);
             rights.Add(Documentations.Name, DeleteSpecial);
+
+            rights.Add(SpentTime.Name, ViewSpecial);
         }
         private static void FillEmployeeRights(Dictionary<string, HashSet<string>> rights)
         {
-            rights.Add(Customers.Name, ViewSpecial);
+            rights.Add(Customers.Name, ViewAll);
 
-            rights.Add(Projects.Name, ViewSpecial);
+            rights.Add(Projects.Name, ViewAll);
 
             rights.Add(Tasks.Name, ViewSpecial);
             rights.Add(Tasks.Name, Tasks.NextStepSpecial);
@@ -125,6 +131,9 @@ namespace Jarboo.Admin.BL.Authorization
             rights.Add(Employees.Name, ViewAll);
 
             rights.Add(Documentations.Name, ViewSpecial);
+
+            rights.Add(SpentTime.Name, ViewSpecial);
+            rights.Add(SpentTime.Name, AddSpecial);
         }
 
         public static void Add(this Dictionary<string, HashSet<string>> dict, string s1, string s2)

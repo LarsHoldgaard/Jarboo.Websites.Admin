@@ -32,7 +32,7 @@ namespace Jarboo.Admin.DAL
                                     {
                                         RequireDigit = true,
                                         RequireLowercase = true,
-                                        RequireNonLetterOrDigit = true,
+                                        RequireNonLetterOrDigit = false,
                                         RequireUppercase = false,
                                         RequiredLength = 8,
                                     };

@@ -98,6 +98,7 @@ namespace Jarboo.Admin.Web.Infrastructure
 
             rights.Add(MVC.Projects.Index());
             rights.Add(MVC.Projects.View());
+            rights.Add(MVC.Projects.AddHours());
 
             rights.Add(MVC.Tasks.View());
             rights.Add(MVC.Tasks.Steps());
@@ -106,6 +107,7 @@ namespace Jarboo.Admin.Web.Infrastructure
             rights.Add(MVC.Tasks.ListData());
             rights.Add(MVC.Tasks.List());
             rights.Add(MVC.Tasks.NextTask());
+            rights.Add(MVC.Tasks.AddHours());
         }
 
         public static bool Can(this WebViewPage view, ActionResult action)

@@ -30,6 +30,10 @@ namespace Jarboo.Admin.Web.Controllers
         public ICustomerService CustomerService { get; set; }
         [Inject]
         public ITaskRegister TaskRegister { get; set; }
+        [Inject]
+        public ISpentTimeService SpentTimeService { get; set; }
+        [Inject]
+        public IEmployeeService EmployeeService { get; set; }
 
         // GET: /Projects/
         public virtual ActionResult Index()
@@ -132,6 +136,30 @@ namespace Jarboo.Admin.Web.Controllers
             };
 
             return View(model);
+        }
+
+        public virtual ActionResult AddHours(int? projectId)
+        {
+            if (projectId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var model = new SpentTimeOnProject();
+            model.ProjectId = projectId.Value;
+
+            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee()), "EmployeeId", "FullName");
+            ViewBag.Project = ProjectService.GetByIdEx(model.ProjectId, new ProjectInclude().Customer());
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult AddHours(SpentTimeOnProject model)
+        {
+            return Handle(model, SpentTimeService.SpentTimeOnProject,
+                RedirectToAction(MVC.Projects.View(model.ProjectId)),
+                RedirectToAction(MVC.Projects.AddHours(model.ProjectId)));
         }
     }
 }

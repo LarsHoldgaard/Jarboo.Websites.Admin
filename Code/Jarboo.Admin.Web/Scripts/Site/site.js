@@ -5,6 +5,25 @@
 
     $(".input-daterange").datepicker({});
 
+    $("input[data-hours]").blur(formatHoursInput);
+    function formatHoursInput() {
+        var $input = $(this);
+
+        var text = $input.val();
+        if (!text) {
+            return;
+        }
+
+        var number = parseFloat(text);
+        if (isNaN(number)) {
+            number = 0;
+        }
+
+        number = (number * 2).toFixed() / 2;
+
+        $input.val(number);
+    }
+
     $(".dataTable").each(function() {
         var $this = $(this);
         var onError = function() {

@@ -74,6 +74,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FakeItEasy">
+      <HintPath>packages\FakeItEasy.1.25.1\lib\net40\FakeItEasy.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Apis">
       <HintPath>packages\Google.Apis.1.9.0\lib\net40\Google.Apis.dll</HintPath>
     </Reference>
@@ -1039,6 +1042,7 @@
     <Compile Include="Controllers\GuidesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
+    <Compile Include="Controllers\SpentTimeController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="CustomersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -1090,6 +1094,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SpentTimeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="T4MVC.cs">
@@ -1164,6 +1171,9 @@
     <Content Include="Views\Accounts\Index.cshtml" />
     <Content Include="Views\Accounts\RecoverPassword.cshtml" />
     <Content Include="Views\Accounts\ResetPassword.cshtml" />
+    <Content Include="Views\Tasks\_AddHours.cshtml" />
+    <Content Include="Views\Projects\AddHours.cshtml" />
+    <Content Include="Views\SpentTime\GroupedList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

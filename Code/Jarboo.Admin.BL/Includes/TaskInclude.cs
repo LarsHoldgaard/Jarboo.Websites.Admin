@@ -14,7 +14,9 @@ namespace Jarboo.Admin.BL.Includes
         private bool project;
         private bool customer;
         private bool taskSteps;
-        private bool employee;
+        private bool taskStepsWithEmployee;
+        private bool spentTimes;
+        private bool spentTimesWithEmployee;
 
         public TaskInclude Customer()
         {
@@ -26,14 +28,16 @@ namespace Jarboo.Admin.BL.Includes
             project = true;
             return this;
         }
-        public TaskInclude TaskSteps()
+        public TaskInclude TaskSteps(bool withEmployee = false)
         {
             taskSteps = true;
+            taskStepsWithEmployee = withEmployee;
             return this;
         }
-        public TaskInclude Employee()
+        public TaskInclude SpentTimes(bool withEmployee = false)
         {
-            employee = true;
+            spentTimes = true;
+            spentTimesWithEmployee = withEmployee;
             return this;
         }
 
@@ -51,12 +55,26 @@ namespace Jarboo.Admin.BL.Includes
 
             if (taskSteps)
             {
-                query = query.Include(x => x.Steps);
+                if (taskStepsWithEmployee)
+                {
+                    query = query.Include(x => x.Steps.Select(y => y.Employee));
+                }
+                else
+                {
+                    query = query.Include(x => x.Steps);                    
+                }
             }
 
-            if (employee)
+            if (spentTimes)
             {
-                query = query.Include(x => x.Steps.Select(y => y.Employee));
+                if (spentTimesWithEmployee)
+                {
+                    query = query.Include(x => x.Steps.Select(y => y.SpentTimes.Select(z => z.Employee)));
+                }
+                else
+                {
+                    query = query.Include(x => x.Steps.Select(y => y.SpentTimes));   
+                }
             }
 
             return query;

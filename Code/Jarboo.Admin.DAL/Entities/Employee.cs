@@ -13,6 +13,7 @@ namespace Jarboo.Admin.DAL.Entities
         {
             Positions = new List<EmployeePosition>();
             TaskSteps = new List<TaskStep>();
+            SpentTimes = new List<SpentTime>();
         }
 
         public int EmployeeId { get; set; }
@@ -33,6 +34,7 @@ namespace Jarboo.Admin.DAL.Entities
 
         public virtual List<EmployeePosition> Positions { get; set; }
         public virtual List<TaskStep> TaskSteps { get; set; }
+        public virtual List<SpentTime> SpentTimes { get; set; }
 
         public bool Deleted()
         {

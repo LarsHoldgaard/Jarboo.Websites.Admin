@@ -39,3 +39,7 @@ form.logout-form button {
 .jarviswidget .widget-body {
     min-height: 0 !important;
 }
+
+input[aria-invalid="true"].form-control {
+    border: 1px solid red;
+}

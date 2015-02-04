@@ -1,0 +1,27 @@
+﻿@model Jarboo.Admin.BL.Models.SpentTimeOnTask
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm(MVC.Tasks.AddHours(), FormMethod.Post, new { @class = "form-inline" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.TaskId)
+    @Html.HiddenFor(x => x.Step)
+
+    if(Model.EmployeeId != 0)
+    {
+            @Html.HiddenFor(x => x.EmployeeId)
+    }
+    else
+    {
+        @Html.DropDownListFor(x => x.EmployeeId, (SelectList)ViewBag.EmployeesList, new { @class = "form-control" })
+    }
+
+    <div class="input-group">
+        @Html.TextBoxFor(x => x.Hours, new { @class = "form-control", data_hours="true" })
+        <div class="input-group-addon">hours</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+}

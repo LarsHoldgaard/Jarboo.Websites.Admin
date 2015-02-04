@@ -26,5 +26,20 @@ namespace Jarboo.Admin.DAL.Entities
 
         public Customer Customer { get; set; }
         public Employee Employee { get; set; }
+
+        public int? CustomerId
+        {
+            get
+            {
+                return Customer == null ? null : (int?)Customer.CustomerId;
+            }
+        }
+        public int? EmployeeId
+        {
+            get
+            {
+                return Employee == null ? null : (int?)Employee.EmployeeId;
+            }
+        }
     }
 }

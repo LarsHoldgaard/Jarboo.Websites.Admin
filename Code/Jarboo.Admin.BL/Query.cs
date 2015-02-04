@@ -74,6 +74,10 @@ namespace Jarboo.Admin.BL
         {
             return new Query<User, UserInclude, UserFilter, UserSorter>(filter);
         }
+        public static IQuery<SpentTime, SpentTimeInclude, SpentTimeFilter, SpentTimeSorter> ForSpentTime(SpentTimeFilter filter = null)
+        {
+            return new Query<SpentTime, SpentTimeInclude, SpentTimeFilter, SpentTimeSorter>(filter);
+        }
     }
 
     public static class QueryExtensions

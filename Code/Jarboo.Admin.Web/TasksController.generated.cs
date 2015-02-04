@@ -105,6 +105,12 @@ namespace Jarboo.Admin.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NextTask);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult AddHours()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddHours);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public TasksController Actions { get { return MVC.Tasks; } }
@@ -131,6 +137,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string ListConfig = "ListConfig";
             public readonly string ListData = "ListData";
             public readonly string NextTask = "NextTask";
+            public readonly string AddHours = "AddHours";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -146,6 +153,7 @@ namespace Jarboo.Admin.Web.Controllers
             public const string ListConfig = "ListConfig";
             public const string ListData = "ListData";
             public const string NextTask = "NextTask";
+            public const string AddHours = "AddHours";
         }
 
 
@@ -225,6 +233,14 @@ namespace Jarboo.Admin.Web.Controllers
         {
             public readonly string id = "id";
         }
+        static readonly ActionParamsClass_AddHours s_params_AddHours = new ActionParamsClass_AddHours();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AddHours AddHoursParams { get { return s_params_AddHours; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AddHours
+        {
+            public readonly string model = "model";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -235,6 +251,7 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _AddHours = "_AddHours";
                 public readonly string _NextStep = "_NextStep";
                 public readonly string Create = "Create";
                 public readonly string Index = "Index";
@@ -243,6 +260,7 @@ namespace Jarboo.Admin.Web.Controllers
                 public readonly string Steps = "Steps";
                 public readonly string View = "View";
             }
+            public readonly string _AddHours = "~/Views/Tasks/_AddHours.cshtml";
             public readonly string _NextStep = "~/Views/Tasks/_NextStep.cshtml";
             public readonly string Create = "~/Views/Tasks/Create.cshtml";
             public readonly string Index = "~/Views/Tasks/Index.cshtml";
@@ -389,6 +407,18 @@ namespace Jarboo.Admin.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NextTask);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             NextTaskOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void AddHoursOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.SpentTimeOnTask model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult AddHours(Jarboo.Admin.BL.Models.SpentTimeOnTask model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddHours);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            AddHoursOverride(callInfo, model);
             return callInfo;
         }
 

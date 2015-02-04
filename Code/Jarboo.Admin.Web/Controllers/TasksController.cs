@@ -38,6 +38,8 @@ namespace Jarboo.Admin.Web.Controllers
         public IEmployeeService EmployeeService { get; set; }
         [Inject]
         public ICustomerService CustomerService { get; set; }
+        [Inject]
+        public ISpentTimeService SpentTimeService { get; set; }
 
         // GET: /Tasks/
         public virtual ActionResult Index()
@@ -98,13 +100,17 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Task task = TaskService.GetByIdEx(id.Value, new TaskInclude().Project().Customer().TaskSteps().Employee());
+            Task task = TaskService.GetByIdEx(id.Value, new TaskInclude().Project().Customer().TaskSteps(true).SpentTimes());
             if (task == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee()), "EmployeeId", "FullName");
+            if (CurrentUser.EmployeeId.HasValue)
+            {
+                ViewBag.CurrentEmployee = EmployeeService.GetByIdEx(CurrentUser.EmployeeId.Value, new EmployeeInclude().Positions());
+            }
+            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee().Include(x => x.Positions())), "EmployeeId", "FullName");
             return View(task);
         }
 
@@ -385,6 +391,15 @@ namespace Jarboo.Admin.Web.Controllers
 
             ViewBag.NextTask = nextTask;
             return View(employee);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult AddHours(SpentTimeOnTask model)
+        {
+            return Handle(model, SpentTimeService.SpentTimeOnTask,
+                RedirectToAction(MVC.Tasks.Steps(model.TaskId)),
+                RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
         }
     }
 }

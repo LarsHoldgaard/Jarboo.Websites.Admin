@@ -43,10 +43,10 @@
                     <a href="@Url.Action(MVC.Accounts.Index())" title="Users"><i class="fa fa-lg fa-fw fa-user"></i><span class="menu-item-parent">Users</span></a>
                 </li>
             }
-            @if (currentUser.Customer != null)
+            @if (currentUser.CustomerId.HasValue)
             {
                 <li class="@Html.RouteIf("customers", "active")">
-                    <a href="@Url.Action(MVC.Customers.View(currentUser.Customer.CustomerId))" title="Projects"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Projects</span></a>
+                    <a href="@Url.Action(MVC.Customers.View(currentUser.CustomerId))" title="Projects"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Projects</span></a>
                 </li>
             }
             @if (this.Can(MVC.Employees.ChooseForTasks()))

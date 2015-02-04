@@ -36,6 +36,7 @@ public static partial class MVC
     public static Jarboo.Admin.Web.Controllers.GuidesController Guides = new Jarboo.Admin.Web.Controllers.T4MVC_GuidesController();
     public static Jarboo.Admin.Web.Controllers.HomeController Home = new Jarboo.Admin.Web.Controllers.T4MVC_HomeController();
     public static Jarboo.Admin.Web.Controllers.ProjectsController Projects = new Jarboo.Admin.Web.Controllers.T4MVC_ProjectsController();
+    public static Jarboo.Admin.Web.Controllers.SpentTimeController SpentTime = new Jarboo.Admin.Web.Controllers.T4MVC_SpentTimeController();
     public static Jarboo.Admin.Web.Controllers.TasksController Tasks = new Jarboo.Admin.Web.Controllers.T4MVC_TasksController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }

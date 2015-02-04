@@ -1,0 +1,101 @@
+﻿@using SmartAdminMvc
+@model Jarboo.Admin.BL.Models.SpentTimeOnProject
+
+@{
+    ViewBag.Title = "Add hours to project";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    HtmlHelper.ClientValidationEnabled = true;
+}
+
+<!-- RIBBON -->
+<div id="ribbon">
+    <span class="ribbon-button-alignment">
+        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
+						<i class="fa fa-refresh"></i>
+					</span>
+    </span>
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @(new BreadCrumbsBuilder(this)
+            .Add(MVC.Customers.View(ViewBag.Project.CustomerId), ViewBag.Project.Customer.Name)
+            .Add(MVC.Projects.View(ViewBag.Project.ProjectId), ViewBag.Project.Name)
+            .Add("Add hours")
+            .Done())
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-7">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-5" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+                <!-- widget options:
+                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                data-widget-colorbutton="false"
+                data-widget-editbutton="false"
+                data-widget-togglebutton="false"
+                data-widget-deletebutton="false"
+                data-widget-fullscreenbutton="false"
+                data-widget-custombutton="false"
+                data-widget-collapsed="true"
+                data-widget-sortable="false"
+
+                -->
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                    <h2>New </h2>
+                </header>
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+                        @using (Html.BeginForm(MVC.Projects.AddHours(), FormMethod.Post, new { @class = "smart-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationBootstrap()
+                            @Html.HiddenFor(x => x.ProjectId)
+                            
+                            <header>
+                                Add hours
+                            </header>
+                            <fieldset>
+                                <section>
+                                    @Html.LabelFor(model => model.Hours, new { @class = "label" })
+                                    <label class="input">
+                                        <i class="icon-append fa">hours</i>
+                                        @Html.TextBoxFor(x => x.Hours, new { @class = "form-control", data_hours="true" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.EmployeeId, new { @class = "label" })
+                                    <label class="select select-multiple">
+                                        @Html.DropDownListFor(x => x.EmployeeId, (SelectList)ViewBag.EmployeesList, new { @class = "form-control" })
+                                    </label>
+                                </section>
+                            </fieldset>
+                            <footer>
+                                <button type="submit" class="btn btn-primary">
+                                    Create
+                                </button>
+                            </footer>
+                        }
+                    </div>
+                    <!-- end widget content -->
+                </div>
+                <!-- end widget div -->
+            </div>
+            <!-- end widget -->
+        </article>
+    </div>
+    <!-- end row -->
+</div>
