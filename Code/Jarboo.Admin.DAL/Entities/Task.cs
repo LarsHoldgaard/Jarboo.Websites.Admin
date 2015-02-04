@@ -80,6 +80,11 @@ namespace Jarboo.Admin.DAL.Entities
                 return val;
             }
         }
+
+        public decimal Hours()
+        {
+            return Steps.SelectMany(x => x.SpentTimes).Aggregate(0m, (a, x) => a + x.Hours);
+        }
     }
 
     public class TaskEqualityComparer : IEqualityComparer<Task>

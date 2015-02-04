@@ -157,9 +157,10 @@ namespace Jarboo.Admin.Web.Controllers
             Folder,
             Card,
             Step,
+            Hours,
             Delete
         }
-        private static TaskListColumns[] columnsWithClientSorting = new TaskListColumns[] { TaskListColumns.Priority };
+        private static TaskListColumns[] columnsWithClientSorting = new TaskListColumns[] { TaskListColumns.Priority, TaskListColumns.Hours };
         private static List<Column<TaskVM>> columns = new List<Column<TaskVM>>()
         {
             new Column<TaskVM>()
@@ -225,6 +226,12 @@ namespace Jarboo.Admin.Web.Controllers
                 },
             new Column<TaskVM>()
                 {
+                    Title = "Hours",
+                    Orderable = true,
+                    Getter = (x) => x.Hours().ToString()
+                },
+            new Column<TaskVM>()
+                {
                     Title = "",
                     Type = DataTableConfig.Column.ColumnSpecialType.DeleteBtn,
                     Getter = (x) => new object[] {x.TaskId, new UrlHelper(Helper.GetRequestContext()).Action(MVC.Tasks.Delete())}
@@ -272,7 +279,7 @@ namespace Jarboo.Admin.Web.Controllers
         {
             var filter = (taskFilter ?? new TaskFilter()).ByString(request.Search.Value);
                 //.WithPaging(request.Length, request.Start / request.Length);
-            var query = Query.ForTask(filter).Include(x => x.Project().TaskSteps());
+            var query = Query.ForTask(filter).Include(x => x.Project().TaskSteps().SpentTimes());
 
             var pageSize = request.Length;
             var pageNumber = request.Start / request.Length;
@@ -308,6 +315,11 @@ namespace Jarboo.Admin.Web.Controllers
                 case TaskListColumns.Priority:
                     {
                         sortedData = sortedData.SortBy(direction, x => x.Priority);
+                        break;
+                    }
+                case TaskListColumns.Hours:
+                    {
+                        sortedData = sortedData.SortBy(direction, x => x.Hours());
                         break;
                     }
             }
