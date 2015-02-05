@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 using Jarboo.Admin.DAL.Entities;
 
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Jarboo.Admin.DAL
 {
-    public class UserStore : UserStore<User>
+    public class UserStore : UserStore<User, UserRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>, IUserStore<User>
     {
         public UserStore(Context context)
             : base(context)

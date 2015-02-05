@@ -15,17 +15,47 @@ using System.Linq;
 using System.Text;
 using System.Data.Entity.Infrastructure;
 
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace Jarboo.Admin.DAL.Tests
 {
     public static class ContextHelper
     {
         #region FillDb
 
+        public static User AddUser(this IUnitOfWork context, Action<User> beforeSave = null)
+        {
+            var id = Guid.NewGuid().ToString();
+            var user = new User()
+                           {
+                               Id = id,
+                               UserName = id,
+                               DisplayName = id
+                           };
+
+            if (beforeSave != null)
+            {
+                beforeSave(user);
+            }
+
+            context.Users.Add(user);
+            context.SaveChanges();
+            return user;
+        }
         public static Customer AddCustomer(this IUnitOfWork context, Action<Customer> beforeSave = null)
         {
             var customer = new Customer()
                                {
                                    Name = "Customer",
+                                   Country = "Country",
+                                   Creator = "Creator",
+                                   User = context.AddUser(
+                                       x => x.Roles.Add(new IdentityUserRole()
+                                                            {
+                                                                RoleId = UserRoles.Customer.ToString(),
+                                                                UserId = x.Id
+                                                            })),
                                };
 
             if (beforeSave != null)
@@ -63,6 +93,12 @@ namespace Jarboo.Admin.DAL.Tests
                                    TrelloId = "TrelloId",
                                    Email = "email@email.com",
                                    Country = "Country",
+                                   User = context.AddUser(
+                                       x => x.Roles.Add(new IdentityUserRole()
+                                       {
+                                           RoleId = UserRoles.Employee.ToString(),
+                                           UserId = x.Id
+                                       })),
                                };
 
             if (beforeSave != null)
@@ -150,6 +186,10 @@ namespace Jarboo.Admin.DAL.Tests
             return query.OrderBy(x => x.DateCreated).AsEnumerable().Last();
         }
 
+        public static User EnsureUser(this IUnitOfWork context, Action<User> beforeSave = null)
+        {
+            return Ensure(context.Users, () => context.AddUser(beforeSave));
+        }
         public static Customer EnsureCustomer(this IUnitOfWork context, Action<Customer> beforeSave = null)
         {
             return Ensure(context.Customers, () => context.AddCustomer(beforeSave));
@@ -192,9 +232,32 @@ namespace Jarboo.Admin.DAL.Tests
         public static IUnitOfWork Create()
         {
 #if DEBUG
-            return FakeContext.Create();
+            var unitOfWork = FakeContext.Create();
 #else
-            return RealContextWrapper.Create();
+            var unitOfWork = RealContextWrapper.Create();
+#endif
+            foreach (var userRole in unitOfWork.Roles)
+            {
+                unitOfWork.Roles.Remove(userRole);
+            }
+            foreach (var roleName in Enum.GetNames(typeof(UserRoles)))
+            {
+                unitOfWork.Roles.Add(new UserRole()
+                {
+                    Id = roleName,
+                    Name = roleName
+                });
+            }
+            unitOfWork.SaveChanges();
+
+            return unitOfWork;
+        }
+        public static IUserStore<User, string> CreateUserStore(this IUnitOfWork context)
+        {
+#if DEBUG
+            return new FakeUserStore(context);
+#else
+            return new UserStore((context as IUnitOfWorkEx).GetContext());
 #endif
         }
     }

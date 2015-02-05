@@ -11,15 +11,21 @@ using FakeItEasy.ExtensionSyntax.Full;
 
 namespace Jarboo.Admin.DAL.Tests
 {
+    public interface IUnitOfWorkEx : IUnitOfWork
+    {
+        Context GetContext();
+    }
+
     public class RealContextWrapper
     {
-        private Context Context { get; set; }
-        public IUnitOfWork UnitOfWork { get; set; }
+        public Context Context { get; set; }
+        public IUnitOfWorkEx UnitOfWork { get; set; }
 
         public RealContextWrapper()
         {
             Context = CreateRalContext();
-            UnitOfWork = A.Fake<IUnitOfWork>();
+            UnitOfWork = A.Fake<IUnitOfWorkEx>();
+            A.CallTo(() => UnitOfWork.GetContext()).Returns(Context);
             A.CallTo(() => UnitOfWork.SaveChanges()).ReturnsLazily(() => Context.SaveChanges());
             A.CallTo(() => UnitOfWork.Dispose()).Invokes(
                 () =>

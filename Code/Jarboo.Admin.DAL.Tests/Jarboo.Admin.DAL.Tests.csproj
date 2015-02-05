@@ -70,9 +70,11 @@
     <Compile Include="Extensions\CustomerExtensionsTests.cs" />
     <Compile Include="FakeContext.cs" />
     <Compile Include="ContextHelper.cs" />
+    <Compile Include="FakeUserStore.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealContextWrapper.cs" />
+    <Compile Include="Root\UserStoreTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

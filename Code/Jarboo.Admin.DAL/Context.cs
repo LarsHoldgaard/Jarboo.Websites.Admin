@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Jarboo.Admin.DAL
 {
-    public class Context : IdentityDbContext<User>, IUnitOfWork
+    public class Context : IdentityDbContext<User, UserRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>, IUnitOfWork
     {
         public Context()
             : this("name=Jarboo.Admin.DAL.Context")

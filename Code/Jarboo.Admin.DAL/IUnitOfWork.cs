@@ -15,6 +15,7 @@ namespace Jarboo.Admin.DAL
         IDbSet<EmployeePosition> EmployeePositions { get; set; }
         IDbSet<User> Users { get; set; }
         IDbSet<SpentTime> SpentTimes { get; set; }
+        IDbSet<UserRole> Roles { get; set; }
 
         DbContextTransaction BeginTransaction();
 
