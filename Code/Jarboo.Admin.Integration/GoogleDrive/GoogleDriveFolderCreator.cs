@@ -101,6 +101,8 @@ namespace Jarboo.Admin.Integration.GoogleDrive
                 CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(date.Month),
                 taskIdentifier).Split('\\');
         }
+
+
         private FolderHierarchy LoadGoogleDriveFolderHierarchy()
         {
             var files = this.driveService.Files.List();
@@ -124,20 +126,28 @@ namespace Jarboo.Admin.Integration.GoogleDrive
                     continue;
                 }
 
-                var driveFile = this.CreateFolder(folderName, parentFolder.Id);
-                parentFolder = new FolderHierarchy.Folder(driveFile);
+                var driveFile = GetExistsFolder(folderName, parentFolder.Id);
+                if (driveFile != null)
+                {
+                    parentFolder = new FolderHierarchy.Folder(driveFile);
+
+                }
+
             }
 
             return parentFolder;
         }
+
         private File CreateFolder(string title, string parentId)
         {
             return this.CreateFile(title, parentId, FOLDER_MIME_TYPE);
         }
+
         private File CreateDoc(string title, string parentId)
         {
             return this.CreateFile(title, parentId, DOC_MIME_TYPE);
         }
+ 
         private File CreateFile(string title, string parentId, string mimeType)
         {
             var body = new File
@@ -162,6 +172,26 @@ namespace Jarboo.Admin.Integration.GoogleDrive
 
             return file;
         }
+
+        private File GetExistsFolder(string title, string parentId)
+        {
+            string query = "mimeType='" + FOLDER_MIME_TYPE + "' AND trashed=false AND title='" + title + "' AND '" + parentId + "' in parents";
+            FilesResource.ListRequest list = this.driveService.Files.List();
+            list.MaxResults = int.MaxValue;
+            list.Q = query;
+            FileList files = list.Execute();
+
+            if (files.Items.Any()) //if the size is zero, then the folder doesn't exist
+            {
+                return null;
+            }
+
+            else
+            {
+                return this.CreateFolder(title, parentId);
+            }
+        }
+
         private File CopyFile(string newFileName, File file, string parentId)
         {
             var body = new File
