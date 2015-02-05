@@ -121,33 +121,49 @@ namespace Jarboo.Admin.Web.Controllers
                 return HttpNotFound();
             }
 
-            var userEdit = user.MapTo<UserEdit>();
-            return View(userEdit);
+            if (user.Customer == null)
+            {
+                var userEdit = user.MapTo<UserEdit>();
+                return View(userEdit);
+            }
+            else
+            {
+                var userEdit = user.MapTo<UserCustomerEdit>();
+                return View(MVC.Accounts.Views.CustomerEdit, userEdit);
+            }
         }
 
         [HttpPost]
         public virtual ActionResult Edit(UserEdit model)
         {
             return Handle(model, UserService.Edit,
-                () =>
-                    {
-                        var user = UserManager.FindByEmail(model.Email);
-                        if (user == null)
-                        {
-                            return RedirectToAction(MVC.Accounts.Login());
-                        }
-
-                        var identity = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-
-                        AuthenticationManager.SignOut();
-                        AuthenticationManager.SignIn(new AuthenticationProperties()
-                        {
-                            IsPersistent = true,
-                        }, identity);
-
-                        return RedirectToAction(MVC.Accounts.View(model.UserId));
-                    },
+                () => this.OnEditSuccess(model),
                 RedirectToAction(MVC.Accounts.Edit(model.UserId)));
+        }
+        [HttpPost]
+        public virtual ActionResult CustomerEdit(UserCustomerEdit model)
+        {
+            return Handle(model, UserService.EditCustomer,
+                () => this.OnEditSuccess(model),
+                RedirectToAction(MVC.Accounts.Edit(model.UserId)));
+        }
+        private ActionResult OnEditSuccess(UserEdit model)
+        {
+            var user = UserManager.FindByEmail(model.Email);
+            if (user == null)
+            {
+                return RedirectToAction(MVC.Accounts.Login());
+            }
+
+            var identity = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+
+            AuthenticationManager.SignOut();
+            AuthenticationManager.SignIn(new AuthenticationProperties()
+            {
+                IsPersistent = true,
+            }, identity);
+
+            return RedirectToAction(MVC.Accounts.View(model.UserId));
         }
 
         public virtual ActionResult ChangePassword(string id = null)

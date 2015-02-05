@@ -17,6 +17,7 @@ namespace Jarboo.Admin.BL.Services
 {
     public interface IUserService : IEntityService<string, User>
     {
+        void EditCustomer(UserCustomerEdit model, IBusinessErrorCollection errors);
         void Edit(UserEdit model, IBusinessErrorCollection errors);
         void ChangePassword(UserPasswordChange model, IBusinessErrorCollection errors);
         void SetPassword(UserPasswordSet model, IBusinessErrorCollection errors);
@@ -54,7 +55,31 @@ namespace Jarboo.Admin.BL.Services
             return entity.Id == UserId;
         }
 
+        public void EditCustomer(UserCustomerEdit model, IBusinessErrorCollection errors)
+        {
+            Edit(model, errors,
+                () =>
+                {
+                    var customer = UnitOfWork.Customers.ByUserIdMust(model.UserId);
+                    customer.Name = model.Name;
+                    customer.Country = model.Country;
+                    customer.Creator = model.Creator;
+                });
+        }
         public void Edit(UserEdit model, IBusinessErrorCollection errors)
+        {
+            Edit(model, errors,
+                () =>
+                    {
+                        var employee = UnitOfWork.Employees.ByUserId(model.UserId);
+                        if (employee != null)
+                        {
+                            employee.FullName = model.Name;
+                            employee.Email = model.Email;
+                        }
+                    });
+        }
+        private void Edit(UserEdit model, IBusinessErrorCollection errors, Action updateRelatedEntities)
         {
             if (!model.Validate(errors))
             {
@@ -95,17 +120,9 @@ namespace Jarboo.Admin.BL.Services
                         return;
                     }
 
-                    var customer = UnitOfWork.Customers.ByUserId(user.Id);
-                    if (customer != null)
+                    if (updateRelatedEntities != null)
                     {
-                        customer.Name = user.DisplayName;
-                    }
-
-                    var employee = UnitOfWork.Employees.ByUserId(user.Id);
-                    if (employee != null)
-                    {
-                        employee.FullName = user.DisplayName;
-                        employee.Email = user.Email;
+                        updateRelatedEntities();
                     }
 
                     UnitOfWork.SaveChanges();

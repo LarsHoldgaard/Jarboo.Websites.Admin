@@ -87,6 +87,7 @@
     <Compile Include="Models\SpentTimeOnProject.cs" />
     <Compile Include="Models\SpentTimeOnTask.cs" />
     <Compile Include="Models\UserCreate.cs" />
+    <Compile Include="Models\UserCustomerEdit.cs" />
     <Compile Include="Models\UserEdit.cs" />
     <Compile Include="Models\UserPasswordChange.cs" />
     <Compile Include="Models\UserPasswordSet.cs" />

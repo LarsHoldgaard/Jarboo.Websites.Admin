@@ -59,6 +59,12 @@ namespace Jarboo.Admin.Web.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult CustomerEdit()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CustomerEdit);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ActionResult ResetPassword()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPassword);
@@ -90,6 +96,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Logout = "Logout";
             public readonly string View = "View";
             public readonly string Edit = "Edit";
+            public readonly string CustomerEdit = "CustomerEdit";
             public readonly string ChangePassword = "ChangePassword";
             public readonly string SetPassword = "SetPassword";
             public readonly string Index = "Index";
@@ -106,6 +113,7 @@ namespace Jarboo.Admin.Web.Controllers
             public const string Logout = "Logout";
             public const string View = "View";
             public const string Edit = "Edit";
+            public const string CustomerEdit = "CustomerEdit";
             public const string ChangePassword = "ChangePassword";
             public const string SetPassword = "SetPassword";
             public const string Index = "Index";
@@ -148,6 +156,14 @@ namespace Jarboo.Admin.Web.Controllers
         public class ActionParamsClass_Edit
         {
             public readonly string id = "id";
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_CustomerEdit s_params_CustomerEdit = new ActionParamsClass_CustomerEdit();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_CustomerEdit CustomerEditParams { get { return s_params_CustomerEdit; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_CustomerEdit
+        {
             public readonly string model = "model";
         }
         static readonly ActionParamsClass_ChangePassword s_params_ChangePassword = new ActionParamsClass_ChangePassword();
@@ -204,6 +220,7 @@ namespace Jarboo.Admin.Web.Controllers
             public class _ViewNamesClass
             {
                 public readonly string ChangePassword = "ChangePassword";
+                public readonly string CustomerEdit = "CustomerEdit";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
                 public readonly string Login = "Login";
@@ -214,6 +231,7 @@ namespace Jarboo.Admin.Web.Controllers
                 public readonly string View = "View";
             }
             public readonly string ChangePassword = "~/Views/Accounts/ChangePassword.cshtml";
+            public readonly string CustomerEdit = "~/Views/Accounts/CustomerEdit.cshtml";
             public readonly string Edit = "~/Views/Accounts/Edit.cshtml";
             public readonly string Index = "~/Views/Accounts/Index.cshtml";
             public readonly string Login = "~/Views/Accounts/Login.cshtml";
@@ -324,6 +342,18 @@ namespace Jarboo.Admin.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             EditOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void CustomerEditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.UserCustomerEdit model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult CustomerEdit(Jarboo.Admin.BL.Models.UserCustomerEdit model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CustomerEdit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            CustomerEditOverride(callInfo, model);
             return callInfo;
         }
 

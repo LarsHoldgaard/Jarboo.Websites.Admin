@@ -47,6 +47,9 @@ namespace Jarboo.Admin.Web.Infrastructure
             rights.Add(MVC.Accounts.Register());
             rights.Add(MVC.Accounts.RecoverPassword());
             rights.Add(MVC.Accounts.ResetPassword());
+
+            rights.Add(MVC.Home.Index());
+            rights.Add(MVC.Home.Landing());
         }
         private static void FillAuthorizedUserRights(Dictionary<string, HashSet<string>> rights)
         {
@@ -61,6 +64,8 @@ namespace Jarboo.Admin.Web.Infrastructure
         }
         private static void FillCustomerRights(Dictionary<string, HashSet<string>> rights)
         {
+            rights.Add(MVC.Accounts.CustomerEdit());
+
             rights.Add(MVC.Customers.View());
 
             rights.Add(MVC.Documentations.View());

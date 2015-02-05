@@ -79,7 +79,9 @@ namespace Jarboo.Admin.BL.Services
                     UnitOfWork.Customers.Add(new Customer()
                                                  {
                                                      Name = model.Name,
-                                                     User = user
+                                                     User = user,
+                                                     Country = model.Country,
+                                                     Creator = model.Creator
                                                  });
                     UnitOfWork.SaveChanges();
 

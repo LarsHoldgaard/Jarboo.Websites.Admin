@@ -126,6 +126,10 @@
     <Compile Include="Migrations\201502041320144_SpentTimeHourlyPrice.Designer.cs">
       <DependentUpon>201502041320144_SpentTimeHourlyPrice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502050759302_CustomerCountryAndCreator.cs" />
+    <Compile Include="Migrations\201502050759302_CustomerCountryAndCreator.Designer.cs">
+      <DependentUpon>201502050759302_CustomerCountryAndCreator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManager.cs" />
@@ -174,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502041320144_SpentTimeHourlyPrice.resx">
       <DependentUpon>201502041320144_SpentTimeHourlyPrice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502050759302_CustomerCountryAndCreator.resx">
+      <DependentUpon>201502050759302_CustomerCountryAndCreator.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

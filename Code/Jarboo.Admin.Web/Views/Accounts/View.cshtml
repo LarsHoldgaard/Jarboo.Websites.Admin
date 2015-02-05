@@ -93,6 +93,25 @@
                                                 @Html.DisplayFor(x => x.DisplayName)
                                             </td>
                                         </tr>
+                                        @if (Model.Customer != null)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    Country
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => x.Customer.Country)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Creator
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => x.Customer.Creator)
+                                                </td>
+                                            </tr>
+                                        }
                                         <tr>
                                             <td colspan="2">
                                                 <a class="btn btn-success" href="@Url.Action(MVC.Accounts.Edit(Model.Id))">

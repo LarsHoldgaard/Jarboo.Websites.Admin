@@ -1085,6 +1085,7 @@
     <Compile Include="Models\DataTable\DataTableConfig.cs" />
     <Compile Include="Models\BtnFormVM.cs" />
     <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
+    <Compile Include="Models\Account\LandingVM.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
     <Compile Include="Models\Task\TasksListViewModel.cs" />
     <Compile Include="Models\Task\TaskSorting.cs" />
@@ -1176,6 +1177,8 @@
     <Content Include="Views\SpentTime\GroupedList.cshtml" />
     <Content Include="Views\SpentTime\List.cshtml" />
     <Content Include="Views\SpentTime\Index.cshtml" />
+    <Content Include="Views\Home\Landing.cshtml" />
+    <Content Include="Views\Accounts\CustomerEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -92,6 +92,11 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<UserEdit, User>()
                 .ForMember(x => x.DisplayName, x => x.MapFrom(y => y.Name))
                 .ForMember(x => x.UserName, x => x.MapFrom(y => y.Email));
+            Mapper.CreateMap<User, UserCustomerEdit>()
+                .ForMember(x => x.UserId, x => x.MapFrom(y => y.Id))
+                .ForMember(x => x.Name, x => x.MapFrom(y => y.DisplayName))
+                .ForMember(x => x.Country, x => x.MapFrom(y => y.Customer.Country))
+                .ForMember(x => x.Creator, x => x.MapFrom(y => y.Customer.Creator));
 
             Mapper.CreateMap<User, UserPasswordChange>()
                 .ForMember(x => x.UserId, x => x.MapFrom(y => y.Id));
