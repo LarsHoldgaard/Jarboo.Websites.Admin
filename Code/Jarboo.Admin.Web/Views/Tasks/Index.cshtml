@@ -12,8 +12,8 @@
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
-                            .Add("Tasks")
+        @(new BreadCrumbsBuilder(this)
+            .Add("Tasks")
             .Done())
     </ol>
     <!-- end breadcrumb -->
@@ -38,11 +38,7 @@
         <!-- end col -->
     </div>
     <!-- end row -->
-    <p>
-        <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create())">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
-        </a>
-    </p>
+
     @Html.Action(MVC.Tasks.List(new TasksListViewModel()
                                              {
                                                  ShowProject = true

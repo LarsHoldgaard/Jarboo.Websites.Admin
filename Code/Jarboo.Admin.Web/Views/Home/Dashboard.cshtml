@@ -1,0 +1,92 @@
+﻿@using Jarboo.Admin.DAL.Entities
+
+@{
+    ViewBag.Title = "Jarboo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- RIBBON -->
+<div id="ribbon">
+    <span class="ribbon-button-alignment">
+        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
+						<i class="fa fa-refresh"></i>
+					</span>
+    </span>
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @(new BreadCrumbsBuilder(this)
+            .Add("Dashboard")
+            .Done())
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <!-- NEW WIDGET START -->
+        @foreach (Customer customer in ViewBag.Customers)
+        {
+
+            <article class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-7" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false">
+                    <!-- widget options:
+                        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                        data-widget-colorbutton="false"
+                        data-widget-editbutton="false"
+                        data-widget-togglebutton="false"
+                        data-widget-deletebutton="false"
+                        data-widget-fullscreenbutton="false"
+                        data-widget-custombutton="false"
+                        data-widget-collapsed="true"
+                        data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <h2><strong>@Html.ActionLink(customer.Name, MVC.Customers.View(customer.CustomerId))</strong></h2>
+                        @if (this.Can(MVC.Projects.Create()))
+                        {
+                            <div class="widget-toolbar">
+                                <a class="btn btn-success" href="@Url.Action(MVC.Projects.Create(customer.CustomerId))">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Project
+                                </a>
+                            </div>
+                        }
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body">
+                            @foreach (var project in customer.Projects)
+                            {
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-12">
+                                        <span>
+                                            <a class="btn btn-xs btn-primary" href="@Url.Action(MVC.Projects.View(project.ProjectId))">View</a>
+                                        </span>
+                                        @if (this.Can(MVC.Tasks.Create()))
+                                        {
+                                            <span>
+                                                <a class="btn btn-xs btn-primary" href="@Url.Action(MVC.Tasks.Create(project.ProjectId))">Add Task</a>
+                                            </span>
+                                        }
+                                        <span> @project.Name</span>
+                                    </div>
+                                    <hr />
+                                </div>
+                            }
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+            </article>
+        }
+    </div>

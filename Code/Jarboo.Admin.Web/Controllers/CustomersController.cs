@@ -37,7 +37,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Customer customer = CustomerService.GetByIdEx(id.Value, new CustomerInclude().Projects());
+            Customer customer = CustomerService.GetById(id.Value);
             if (customer == null)
             {
                 return HttpNotFound();

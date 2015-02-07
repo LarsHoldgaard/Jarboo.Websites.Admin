@@ -1,9 +1,11 @@
-﻿@model Jarboo.Admin.BL.Models.TaskCreate
+﻿@using SmartAdminMvc
+@model Jarboo.Admin.BL.Models.TaskCreate
 
 @{
     ViewBag.Title = "New task";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <!-- RIBBON -->
 <div id="ribbon">
     <span class="ribbon-button-alignment">
@@ -13,14 +15,16 @@
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
-            .Add(Url.Action(MVC.Tasks.Index()), "Tasks")
+        @(new BreadCrumbsBuilder(this)
+            .Add(MVC.Customers.View(ViewBag.Project.CustomerId), ViewBag.Project.Customer.Name)
+            .Add(MVC.Projects.View(ViewBag.Project.ProjectId), ViewBag.Project.Name)
             .Add("New task")
             .Done())
     </ol>
     <!-- end breadcrumb -->
 </div>
 <!-- END RIBBON -->
+
 <div id="content">
     <!-- row -->
     <div class="row">
@@ -53,10 +57,12 @@
                     <!-- end widget edit box -->
                     <!-- widget content -->
                     <div class="widget-body no-padding">
-                        @using (Html.BeginForm("create", "tasks", FormMethod.Post, new { @id="form1", @class = "smart-form" }))
+                        @using (Html.BeginForm(MVC.Tasks.Create(), FormMethod.Post, new { @class = "smart-form" }))
                         {
                             @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(false)
+                            @Html.ValidationBootstrap()
+                            @Html.HiddenFor(x => x.ProjectId)
+                            
                             <header>
                                 New Tasks
                             </header>
@@ -65,12 +71,6 @@
                                     @Html.LabelFor(model => model.Title, new { @class = "label" })
                                     <label class="input">
                                         @Html.TextBoxFor(x => x.Title, new { @placeholder = "Title", @class="form-control" })
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.ProjectId, new { @class = "select" })
-                                    <label class="select select-multiple">
-                                        @Html.DropDownListFor(x => x.ProjectId, (SelectList)ViewBag.ProjectsList)
                                     </label>
                                 </section>
                                 <section>
@@ -121,34 +121,3 @@
     </div>
     <!-- end row -->
 </div>
-@section pagespecific {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#form1').validate({
-                // Rules for form validation
-                rules: {
-                    Title: {
-                        required: true
-                    },
-                    Size: {
-                        number: true
-                    }
-                },
-
-                // Messages for form validation
-                messages: {
-                    Title: {
-                        required: 'Enter title name',
-                    }
-                },
-
-                // Do not change code below
-                errorPlacement: function (error, element) {
-                    error.insertAfter(element.parent());
-                }
-            });
-
-        });
-
-    </script>
-}

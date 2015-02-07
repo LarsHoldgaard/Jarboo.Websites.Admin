@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
+using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
@@ -16,7 +17,7 @@ using Task = Jarboo.Admin.DAL.Entities.Task;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface ITaskService : IEntityService<Task>
+    public interface ITaskService : IEntityService<int, Task>
     {
         void Create(TaskCreate model, IBusinessErrorCollection errors);
 
@@ -25,18 +26,20 @@ namespace Jarboo.Admin.BL.Services
         void Delete(int taskId, IBusinessErrorCollection errors);
     }
 
-    public class TaskService : BaseEntityService<Task>, ITaskService
+    public class TaskService : BaseEntityService<int, Task>, ITaskService
     {
         protected ITaskRegister TaskRegister { get; set; }
         protected IFolderCreator FolderCreator { get; set; }
         protected ITaskStepEmployeeStrategy TaskStepEmployeeStrategy { get; set; }
+        protected INotifier Notifier { get; set; }
 
-        public TaskService(IUnitOfWork unitOfWork, ITaskRegister taskRegister, IFolderCreator folderCreator, ITaskStepEmployeeStrategy taskStepEmployeeStrategy)
-            : base(unitOfWork)
+        public TaskService(IUnitOfWork unitOfWork, IAuth auth, ITaskRegister taskRegister, IFolderCreator folderCreator, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, INotifier notifier)
+            : base(unitOfWork, auth)
         {
             TaskRegister = taskRegister;
             FolderCreator = folderCreator;
             TaskStepEmployeeStrategy = taskStepEmployeeStrategy;
+            Notifier = notifier;
         }
 
         protected override IDbSet<Task> Table
@@ -46,6 +49,32 @@ namespace Jarboo.Admin.BL.Services
         protected override Task Find(int id, IQueryable<Task> query)
         {
             return query.ById(id);
+        }
+
+        protected override string SecurityEntities
+        {
+            get { return Rights.Tasks.Name; }
+        }
+        protected override IQueryable<Task> FilterCanView(IQueryable<Task> query)
+        {
+            return query.Where(x => x.Project.CustomerId == UserCustomerId || x.Steps.Any(y => y.EmployeeId == UserEmployeeId));
+        }
+        protected override bool HasAccessTo(Task entity)
+        {
+            if (entity.ProjectId != 0)
+            {
+                return UnitOfWork.Projects.Any(x => x.ProjectId == entity.ProjectId && x.CustomerId == UserCustomerId);
+            }
+            else if (entity.TaskId != 0)
+            {
+                return UnitOfWork.Tasks.Any(x => x.TaskId == entity.TaskId && (
+                    x.Project.CustomerId == UserCustomerId ||
+                    x.Steps.Any(y => y.EmployeeId == UserEmployeeId)));
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void Create(TaskCreate model, IBusinessErrorCollection errors)
@@ -96,6 +125,16 @@ namespace Jarboo.Admin.BL.Services
             {
                 this.Cleanup(customer.Name, project.BoardName, taskIdentifier, taskLink, folderLink);
                 throw new ApplicationException("Couldn't create task", ex);
+            }
+
+            try
+            {
+                Notifier.TaskResponsibleChanged(new TaskResponsibleChangedData(model, employee));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException(
+                    "Task was successfully created, but the error was raised during email sending", ex);
             }
         }
         private string RegisterTask(string boardName, string taskIdentifier, string folderLink)
@@ -173,6 +212,10 @@ namespace Jarboo.Admin.BL.Services
             }
         }
 
+        private void CheckCanNextStep(Task entity)
+        {
+            CheckCan(Rights.Tasks.NextStepAny, Rights.Tasks.NextStepSpecial, HasAccessTo, entity);
+        }
         public void NextStep(TaskNextStep model, IBusinessErrorCollection errors)
         {
             var now = DateTime.Now;
@@ -180,14 +223,17 @@ namespace Jarboo.Admin.BL.Services
             var task = Table.Include(x => x.Steps.Select(y => y.Employee)).Include(x => x.Project).ByIdMust(model.TaskId);
             task.DateModified = now;
 
+            CheckCanNextStep(task);
+
             var lastStep = task.Steps.Last();
             lastStep.DateModified = now;
             lastStep.DateEnd = now;
 
+            Employee employee = null;
             var nextStep = TaskStep.Next(lastStep.Step);
             if (nextStep.HasValue)
             {
-                Employee employee = !model.EmployeeId.HasValue ? 
+                employee = !model.EmployeeId.HasValue ? 
                     this.TaskStepEmployeeStrategy.SelectEmployee(nextStep.Value, task.ProjectId) : 
                     this.UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
@@ -211,6 +257,19 @@ namespace Jarboo.Admin.BL.Services
                 ChangeResponsible(task.Project.BoardName, task.Identifier(), task.CardLink, lastStep.Employee.TrelloId);
                 throw;
             }
+
+            if (nextStep.HasValue)
+            {
+                try
+                {
+                    Notifier.TaskResponsibleChanged(new TaskResponsibleChangedData(task, employee));
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException(
+                        "Task was successfully moved to the next step, but the error was raised during email sending", ex);
+                }
+            }
         }
 
         public void Delete(int taskId, IBusinessErrorCollection errors)
@@ -220,6 +279,8 @@ namespace Jarboo.Admin.BL.Services
 
             entity.DateModified = DateTime.Now;
             entity.DateDeleted = DateTime.Now;
+
+            CheckCanDisable(entity);
 
             UnitOfWork.SaveChanges();
 

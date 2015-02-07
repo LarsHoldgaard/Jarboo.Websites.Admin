@@ -1,8 +1,10 @@
 ﻿using FakeItEasy;
-
+using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL;
+using Jarboo.Admin.DAL.Entities;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,38 +17,51 @@ namespace Jarboo.Admin.BL.Tests
     {
         public static TaskService CreateTaskService(
             IUnitOfWork unitOfWork = null,
+            IAuth auth = null,
             ITaskRegister taskRegister = null,
             IFolderCreator folderCreator = null,
-            ITaskStepEmployeeStrategy taskStepEmployeeStrategy = null)
+            ITaskStepEmployeeStrategy taskStepEmployeeStrategy = null,
+            INotifier notifier = null)
         {
             unitOfWork = unitOfWork ?? A.Fake<IUnitOfWork>();
+            auth = auth ?? A.Fake<IAuth>();
+            A.CallTo(() => auth.Can(A<string>._, A<string>._)).Returns(true);
             taskRegister = taskRegister ?? A.Fake<ITaskRegister>();
             folderCreator = folderCreator ?? A.Fake<IFolderCreator>();
             taskStepEmployeeStrategy = taskStepEmployeeStrategy ?? A.Fake<ITaskStepEmployeeStrategy>();
+            notifier = notifier ?? A.Fake<INotifier>();
 
-            return new TaskService(unitOfWork, taskRegister, folderCreator, taskStepEmployeeStrategy);
+            return new TaskService(unitOfWork, auth, taskRegister, folderCreator, taskStepEmployeeStrategy, notifier);
         }
 
         public static EmployeeService CreateEmployeeService(
             IUnitOfWork unitOfWork = null,
+            IAuth auth = null,
             ITaskRegister taskRegister = null,
-            ITaskStepEmployeeStrategy taskStepEmployeeStrategy = null)
+            ITaskStepEmployeeStrategy taskStepEmployeeStrategy = null,
+            UserManager<User> userManager = null)
         {
             unitOfWork = unitOfWork ?? A.Fake<IUnitOfWork>();
+            auth = auth ?? A.Fake<IAuth>();
+            A.CallTo(() => auth.Can(A<string>._, A<string>._)).Returns(true);
             taskRegister = taskRegister ?? A.Fake<ITaskRegister>();
             taskStepEmployeeStrategy = taskStepEmployeeStrategy ?? A.Fake<ITaskStepEmployeeStrategy>();
+            userManager = userManager ?? A.Fake<UserManager<User>>();
 
-            return new EmployeeService(unitOfWork, taskRegister, taskStepEmployeeStrategy);
+            return new EmployeeService(unitOfWork, auth, taskRegister, taskStepEmployeeStrategy, userManager);
         }
 
         public static ProjectService CreateProjectService(
             IUnitOfWork unitOfWork = null,
+            IAuth auth = null,
             ITaskRegister taskRegister = null)
         {
             unitOfWork = unitOfWork ?? A.Fake<IUnitOfWork>();
+            auth = auth ?? A.Fake<IAuth>();
+            A.CallTo(() => auth.Can(A<string>._, A<string>._)).Returns(true);
             taskRegister = taskRegister ?? A.Fake<ITaskRegister>();
 
-            return new ProjectService(unitOfWork, taskRegister);
+            return new ProjectService(unitOfWork, auth, taskRegister);
         }
 
         public static TaskStepEmployeeStrategy CreateStrategy(IUnitOfWork unitOfWork)

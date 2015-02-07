@@ -1,9 +1,12 @@
-﻿<div class="login-info">
+﻿@{
+    var viewLinkHref = User.Identity.IsAuthenticated ? Url.Action(MVC.Accounts.View()) : "javascript:void(0);";
+}
+
+<div class="login-info">
     <span>
-        @*<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+        <a href="@viewLinkHref">
             <img src="~/content/img/avatars/sunny.png" alt="me" class="online" />
-            <span>@User.Identity.Name.ToLower() John.Doe</span>
-            <i class="fa fa-angle-down"></i>
-        </a>*@
+            <span>@ViewBag.CurrentUser.DisplayName</span>
+        </a>
     </span>
 </div>

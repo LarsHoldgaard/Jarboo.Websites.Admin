@@ -1,4 +1,5 @@
-﻿@model Jarboo.Admin.BL.Models.ProjectEdit
+﻿@using SmartAdminMvc
+@model Jarboo.Admin.BL.Models.ProjectEdit
 
 <div id="content">
     <!-- row -->
@@ -32,12 +33,13 @@
                     <!-- end widget edit box -->
                     <!-- widget content -->
                     <div class="widget-body no-padding">
-                        @using (Html.BeginForm(MVC.Projects.Edit(), FormMethod.Post, new {@id = "form1", @class = "smart-form" }))
+                        @using (Html.BeginForm(MVC.Projects.Edit(), FormMethod.Post, new { @class = "smart-form" }))
                         {
                             @Html.AntiForgeryToken()
                             @Html.HiddenFor(x => x.ProjectId)
+                            @Html.HiddenFor(x => x.CustomerId)
 
-                            @Html.ValidationSummary(false)
+                            @Html.ValidationBootstrap()
                             <header>
                                 New Project
                             </header>
@@ -53,12 +55,6 @@
                                     @Html.LabelFor(model => model.BoardName, new { @class = "label" })
                                     <label class="select select-multiple">
                                         @Html.DropDownListFor(x => x.BoardName, (SelectList)ViewBag.BoardNames, "Fill automatically", new { @class = "form-control" })
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.CustomerId, new { @class = "label" })
-                                    <label class="select select-multiple">
-                                        @Html.DropDownListFor(x => x.CustomerId, (SelectList)ViewBag.CustomersList, new { @class = "form-control" })
                                     </label>
                                 </section>
                             </fieldset>

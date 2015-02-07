@@ -38,5 +38,20 @@ namespace Jarboo.Admin.DAL.Extensions
         {
             return query.FirstOrDefault(x => x.Projects.Any(y => y.ProjectId == projectId));
         }
+
+        public static Customer ByUserIdMust(this IQueryable<Customer> query, string userId)
+        {
+            var customer = ByUserId(query, userId);
+            if (customer == null)
+            {
+                throw new Exception("Couldn't find customer for user " + userId);
+            }
+
+            return customer;
+        }
+        public static Customer ByUserId(this IQueryable<Customer> query, string userId)
+        {
+            return query.FirstOrDefault(x => x.User.Id == userId);
+        }
     }
 }

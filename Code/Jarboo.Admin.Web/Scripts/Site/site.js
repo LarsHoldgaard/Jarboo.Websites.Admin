@@ -5,6 +5,25 @@
 
     $(".input-daterange").datepicker({});
 
+    $("input[data-hours]").blur(formatHoursInput);
+    function formatHoursInput() {
+        var $input = $(this);
+
+        var text = $input.val();
+        if (!text) {
+            return;
+        }
+
+        var number = parseFloat(text);
+        if (isNaN(number)) {
+            number = 0;
+        }
+
+        number = (number * 2).toFixed() / 2;
+
+        $input.val(number);
+    }
+
     $(".dataTable").each(function() {
         var $this = $(this);
         var onError = function() {
@@ -47,7 +66,7 @@
                                 continue;
                             }
 
-                            column.render = getColumnRender(column.type);
+                            column.render = getColumnRender(column.type, token);
                         }
                     }
 
@@ -77,7 +96,7 @@
         }
     });
 
-    function getColumnRender(columnType) {
+    function getColumnRender(columnType, token) {
         switch (columnType) {
             case "TaskLink":
                 {
@@ -125,14 +144,12 @@
                         if (type != "display") {
                             return null;
                         }
-
-                        var token = $('.dataTables_wrapper > input[name="__RequestVerificationToken"]').val();
-
+                        
                         return "\
 <form method='post' class='delete-btn-form pull-left' action='" + data[1] + "'>\
     <input type='hidden' value='" + token + "' name='__RequestVerificationToken'>\
     <input type='hidden' value='" + data[0] + "' name='id'>\
-    <input type='hidden' value='" + window.location + "' name='returnUrl'>\
+    <input type='hidden' value='" + window.location.pathname + window.location.search + "' name='returnUrl'>\
     <button type='submit' class='btn btn-danger btn-xs'><span aria-hidden='true' class='glyphicon glyphicon-remove-sign'></span> Delete</button>\
 </form>";
                     }

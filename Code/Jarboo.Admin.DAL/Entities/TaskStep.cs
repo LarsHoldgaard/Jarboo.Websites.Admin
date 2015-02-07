@@ -19,6 +19,11 @@ namespace Jarboo.Admin.DAL.Entities
 
     public class TaskStep : BaseEntity
     {
+        public TaskStep()
+        {
+            SpentTimes = new List<SpentTime>();
+        }
+
         [Key][Column(Order = 0)]
         public int TaskId { get; set; }
         [Key][Column(Order = 1)]
@@ -29,7 +34,9 @@ namespace Jarboo.Admin.DAL.Entities
 
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
-        
+
+        public List<SpentTime> SpentTimes { get; set; }
+
         public bool Done()
         {
             return DateEnd.HasValue;

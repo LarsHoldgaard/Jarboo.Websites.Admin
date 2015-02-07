@@ -23,5 +23,10 @@ namespace Jarboo.Admin.DAL.Extensions
         {
             return query.FirstOrDefault(x => x.EmployeeId == employeeId);
         }
+
+        public static Employee ByUserId(this IQueryable<Employee> query, string userId)
+        {
+            return query.FirstOrDefault(x => x.User.Id == userId);
+        }
     }
 }

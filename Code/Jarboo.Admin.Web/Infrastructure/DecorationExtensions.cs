@@ -23,5 +23,12 @@ namespace Jarboo.Admin.Web.Infrastructure
         {
             return tasks.Select(x => x.MapTo<TaskVM>()).ToList();
         }
+
+        public static IEnumerable<TVM> Decorate<T, TVM>(this IEnumerable<T> entities)
+            where T: class
+            where TVM : class
+        {
+            return entities.Select(x => x.MapTo<TVM>()).ToList();
+        }
     }
 }

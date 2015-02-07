@@ -135,7 +135,7 @@ namespace Jarboo.Admin.DAL.Tests
         }
 
         public static T Ensure<T>(this IQueryable<T> query, Func<T> create)
-            where T : BaseEntity
+            where T : class, IBaseEntity
         {
             if (!query.Any())
             {
@@ -145,7 +145,7 @@ namespace Jarboo.Admin.DAL.Tests
             return query.LastCreated();
         }
         internal static T LastCreated<T>(this IQueryable<T> query)
-            where T : BaseEntity
+            where T : class, IBaseEntity
         {
             return query.OrderBy(x => x.DateCreated).AsEnumerable().Last();
         }

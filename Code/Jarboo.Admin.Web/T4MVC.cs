@@ -25,6 +25,7 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
+    public static Jarboo.Admin.Web.Controllers.AccountsController Accounts = new Jarboo.Admin.Web.Controllers.T4MVC_AccountsController();
     public static Jarboo.Admin.Web.Controllers.AdminController Admin = new Jarboo.Admin.Web.Controllers.T4MVC_AdminController();
     public static Jarboo.Admin.Web.Controllers.AuthCallbackController AuthCallback = new Jarboo.Admin.Web.Controllers.T4MVC_AuthCallbackController();
     public static Jarboo.Admin.Web.Controllers.BaseController Base = new Jarboo.Admin.Web.Controllers.T4MVC_BaseController();
@@ -35,6 +36,7 @@ public static partial class MVC
     public static Jarboo.Admin.Web.Controllers.GuidesController Guides = new Jarboo.Admin.Web.Controllers.T4MVC_GuidesController();
     public static Jarboo.Admin.Web.Controllers.HomeController Home = new Jarboo.Admin.Web.Controllers.T4MVC_HomeController();
     public static Jarboo.Admin.Web.Controllers.ProjectsController Projects = new Jarboo.Admin.Web.Controllers.T4MVC_ProjectsController();
+    public static Jarboo.Admin.Web.Controllers.SpentTimeController SpentTime = new Jarboo.Admin.Web.Controllers.T4MVC_SpentTimeController();
     public static Jarboo.Admin.Web.Controllers.TasksController Tasks = new Jarboo.Admin.Web.Controllers.T4MVC_TasksController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
@@ -94,6 +96,11 @@ namespace Links
         public static readonly string jquery_2_1_1_min_js = Url("jquery-2.1.1.min.js");
         public static readonly string jquery_2_1_1_min_map = Url("jquery-2.1.1.min.map");
         public static readonly string jquery_bonnet_ajax_dropdownlist_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.bonnet.ajax-dropdownlist.min.js") ? Url("jquery.bonnet.ajax-dropdownlist.min.js") : Url("jquery.bonnet.ajax-dropdownlist.js");
+        public static readonly string jquery_validate_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate-vsdoc.min.js") ? Url("jquery.validate-vsdoc.min.js") : Url("jquery.validate-vsdoc.js");
+        public static readonly string jquery_validate_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate.min.js") ? Url("jquery.validate.min.js") : Url("jquery.validate.js");
+        public static readonly string jquery_validate_min_js = Url("jquery.validate.min.js");
+        public static readonly string jquery_validate_unobtrusive_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate.unobtrusive.min.js") ? Url("jquery.validate.unobtrusive.min.js") : Url("jquery.validate.unobtrusive.js");
+        public static readonly string jquery_validate_unobtrusive_min_js = Url("jquery.validate.unobtrusive.min.js");
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class libs {
             private const string URLPATH = "~/Scripts/libs";

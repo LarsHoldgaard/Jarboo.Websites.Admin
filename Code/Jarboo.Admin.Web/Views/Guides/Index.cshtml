@@ -11,7 +11,7 @@
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
+        @(new BreadCrumbsBuilder(this)
             .Add("Guide")
             .Done())
     </ol>

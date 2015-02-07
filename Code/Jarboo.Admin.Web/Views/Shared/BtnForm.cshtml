@@ -1,0 +1,16 @@
+﻿@model Jarboo.Admin.Web.Models.BtnFormVM
+
+@{
+    string btnClass = Model.Small ? "btn-xs" : "";
+}
+
+@using (@Html.BeginForm(Model.Action, FormMethod.Post, new { @class = "btn-form pull-left"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("id", Model.Id)
+    @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+
+    <button class="btn btn-@Model.Style @btnClass" type="submit"><i class="glyphicon glyphicon-@Model.Icon" aria-hidden="true"></i>@Model.Text</button>
+}
+
+

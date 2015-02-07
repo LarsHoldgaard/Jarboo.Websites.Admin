@@ -1,0 +1,100 @@
+﻿@model Jarboo.Admin.Web.Models.Project.ProjectsListViewModel
+
+<!-- widget grid -->
+<section id="widget-grid" class="">
+    <!-- row -->
+    <div class="row">
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            @*<div class="alert alert-info">
+                    <strong>NOTE:</strong> All the data is loaded from a seperate JSON file
+                </div>*@
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget well" id="wid-id-0">
+                <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+                    -->
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
+                    <h2>Widget Title </h2>
+                </header>
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                        <input class="form-control" type="text">
+                    </div>
+                    <!-- end widget edit box -->
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+                        <table class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="sorting">
+                                        Name
+                                    </th>
+                                    @if (Model.ShowCustomer)
+                                    {
+                                        <th class="sorting">
+                                            Customer name
+                                        </th>
+                                    }
+                                    @if (this.Can(MVC.Projects.Edit()))
+                                    {
+                                        <th></th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var project in Model.Projects)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink(project.Name, MVC.Projects.View(project.ProjectId))
+                                        </td>
+                                        @if (Model.ShowCustomer)
+                                        {
+
+                                            <td>@Html.ActionLink(project.Customer.Name, MVC.Customers.View(project.CustomerId))
+                                            </td>
+                                        }
+                                        @if (this.Can(MVC.Projects.Edit()))
+                                        {
+                                            <td>
+                                                @Html.ActionLink("Edit", MVC.Projects.Edit(project.ProjectId))
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end widget content -->
+                </div>
+                <!-- end widget div -->
+            </div>
+            <!-- end widget -->
+        </article>
+        <!-- WIDGET END -->
+    </div>
+    <!-- end row -->
+    <!-- row -->
+    <div class="row">
+        <!-- a blank row to get started -->
+        <div class="col-sm-12">
+            <!-- your contents here -->
+        </div>
+    </div>
+    <!-- end row -->
+</section>
+<!-- end widget grid -->

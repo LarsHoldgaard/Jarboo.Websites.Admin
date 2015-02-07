@@ -51,8 +51,19 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Employees/Create
         public virtual ActionResult Create()
         {
-            var employee = new EmployeeEdit();
+            var employee = new EmployeeCreate();
             return View(employee);
+        }
+
+        // POST: /Employees/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Create(EmployeeCreate model)
+        {
+            return Handle(
+                model, EmployeeService.Create,
+                () => RedirectToAction(MVC.Employees.View(model.EmployeeId)),
+                RedirectToAction(MVC.Employees.Create()));
         }
         
         // GET: /Employees/Edit/5
@@ -78,11 +89,9 @@ namespace Jarboo.Admin.Web.Controllers
         public virtual ActionResult Edit(EmployeeEdit model)
         {
             return Handle(
-                model, EmployeeService.Save,
-                () => RedirectToAction(MVC.Employees.View(model.EmployeeId)),
-                () => model.EmployeeId == 0 ? 
-                    RedirectToAction(MVC.Employees.Create()) :
-                    RedirectToAction(MVC.Employees.Edit(model.EmployeeId)));
+                model, EmployeeService.Edit,
+                RedirectToAction(MVC.Employees.View(model.EmployeeId)),
+                RedirectToAction(MVC.Employees.Edit(model.EmployeeId)));
         }
 
         // POST: /Employees/Delete/5
@@ -90,41 +99,13 @@ namespace Jarboo.Admin.Web.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(int id, string returnUrl)
         {
-            ActionResult result;
-            if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
-            {
-                result = RedirectToAction(MVC.Employees.Index());
-            }
-            else
-            {
-                result = this.Redirect(returnUrl);
-            }
-
+            ActionResult result = this.RedirectToLocalUrl(returnUrl, MVC.Employees.Index());
             return Handle(id, EmployeeService.Delete, result, result, "Employee successfully deleted");
         }
 
-        // GET: /Employees/View/5
-        public virtual ActionResult Tasks(int? id)
+        public virtual ActionResult ChooseForTasks()
         {
-            if (id == null)
-            {
-                return View(MVC.Employees.Views.ChooseForTasks, EmployeeService.GetAll(Query.ForEmployee()).OrderBy(x => x.FullName));
-            }
-
-            Employee employee = EmployeeService.GetByIdEx(id.Value, new EmployeeInclude().Positions());
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
-
-            var nextTask = TaskService.GetAll(Query.ForTask()
-                    .Include(x => x.Project().Customer().TaskSteps())
-                    .Filter(x => x.ByEmployeeId(id.Value)))
-                .OrderByDescending(x => x.Priority)
-                .FirstOrDefault();
-
-            ViewBag.NextTask = nextTask;
-            return View(employee);
+            return this.View(EmployeeService.GetAll(Query.ForEmployee()).OrderBy(x => x.FullName));
         }
     }
 }

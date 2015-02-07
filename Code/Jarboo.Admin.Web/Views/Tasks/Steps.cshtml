@@ -1,24 +1,29 @@
-﻿@using Jarboo.Admin.BL.Models
+﻿@using Jarboo.Admin.BL.Filters
+@using Jarboo.Admin.BL.Models
+@using Jarboo.Admin.DAL.Entities
 @model Jarboo.Admin.DAL.Entities.Task
 
 @{
     ViewBag.Title = "Steps";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    HtmlHelper.ClientValidationEnabled = true;
+    
+    var currentEmployee = (Employee)ViewBag.CurrentEmployee;
 }
 
 <!-- RIBBON -->
 <div id="ribbon">
     <span class="ribbon-button-alignment">
         <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
-						<i class="fa fa-refresh"></i>
-					</span>
+            <i class="fa fa-refresh"></i>
+        </span>
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
-            .Add(Url.Action(MVC.Customers.Index()), "Customers")
-            .Add(Url.Action(MVC.Customers.View(Model.Project.CustomerId)), Model.Project.Customer.Name)
-            .Add(Url.Action(MVC.Projects.View(Model.ProjectId)), Model.Project.Name)
+        @(new BreadCrumbsBuilder(this)
+            .Add(MVC.Customers.View(Model.Project.CustomerId), Model.Project.Customer.Name)
+            .Add(MVC.Projects.View(Model.ProjectId), Model.Project.Name)
             .Add(Model.Title)
             .Done())
     </ol>
@@ -29,16 +34,23 @@
 <div id="content">
     @foreach (var step in Model.Steps)
     {
-        if (step.Done())
-        {
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    @if (step.Done())
+                    {
                         <i class="glyphicon glyphicon-check"></i>
-                        @step.Step
-                    </h3>
-                </div>
-                <div class="panel-body">
+                    }
+                    else
+                    {
+                        <i class="glyphicon glyphicon-unchecked"></i>
+                    }
+                    @step.Step
+                </h3>
+            </div>
+            <div class="panel-body">
+                @if (step.Done())
+                {
                     <p>
                         Done by
                         <a class="btn btn-default btn-xs" href="@Url.Action(MVC.Employees.View(step.EmployeeId))">
@@ -47,19 +59,9 @@
                         at
                         <time>@step.DateCreated.ToString("yyyy-MM-dd hh:mm:ss")</time>
                     </p>
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <i class="glyphicon glyphicon-unchecked"></i>
-                        @step.Step
-                    </h3>
-                </div>
-                <div class="panel-body">
+                }
+                else
+                {
                     <p>
                         <a class="btn btn-default btn-xs" href="@Url.Action(MVC.Employees.View(step.EmployeeId))">
                             <i class="glyphicon glyphicon-user" aria-hidden="true"></i>@step.Employee.FullName
@@ -67,11 +69,28 @@
                         was assigned at
                         <time>@step.DateCreated.ToString("yyyy-MM-dd hh:mm:ss")</time>
                     </p>
+                }
+                
+                @Html.Action(MVC.SpentTime.GroupedList(new SpentTimeFilter().ByTask(Model.TaskId).ByTaskStep(step.Step)))
+
+                @if (this.Can(MVC.Tasks.AddHours()))
+                {
                     <div>
-                        @Html.Partial(MVC.Tasks.Views._NextStep, new TaskNextStep() { TaskId = Model.TaskId })
+                        @Html.Partial(MVC.Tasks.Views._AddHours, new SpentTimeOnTask()
+                                                                     {
+                                                                         TaskId = Model.TaskId, 
+                                                                         Step = step.Step,
+                                                                         EmployeeId = currentEmployee == null ? 0 : currentEmployee.EmployeeId
+                                                                     })
                     </div>
-                </div>
+                }
             </div>
-        }
-}
+            @if (!step.Done())
+            {
+                <div class="panel-footer">
+                    @Html.Partial(MVC.Tasks.Views._NextStep, new TaskNextStep() { TaskId = Model.TaskId })
+                </div>
+            }
+        </div>
+    }
 </div>

@@ -1,9 +1,17 @@
+using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL;
+using Jarboo.Admin.DAL.Entities;
+using Jarboo.Admin.Integration;
+using Jarboo.Admin.Integration.GoogleDrive;
+using Jarboo.Admin.Integration.Mandrill;
+using Jarboo.Admin.Integration.Noop;
+using Jarboo.Admin.Integration.Trello;
 using Jarboo.Admin.Web.Infrastructure;
-using Jarboo.Admin.Web.Infrastructure.BLExternals;
 using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
+
+using Microsoft.AspNet.Identity;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Jarboo.Admin.Web.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Jarboo.Admin.Web.App_Start.NinjectWebCommon), "Stop")]
@@ -17,6 +25,8 @@ namespace Jarboo.Admin.Web.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security.DataProtection;
 
     public static class NinjectWebCommon 
     {
@@ -68,8 +78,9 @@ namespace Jarboo.Admin.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            if (Configuration.UseTrello)
+            if (Configuration.Instance.UseTrello)
             {
+                kernel.Bind<ITrelloConfiguration>().ToConstant(Configuration.Instance);
                 kernel.Bind<ITaskRegister>().To<TrelloTaskRegister>().InRequestScope();
             }
             else
@@ -77,23 +88,46 @@ namespace Jarboo.Admin.Web.App_Start
                 kernel.Bind<ITaskRegister>().To<NoopTaskRegister>().InRequestScope();
             }
 
-            if (Configuration.UseGoogleDrive)
+            if (Configuration.Instance.UseGoogleDrive)
             {
-                kernel.Bind<IFolderCreator>().To<GoogleFolderCreator>().InRequestScope();
+                kernel.Bind<IGoogleDriveConfiguration>().ToConstant(Configuration.Instance);
+                kernel.Bind<IFolderCreator>().To<GoogleDriveFolderCreator>().InRequestScope();
             }
             else
             {
                 kernel.Bind<IFolderCreator>().To<NoopFolderCrator>().InRequestScope();
             }
 
+            if (Configuration.Instance.UseNotifier)
+            {
+                kernel.Bind<INotifier>().To<MandrillNotifierEmailer>().InRequestScope();
+            }
+            else
+            {
+                kernel.Bind<INotifier>().To<NoopNotifier>().InRequestScope();
+            }
+
+            kernel.Bind<IMandrillConfiguration>().ToConstant(Configuration.Instance);
+            kernel.Bind<IEmailer>().To<MandrillNotifierEmailer>().InRequestScope();
             kernel.Bind<ITaskStepEmployeeStrategy>().To<TaskStepEmployeeStrategy>().InRequestScope();
 
-            kernel.Bind<IUnitOfWork>().To<Context>().InRequestScope();
+            kernel.Bind<IUserTokenProvider<User, string>>().ToMethod((x) =>
+            {
+                var provider = new DpapiDataProtectionProvider("Sample");
+                return new DataProtectorTokenProvider<User>(provider.Create("EmailConfirmation"));
+            }).InRequestScope();
+            kernel.Bind<IAuth>().To<BLAuth>().InRequestScope();
+            kernel.Bind<IUnitOfWork, Context>().To<Context>().InRequestScope();
+            kernel.Bind<UserManager<User>>().To<UserManager>().InRequestScope();
+            kernel.Bind<RoleManager<UserRole>>().To<RoleManager>().InRequestScope();
+            kernel.Bind<IAccountService>().To<AccountService>().InRequestScope();
             kernel.Bind<ICustomerService>().To<CustomerService>().InRequestScope();
             kernel.Bind<IProjectService>().To<ProjectService>().InRequestScope();
             kernel.Bind<ITaskService>().To<TaskService>().InRequestScope();
             kernel.Bind<IEmployeeService>().To<EmployeeService>().InRequestScope();
             kernel.Bind<IDocumentationService>().To<DocumentationService>().InRequestScope();
+            kernel.Bind<IUserService>().To<UserService>().InRequestScope();
+            kernel.Bind<ISpentTimeService>().To<SpentTimeService>().InRequestScope();
         }
     }
 }

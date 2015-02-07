@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Web
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarboo.Admin.Web", "Jarboo.Admin.Web.csproj", "{693757E4-0F1A-42FC-9CE4-92F7A5CB7A1D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarboo.Admin.DAL", "..\Jarboo.Admin.DAL\Jarboo.Admin.DAL.csproj", "{286FF3F8-7581-4BF0-AF2C-47A88B50FF3A}"
@@ -22,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarboo.Admin.BL.Tests", "..\Jarboo.Admin.BL.Tests\Jarboo.Admin.BL.Tests.csproj", "{5AFA430B-4075-477E-9DDD-14CE04C28074}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarboo.Admin.DAL.Tests", "..\Jarboo.Admin.DAL.Tests\Jarboo.Admin.DAL.Tests.csproj", "{69444B53-23BB-470A-AA13-8A00D984A167}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jarboo.Admin.Integration", "..\Jarboo.Admin.Integration\Jarboo.Admin.Integration.csproj", "{075FBB12-36AF-4077-A70C-36158F2FF81C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{69444B53-23BB-470A-AA13-8A00D984A167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69444B53-23BB-470A-AA13-8A00D984A167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69444B53-23BB-470A-AA13-8A00D984A167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{075FBB12-36AF-4077-A70C-36158F2FF81C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{075FBB12-36AF-4077-A70C-36158F2FF81C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{075FBB12-36AF-4077-A70C-36158F2FF81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{075FBB12-36AF-4077-A70C-36158F2FF81C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

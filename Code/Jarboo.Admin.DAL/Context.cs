@@ -5,9 +5,11 @@ using System.Data.Entity.Validation;
 
 using Jarboo.Admin.DAL.Entities;
 
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace Jarboo.Admin.DAL
 {
-    public class Context : DbContext, IUnitOfWork
+    public class Context : IdentityDbContext<User>, IUnitOfWork
     {
         public Context()
             : this("name=Jarboo.Admin.DAL.Context")
@@ -40,6 +42,21 @@ namespace Jarboo.Admin.DAL
             return new DbEntityValidationResult(entityEntry, errors);
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasOptional(x => x.Customer)
+                .WithOptionalDependent(x => x.User)
+                .Map(x => x.MapKey("CustomerId"));
+
+            modelBuilder.Entity<User>()
+                .HasOptional(x => x.Employee)
+                .WithOptionalDependent(x => x.User)
+                .Map(x => x.MapKey("EmployeeId"));
+
+            base.OnModelCreating(modelBuilder);
+        }
+
         public IDbSet<Customer> Customers { get; set; }
         public IDbSet<Project> Projects { get; set; }
         public IDbSet<Documentation> Documentations { get; set; }
@@ -47,6 +64,7 @@ namespace Jarboo.Admin.DAL
         public IDbSet<TaskStep> TaskSteps { get; set; }
         public IDbSet<Employee> Employees { get; set; }
         public IDbSet<EmployeePosition> EmployeePositions { get; set; }
+        public IDbSet<SpentTime> SpentTimes { get; set; }
 
         public DbContextTransaction BeginTransaction()
         {

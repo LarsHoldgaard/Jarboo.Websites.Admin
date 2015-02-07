@@ -14,6 +14,12 @@ namespace Jarboo.Admin.DAL.Entities
         public int CustomerId { get; set; }
         [Required]
         public string Name { get; set; }
+        [Required]
+        public string Country { get; set; }
+        [Required]
+        public string Creator { get; set; }
+
+        public User User { get; set; }
 
         public virtual List<Project> Projects { get; set; }
     }

@@ -17,13 +17,10 @@ namespace Jarboo.Admin.BL.Models
         }
 
         public int EmployeeId { get; set; }
-        [Required]
         public string FullName { get; set; }
         public string SkypeName { get; set; }
         [Required]
         public string TrelloId { get; set; }
-        [Required][EmailAddress]
-        public string Email { get; set; }
         [Required]
         public string Country { get; set; }
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]

@@ -74,15 +74,27 @@ namespace Jarboo.Admin.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string Dashboard = "Dashboard";
+            public readonly string Landing = "Landing";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string Dashboard = "Dashboard";
+            public const string Landing = "Landing";
         }
 
 
+        static readonly ActionParamsClass_Landing s_params_Landing = new ActionParamsClass_Landing();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Landing LandingParams { get { return s_params_Landing; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Landing
+        {
+            public readonly string model = "model";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -93,9 +105,11 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string Index = "Index";
+                public readonly string Dashboard = "Dashboard";
+                public readonly string Landing = "Landing";
             }
-            public readonly string Index = "~/Views/Home/Index.cshtml";
+            public readonly string Dashboard = "~/Views/Home/Dashboard.cshtml";
+            public readonly string Landing = "~/Views/Home/Landing.cshtml";
         }
     }
 
@@ -112,6 +126,40 @@ namespace Jarboo.Admin.Web.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             IndexOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DashboardOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Dashboard()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Dashboard);
+            DashboardOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void LandingOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Landing()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Landing);
+            LandingOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void LandingOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Account.LandingVM model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Landing(Jarboo.Admin.Web.Models.Account.LandingVM model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Landing);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            LandingOverride(callInfo, model);
             return callInfo;
         }
 

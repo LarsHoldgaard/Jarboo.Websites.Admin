@@ -12,14 +12,13 @@
 <div id="ribbon">
     <span class="ribbon-button-alignment">
         <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
-						<i class="fa fa-refresh"></i>
-					</span>
+            <i class="fa fa-refresh"></i>
+        </span>
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
-            .Add(Url.Action(MVC.Customers.Index()), "Customers")
-            .Add(Url.Action(MVC.Customers.View(Model.CustomerId)), Model.Customer.Name)
+        @(new BreadCrumbsBuilder(this)
+            .Add(MVC.Customers.View(Model.CustomerId), Model.Customer.Name)
             .Add(Model.Name)
             .Done())
     </ol>
@@ -69,7 +68,7 @@
                         data-widget-sortable="false"
                         -->
                     <header>
-                        <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
+                        <span class="widget-icon"><i class="fa fa-comments"></i></span>
                         <h2>Widget Title </h2>
                     </header>
                     <!-- widget div-->
@@ -102,13 +101,22 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
-                                                Customer
+                                            <td>Customer
                                             </td>
                                             <td>
                                                 @Model.Customer.Name
                                             </td>
                                         </tr>
+                                        @if (this.Can(MVC.Projects.Edit()))
+                                        {
+                                            <tr>
+                                                <td colspan="2">
+                                                    <a class="btn btn-success" href="@Url.Action(MVC.Projects.Edit(Model.ProjectId))">
+                                                        <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>Edit
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -133,6 +141,43 @@
     </section>
     <!-- end widget grid -->
 
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
+                Hours
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- col -->
+        <div class="col-sm-6">
+            <div class="well">
+                <h2 class="page-title txt-color-blueDark">Misc tasks
+                    @if (this.Can(MVC.Projects.AddHours()))
+                    {
+                        <a class="btn btn-success btn-xs" href="@Url.Action(MVC.Projects.AddHours(Model.ProjectId))">
+                            <i class="glyphicon glyphicon-plus-sign" aria-hidden="true"></i>Add
+                        </a>
+                    }
+                </h2>
+
+                @Html.Action(MVC.SpentTime.GroupedList(new SpentTimeFilter().ByProject(Model.ProjectId, true)))
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="well">
+                <h2 class="page-title txt-color-blueDark">Overall
+                </h2>
+
+                @Html.Action(MVC.SpentTime.GroupedList(new SpentTimeFilter().ByProject(Model.ProjectId)))
+            </div>
+        </div>
+    </div>
+
     <!-- row -->
     <div class="row">
         <!-- col -->
@@ -141,23 +186,21 @@
                 <!-- PAGE HEADER -->
                 <i class="fa-fw fa fa-file-text-o"></i>
                 Tasks
-                @*<span>
-                        >
-                        Overview
-                    </span>*@
             </h1>
 
         </div>
     </div>
-    <p>
-        <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create(Model.ProjectId))">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
-        </a>
-    </p>
-
+    @if (this.Can(MVC.Tasks.Create()))
+    {
+        <p>
+            <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create(Model.ProjectId))">
+                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>Add task
+            </a>
+        </p>
+    }
     @Html.Action(MVC.Tasks.List(new TasksListViewModel()
                                              {
-                                                 TaskFilter = new Jarboo.Admin.BL.Filters.TaskFilter().ByProjectId(Model.ProjectId)
+                                                 TaskFilter = new TaskFilter().ByProjectId(Model.ProjectId)
                                              }))
 
     <!-- end row -->
@@ -170,19 +213,18 @@
                 <!-- PAGE HEADER -->
                 <i class="fa-fw fa fa-file-text-o"></i>
                 Documentations
-                @*<span>
-                        >
-                        Overview
-                    </span>*@
             </h1>
 
         </div>
     </div>
-    <p>
-        <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create(Model.ProjectId))">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add documentation
-        </a>
-    </p>
+    @if (this.Can(MVC.Documentations.Create()))
+    {
+        <p>
+            <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Create(Model.ProjectId))">
+                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>Add documentation
+            </a>
+        </p>
+    }
     @Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new
                                                                                    {
                                                                                        documentationFilter = new DocumentationFilter().ByProjectId(Model.ProjectId)

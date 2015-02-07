@@ -9,7 +9,6 @@ using Jarboo.Admin.DAL.Entities;
 namespace Jarboo.Admin.BL.Filters
 {
     public class Filter<T>
-        where T : BaseEntity
     {
         internal static Filter<T> None = new Filter<T>();
 
@@ -22,7 +21,6 @@ namespace Jarboo.Admin.BL.Filters
     public static class FilterExtensions
     {
         public static IQueryable<T> FilterBy<T>(this IQueryable<T> query, Filter<T> filter)
-            where T : BaseEntity
         {
             return filter.Execute(query);
         }

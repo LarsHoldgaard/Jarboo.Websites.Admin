@@ -117,6 +117,28 @@ namespace Jarboo.Admin.BL.Tests.Services
             }
         }
 
+        [Test]
+        public void Create_Always_NotifyEmployee()
+        {
+            using (var context = ContextHelper.Create())
+            {
+                var employee = context.AddEmployee();
+
+                var model = ValidTaskCreate(context);
+                model.EmployeeId = employee.EmployeeId;
+
+                var mockNotifier = A.Fake<INotifier>();
+                var service = Factory.CreateTaskService(context, notifier: mockNotifier);
+
+
+                Helper.Suppress(() => service.Create(model, null));
+
+
+                var notifyData = new TaskResponsibleChangedData(model, employee);
+                A.CallTo(() => mockNotifier.TaskResponsibleChanged(notifyData)).MustHaveHappened();
+            }
+        }
+
 
         [Test]
         public void Delete_Always_DeleteTasksFolder()
@@ -220,6 +242,47 @@ namespace Jarboo.Admin.BL.Tests.Services
                 Helper.Suppress(() => service.NextStep(model, null));
 
                 A.CallTo(() => mockTaskStepEmployeeStrategy.SelectEmployee(nextStep.Value, project.ProjectId)).MustHaveHappened();
+            }
+        }
+
+        [Test]
+        public void NextStep_WhenLastStep_DoNotNotifyEmployee()
+        {
+            using (var context = ContextHelper.Create())
+            {
+                context.AddTaskStep(x => x.Step = Helper.LastStep());
+
+                var model = this.ValidNextStep(context);
+                model.EmployeeId = context.AddEmployee().EmployeeId;
+
+                var mockNotifier = A.Fake<INotifier>();
+                var service = Factory.CreateTaskService(context, notifier: mockNotifier);
+
+                Helper.Suppress(() => service.NextStep(model, null));
+
+                A.CallTo(() => mockNotifier.TaskResponsibleChanged(A<TaskResponsibleChangedData>._)).MustNotHaveHappened();
+            }
+        }
+        [Test]
+        public void NextStep_WhenNotLastStep_NotifyEmployee()
+        {
+            using (var context = ContextHelper.Create())
+            {
+                var employee = context.AddEmployee();
+                var task = context.AddTask();
+                context.AddTaskStep();
+
+                var model = this.ValidNextStep(context);
+                model.EmployeeId = employee.EmployeeId;
+
+                var mockNotifier = A.Fake<INotifier>();
+                var service = Factory.CreateTaskService(context, notifier: mockNotifier);
+
+
+                Helper.Suppress(() => service.NextStep(model, null));
+
+                var notificationData = new TaskResponsibleChangedData(task, employee);
+                A.CallTo(() => mockNotifier.TaskResponsibleChanged(notificationData)).MustHaveHappened();
             }
         }
 

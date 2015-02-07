@@ -16,10 +16,9 @@
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
-            .Add(Url.Action(MVC.Customers.Index()), "Customers")
-            .Add(Url.Action(MVC.Customers.View(Model.Project.CustomerId)), Model.Project.Customer.Name)
-            .Add(Url.Action(MVC.Projects.View(Model.ProjectId)), Model.Project.Name)
+        @(new BreadCrumbsBuilder(this)
+            .Add(MVC.Customers.View(Model.Project.CustomerId), Model.Project.Customer.Name)
+            .Add(MVC.Projects.View(Model.ProjectId), Model.Project.Name)
             .Add("Documentation")
             .Done())
     </ol>
@@ -101,13 +100,16 @@
                                                 <a target="_blank" href="@Model.DocumentLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Edit(Model.DocumentationId))">
-                                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Edit
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @if (this.Can(MVC.Documentations.Edit()))
+                                        {
+                                            <tr>
+                                                <td colspan="2">
+                                                    <a class="btn btn-success" href="@Url.Action(MVC.Documentations.Edit(Model.DocumentationId))">
+                                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Edit
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>

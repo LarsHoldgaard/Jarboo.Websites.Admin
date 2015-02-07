@@ -90,13 +90,7 @@ namespace Jarboo.Admin.BL.Filters
         /// The <see cref="PagedData"/>.
         /// </returns>
         public static PagedData<TEntity> Create<TEntity>(int pageSize, int pageNumber, IQueryable<TEntity> source)
-            where TEntity : BaseEntity
         {
-            if (!source.IsOrdered())
-            {
-                source = source.OrderBy(x => x.DateCreated);
-            }
-
             return new PagedData<TEntity>(
                 source.Skip(pageNumber * pageSize).Take(pageSize).ToList(),
                 pageSize,
@@ -123,10 +117,9 @@ namespace Jarboo.Admin.BL.Filters
         /// The <see cref="PagedData"/>.
         /// </returns>
         public static PagedData<TEntity> Create<TEntity>(int pageSize, int pageNumber, IEnumerable<TEntity> source)
-            where TEntity : BaseEntity
         {
             return new PagedData<TEntity>(
-                source.OrderBy(x => x.DateCreated).Skip(pageNumber * pageSize).Take(pageSize).ToList(),
+                source.Skip(pageNumber * pageSize).Take(pageSize).ToList(),
                 pageSize,
                 pageNumber,
                 source.Count());

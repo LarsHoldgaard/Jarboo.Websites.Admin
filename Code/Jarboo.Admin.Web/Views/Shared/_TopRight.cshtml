@@ -34,10 +34,18 @@
     </li>
 </ul>
 
-<!-- logout button -->
-<div id="logout" class="btn-header transparent pull-right">
-    <span> <a href="@Url.Action("login", "account")" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
-</div>
+@if (User.Identity.IsAuthenticated)
+{
+    <!-- logout button -->
+    <div class="btn-header transparent pull-right">
+        @using (Html.BeginForm(MVC.Accounts.Logout(), FormMethod.Post, new { @class = "logout-form" }))
+        {
+            @Html.AntiForgeryToken()
+            <button title="Sign Out" ><i class="fa fa-sign-out"></i></button>
+        }
+    </div>
+}
+
 <!-- end logout button -->
 <!-- search mobile button (this is hidden till mobile view port) -->
 <div id="search-mobile" class="btn-header transparent pull-right">

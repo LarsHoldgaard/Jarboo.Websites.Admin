@@ -13,8 +13,10 @@ namespace Jarboo.Admin.DAL
         IDbSet<TaskStep> TaskSteps { get; set; }
         IDbSet<Employee> Employees { get; set; }
         IDbSet<EmployeePosition> EmployeePositions { get; set; }
+        IDbSet<User> Users { get; set; }
+        IDbSet<SpentTime> SpentTimes { get; set; }
 
-        //DbContextTransaction BeginTransaction();
+        DbContextTransaction BeginTransaction();
 
         int SaveChanges();
     }

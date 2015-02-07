@@ -47,6 +47,14 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\Jarboo.Admin.Web\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -57,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorization\Rights.cs" />
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Filters\CustomerFilter.cs" />
@@ -65,9 +74,24 @@
     <Compile Include="Filters\Filter.cs" />
     <Compile Include="Filters\PagedData.cs" />
     <Compile Include="Filters\ProjectFilter.cs" />
+    <Compile Include="Filters\SpentTimeFilter.cs" />
     <Compile Include="Filters\TaskFilter.cs" />
+    <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="Includes\DocumentationInclude.cs" />
+    <Compile Include="Includes\SpentTimeInclude.cs" />
+    <Compile Include="Includes\UserInclude.cs" />
     <Compile Include="Models\DocumentationEdit.cs" />
+    <Compile Include="Models\EmployeeCreate.cs" />
+    <Compile Include="Models\PasswordRecover.cs" />
+    <Compile Include="Models\ResetPassword.cs" />
+    <Compile Include="Models\SpentTimeOnProject.cs" />
+    <Compile Include="Models\SpentTimeOnTask.cs" />
+    <Compile Include="Models\UserCreate.cs" />
+    <Compile Include="Models\UserCustomerEdit.cs" />
+    <Compile Include="Models\UserEdit.cs" />
+    <Compile Include="Models\UserPasswordChange.cs" />
+    <Compile Include="Models\UserPasswordSet.cs" />
+    <Compile Include="Authorization\IAuth.cs" />
     <Compile Include="Other\IBusinessErrorCollection.cs" />
     <Compile Include="Includes\CustomerInclude.cs" />
     <Compile Include="Includes\EmployeeInclude.cs" />
@@ -79,8 +103,11 @@
     <Compile Include="Models\ProjectEdit.cs" />
     <Compile Include="Models\TaskCreate.cs" />
     <Compile Include="Models\TaskNextStep.cs" />
+    <Compile Include="Other\IEmailer.cs" />
+    <Compile Include="Other\INotifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
+    <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\BaseEntityService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\CustomerService.cs" />
@@ -88,16 +115,20 @@
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\IEntityService.cs" />
     <Compile Include="Services\ProjectService.cs" />
+    <Compile Include="Services\SpentTimeService.cs" />
     <Compile Include="Services\TaskService.cs" />
     <Compile Include="Other\IFolderCreator.cs" />
     <Compile Include="Other\ITaskRegister.cs" />
     <Compile Include="Other\TaskStepEmployeeStrategy.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Sorters\CustomerSorter.cs" />
     <Compile Include="Sorters\DocumentationSorter.cs" />
     <Compile Include="Sorters\EmployeeSorter.cs" />
     <Compile Include="Sorters\ProjectSorter.cs" />
     <Compile Include="Sorters\Sorter.cs" />
+    <Compile Include="Sorters\SpentTimeSorter.cs" />
     <Compile Include="Sorters\TaskSorter.cs" />
+    <Compile Include="Sorters\UserSorter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,0 +1,27 @@
+﻿@using Jarboo.Admin.DAL.Entities
+@model IEnumerable<Jarboo.Admin.DAL.Entities.SpentTime>
+@{
+    Layout = null;
+    
+    List<Employee> emplyees = ViewBag.EmployeesList.Items.Data;
+}
+
+@if (Model.Any())
+{
+    <ul>
+        @foreach (var record in Model.GroupBy(x => x.EmployeeId).ToDictionary(x => x.Key, x => x.Aggregate(0m, (a, y) => a + y.Hours)))
+        {
+            <li>
+                <a class="btn btn-default btn-xs" href="@Url.Action(MVC.Employees.View(record.Key))">
+                    <i class="glyphicon glyphicon-user" aria-hidden="true"></i>@emplyees.First(x => x.EmployeeId == record.Key).FullName
+                </a>
+                spent
+                <span>@record.Value hour(s)</span>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <span>No spent hours</span>
+}

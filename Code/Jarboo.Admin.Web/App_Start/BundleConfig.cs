@@ -15,6 +15,10 @@ namespace Jarboo.Admin.Web.App_Start
                 "~/Scripts/jquery.bonnet.ajax-dropdownlist.js",
                 "~/Scripts/Site/site.js"));
 
+            bundles.Add(new ScriptBundle("~/js/validation").Include(
+                "~/Scripts/jquery.validate*",
+                "~/Scripts/Site/validation.style.js"));
+
             bundles.Add(new ScriptBundle("~/js/bootstrap-datepicker").Include(
                 "~/Scripts/bootstrap-datepicker.js"));
 

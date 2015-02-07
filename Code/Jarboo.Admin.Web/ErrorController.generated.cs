@@ -75,6 +75,7 @@ namespace Jarboo.Admin.Web.Controllers
         {
             public readonly string Index = "Index";
             public readonly string NotFound = "NotFound";
+            public readonly string AccessDenied = "AccessDenied";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -82,6 +83,7 @@ namespace Jarboo.Admin.Web.Controllers
         {
             public const string Index = "Index";
             public const string NotFound = "NotFound";
+            public const string AccessDenied = "AccessDenied";
         }
 
 
@@ -95,8 +97,10 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string AccessDenied = "AccessDenied";
                 public readonly string NotFound = "NotFound";
             }
+            public readonly string AccessDenied = "~/Views/Error/AccessDenied.cshtml";
             public readonly string NotFound = "~/Views/Error/NotFound.cshtml";
         }
     }
@@ -125,6 +129,17 @@ namespace Jarboo.Admin.Web.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NotFound);
             NotFoundOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void AccessDeniedOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult AccessDenied()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AccessDenied);
+            AccessDeniedOverride(callInfo);
             return callInfo;
         }
 

@@ -14,7 +14,7 @@
     </span>
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder()
+        @(new BreadCrumbsBuilder(this)
             .Add("Employees")
             .Done())
     </ol>
@@ -39,11 +39,14 @@
         <!-- end col -->
     </div>
     <!-- end row -->
-    <p>
-        <a class="btn btn-success" href="@Url.Action(MVC.Employees.Create())">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add employee
-        </a>
-    </p>
+    @if (this.Can(MVC.Employees.Create()))
+    {
+        <p>
+            <a class="btn btn-success" href="@Url.Action(MVC.Employees.Create())">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add employee
+            </a>
+        </p>
+    }
 
     <!-- widget grid -->
     <section id="widget-grid" class="">
@@ -107,8 +110,14 @@
                                         <th class="sorting">
                                             @Html.DisplayNameFor(model => model.Positions)
                                         </th>
-                                        <th></th>
-                                        <th></th>
+                                        @if (this.Can(MVC.Employees.Edit()))
+                                        {
+                                            <th></th>
+                                        }
+                                        @if (this.Can(MVC.Employees.Delete()))
+                                        {
+                                            <th></th>
+                                        }
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -139,17 +148,22 @@
                                                     <span class="label label-info">@position.Position</span>
                                                 }
                                             </td>
-                                            <td>
-                                                @Html.ActionLink("Edit", MVC.Employees.Edit(employee.EmployeeId))
-                                            </td>
-                                            <td>
-                                                @Html.Partial(MVC.Shared.Views.DeleteBtnForm, new DeleteBtnVM()
-                                                                        {
-                                                                            Id = employee.EmployeeId,
-                                                                            Action = MVC.Employees.Delete(),
-                                                                            Small = true
-                                                                        })
-                                            </td>
+                                            @if (this.Can(MVC.Employees.Edit()))
+                                            {
+                                                <td>
+                                                    @Html.ActionLink("Edit", MVC.Employees.Edit(employee.EmployeeId))
+                                                </td>
+                                            }
+                                            @if (this.Can(MVC.Employees.Delete()))
+                                            {
+                                                <td>
+                                                    @Html.Partial(MVC.Shared.Views.BtnForm, BtnFormVM.Delete(x =>
+                                                        {
+                                                            x.Id = employee.EmployeeId;
+                                                            x.Action = MVC.Employees.Delete();
+                                                        }))
+                                                </td>
+                                            }
                                         </tr>
                                     }
                                 </tbody>

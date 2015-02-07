@@ -15,6 +15,8 @@ using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL;
+using Jarboo.Admin.Web.Models.Documentation;
+using Jarboo.Admin.Web.Models.Project;
 
 using Ninject;
 
@@ -28,11 +30,15 @@ namespace Jarboo.Admin.Web.Controllers
         public ICustomerService CustomerService { get; set; }
         [Inject]
         public ITaskRegister TaskRegister { get; set; }
+        [Inject]
+        public ISpentTimeService SpentTimeService { get; set; }
+        [Inject]
+        public IEmployeeService EmployeeService { get; set; }
 
         // GET: /Projects/
         public virtual ActionResult Index()
         {
-            return View(ProjectService.GetAll(Query.ForProject().Include(x => x.Customer())));
+            return View(MVC.Projects.Views.Index);
         }
 
         // GET: /Projects/View/5
@@ -54,11 +60,13 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Projects/Create
         public virtual ActionResult Create(int? customerId)
         {
-            var projectEdit = new ProjectEdit();
-            if (customerId.HasValue)
+            if (customerId == null)
             {
-                projectEdit.CustomerId = customerId.Value;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            var projectEdit = new ProjectEdit();
+            projectEdit.CustomerId = customerId.Value;
 
             return this.CreateEditView(projectEdit);
         }
@@ -83,7 +91,7 @@ namespace Jarboo.Admin.Web.Controllers
         private ActionResult CreateEditView(ProjectEdit model)
         {
             ViewBag.BoardNames = new SelectList(TaskRegister.BoardNames(), model.BoardName);
-            ViewBag.CustomersList = new SelectList(CustomerService.GetAll(Query.ForCustomer()), "CustomerId", "Name", model.CustomerId);
+            ViewBag.Customer = CustomerService.GetById(model.CustomerId);
             return View(model);
         }
 
@@ -95,7 +103,7 @@ namespace Jarboo.Admin.Web.Controllers
             return Handle(model, ProjectService.Save,
                 () => RedirectToAction(MVC.Projects.View(model.ProjectId)),
                 () => model.ProjectId == 0 ?
-                    RedirectToAction(MVC.Projects.Create()) :
+                    RedirectToAction(MVC.Projects.Create(model.CustomerId)) :
                     RedirectToAction(MVC.Projects.Edit(model.ProjectId)));
         }
 
@@ -114,6 +122,44 @@ namespace Jarboo.Admin.Web.Controllers
                                            Text = "Any project"
                                        });
             return Json(projectsList, JsonRequestBehavior.AllowGet);
+        }
+
+        [ChildActionOnly]
+        public virtual ActionResult List(bool showCustomer = false, ProjectFilter projectFilter = null)
+        {
+            projectFilter = projectFilter ?? new ProjectFilter();
+
+            var model = new ProjectsListViewModel()
+            {
+                ShowCustomer = showCustomer,
+                Projects = ProjectService.GetAll(Query.ForProject(projectFilter).Include(x => x.Customer()))
+            };
+
+            return View(model);
+        }
+
+        public virtual ActionResult AddHours(int? projectId)
+        {
+            if (projectId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var model = new SpentTimeOnProject();
+            model.ProjectId = projectId.Value;
+
+            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee()), "EmployeeId", "FullName");
+            ViewBag.Project = ProjectService.GetByIdEx(model.ProjectId, new ProjectInclude().Customer());
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult AddHours(SpentTimeOnProject model)
+        {
+            return Handle(model, SpentTimeService.SpentTimeOnProject,
+                RedirectToAction(MVC.Projects.View(model.ProjectId)),
+                RedirectToAction(MVC.Projects.AddHours(model.ProjectId)));
         }
     }
 }

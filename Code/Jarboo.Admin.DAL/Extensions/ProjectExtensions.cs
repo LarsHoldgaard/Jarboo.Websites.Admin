@@ -12,12 +12,12 @@ namespace Jarboo.Admin.DAL.Extensions
     {
         public static Project ByIdMust(this IQueryable<Project> query, int projectId)
         {
-            var employee = query.ById(projectId);
-            if (employee == null)
+            var project = query.ById(projectId);
+            if (project == null)
             {
                 throw new Exception("Couldn't find project " + projectId);
             }
-            return employee;
+            return project;
         }
         public static Project ById(this IQueryable<Project> query, int projectId)
         {

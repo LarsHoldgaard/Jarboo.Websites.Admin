@@ -8,6 +8,7 @@ using AutoMapper;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Web.Models.Task;
+using Jarboo.Admin.Web.Models.Account;
 
 namespace Jarboo.Admin.Web.App_Start
 {
@@ -18,6 +19,7 @@ namespace Jarboo.Admin.Web.App_Start
             BL.AutoMapperConfig.RegisterMappers();
 
             Mapper.CreateMap<DAL.Entities.Task, TaskVM>();
+            Mapper.CreateMap<DAL.Entities.User, UserVM>();
         }
     }
 }

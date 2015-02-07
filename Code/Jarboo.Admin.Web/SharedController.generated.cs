@@ -45,10 +45,9 @@ namespace T4MVC
                 public readonly string _Scripts = "_Scripts";
                 public readonly string _Tiles = "_Tiles";
                 public readonly string _TopRight = "_TopRight";
-                public readonly string DeleteBtnForm = "DeleteBtnForm";
+                public readonly string BtnForm = "BtnForm";
                 public readonly string Error = "Error";
                 public readonly string Messages = "Messages";
-                public readonly string TopMenu = "TopMenu";
             }
             public readonly string _Aside = "~/Views/Shared/_Aside.cshtml";
             public readonly string _CurrentUser = "~/Views/Shared/_CurrentUser.cshtml";
@@ -59,10 +58,9 @@ namespace T4MVC
             public readonly string _Scripts = "~/Views/Shared/_Scripts.cshtml";
             public readonly string _Tiles = "~/Views/Shared/_Tiles.cshtml";
             public readonly string _TopRight = "~/Views/Shared/_TopRight.cshtml";
-            public readonly string DeleteBtnForm = "~/Views/Shared/DeleteBtnForm.cshtml";
+            public readonly string BtnForm = "~/Views/Shared/BtnForm.cshtml";
             public readonly string Error = "~/Views/Shared/Error.cshtml";
             public readonly string Messages = "~/Views/Shared/Messages.cshtml";
-            public readonly string TopMenu = "~/Views/Shared/TopMenu.cshtml";
             static readonly _EditorTemplatesClass s_EditorTemplates = new _EditorTemplatesClass();
             public _EditorTemplatesClass EditorTemplates { get { return s_EditorTemplates; } }
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

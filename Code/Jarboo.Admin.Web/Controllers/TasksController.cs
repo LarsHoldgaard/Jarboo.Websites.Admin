@@ -38,6 +38,8 @@ namespace Jarboo.Admin.Web.Controllers
         public IEmployeeService EmployeeService { get; set; }
         [Inject]
         public ICustomerService CustomerService { get; set; }
+        [Inject]
+        public ISpentTimeService SpentTimeService { get; set; }
 
         // GET: /Tasks/
         public virtual ActionResult Index()
@@ -65,14 +67,16 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Tasks/Create
         public virtual ActionResult Create(int? projectId)
         {
-            var task = new TaskCreate();
-            if (projectId.HasValue)
+            if (projectId == null)
             {
-                task.ProjectId = projectId.Value;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            var task = new TaskCreate();
+            task.ProjectId = projectId.Value;
+
             ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee()), "EmployeeId", "FullName");
-            ViewBag.ProjectsList = new SelectList(ProjectService.GetAll(Query.ForProject().Include(x => x.Customer())), "ProjectId", "Name", "Customer.Name", task.ProjectId);
+            ViewBag.Project = ProjectService.GetByIdEx(task.ProjectId, new ProjectInclude().Customer());
             return View(task);
         }
 
@@ -85,7 +89,7 @@ namespace Jarboo.Admin.Web.Controllers
                 model,
                 TaskService.Create,
                 () => RedirectToAction(MVC.Tasks.View(model.TaskId)),
-                RedirectToAction(MVC.Tasks.Create()));
+                RedirectToAction(MVC.Tasks.Create(model.ProjectId)));
         }
 
         // GET: /Tasks/Steps/5
@@ -96,13 +100,17 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Task task = TaskService.GetByIdEx(id.Value, new TaskInclude().Project().Customer().TaskSteps().Employee());
+            Task task = TaskService.GetByIdEx(id.Value, new TaskInclude().Project().Customer().TaskSteps(true).SpentTimes());
             if (task == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee()), "EmployeeId", "FullName");
+            if (CurrentUser.EmployeeId.HasValue)
+            {
+                ViewBag.CurrentEmployee = EmployeeService.GetByIdEx(CurrentUser.EmployeeId.Value, new EmployeeInclude().Positions());
+            }
+            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee().Include(x => x.Positions())), "EmployeeId", "FullName");
             return View(task);
         }
 
@@ -123,16 +131,7 @@ namespace Jarboo.Admin.Web.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(int id, string returnUrl)
         {
-            ActionResult result;
-            if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
-            {
-                result = RedirectToAction(MVC.Tasks.Index());
-            }
-            else
-            {
-                result = this.Redirect(returnUrl);
-            }
-
+            ActionResult result = this.RedirectToLocalUrl(returnUrl, MVC.Tasks.Index());
             return Handle(id, TaskService.Delete, result, result, "Task successfully deleted");
         }
 
@@ -148,7 +147,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         public enum TaskListColumns
         {
-            Title,
+            Title = 0,
             Date,
             ProjectName,
             Priority,
@@ -158,9 +157,10 @@ namespace Jarboo.Admin.Web.Controllers
             Folder,
             Card,
             Step,
+            Hours,
             Delete
         }
-        private static TaskListColumns[] columnsWithClientSorting = new TaskListColumns[] { TaskListColumns.Priority };
+        private static TaskListColumns[] columnsWithClientSorting = new TaskListColumns[] { TaskListColumns.Priority, TaskListColumns.Hours };
         private static List<Column<TaskVM>> columns = new List<Column<TaskVM>>()
         {
             new Column<TaskVM>()
@@ -226,6 +226,12 @@ namespace Jarboo.Admin.Web.Controllers
                 },
             new Column<TaskVM>()
                 {
+                    Title = "Hours",
+                    Orderable = true,
+                    Getter = (x) => x.Hours().ToString()
+                },
+            new Column<TaskVM>()
+                {
                     Title = "",
                     Type = DataTableConfig.Column.ColumnSpecialType.DeleteBtn,
                     Getter = (x) => new object[] {x.TaskId, new UrlHelper(Helper.GetRequestContext()).Action(MVC.Tasks.Delete())}
@@ -239,7 +245,8 @@ namespace Jarboo.Admin.Web.Controllers
             config.Searching = true;
             config.SetupServerDataSource(Url.Action(MVC.Tasks.ListData()), FormMethod.Post);
             config.Columns = new List<DataTableConfig.Column>(columns);
-            config.Columns[1].Visible = showProject;
+            config.Columns[(int)TaskListColumns.ProjectName].Visible = showProject;
+            config.Columns[(int)TaskListColumns.Delete].Visible = this.Can(MVC.Tasks.Delete());
 
             switch (sorting)
             {
@@ -272,7 +279,7 @@ namespace Jarboo.Admin.Web.Controllers
         {
             var filter = (taskFilter ?? new TaskFilter()).ByString(request.Search.Value);
                 //.WithPaging(request.Length, request.Start / request.Length);
-            var query = Query.ForTask(filter).Include(x => x.Project().TaskSteps());
+            var query = Query.ForTask(filter).Include(x => x.Project().TaskSteps().SpentTimes());
 
             var pageSize = request.Length;
             var pageNumber = request.Start / request.Length;
@@ -308,6 +315,11 @@ namespace Jarboo.Admin.Web.Controllers
                 case TaskListColumns.Priority:
                     {
                         sortedData = sortedData.SortBy(direction, x => x.Priority);
+                        break;
+                    }
+                case TaskListColumns.Hours:
+                    {
+                        sortedData = sortedData.SortBy(direction, x => x.Hours());
                         break;
                     }
             }
@@ -356,6 +368,41 @@ namespace Jarboo.Admin.Web.Controllers
         private PagedData<Task> GetTasksWithoutSorting(IQuery<Task, TaskInclude, TaskFilter, TaskSorter> query, int pageSize, int pageNumber)
         {
             return TaskService.GetAll(query.WithPaging(pageSize, pageNumber));
+        }
+
+        // GET: /Tasks/NextTask/5
+        public virtual ActionResult NextTask(int? id)
+        {
+            id = id ?? UserEmployeeId;
+
+            if (id == null)
+            {
+                return RedirectToAction(MVC.Employees.ChooseForTasks());
+            }
+
+            Employee employee = EmployeeService.GetByIdEx(id.Value, new EmployeeInclude().Positions());
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+
+            var nextTask = TaskService.GetAll(Query.ForTask()
+                    .Include(x => x.Project().Customer().TaskSteps())
+                    .Filter(x => x.ByEmployeeId(id.Value)))
+                .OrderByDescending(x => x.Priority)
+                .FirstOrDefault();
+
+            ViewBag.NextTask = nextTask;
+            return View(employee);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult AddHours(SpentTimeOnTask model)
+        {
+            return Handle(model, SpentTimeService.SpentTimeOnTask,
+                RedirectToAction(MVC.Tasks.Steps(model.TaskId)),
+                RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
         }
     }
 }

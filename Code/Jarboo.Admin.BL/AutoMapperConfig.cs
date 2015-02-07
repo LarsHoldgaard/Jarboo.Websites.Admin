@@ -60,15 +60,55 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<Employee, EmployeeEdit>()
                 .ForMember(x => x.Positions, x => x.MapFrom(y => y.Positions.Select(z => z.Position).ToList()));
             Mapper.CreateMap<EmployeeEdit, Employee>()
+                .ForMember(x => x.FullName, x => x.Ignore())
                 .ForMember(x => x.Positions, x => x.MapFrom(y =>
                     y.Positions.Select(z => new EmployeePosition()
-                                                {
-                                                    EmployeeId = y.EmployeeId,
-                                                    Position = z
-                                                })));
+                    {
+                        EmployeeId = y.EmployeeId,
+                        Position = z
+                    })));
+
+            Mapper.CreateMap<Employee, EmployeeCreate>()
+                .ForMember(x => x.Positions, x => x.MapFrom(y => y.Positions.Select(z => z.Position).ToList()));
+            Mapper.CreateMap<EmployeeCreate, Employee>()
+                .ForMember(x => x.EmployeeId, x => x.Ignore())
+                .ForMember(x => x.Positions, x => x.MapFrom(y =>
+                    y.Positions.Select(z => new EmployeePosition()
+                    {
+                        EmployeeId = y.EmployeeId,
+                        Position = z
+                    })));
 
             Mapper.CreateMap<Documentation, DocumentationEdit>();
             Mapper.CreateMap<DocumentationEdit, Documentation>();
+
+            Mapper.CreateMap<UserCreate, User>()
+                .ForMember(x => x.DisplayName, x => x.MapFrom(y => y.Name))
+                .ForMember(x => x.UserName, x => x.MapFrom(y => y.Email));
+
+            Mapper.CreateMap<User, UserEdit>()
+                .ForMember(x => x.UserId, x => x.MapFrom(y => y.Id))
+                .ForMember(x => x.Name, x => x.MapFrom(y => y.DisplayName));
+            Mapper.CreateMap<UserEdit, User>()
+                .ForMember(x => x.DisplayName, x => x.MapFrom(y => y.Name))
+                .ForMember(x => x.UserName, x => x.MapFrom(y => y.Email));
+            Mapper.CreateMap<User, UserCustomerEdit>()
+                .ForMember(x => x.UserId, x => x.MapFrom(y => y.Id))
+                .ForMember(x => x.Name, x => x.MapFrom(y => y.DisplayName))
+                .ForMember(x => x.Country, x => x.MapFrom(y => y.Customer.Country))
+                .ForMember(x => x.Creator, x => x.MapFrom(y => y.Customer.Creator));
+
+            Mapper.CreateMap<User, UserPasswordChange>()
+                .ForMember(x => x.UserId, x => x.MapFrom(y => y.Id));
+            
+            Mapper.CreateMap<User, UserPasswordSet>()
+                .ForMember(x => x.UserId, x => x.MapFrom(y => y.Id));
+
+            Mapper.CreateMap<SpentTimeOnTask, SpentTime>();
+            Mapper.CreateMap<SpentTime, SpentTimeOnTask>();
+
+            Mapper.CreateMap<SpentTimeOnProject, SpentTime>();
+            Mapper.CreateMap<SpentTime, SpentTimeOnProject>();
         }
     }
 }

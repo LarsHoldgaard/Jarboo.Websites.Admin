@@ -1,8 +1,11 @@
-﻿.delete-btn-form {
+﻿.btn-form {
     display: inline;
 }
 
 a.btn i {
+    margin-right: 5px;
+}
+button.btn i {
     margin-right: 5px;
 }
 
@@ -26,4 +29,25 @@ div.dataTables_filter label {
 
 .data-table-filter > * {
     margin-left: 5px;
+}
+
+form.logout-form {
+    margin-top: 11px;
+}
+
+form.logout-form button {
+    height: 28px;
+}
+
+.jarviswidget .widget-body {
+    min-height: 0 !important;
+}
+
+input[aria-invalid="true"].form-control {
+    border: 1px solid red;
+}
+
+td span.label {
+    position: relative;
+    top: -4px;
 }
