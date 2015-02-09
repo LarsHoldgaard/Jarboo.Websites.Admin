@@ -55,7 +55,7 @@ namespace Jarboo.Admin.DAL.Tests
 
         private static Context CreateRalContext()
         {
-            return new Context("Jarboo.Admin.DAL.Context");
+            return new Context();
         }
         /*private static DbConnection CreateDbConnection()
         {
