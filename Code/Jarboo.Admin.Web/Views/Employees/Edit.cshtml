@@ -67,39 +67,45 @@
                             <header>
                                 Edit form
                             </header>
-                            <fieldset>
-                                <section>
-                                    @Html.LabelFor(model => model.SkypeName, new { @class = "label" })
-                                    <label class="input">
-                                        @Html.TextBoxFor(x => x.SkypeName, new { @placeholder = "SkypeName" })
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.TrelloId, new { @class = "label" })
-                                    <label class="input">
-                                        @Html.TextBoxFor(x => x.TrelloId, new { @placeholder = "TrelloId" })
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.Country, new { @class = "label" }) 
-                                    <label class="input">
-                                        @Html.TextBoxFor(x => x.Country, new { @placeholder = "Country" })
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.HourlyPrice, new { @class = "label" }) 
-                                    <label class="input">
-                                        <i class="icon-append fa">USD</i>
-                                        @Html.TextBoxFor(x => x.HourlyPrice, new { @placeholder = "HourlyPrice" })
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.Positions, new { @class = "label" })
-                                    <label class="select select-multiple">
-                                        @Html.EnumListBoxFor(x => x.Positions, new { @placeholder = "Positions" })
-                                    </label>
-                                </section>                            
-                            </fieldset>
+    <fieldset>
+        <section>
+            @Html.LabelFor(model => model.SkypeName, new { @class = "label" })
+            <label class="input">
+                @Html.TextBoxFor(x => x.SkypeName, new { @placeholder = "SkypeName" })
+            </label>
+        </section>
+        <section>
+            @Html.LabelFor(model => model.TrelloId, new { @class = "label" })
+            <label class="input">
+                @Html.TextBoxFor(x => x.TrelloId, new { @placeholder = "TrelloId" })
+            </label>
+        </section>
+        <section>
+            @Html.LabelFor(model => model.Country, new { @class = "label" })
+            <label class="input">
+                @Html.TextBoxFor(x => x.Country, new { @placeholder = "Country" })
+            </label>
+        </section>
+        <section>
+            @Html.LabelFor(model => model.HourlyPrice, new { @class = "label" })
+            <label class="input">
+                <i class="icon-append fa">USD</i>
+                @Html.TextBoxFor(x => x.HourlyPrice, new { @placeholder = "HourlyPrice" })
+            </label>
+        </section>
+        <section>
+            @Html.LabelFor(model => model.Positions, new { @class = "label" })
+            <label class="select select-multiple">
+                @Html.EnumListBoxFor(x => x.Positions, new { @placeholder = "Positions" })
+            </label>
+        </section>
+
+        <section>
+            @Html.LabelFor(model => model.IsHired, "Hired?", new { @class = "label" })
+            <label class="input">
+                @Html.CheckBoxFor(x => x.IsHired)
+            </label>
+        </section></fieldset>
                             <footer>
                                 <button type="submit" class="btn btn-primary">
                                     Save

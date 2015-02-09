@@ -36,6 +36,8 @@ namespace Jarboo.Admin.DAL.Entities
         public virtual List<TaskStep> TaskSteps { get; set; }
         public virtual List<SpentTime> SpentTimes { get; set; }
 
+        public bool IsHired { get; set; }
+
         public bool Deleted()
         {
             return DateDeleted.HasValue;

@@ -25,7 +25,7 @@ namespace Jarboo.Admin.BL.Models
         public string Country { get; set; }
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
         public double HourlyPrice { get; set; }
-
+        public bool IsHired { get; set; }
         public virtual List<Position> Positions { get; set; }
     }
 }

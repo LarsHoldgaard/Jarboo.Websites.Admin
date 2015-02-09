@@ -116,6 +116,12 @@
                                         @Html.TextBoxFor(x => x.Password, new { type="password" })
                                     </label>
                                 </section>
+                                <section>
+                                    @Html.LabelFor(model => model.IsHired, "Hired?", new { @class = "label" })
+                                    <label class="cke_dialog_ui_checkbox_input">
+                                        @Html.CheckBoxFor(x => x.IsHired)
+                                    </label>
+                                </section>
                             </fieldset>
                             <footer>
                                 <button type="submit" class="btn btn-primary">
