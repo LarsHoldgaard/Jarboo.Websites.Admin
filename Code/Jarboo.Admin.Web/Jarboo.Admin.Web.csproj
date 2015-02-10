@@ -1008,6 +1008,7 @@
     </Content>
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
