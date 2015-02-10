@@ -7,11 +7,10 @@ using System.Web.Configuration;
 
 using Jarboo.Admin.Integration.GoogleDrive;
 using Jarboo.Admin.Integration.Mandrill;
-using Jarboo.Admin.Integration.Trello;
 
 namespace Jarboo.Admin.Web.Infrastructure
 {
-    public class Configuration : IGoogleDriveConfiguration, ITrelloConfiguration, IMandrillConfiguration
+    public class Configuration : IGoogleDriveConfiguration, IMandrillConfiguration
     {
         private Configuration()
         { }
@@ -46,47 +45,6 @@ namespace Jarboo.Admin.Web.Infrastructure
                 return predefinedCustomers;
             }
         }
-
-
-        private bool? useTrello;
-        public bool UseTrello
-        {
-            get
-            {
-                if (useTrello == null)
-                {
-                    useTrello = bool.Parse(ConfigurationManager.AppSettings["UseTrello"]);
-                }
-                return useTrello.Value;
-            }
-        }
-
-        private string trelloApiKey;
-        public string TrelloApiKey
-        {
-            get
-            {
-                if (trelloApiKey == null)
-                {
-                    trelloApiKey = ConfigurationManager.AppSettings["TrelloApiKey"];
-                }
-                return trelloApiKey;
-            }
-        }
-
-        private string trelloToken;
-        public string TrelloToken
-        {
-            get
-            {
-                if (trelloToken == null)
-                {
-                    trelloToken = ConfigurationManager.AppSettings["TrelloToken"];
-                }
-                return trelloToken;
-            }
-        }
-
 
         private bool? useGoogleDrive;
         public bool UseGoogleDrive

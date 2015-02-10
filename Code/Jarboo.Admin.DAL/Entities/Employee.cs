@@ -20,8 +20,6 @@ namespace Jarboo.Admin.DAL.Entities
         [Required]
         public string FullName { get; set; }
         public string SkypeName { get; set; }
-        [Required]
-        public string TrelloId { get; set; }
         [Required][EmailAddress]
         public string Email { get; set; }
         [Required]

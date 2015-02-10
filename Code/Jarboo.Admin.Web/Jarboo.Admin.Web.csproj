@@ -1006,6 +1006,10 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Web.Staging.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountsController.generated.cs">
@@ -1079,21 +1083,21 @@
     <Compile Include="Infrastructure\ThirdPartyIntegration\AppFlowMetadata.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\MemoryDataStore.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
-    <Compile Include="Models\Account\LoginVM.cs" />
-    <Compile Include="Models\Account\PasswordRecoverVM.cs" />
-    <Compile Include="Models\Account\UserVM.cs" />
+    <Compile Include="Models\Account\LoginViewModel.cs" />
+    <Compile Include="Models\Account\PasswordRecoverViewModel.cs" />
+    <Compile Include="Models\Account\UserViewModel.cs" />
     <Compile Include="Models\DataTable\Column.cs" />
     <Compile Include="Models\DataTable\DataTableConfig.cs" />
     <Compile Include="Models\BtnFormVM.cs" />
     <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
-    <Compile Include="Models\Account\LandingVM.cs" />
+    <Compile Include="Models\Account\LandingViewModel.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
     <Compile Include="Models\Report\ReportsListViewModel.cs" />
     <Compile Include="Models\Report\ReportSorting.cs" />
     <Compile Include="Models\Report\ReportViewModel.cs" />
     <Compile Include="Models\Task\TasksListViewModel.cs" />
     <Compile Include="Models\Task\TaskSorting.cs" />
-    <Compile Include="Models\Task\TaskVM.cs" />
+    <Compile Include="Models\Task\TaskViewModel.cs" />
     <Compile Include="ProjectsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1217,6 +1221,15 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

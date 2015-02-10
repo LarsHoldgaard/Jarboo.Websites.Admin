@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Jarboo.Admin.Web.Models.Account
 {
-    public class UserVM : User
+    public class UserViewModel : User
     {
         public string RoleNames { get; set; }
     }

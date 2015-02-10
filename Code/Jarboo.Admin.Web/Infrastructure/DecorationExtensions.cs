@@ -9,19 +9,19 @@ namespace Jarboo.Admin.Web.Infrastructure
 {
     public static class DecorationExtensions
     {
-        public static TaskVM Decorate(this Task task)
+        public static TaskViewModel Decorate(this Task task)
         {
-            return task.MapTo<TaskVM>();
+            return task.MapTo<TaskViewModel>();
         }
 
-        public static IEnumerable<TaskVM> Decorate(this IEnumerable<Task> tasks)
+        public static IEnumerable<TaskViewModel> Decorate(this IEnumerable<Task> tasks)
         {
-            return tasks.Select(x => x.MapTo<TaskVM>());
+            return tasks.Select(x => x.MapTo<TaskViewModel>());
         }
 
-        public static List<TaskVM> Decorate(this List<Task> tasks)
+        public static List<TaskViewModel> Decorate(this List<Task> tasks)
         {
-            return tasks.Select(x => x.MapTo<TaskVM>()).ToList();
+            return tasks.Select(x => x.MapTo<TaskViewModel>()).ToList();
         }
 
         public static ReportViewModel DecorateReport(this Task task)

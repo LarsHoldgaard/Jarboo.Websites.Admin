@@ -90,7 +90,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         private ActionResult CreateEditView(ProjectEdit model)
         {
-            ViewBag.BoardNames = new SelectList(TaskRegister.BoardNames(), model.BoardName);
+            ViewBag.BoardNames = new SelectList(TaskRegister.ProjectNames(), model.BoardName);
             ViewBag.Customer = CustomerService.GetById(model.CustomerId);
             return View(model);
         }

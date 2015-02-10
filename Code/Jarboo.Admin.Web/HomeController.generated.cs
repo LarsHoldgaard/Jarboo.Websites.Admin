@@ -152,10 +152,10 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void LandingOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Account.LandingVM model);
+        partial void LandingOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Account.LandingViewModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Landing(Jarboo.Admin.Web.Models.Account.LandingVM model)
+        public override System.Web.Mvc.ActionResult Landing(Jarboo.Admin.Web.Models.Account.LandingViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Landing);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

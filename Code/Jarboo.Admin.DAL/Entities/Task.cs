@@ -39,7 +39,6 @@ namespace Jarboo.Admin.DAL.Entities
         public int? ForcedPriority { get; set; }
 
         public string FolderLink { get; set; }
-        public string CardLink { get; set; }
 
         public DateTime? DateDeleted { get; set; }
 

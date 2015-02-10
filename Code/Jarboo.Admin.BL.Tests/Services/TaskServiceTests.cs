@@ -75,7 +75,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 Helper.Suppress(() => service.Create(model, null));
 
 
-                A.CallTo(() => mockTaskRegister.Register(project.BoardName, model.Identifier(), folderLink)).MustHaveHappened();
+                A.CallTo(() => mockTaskRegister.Register(project.Name, model.Identifier(), folderLink)).MustHaveHappened();
             }
         }
         [Test]
@@ -97,7 +97,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 Helper.Suppress(() => service.Create(model, null));
 
 
-                A.CallTo(() => mockTaskRegister.Unregister(project.BoardName, model.Identifier(), taskLink)).MustHaveHappened();
+                A.CallTo(() => mockTaskRegister.Unregister(project.Name, model.Identifier())).MustHaveHappened();
             }
         }
 
@@ -158,27 +158,6 @@ namespace Jarboo.Admin.BL.Tests.Services
                 A.CallTo(() => mockFolderCreator.Delete(customer.Name, task.Identifier())).MustHaveHappened();
             }
         }
-        [Test]
-        public void Delete_Always_DeleteTasksCard()
-        {
-            using (var context = ContextHelper.Create())
-            {
-                const string cardLink = "card_link";
-
-                var project = context.AddProject();
-                var task = context.AddTask(x => { x.CardLink = cardLink; });
-
-                var mockTaskRegister = A.Fake<ITaskRegister>();
-                var service = Factory.CreateTaskService(context, taskRegister: mockTaskRegister);
-
-
-                Helper.Suppress(() => service.Delete(task.TaskId, null));
-
-
-                A.CallTo(() => mockTaskRegister.Unregister(project.BoardName, task.Identifier(), cardLink)).MustHaveHappened();
-            }
-        }
-
 
         [Test]
         public void NextStep_WhenLastStep_ChangeResponsibleToNone()
@@ -197,7 +176,7 @@ namespace Jarboo.Admin.BL.Tests.Services
 
                 Helper.Suppress(() => service.NextStep(model, null));
 
-                A.CallTo(() => mockTaskRegister.ChangeResponsible(project.BoardName, task.Identifier(), task.CardLink, null)).MustHaveHappened();
+                A.CallTo(() => mockTaskRegister.ChangeResponsible(project.Name, task.Identifier(), null)).MustHaveHappened();
             }
         }
         [Test]
@@ -218,7 +197,7 @@ namespace Jarboo.Admin.BL.Tests.Services
 
                 Helper.Suppress(() => service.NextStep(model, null));
 
-                A.CallTo(() => mockTaskRegister.ChangeResponsible(project.BoardName, task.Identifier(), task.CardLink, employee.TrelloId)).MustHaveHappened();
+                A.CallTo(() => mockTaskRegister.ChangeResponsible(project.Name, task.Identifier(), employee.EmployeeId.ToString())).MustHaveHappened();
             }
         }
         [Test]

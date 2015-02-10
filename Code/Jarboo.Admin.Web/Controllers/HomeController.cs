@@ -50,11 +50,11 @@ namespace Jarboo.Admin.Web.Controllers
 
         public virtual ActionResult Landing()
         {
-            return this.View(new LandingVM());
+            return this.View(new LandingViewModel());
         }
 
         [HttpPost]
-        public virtual ActionResult Landing(LandingVM model)
+        public virtual ActionResult Landing(LandingViewModel model)
         {
             if (!ModelState.IsValid)
             {

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Jarboo.Admin.Web.Models.Task
 {
-    public class TaskVM : DAL.Entities.Task
+    public class TaskViewModel : DAL.Entities.Task
     {
         public string Step()
         {

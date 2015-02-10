@@ -136,7 +136,7 @@ namespace Jarboo.Admin.BL.Services
                 foreach (var step in steps)
                 {
                     var newEmployee = TaskStepEmployeeStrategy.SelectEmployee(step.Step, step.Task.ProjectId);
-                    ChangeResponsible(step.Task.Project.Customer.Name, step.Task.Identifier(), step.Task.CardLink, newEmployee.TrelloId);
+                    ChangeResponsible(step.Task.Project.Customer.Name, step.Task.Identifier(), newEmployee.EmployeeId.ToString());
                     step.EmployeeId = newEmployee.EmployeeId;
                 }
                 UnitOfWork.SaveChanges();
@@ -146,11 +146,11 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Error during tasks assigment. Some task may left assigned to deleted employee.", ex);
             }
         }
-        private void ChangeResponsible(string customerName, string tasktaskIdentifierTitle, string url, string responsibleUserId)
+        private void ChangeResponsible(string customerName, string tasktaskIdentifierTitle, string responsibleUserId)
         {
             try
             {
-                TaskRegister.ChangeResponsible(customerName, tasktaskIdentifierTitle, url, responsibleUserId);
+                TaskRegister.ChangeResponsible(customerName, tasktaskIdentifierTitle, responsibleUserId);
             }
             catch (ApplicationException)
             {

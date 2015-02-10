@@ -92,20 +92,17 @@ namespace Jarboo.Admin.BL.Services
                 this.UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
             var taskIdentifier = model.Identifier();
-            string taskLink = null;
             string folderLink = null;
 
             try
             {
                 folderLink = CreateFolder(customer.Name, taskIdentifier);
 
-                taskLink = RegisterTask(project.BoardName, taskIdentifier, folderLink);
-                ChangeResponsible(project.BoardName, taskIdentifier, taskLink, employee.TrelloId);
+                ChangeResponsible(project.Name, taskIdentifier, employee.EmployeeId.ToString());
 
                 var entity = new Task()
                 {
-                    FolderLink = folderLink,
-                    CardLink = taskLink
+                    FolderLink = folderLink
                 };
 
                 entity.Steps.Add(new TaskStep()
@@ -118,12 +115,12 @@ namespace Jarboo.Admin.BL.Services
             }
             catch (ApplicationException ex)
             {
-                this.Cleanup(customer.Name, project.BoardName, taskIdentifier, taskLink, folderLink);
-                throw;
+                this.Cleanup(customer.Name, project.Name, taskIdentifier, folderLink);
+                throw ex;
             }
             catch (Exception ex)
             {
-                this.Cleanup(customer.Name, project.BoardName, taskIdentifier, taskLink, folderLink);
+                this.Cleanup(customer.Name, project.Name, taskIdentifier, folderLink);
                 throw new ApplicationException("Couldn't create task", ex);
             }
 
@@ -152,11 +149,11 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Could not register task in third party service", ex);
             }
         }
-        private void ChangeResponsible(string boardName, string tasktaskIdentifierTitle, string url, string responsibleUserId)
+        private void ChangeResponsible(string boardName, string tasktaskIdentifierTitle, string responsibleUserId)
         {
             try
             {
-                TaskRegister.ChangeResponsible(boardName, tasktaskIdentifierTitle, url, responsibleUserId);
+                TaskRegister.ChangeResponsible(boardName, tasktaskIdentifierTitle, responsibleUserId);
             }
             catch (ApplicationException)
             {
@@ -167,11 +164,11 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Could not set responsible for task", ex);
             }
         }
-        private void UnregisterTask(string boardName, string taskIdentifier, string url)
+        private void UnregisterTask(string boardName, string taskIdentifier)
         {
             try
             {
-                TaskRegister.Unregister(boardName, taskIdentifier, url);
+                TaskRegister.Unregister(boardName, taskIdentifier);
             }
             catch
             { }
@@ -200,12 +197,9 @@ namespace Jarboo.Admin.BL.Services
             catch
             { }
         }
-        private void Cleanup(string customerName, string boardName, string taskIdentifier, string taskLink, string folderLink)
+        private void Cleanup(string customerName, string projectName, string taskIdentifier, string folderLink)
         {
-            if (!string.IsNullOrEmpty(taskLink))
-            {
-                this.UnregisterTask(boardName, taskIdentifier, taskLink);
-            }
+            this.UnregisterTask(projectName, taskIdentifier);
             if (!string.IsNullOrEmpty(folderLink))
             {
                 this.DeleteFolder(customerName, taskIdentifier);
@@ -237,13 +231,13 @@ namespace Jarboo.Admin.BL.Services
                     this.TaskStepEmployeeStrategy.SelectEmployee(nextStep.Value, task.ProjectId) : 
                     this.UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
-                ChangeResponsible(task.Project.BoardName, task.Identifier(), task.CardLink, employee.TrelloId);
+                ChangeResponsible(task.Project.Name, task.Identifier(), employee.EmployeeId.ToString());
 
                 task.Steps.Add(new TaskStep() { EmployeeId = employee.EmployeeId, Step = nextStep.Value });
             }
             else
             {
-                ChangeResponsible(task.Project.BoardName, task.Identifier(), task.CardLink, null);
+                ChangeResponsible(task.Project.Name, task.Identifier(), null);
 
                 task.Done = true;
             }
@@ -254,7 +248,7 @@ namespace Jarboo.Admin.BL.Services
             }
             catch (Exception)
             {
-                ChangeResponsible(task.Project.BoardName, task.Identifier(), task.CardLink, lastStep.Employee.TrelloId);
+                ChangeResponsible(task.Project.Name, task.Identifier(), lastStep.Employee.EmployeeId.ToString());
                 throw;
             }
 
@@ -285,7 +279,7 @@ namespace Jarboo.Admin.BL.Services
             UnitOfWork.SaveChanges();
 
             this.DeleteFolder(customer.Name, entity.Identifier());
-            this.UnregisterTask(entity.Project.BoardName, entity.Identifier(), entity.CardLink);
+            this.UnregisterTask(entity.Project.Name, entity.Identifier());
         }
     }
 }

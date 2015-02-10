@@ -155,82 +155,75 @@ namespace Jarboo.Admin.Web.Controllers
             Size,
             Urgency,
             Folder,
-            Card,
             Step,
             Hours,
             Delete
         }
         private static TaskListColumns[] columnsWithClientSorting = new TaskListColumns[] { TaskListColumns.Priority, TaskListColumns.Hours };
-        private static List<Column<TaskVM>> columns = new List<Column<TaskVM>>()
+        private static List<Column<TaskViewModel>> columns = new List<Column<TaskViewModel>>()
         {
-            new Column<TaskVM>()
+            new Column<TaskViewModel>()
                 {
                     Title = "Title",
                     Type = DataTableConfig.Column.ColumnSpecialType.TaskLink,
                     Orderable = true,
                     Getter = (x) => new object[] {x.TaskId, x.Title}
                 },
-            new Column<TaskVM>()
+            new Column<TaskViewModel>()
                 {
                     Title = "Date",
                     Orderable = true,
                     Getter = (x) => x.Date()
                 },
-            new Column<TaskVM>()
+            new Column<TaskViewModel>()
                 {
                     Title = "Project name",
                     Type = DataTableConfig.Column.ColumnSpecialType.ProjectLink,
                     Getter = (x) => new object[] {x.ProjectId, x.Project.Name}
                 },
-            new Column<TaskVM>()
+            new Column<TaskViewModel>()
                 {
                     Title = "Priority",
                     Orderable = true,
                     Getter = (x) => x.Priority.ToString()
                 },
-            new Column<TaskVM>()
+            new Column<TaskViewModel>()
                 {
                     Title = "Type",
                     Orderable = true,
                     Getter = (x) => x.Type.ToString()
                 },
-            new Column<TaskVM>()
+            new Column<TaskViewModel>()
                 {
                     Title = "Size",
                     Orderable = true,
                     Getter = (x) => x.Size.ToString()
                 },
-            new Column<TaskVM>()
+            new Column<TaskViewModel>()
                 {
                     Title = "Urgency",
                     Orderable = true,
                     Getter = (x) => x.Urgency.ToString()
                 },
-            new Column<TaskVM>()
+            new Column<TaskViewModel>()
                 {
                     Title = "Folder",
                     Type = DataTableConfig.Column.ColumnSpecialType.ExternalLink,
                     Getter = (x) => x.FolderLink
                 },
-            new Column<TaskVM>()
-                {
-                    Title = "Card",
-                    Type = DataTableConfig.Column.ColumnSpecialType.ExternalLink,
-                    Getter = (x) => x.CardLink
-                },
-            new Column<TaskVM>()
+            new Column<TaskViewModel>()
                 {
                     Title = "Step",
                     Type = DataTableConfig.Column.ColumnSpecialType.TaskStepLink,
                     Getter = (x) => new object[] {x.TaskId, x.Step()}
                 },
-            new Column<TaskVM>()
+            new Column<TaskViewModel>()
                 {
                     Title = "Hours",
                     Orderable = true,
                     Getter = (x) => x.Hours().ToString()
                 },
-            new Column<TaskVM>()
+            new Column<TaskViewModel>()
                 {
                     Title = "",
                     Type = DataTableConfig.Column.ColumnSpecialType.DeleteBtn,
