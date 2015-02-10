@@ -17,7 +17,10 @@ namespace Jarboo.Admin.BL.Models
         }
 
         public int EmployeeId { get; set; }
+        [Required]
         public string FullName { get; set; }
+        [Required]
+        public string Email { get; set; }
         public string SkypeName { get; set; }
         [Required]
         public string TrelloId { get; set; }

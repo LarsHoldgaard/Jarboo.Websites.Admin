@@ -15,6 +15,7 @@ using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
 using Nito.AsyncEx.Synchronous;
 
 using TrelloNet;
+using Jarboo.Admin.Web.Models;
 
 namespace Jarboo.Admin.Web.Controllers
 {
@@ -65,6 +66,40 @@ namespace Jarboo.Admin.Web.Controllers
             }
 
             return Content(member.Id);
+        }
+
+        [HttpGet]
+        public ActionResult Settings()
+        {
+            var model = new SettingsViewModel();
+            model.UseGoogleDrive = SmartAdminMvc.Settings.GetValue<bool>("UseGoogleDrive", "");
+            model.GoogleApiKey = SmartAdminMvc.Settings.GetValue<string>("GoogleClientId", "");
+            model.GoogleApiSecret = SmartAdminMvc.Settings.GetValue<string>("GoogleClientSecret", "");
+            model.GoogleTemplatePath = SmartAdminMvc.Settings.GetValue<string>("GoogleDriveTemplatePath", "");
+            model.GoogleDrivePath = SmartAdminMvc.Settings.GetValue<string>("GoogleDrivePath", "");
+            model.GoogleRefreshToken = SmartAdminMvc.Settings.GetValue<string>("GoogleRefreshToken", "");
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Settings(SettingsViewModel model)
+        {
+            try
+            {
+                SmartAdminMvc.Settings.SetValue<bool>("UseGoogleDrive", model.UseGoogleDrive.ToString().ToLower());
+                SmartAdminMvc.Settings.SetValue<string>("GoogleClientId", model.GoogleApiKey);
+                SmartAdminMvc.Settings.SetValue<string>("GoogleClientSecret", model.GoogleApiSecret);
+                SmartAdminMvc.Settings.SetValue<string>("GoogleDriveTemplatePath", model.GoogleTemplatePath);
+                SmartAdminMvc.Settings.SetValue<string>("GoogleDrivePath", model.GoogleDrivePath);
+                SmartAdminMvc.Settings.SetValue<string>("GoogleRefreshToken", model.GoogleRefreshToken);
+                this.AddSuccess("Settings is updated");
+            }
+            catch (Exception ex)
+            {
+                this.AddError(ex.Message);
+            }
+            
+            return View(model);
         }
 	}
 }

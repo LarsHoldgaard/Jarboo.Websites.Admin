@@ -1,4 +1,7 @@
-﻿.btn-form {
+﻿#logo {
+    margin-top: 5px;
+}
+.btn-form {
     display: inline;
 }
 
