@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Sorters;
@@ -16,6 +12,7 @@ namespace Jarboo.Admin.BL
         int? PageSize { get; set; }
         int? PageNumber { get; set; }
     }
+
     public interface IQuery<TEntity, out TInclude, out TFilter, out TSorter> : IQuery
         where TEntity : IBaseEntity
         where TFilter : Filter<TEntity>, new()
@@ -28,7 +25,7 @@ namespace Jarboo.Admin.BL
     }
 
     public class Query<TEntity, TInclude, TFilter, TSorter> : IQuery<TEntity, TInclude, TFilter, TSorter>
-        where TEntity: IBaseEntity
+        where TEntity : IBaseEntity
         where TFilter : Filter<TEntity>, new()
         where TInclude : Include<TEntity>, new()
         where TSorter : Sorter<TEntity>, new()
@@ -54,26 +51,37 @@ namespace Jarboo.Admin.BL
         {
             return new Query<Customer, CustomerInclude, CustomerFilter, CustomerSorter>(filter);
         }
+
         public static IQuery<Project, ProjectInclude, ProjectFilter, ProjectSorter> ForProject(ProjectFilter filter = null)
         {
             return new Query<Project, ProjectInclude, ProjectFilter, ProjectSorter>(filter);
         }
+
         public static IQuery<Jarboo.Admin.DAL.Entities.Task, TaskInclude, TaskFilter, TaskSorter> ForTask(TaskFilter filter = null)
         {
             return new Query<Jarboo.Admin.DAL.Entities.Task, TaskInclude, TaskFilter, TaskSorter>(filter);
         }
+
+        public static IQuery<Jarboo.Admin.DAL.Entities.Task, ReportInclude, ReportFilter, ReportSorter> ForReport(ReportFilter filter = null)
+        {
+            return new Query<Jarboo.Admin.DAL.Entities.Task, ReportInclude, ReportFilter, ReportSorter>(filter);
+        }
+
         public static IQuery<Employee, EmployeeInclude, EmployeeFilter, EmployeeSorter> ForEmployee(EmployeeFilter filter = null)
         {
             return new Query<Employee, EmployeeInclude, EmployeeFilter, EmployeeSorter>(filter);
         }
+
         public static IQuery<Documentation, DocumentationInclude, DocumentationFilter, DocumentationSorter> ForDocumentation(DocumentationFilter filter = null)
         {
             return new Query<Documentation, DocumentationInclude, DocumentationFilter, DocumentationSorter>(filter);
         }
+
         public static IQuery<User, UserInclude, UserFilter, UserSorter> ForUser(UserFilter filter = null)
         {
             return new Query<User, UserInclude, UserFilter, UserSorter>(filter);
         }
+
         public static IQuery<SpentTime, SpentTimeInclude, SpentTimeFilter, SpentTimeSorter> ForSpentTime(SpentTimeFilter filter = null)
         {
             return new Query<SpentTime, SpentTimeInclude, SpentTimeFilter, SpentTimeSorter>(filter);
@@ -90,6 +98,7 @@ namespace Jarboo.Admin.BL
 
             return query;
         }
+
         public static PagedData<T> Paginate<T>(this IQueryable<T> query, IQuery paging)
             where T : class, IBaseEntity
         {
@@ -115,6 +124,7 @@ namespace Jarboo.Admin.BL
             action(query.Filter);
             return query;
         }
+
         public static IQuery<TEntity, TInclude, TFilter, TSorter> Include<TEntity, TInclude, TFilter, TSorter>(this IQuery<TEntity, TInclude, TFilter, TSorter> query, Action<TInclude> action)
             where TEntity : IBaseEntity
             where TFilter : Filter<TEntity>, new()
@@ -124,6 +134,7 @@ namespace Jarboo.Admin.BL
             action(query.Include);
             return query;
         }
+
         public static IQuery<TEntity, TInclude, TFilter, TSorter> Sort<TEntity, TInclude, TFilter, TSorter>(this IQuery<TEntity, TInclude, TFilter, TSorter> query, Action<TSorter> action)
             where TEntity : IBaseEntity
             where TFilter : Filter<TEntity>, new()
