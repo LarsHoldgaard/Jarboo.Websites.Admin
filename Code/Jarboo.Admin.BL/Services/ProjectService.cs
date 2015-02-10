@@ -74,7 +74,7 @@ namespace Jarboo.Admin.BL.Services
             if (string.IsNullOrEmpty(model.BoardName))
             {
                 var customer = UnitOfWork.Customers.AsNoTracking().ByIdMust(model.CustomerId);
-                model.BoardName = TaskRegister.DefaultBoardName(customer.Name);
+                model.BoardName = TaskRegister.DefaultProjectName(customer.Name);
             }
 
             if (model.ProjectId == 0)

@@ -34,32 +34,6 @@ namespace Jarboo.Admin.BL.Tests.Services
         }
 
         [Test]
-        public void Delete_WhenHasUndoneTaskStep_ChangesTaskResponsible()
-        {
-            using (var context = ContextHelper.Create())
-            {
-                var employee = context.AddEmployee(x => x.TrelloId = "id1");
-                var employeeToDelete = context.AddEmployee();
-                var taskStep = context.AddTaskStep(x => x.Employee = employeeToDelete);
-
-                var mockTaskRegister = A.Fake<ITaskRegister>();
-                var taskStepEmployeeStrategy = A.Fake<ITaskStepEmployeeStrategy>();
-                A.CallTo(() => taskStepEmployeeStrategy.SelectEmployee(taskStep.Step, taskStep.Task.ProjectId)).Returns(employee);
-                var service = Factory.CreateEmployeeService(context, taskRegister: mockTaskRegister, taskStepEmployeeStrategy: taskStepEmployeeStrategy);
-
-
-                Helper.Suppress(() => service.Delete(employeeToDelete.EmployeeId, null));
-
-
-                A.CallTo(() => mockTaskRegister.ChangeResponsible(
-                        taskStep.Task.Project.Customer.Name,
-                        taskStep.Task.Identifier(),
-                        taskStep.Task.CardLink,
-                        employee.TrelloId)).MustHaveHappened();
-            }
-        }
-
-        [Test]
         public void Delete_WhenHasDoneTaskStep_NotChangesResponsible()
         {
             using (var context = ContextHelper.Create())

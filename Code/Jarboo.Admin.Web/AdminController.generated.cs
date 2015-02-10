@@ -131,16 +131,6 @@ namespace Jarboo.Admin.Web.Controllers
 
         [NonAction]
         partial void TrelloIdOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult TrelloId(string id)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TrelloId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            TrelloIdOverride(callInfo, id);
-            return callInfo;
-        }
-
     }
 }
 

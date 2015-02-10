@@ -33,7 +33,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 Helper.Suppress(() => service.Save(model, null));
 
 
-                A.CallTo(() => mockTaskRegister.DefaultBoardName(customer.Name)).MustHaveHappened();
+                A.CallTo(() => mockTaskRegister.DefaultProjectName(customer.Name)).MustHaveHappened();
             }
         }
 

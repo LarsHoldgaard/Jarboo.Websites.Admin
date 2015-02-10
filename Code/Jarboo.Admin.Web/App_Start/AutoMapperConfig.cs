@@ -18,8 +18,8 @@ namespace Jarboo.Admin.Web.App_Start
         {
             BL.AutoMapperConfig.RegisterMappers();
 
-            Mapper.CreateMap<DAL.Entities.Task, TaskVM>();
-            Mapper.CreateMap<DAL.Entities.User, UserVM>();
+            Mapper.CreateMap<DAL.Entities.Task, TaskViewModel>();
+            Mapper.CreateMap<DAL.Entities.User, UserViewModel>();
         }
     }
 }

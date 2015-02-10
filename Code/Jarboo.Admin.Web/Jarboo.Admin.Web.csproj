@@ -1082,18 +1082,18 @@
     <Compile Include="Infrastructure\ThirdPartyIntegration\AppFlowMetadata.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\MemoryDataStore.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
-    <Compile Include="Models\Account\LoginVM.cs" />
-    <Compile Include="Models\Account\PasswordRecoverVM.cs" />
-    <Compile Include="Models\Account\UserVM.cs" />
+    <Compile Include="Models\Account\LoginViewModel.cs" />
+    <Compile Include="Models\Account\PasswordRecoverViewModel.cs" />
+    <Compile Include="Models\Account\UserViewModel.cs" />
     <Compile Include="Models\DataTable\Column.cs" />
     <Compile Include="Models\DataTable\DataTableConfig.cs" />
     <Compile Include="Models\BtnFormVM.cs" />
     <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
-    <Compile Include="Models\Account\LandingVM.cs" />
+    <Compile Include="Models\Account\LandingViewModel.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
     <Compile Include="Models\Task\TasksListViewModel.cs" />
     <Compile Include="Models\Task\TaskSorting.cs" />
-    <Compile Include="Models\Task\TaskVM.cs" />
+    <Compile Include="Models\Task\TaskViewModel.cs" />
     <Compile Include="ProjectsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

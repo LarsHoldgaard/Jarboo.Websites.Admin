@@ -2,7 +2,7 @@
 
 namespace Jarboo.Admin.Web.Models.Account
 {
-    public class LandingVM
+    public class LandingViewModel
     {
         [Required]
         [EmailAddress]
