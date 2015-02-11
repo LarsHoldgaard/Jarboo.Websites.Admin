@@ -96,9 +96,6 @@
                                             @Html.DisplayNameFor(model => model.SkypeName)
                                         </th>
                                         <th class="sorting">
-                                            @Html.DisplayNameFor(model => model.TrelloId)
-                                        </th>
-                                        <th class="sorting">
                                             @Html.DisplayNameFor(model => model.Email)
                                         </th>
                                         <th class="sorting">
@@ -131,9 +128,6 @@
                                                 <a href="skype:@employee.SkypeName">@employee.SkypeName</a>
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => employee.TrelloId)
-                                            </td>
-                                            <td>
                                                 @Html.DisplayFor(modelItem => employee.Email)
                                             </td>
                                             <td>
@@ -157,7 +151,7 @@
                                             @if (this.Can(MVC.Employees.Delete()))
                                             {
                                                 <td>
-                                                    @Html.Partial(MVC.Shared.Views.BtnForm, BtnFormVM.Delete(x =>
+                                                    @Html.Partial(MVC.Shared.Views.BtnForm, BtnFormViewModel.Delete(x =>
                                                         {
                                                             x.Id = employee.EmployeeId;
                                                             x.Action = MVC.Employees.Delete();

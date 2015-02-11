@@ -11,18 +11,10 @@ using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface ISpentTimeService : IEntityService<int, SpentTime>
-    {
-        void SpentTimeOnTask(SpentTimeOnTask model, IBusinessErrorCollection errors);
-        void SpentTimeOnProject(SpentTimeOnProject model, IBusinessErrorCollection errors);
-
-        void Accept(int id, IBusinessErrorCollection errors);
-        void Deny(int id, IBusinessErrorCollection errors);
-    }
-
     public class SpentTimeService : BaseEntityService<int, SpentTime>, ISpentTimeService
     {
         public SpentTimeService(IUnitOfWork unitOfWork, IAuth auth)

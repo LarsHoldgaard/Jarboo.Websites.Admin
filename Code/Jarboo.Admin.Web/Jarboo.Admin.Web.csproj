@@ -566,6 +566,13 @@
     <Content Include="Scripts\plugin\ckeditor\README.md" />
     <Content Include="Scripts\plugin\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="Scripts\plugin\ckeditor\skins\moono\readme.md" />
+    <Content Include="Scripts\smartadmin.js">
+      <DependentUpon>smartadmin.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Scripts\smartadmin.js.bundle" />
+    <Content Include="Scripts\smartadmin.min.js.map">
+      <DependentUpon>smartadmin.min.js</DependentUpon>
+    </Content>
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Scripts\plugin\bootstrap-duallistbox\jquery.bootstrap-duallistbox.min.js" />
     <Content Include="Scripts\plugin\bootstrap-progressbar\bootstrap-progressbar.min.js" />
@@ -1001,6 +1008,9 @@
     <Content Include="Scripts\Site\validation.style.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.manager.min.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.ui.min.js" />
+    <Content Include="Scripts\smartadmin.min.js">
+      <DependentUpon>smartadmin.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\smartwidgets\jarvis.widget.min.js" />
     <Content Include="Scripts\speech\voicecommand.min.js" />
     <Content Include="Web.config">
@@ -1087,7 +1097,7 @@
     <Compile Include="Models\Account\UserViewModel.cs" />
     <Compile Include="Models\DataTable\Column.cs" />
     <Compile Include="Models\DataTable\DataTableConfig.cs" />
-    <Compile Include="Models\BtnFormVM.cs" />
+    <Compile Include="Models\BtnFormViewModel.cs" />
     <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
     <Compile Include="Models\Account\LandingViewModel.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />

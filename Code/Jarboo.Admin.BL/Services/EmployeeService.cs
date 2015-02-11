@@ -13,17 +13,10 @@ using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
 using Microsoft.AspNet.Identity;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface IEmployeeService : IEntityService<int, Employee>
-    {
-        void Create(EmployeeCreate model, IBusinessErrorCollection errors);
-        void Edit(EmployeeEdit model, IBusinessErrorCollection errors);
-
-        void Delete(int employeeId, IBusinessErrorCollection errors);
-    }
-
     public class EmployeeService : BaseEntityService<int, Employee>, IEmployeeService
     {
         protected ITaskRegister TaskRegister { get; set; }

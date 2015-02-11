@@ -122,7 +122,15 @@
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\DocumentationService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
-    <Compile Include="Services\IEntityService.cs" />
+    <Compile Include="Services\Interfaces\IEntityService.cs" />
+    <Compile Include="Services\Interfaces\IAccountService.cs" />
+    <Compile Include="Services\Interfaces\ICustomerService.cs" />
+    <Compile Include="Services\Interfaces\IDocumentationService.cs" />
+    <Compile Include="Services\Interfaces\IEmployeeService.cs" />
+    <Compile Include="Services\Interfaces\IProjectService.cs" />
+    <Compile Include="Services\Interfaces\ISpentTimeService.cs" />
+    <Compile Include="Services\Interfaces\ITaskService.cs" />
+    <Compile Include="Services\Interfaces\IUserService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\SpentTimeService.cs" />
     <Compile Include="Services\TaskService.cs" />

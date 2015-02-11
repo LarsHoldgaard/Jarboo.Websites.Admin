@@ -6,57 +6,39 @@
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script> if (!window.jQuery.ui) { document.write('<script src="/scripts/libs/jquery-ui-1.10.3.min.js"><\/script>'); } </script>
 
+<!-- Link to cdnjs CDN's underscore -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js" type="text/javascript"></script>
+
 <!-- IMPORTANT: SmartAdmin Core -->
-@Scripts.Render("~/scripts/smartadmin")
+<script src="@Url.Content("~/Scripts/smartadmin.js")" type="text/javascript"></script>
 
 @if (Request.IsAuthenticated)
 {
     <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
     <script data-pace-options='{ "restartOnRequestAfter": true }' src="~/scripts/plugin/pace/pace.min.js"></script>
-    <!-- Demo purpose only! -->
-    <script src="/scripts/demo.min.js"></script>
 }
 
-<!-- Voice command : plugin -->
-<script src="~/scripts/speech/voicecommand.min.js"></script>
-
-<!-- SmartChat UI : plugin -->
-@Scripts.Render("~/scripts/smart-chat")
-
-<!-- DataTables : plugin -->
-@Scripts.Render("~/scripts/datatables")
-
-<!-- jQGrid : plugin -->
-@Scripts.Render("~/scripts/jq-grid")
-
-<!-- Forms : plugin -->
-@Scripts.Render("~/scripts/forms")
-
-<!-- Flot Chart Plugin: Flot Engine, Flot Resizer, Flot Tooltip, Morris, Sparkline, EasyPie -->
-@Scripts.Render("~/scripts/charts")
-
-<!-- Vector Maps Plugin: Vectormap engine, Vectormap language -->
-@Scripts.Render("~/scripts/vector-map")
-
-<!-- Full Calendar -->
-@Scripts.Render("~/scripts/full-calendar")
-
 <!-- DO NOT REMOVE : GLOBAL FUNCTIONS! -->
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
         pageSetUp();
         //drawBreadCrumb();
     });
 </script>
 
-@Scripts.Render("~/js/bootstrap-datepicker")
-@Scripts.Render("~/js/validation")
-@Scripts.Render("~/js/site")
-
 @if (@Model is HelperResult)
 {
     @Model
 }
+ <!-- BEGIN: Underscore Template Definition. -->
+<script type="text/template" id="deteleBtnTemplete">
+    <form method="post" class="delete-btn-form pull-left" action="<%- rc.action %>">
+        <input type="hidden" value="<%- rc.token %>" name="__RequestVerificationToken" />
+        <input type="hidden" value="<%- rc.id %>" name="id" />
+        <input type="hidden" value="<%- rc.id %>" name="returnUrl" />
+        <button type="submit" class="btn btn-danger btn-xs"><span aria-hidden="true" class="glyphicon glyphicon-remove-sign"></span> Delete</button>
+    </form>
+</script> 
 <!-- Your GOOGLE ANALYTICS CODE Below-->
     @*<script type="text/javascript">
     var _gaq = _gaq || [];

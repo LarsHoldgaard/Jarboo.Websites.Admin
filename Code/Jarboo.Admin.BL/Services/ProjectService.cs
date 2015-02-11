@@ -11,14 +11,10 @@ using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface IProjectService : IEntityService<int, Project>
-    {
-        void Save(ProjectEdit model, IBusinessErrorCollection errors);
-    }
-
     public class ProjectService : BaseEntityService<int, Project>, IProjectService
     {
         protected ITaskRegister TaskRegister { get; set; }

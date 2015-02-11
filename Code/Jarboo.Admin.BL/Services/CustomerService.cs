@@ -9,14 +9,10 @@ using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface ICustomerService : IEntityService<int, Customer>
-    {
-        void Create(CustomerCreate model, IBusinessErrorCollection errors);
-    }
-
     public class CustomerService : BaseEntityService<int, Customer>, ICustomerService
     {
         public CustomerService(IUnitOfWork unitOfWork, IAuth auth)

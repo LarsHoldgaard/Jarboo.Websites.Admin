@@ -1,6 +1,7 @@
 ﻿using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Other;
+using Jarboo.Admin.BL.Services.Interfaces;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 using System;
@@ -12,12 +13,6 @@ using System.Threading.Tasks;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface IDocumentationService : IEntityService<int, Documentation>
-    {
-        void Save(DocumentationEdit model, IBusinessErrorCollection errors);
-        void Delete(int documentationId, IBusinessErrorCollection errors);
-    }
-
     public class DocumentationService : BaseEntityService<int, Documentation>, IDocumentationService
     {
         public DocumentationService(IUnitOfWork unitOfWork, IAuth auth)

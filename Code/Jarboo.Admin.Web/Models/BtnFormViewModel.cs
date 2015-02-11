@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace Jarboo.Admin.Web.Models
 {
-    public class BtnFormVM
+    public class BtnFormViewModel
     {
-        public BtnFormVM()
+        public BtnFormViewModel()
         {
             Small = true;
         }
@@ -20,9 +20,9 @@ namespace Jarboo.Admin.Web.Models
         public string Style { get; set; }
         public string Icon { get; set; }
 
-        public static BtnFormVM Delete(Action<BtnFormVM> init = null)
+        public static BtnFormViewModel Delete(Action<BtnFormViewModel> init = null)
         {
-            var form = new BtnFormVM()
+            var form = new BtnFormViewModel()
                        {
                            Text = "Delete",
                            Style = "danger",

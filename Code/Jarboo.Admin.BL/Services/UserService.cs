@@ -12,17 +12,10 @@ using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
 
 using Microsoft.AspNet.Identity;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface IUserService : IEntityService<string, User>
-    {
-        void EditCustomer(UserCustomerEdit model, IBusinessErrorCollection errors);
-        void Edit(UserEdit model, IBusinessErrorCollection errors);
-        void ChangePassword(UserPasswordChange model, IBusinessErrorCollection errors);
-        void SetPassword(UserPasswordSet model, IBusinessErrorCollection errors);
-    }
-
     public class UserService : BaseEntityService<string, User>, IUserService
     {
         public UserManager<User> UserManager { get; set; }

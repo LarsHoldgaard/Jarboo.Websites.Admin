@@ -14,16 +14,10 @@ using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
 
 using Microsoft.AspNet.Identity;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface IAccountService
-    {
-        void Register(UserCreate model, IBusinessErrorCollection errors);
-        void RecoverPassword(PasswordRecover model, IBusinessErrorCollection errors);
-        void ResetPassword(ResetPassword model, IBusinessErrorCollection errors);
-    }
-
     public class AccountService : BaseService, IAccountService
     {
         public UserManager<User> UserManager { get; set; }

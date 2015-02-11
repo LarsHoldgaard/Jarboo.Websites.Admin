@@ -12,6 +12,7 @@ using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Sorters;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.BL.Services
 {

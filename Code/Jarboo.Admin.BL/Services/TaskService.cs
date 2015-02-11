@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
 
 using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Models;
@@ -14,18 +13,10 @@ using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
 
 using Task = Jarboo.Admin.DAL.Entities.Task;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface ITaskService : IEntityService<int, Task>
-    {
-        void Create(TaskCreate model, IBusinessErrorCollection errors);
-
-        void NextStep(TaskNextStep model, IBusinessErrorCollection errors);
-
-        void Delete(int taskId, IBusinessErrorCollection errors);
-    }
-
     public class TaskService : BaseEntityService<int, Task>, ITaskService
     {
         protected ITaskRegister TaskRegister { get; set; }

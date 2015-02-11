@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Sorters;
 using Jarboo.Admin.DAL.Entities;
 
-namespace Jarboo.Admin.BL.Services
+namespace Jarboo.Admin.BL.Services.Interfaces
 {
-    public interface IEntityService<TKey, T>
-        where T : IBaseEntity
+    public interface IEntityService<TKey, T> where T : IBaseEntity
     {
         T GetById(TKey id);
         T GetByIdEx(TKey id, Include<T> include);

@@ -26,6 +26,7 @@ namespace Jarboo.Admin.Web.App_Start
     using Ninject.Web.Common;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security.DataProtection;
+    using Jarboo.Admin.BL.Services.Interfaces;
 
     public static class NinjectWebCommon 
     {

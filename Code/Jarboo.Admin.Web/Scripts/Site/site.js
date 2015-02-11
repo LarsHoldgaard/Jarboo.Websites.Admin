@@ -1,4 +1,14 @@
-﻿$(function () {
+﻿$(function() {
+    // When rending an underscore template, we want top-level
+    // variables to be referenced as part of an object. For
+    // technical reasons (scope-chain search), this speeds up
+    // rendering; however, more importantly, this also allows our
+    // templates to look / feel more like our server-side
+    // templates that use the rc (Request Context / Colletion) in
+    // order to render their markup.
+    _.templateSettings.variable = "rc";
+    var deleteBtnTemplate = _.template($("#deteleBtnTemplete").html());
+
     $(document).on("submit", ".delete-btn-form", function () {
         return confirm("Are you sure you want to delete this item?");
     });
@@ -39,7 +49,7 @@
                 url: configUrl,
                 dataType: "json",
                 success: function(config) {
-                    console.log(config);
+                    console.log('datatable config: ', config);
 
                     var ajax = config.ajax;
                     if (config.ajax) {
@@ -144,14 +154,13 @@
                         if (type != "display") {
                             return null;
                         }
-                        
-                        return "\
-<form method='post' class='delete-btn-form pull-left' action='" + data[1] + "'>\
-    <input type='hidden' value='" + token + "' name='__RequestVerificationToken'>\
-    <input type='hidden' value='" + data[0] + "' name='id'>\
-    <input type='hidden' value='" + window.location.pathname + window.location.search + "' name='returnUrl'>\
-    <button type='submit' class='btn btn-danger btn-xs'><span aria-hidden='true' class='glyphicon glyphicon-remove-sign'></span> Delete</button>\
-</form>";
+                        var deleteBtnData = {
+                            action: data[1],
+                            token: token,
+                            id: data[0],
+                            returnUrl: window.location.pathname + window.location.search
+                        };
+                        return deleteBtnTemplate(deleteBtnData);
                     }
                 }
         }
