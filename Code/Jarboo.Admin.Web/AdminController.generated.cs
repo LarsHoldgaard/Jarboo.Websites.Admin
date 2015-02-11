@@ -57,12 +57,6 @@ namespace Jarboo.Admin.Web.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult TrelloId()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TrelloId);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public AdminController Actions { get { return MVC.Admin; } }
@@ -80,25 +74,15 @@ namespace Jarboo.Admin.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string RequestRefreshToken = "RequestRefreshToken";
-            public readonly string TrelloId = "TrelloId";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string RequestRefreshToken = "RequestRefreshToken";
-            public const string TrelloId = "TrelloId";
         }
 
 
-        static readonly ActionParamsClass_TrelloId s_params_TrelloId = new ActionParamsClass_TrelloId();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_TrelloId TrelloIdParams { get { return s_params_TrelloId; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_TrelloId
-        {
-            public readonly string id = "id";
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -129,8 +113,6 @@ namespace Jarboo.Admin.Web.Controllers
             return callInfo;
         }
 
-        [NonAction]
-        partial void TrelloIdOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id);
     }
 }
 

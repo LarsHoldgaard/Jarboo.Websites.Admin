@@ -98,9 +98,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TrelloNet">
-      <HintPath>..\Jarboo.Admin.Web\packages\TrelloNet.Temp.Fork.0.6.2\lib\net40-Client\TrelloNet.dll</HintPath>
-    </Reference>
     <Reference Include="Zlib.Portable">
       <HintPath>..\Jarboo.Admin.Web\packages\Zlib.Portable.1.10.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
     </Reference>
@@ -128,6 +125,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

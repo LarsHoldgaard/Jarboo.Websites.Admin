@@ -96,9 +96,6 @@
                                             @Html.DisplayNameFor(model => model.SkypeName)
                                         </th>
                                         <th class="sorting">
-                                            @Html.DisplayNameFor(model => model.TrelloId)
-                                        </th>
-                                        <th class="sorting">
                                             @Html.DisplayNameFor(model => model.Email)
                                         </th>
                                         <th class="sorting">
@@ -129,9 +126,6 @@
                                             </td>
                                             <td>
                                                 <a href="skype:@employee.SkypeName">@employee.SkypeName</a>
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => employee.TrelloId)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => employee.Email)

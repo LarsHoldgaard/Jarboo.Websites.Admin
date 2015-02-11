@@ -24,7 +24,6 @@ using Newtonsoft.Json;
 
 using Ninject;
 
-using RestSharp;
 
 namespace Jarboo.Admin.Web.Controllers
 {
