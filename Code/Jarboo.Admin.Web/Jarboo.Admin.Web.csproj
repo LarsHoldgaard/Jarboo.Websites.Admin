@@ -453,6 +453,12 @@
     <Content Include="Content\img\violate.jpg" />
     <Content Include="Content\img\voicecommand\active-btn.gif" />
     <Content Include="Content\img\vt-menu.png" />
+    <Content Include="Content\jarboo.css">
+      <DependentUpon>jarboo.css.bundle</DependentUpon>
+    </Content>
+    <Content Include="Content\jarboo.min.css">
+      <DependentUpon>jarboo.css</DependentUpon>
+    </Content>
     <Content Include="Content\sound\bigbox.mp3" />
     <Content Include="Content\sound\license.txt" />
     <Content Include="Content\sound\messagebox.mp3" />
@@ -482,6 +488,7 @@
     <Content Include="Content\sound\voice_alert.ogg" />
     <Content Include="Content\sound\voice_off.ogg" />
     <Content Include="Content\sound\voice_on.ogg" />
+    <Content Include="Content\jarboo.css.bundle" />
     <None Include="Properties\PublishProfiles\File.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
