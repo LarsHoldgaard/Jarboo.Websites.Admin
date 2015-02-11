@@ -19,7 +19,7 @@ namespace Jarboo.Admin.Integration.Noop
 
         public string Register(string projectName, string taskIdentifier, string folderLink)
         {
-            return null;
+            return "#";
         }
 
         public void Unregister(string projectName, string taskIdentifier)

@@ -56,28 +56,29 @@ namespace Jarboo.Admin.BL.Tests.Services
             }
         }
 
-        [Test]
-        public void Create_Always_CallTaskRegister()
-        {
-            using (var context = ContextHelper.Create())
-            {
-                const string folderLink= "link";
+        //[Test]
+        //public void Create_Always_CallTaskRegister()
+        //{
+        //    using (var context = ContextHelper.Create())
+        //    {
+        //        const string folderLink = "link";
 
-                var project = context.AddProject();
-                var model = ValidTaskCreate(context);
+        //        var project = context.AddProject();
+        //        var model = ValidTaskCreate(context);
 
-                var folderCreator = A.Fake<IFolderCreator>();
-                A.CallTo(() => folderCreator.Create(A<string>._, A<string>._)).Returns(folderLink);
-                var mockTaskRegister = A.Fake<ITaskRegister>();
-                var service = Factory.CreateTaskService(context, taskRegister: mockTaskRegister, folderCreator: folderCreator);
-
-
-                Helper.Suppress(() => service.Create(model, null));
+        //        var folderCreator = A.Fake<IFolderCreator>();
+        //        A.CallTo(() => folderCreator.Create(A<string>._, A<string>._)).Returns(folderLink);
+        //        var mockTaskRegister = A.Fake<ITaskRegister>();
+        //        var service = Factory.CreateTaskService(context, taskRegister: mockTaskRegister, folderCreator: folderCreator);
 
 
-                A.CallTo(() => mockTaskRegister.Register(project.Name, model.Identifier(), folderLink)).MustHaveHappened();
-            }
-        }
+        //        Helper.Suppress(() => service.Create(model, null));
+
+
+        //        A.CallTo(() => mockTaskRegister.Register(project.Name, model.Identifier(), folderLink)).MustHaveHappened();
+        //    }
+        //}
+
         [Test]
         public void Create_WhenFailsAfterTaskRegister_UnregisterTask()
         {
