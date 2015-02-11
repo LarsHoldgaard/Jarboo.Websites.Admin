@@ -1,5 +1,6 @@
 ﻿@using Jarboo.Admin.DAL.Entities
 @using Jarboo.Admin.Web.Models.Task
+@using SmartAdminMvc
 @model Jarboo.Admin.DAL.Entities.Employee
 
 @{
@@ -8,17 +9,10 @@
 }
 <!-- RIBBON -->
 <div id="ribbon">
-    <span class="ribbon-button-alignment">
-        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
-						<i class="fa fa-refresh"></i>
-					</span>
-    </span>
+    @Html.Partial("_RibbonRefresh")
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder(this)
-            .Add(MVC.Employees.Index(), "Employees")
-            .Add(Model.FullName)
-            .Done())
+        @Html.RenderBreadCrumbs(this, new BreadCrumbItem(MVC.Employees.Index(), "Employees"), new BreadCrumbItem(Model.FullName))
     </ol>
     <!-- end breadcrumb -->
 </div>
