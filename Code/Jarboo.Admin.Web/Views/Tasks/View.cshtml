@@ -1,11 +1,11 @@
 ﻿@using System.Linq
 @using Jarboo.Admin.BL.Filters
-@model Jarboo.Admin.Web.Models.Task.TaskVM
+@model Jarboo.Admin.Web.Models.Task.TaskViewModel
 
 @{
-        ViewBag.Title = Model.FullTitle();
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+    ViewBag.Title = Model.FullTitle();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <!-- RIBBON -->
 <div id="ribbon">
@@ -140,21 +140,6 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                Card
-                                            </td>
-                                            <td>
-                                                @if (string.IsNullOrEmpty(Model.CardLink))
-                                                {
-                                                    <span>Missing</span>
-                                                }
-                                                else
-                                                {
-                                                    <a target="_blank" href="@Model.CardLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
-                                                }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
                                                 Step
                                             </td>
                                             <td>
@@ -186,7 +171,7 @@
         <!-- end row -->
     </section>
     <!-- end widget grid -->
-    
+
     <div class="row">
         <!-- col -->
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">

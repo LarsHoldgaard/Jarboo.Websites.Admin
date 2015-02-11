@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Threading;
 using System.Web.Mvc;
 
 using Google.Apis.Auth.OAuth2.Mvc;
-using Google.Apis.Auth.OAuth2.Responses;
-
-using Jarboo.Admin.Web.Infrastructure;
 using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
 
 using Nito.AsyncEx.Synchronous;
-
-using TrelloNet;
 
 namespace Jarboo.Admin.Web.Controllers
 {

@@ -175,9 +175,6 @@
     <Reference Include="Owin">
       <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
@@ -236,9 +233,6 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="T4MVCExtensions">
       <HintPath>packages\T4MVCExtensions.3.10.0\lib\net40\T4MVCExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="TrelloNet">
-      <HintPath>packages\TrelloNet.Temp.Fork.0.6.2\lib\net40-Client\TrelloNet.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>

@@ -75,19 +75,13 @@
                                     </label>
                                 </section>
                                 <section>
-                                    @Html.LabelFor(model => model.TrelloId, new { @class = "label" })
-                                    <label class="input">
-                                        @Html.TextBoxFor(x => x.TrelloId, new { @placeholder = "TrelloId" })
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.Country, new { @class = "label" }) 
+                                    @Html.LabelFor(model => model.Country, new { @class = "label" })
                                     <label class="input">
                                         @Html.TextBoxFor(x => x.Country, new { @placeholder = "Country" })
                                     </label>
                                 </section>
                                 <section>
-                                    @Html.LabelFor(model => model.HourlyPrice, new { @class = "label" }) 
+                                    @Html.LabelFor(model => model.HourlyPrice, new { @class = "label" })
                                     <label class="input">
                                         <i class="icon-append fa">USD</i>
                                         @Html.TextBoxFor(x => x.HourlyPrice, new { @placeholder = "HourlyPrice" })
@@ -98,7 +92,7 @@
                                     <label class="select select-multiple">
                                         @Html.EnumListBoxFor(x => x.Positions, new { @placeholder = "Positions" })
                                     </label>
-                                </section>                            
+                                </section>
                             </fieldset>
                             <footer>
                                 <button type="submit" class="btn btn-primary">
@@ -114,5 +108,5 @@
             <!-- end widget -->
         </article>
     </div>
-    <!-- end row -->   
+    <!-- end row -->
 </div>
