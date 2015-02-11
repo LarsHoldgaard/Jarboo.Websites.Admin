@@ -23,9 +23,15 @@ namespace Jarboo.Admin.BL.Services
         {
             get { return UnitOfWork.Customers; }
         }
+        
         protected override Customer Find(int id, IQueryable<Customer> query)
         {
             return query.FirstOrDefault(x => x.CustomerId == id);
+        }
+
+        protected override async System.Threading.Tasks.Task<Customer> FindAsync(int id, IQueryable<Customer> query)
+        {
+            return await query.FirstOrDefaultAsync(x => x.CustomerId == id);
         }
 
         protected override string SecurityEntities

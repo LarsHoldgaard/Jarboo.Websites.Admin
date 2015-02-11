@@ -31,7 +31,10 @@ namespace Jarboo.Admin.BL.Services
         {
             return query.ById(id);
         }
-
+        protected override async Task<SpentTime> FindAsync(int id, IQueryable<SpentTime> query)
+        {
+            return await query.ByIdAsync(id);
+        }
         protected override string SecurityEntities
         {
             get { return Rights.SpentTime.Name; }

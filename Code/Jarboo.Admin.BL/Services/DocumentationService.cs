@@ -28,6 +28,11 @@ namespace Jarboo.Admin.BL.Services
             return query.FirstOrDefault(x => x.DocumentationId == id);
         }
 
+        protected override async Task<Documentation> FindAsync(int id, IQueryable<Documentation> query)
+        {
+            return await query.FirstOrDefaultAsync(x => x.DocumentationId == id);
+        }
+
         protected override string SecurityEntities
         {
             get { return Rights.Documentations.Name; }

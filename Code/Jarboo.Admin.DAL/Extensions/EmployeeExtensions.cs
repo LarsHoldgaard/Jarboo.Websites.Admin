@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,15 @@ namespace Jarboo.Admin.DAL.Extensions
             }
             return employee;
         }
+
         public static Employee ById(this IQueryable<Employee> query, int employeeId)
         {
             return query.FirstOrDefault(x => x.EmployeeId == employeeId);
+        }
+
+        public static async Task<Employee> ByIdAsync(this IQueryable<Employee> query, int employeeId)
+        {
+            return await query.FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
         }
 
         public static Employee ByUserId(this IQueryable<Employee> query, string userId)

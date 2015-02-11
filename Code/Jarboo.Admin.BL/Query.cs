@@ -90,8 +90,7 @@ namespace Jarboo.Admin.BL
 
             return query;
         }
-        public static PagedData<T> Paginate<T>(this IQueryable<T> query, IQuery paging)
-            where T : class, IBaseEntity
+        public static PagedData<T> Paginate<T>(this IQueryable<T> query, IQuery paging) where T : class, IBaseEntity
         {
             if (!paging.PageNumber.HasValue || !paging.PageSize.HasValue)
             {
@@ -104,6 +103,21 @@ namespace Jarboo.Admin.BL
             }
 
             return PagedData.Create(paging.PageSize.Value, paging.PageNumber.Value, query);
+        }
+
+        public static async Task<PagedData<T>> PaginateAsync<T>(this IQueryable<T> query, IQuery paging) where T : class, IBaseEntity
+        {
+            if (!paging.PageNumber.HasValue || !paging.PageSize.HasValue)
+            {
+                return await PagedData.AllOnOnePageAsync(query);
+            }
+
+            if (!query.IsOrdered())
+            {
+                query = query.OrderBy(x => x.DateCreated);
+            }
+
+            return await PagedData.CreateAsync(paging.PageSize.Value, paging.PageNumber.Value, query);
         }
 
         public static IQuery<TEntity, TInclude, TFilter, TSorter> Filter<TEntity, TInclude, TFilter, TSorter>(this IQuery<TEntity, TInclude, TFilter, TSorter> query, Action<TFilter> action)
@@ -146,6 +160,20 @@ namespace Jarboo.Admin.BL
                 filteredData = securityFilter(filteredData);
             }
             return filteredData.SortBy(query.Sorter).Paginate(query);
+        }
+
+        public static async Task<PagedData<TEntity>> ApplyToAsync<TEntity, TInclude, TFilter, TSorter>(this IQuery<TEntity, TInclude, TFilter, TSorter> query, IQueryable<TEntity> data, Func<IQueryable<TEntity>, IQueryable<TEntity>> securityFilter = null)
+            where TEntity : class, IBaseEntity
+            where TFilter : Filter<TEntity>, new()
+            where TInclude : Include<TEntity>, new()
+            where TSorter : Sorter<TEntity>, new()
+        {
+            var filteredData = data.Include(query.Include).FilterBy(query.Filter);
+            if (securityFilter != null)
+            {
+                filteredData = securityFilter(filteredData);
+            }
+            return await filteredData.SortBy(query.Sorter).PaginateAsync(query);
         }
     }
 }

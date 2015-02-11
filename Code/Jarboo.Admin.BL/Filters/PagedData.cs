@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Data.Entity;
 using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Filters
@@ -71,6 +71,17 @@ namespace Jarboo.Admin.BL.Filters
                 list.Count);
         }
 
+        public static async Task<PagedData<TData>> AllOnOnePageAsync<TData>(IQueryable<TData> source)
+        {
+            var list = await source.ToListAsync();
+
+            return new PagedData<TData>(
+                list,
+                int.MaxValue,
+                1,
+                list.Count);
+        }
+
         /// <summary>
         ///  Creates <see cref="PagedData"/>.
         /// </summary>
@@ -93,6 +104,15 @@ namespace Jarboo.Admin.BL.Filters
         {
             return new PagedData<TEntity>(
                 source.Skip(pageNumber * pageSize).Take(pageSize).ToList(),
+                pageSize,
+                pageNumber,
+                source.Count());
+        }
+
+        public static async Task<PagedData<TEntity>> CreateAsync<TEntity>(int pageSize, int pageNumber, IQueryable<TEntity> source)
+        {
+            return new PagedData<TEntity>(
+                await source.Skip(pageNumber * pageSize).Take(pageSize).ToListAsync(),
                 pageSize,
                 pageNumber,
                 source.Count());

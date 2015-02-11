@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,10 @@ namespace Jarboo.Admin.DAL.Extensions
         public static Project ById(this IQueryable<Project> query, int projectId)
         {
             return query.FirstOrDefault(x => x.ProjectId == projectId);
+        }
+        public static async Task<Project> ByIdAsync(this IQueryable<Project> query, int projectId)
+        {
+            return await query.FirstOrDefaultAsync(x => x.ProjectId == projectId);
         }
     }
 }

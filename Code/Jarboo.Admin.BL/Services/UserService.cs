@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Models;
@@ -34,7 +35,10 @@ namespace Jarboo.Admin.BL.Services
         {
             return query.FirstOrDefault(x => x.Id == id);
         }
-
+        protected override async Task<User> FindAsync(string id, IQueryable<User> query)
+        {
+            return await query.FirstOrDefaultAsync(x => x.Id == id);
+        }
         protected override string SecurityEntities
         {
             get { return Rights.Users.Name; }
