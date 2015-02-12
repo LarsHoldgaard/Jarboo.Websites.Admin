@@ -146,6 +146,8 @@ namespace Jarboo.Admin.BL.Services
             Table.Attach(entity);
             entity.DateModified = DateTime.Now;
             
+            UnitOfWork.Entry(entity).State = EntityState.Modified;
+
             Save(entity, model);
         }
         protected virtual void Save<TM>(T entity, TM model)
