@@ -53,8 +53,14 @@ namespace Jarboo.Admin.BL
 
             var list = new List<string>();
 
+            if (Filter != null) list.Add(Filter.ToString());
+            if (Include != null) list.Add(Include.ToString());
+            if (Sorter != null) list.Add(Sorter.ToString());
+
             foreach (var prop in type.GetProperties())
             {
+                if (prop.Name == "Filter" || prop.Name == "Include" || prop.Name == "Sorter") continue;
+
                 var value = GetValue(prop.GetValue(this));
 
                 if (String.IsNullOrEmpty(value)) continue;

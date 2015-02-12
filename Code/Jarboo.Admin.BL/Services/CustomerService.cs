@@ -10,6 +10,7 @@ using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.BL.Services.Interfaces;
+using System.Reflection;
 
 namespace Jarboo.Admin.BL.Services
 {
@@ -26,12 +27,24 @@ namespace Jarboo.Admin.BL.Services
         
         protected override Customer Find(int id, IQueryable<Customer> query)
         {
-            return query.FirstOrDefault(x => x.CustomerId == id);
+            Type type = typeof(Customer);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Customer)this.CacheService.GetById(cacheKey);
+
+            var customer = query.FirstOrDefault(x => x.CustomerId == id);
+            this.CacheService.Create(cacheKey, customer);
+            return customer;
         }
 
         protected override async System.Threading.Tasks.Task<Customer> FindAsync(int id, IQueryable<Customer> query)
         {
-            return await query.FirstOrDefaultAsync(x => x.CustomerId == id);
+            Type type = typeof(Customer);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Customer)this.CacheService.GetById(cacheKey);
+
+            var customer = await query.FirstOrDefaultAsync(x => x.CustomerId == id);
+            this.CacheService.Create(cacheKey, customer);
+            return customer;
         }
 
         protected override string SecurityEntities
@@ -53,6 +66,19 @@ namespace Jarboo.Admin.BL.Services
 
             var entity = new Customer();
             Add(entity, model);
+            ClearCache();
+        }
+
+        private void ClearCache()
+        {
+            try
+            {
+                Type type = typeof(Customer);
+                this.CacheService.DeleteByContaining(type.Name);
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

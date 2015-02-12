@@ -84,14 +84,14 @@ namespace Jarboo.Admin.BL.Services
 
         public PagedData<T> GetAll(IQuery<T, Include<T>, Filter<T>, Sorter<T>> query)
         {
-            Type type = typeof(T);
-            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, query.ToString());
-            if (this.CacheService.ContainsKey(cacheKey)) return (PagedData<T>)this.CacheService.GetById(cacheKey);
-
             if (Cannot(Rights.ViewAll) && Cannot(Rights.ViewSpecial))
             {
                 return PagedData.AllOnOnePage(Enumerable.Empty<T>().AsQueryable());
             }
+
+            Type type = typeof(T);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, query.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (PagedData<T>)this.CacheService.GetById(cacheKey);
 
             Func<IQueryable<T>, IQueryable<T>> securityFilter = null;
             if (Cannot(Rights.ViewAll))
@@ -99,7 +99,10 @@ namespace Jarboo.Admin.BL.Services
                 securityFilter = this.FilterCanView;
             }
 
-            return query.ApplyTo(TableNoTracking, securityFilter);
+            var results = query.ApplyTo(TableNoTracking, securityFilter);
+            this.CacheService.Create(cacheKey, results);
+
+            return results;
         }
 
         public async Task<PagedData<T>> GetAllAsync(IQuery<T, Include<T>, Filter<T>, Sorter<T>> query)
@@ -109,13 +112,20 @@ namespace Jarboo.Admin.BL.Services
                 return await PagedData.AllOnOnePageAsync(Enumerable.Empty<T>().AsQueryable());
             }
 
+            Type type = typeof(T);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, query.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (PagedData<T>)this.CacheService.GetById(cacheKey);
+
             Func<IQueryable<T>, IQueryable<T>> securityFilter = null;
             if (Cannot(Rights.ViewAll))
             {
                 securityFilter = this.FilterCanView;
             }
 
-            return await query.ApplyToAsync(TableNoTracking, securityFilter);
+            var results = await query.ApplyToAsync(TableNoTracking, securityFilter);
+            this.CacheService.Create(cacheKey, results);
+
+            return results;
         }
 
         protected virtual bool HasAccessTo(T entity)

@@ -12,6 +12,7 @@ using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
 using Jarboo.Admin.BL.Services.Interfaces;
+using System.Reflection;
 
 namespace Jarboo.Admin.BL.Services
 {
@@ -30,12 +31,24 @@ namespace Jarboo.Admin.BL.Services
 
         protected override SpentTime Find(int id, IQueryable<SpentTime> query)
         {
-            return query.ById(id);
+            Type type = typeof(SpentTime);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (SpentTime)this.CacheService.GetById(cacheKey);
+
+            var spentTime = query.ById(id);
+            this.CacheService.Create(cacheKey, spentTime);
+            return spentTime;
         }
 
         protected override async Task<SpentTime> FindAsync(int id, IQueryable<SpentTime> query)
         {
-            return await query.ByIdAsync(id);
+            Type type = typeof(SpentTime);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (SpentTime)this.CacheService.GetById(cacheKey);
+
+            var spentTime = await query.ByIdAsync(id);
+            this.CacheService.Create(cacheKey, spentTime);
+            return spentTime;
         }
 
         protected override string SecurityEntities
@@ -101,6 +114,7 @@ namespace Jarboo.Admin.BL.Services
             FillNewlyCreated(entity, model.EmployeeId);
 
             Add(entity, model);
+            ClearCache();
         }
 
         public void SpentTimeOnProject(SpentTimeOnProject model, IBusinessErrorCollection errors)
@@ -114,6 +128,7 @@ namespace Jarboo.Admin.BL.Services
             FillNewlyCreated(entity, model.EmployeeId);
 
             Add(entity, model);
+            ClearCache();
         }
 
         public bool CanAccept()
@@ -140,6 +155,7 @@ namespace Jarboo.Admin.BL.Services
             CheckCanAccept();
 
             UnitOfWork.SaveChanges();
+            ClearCache();
         }
         
         public void CheckCanDeny()
@@ -161,6 +177,19 @@ namespace Jarboo.Admin.BL.Services
             CheckCanDeny();
 
             UnitOfWork.SaveChanges();
+            ClearCache();
+        }
+
+        private void ClearCache()
+        {
+            try
+            {
+                Type type = typeof(SpentTime);
+                this.CacheService.DeleteByContaining(type.Name);
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

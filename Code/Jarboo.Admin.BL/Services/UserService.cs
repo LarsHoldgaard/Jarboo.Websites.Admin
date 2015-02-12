@@ -14,6 +14,7 @@ using Jarboo.Admin.DAL.Extensions;
 
 using Microsoft.AspNet.Identity;
 using Jarboo.Admin.BL.Services.Interfaces;
+using System.Reflection;
 
 namespace Jarboo.Admin.BL.Services
 {
@@ -33,11 +34,23 @@ namespace Jarboo.Admin.BL.Services
         }
         protected override User Find(string id, IQueryable<User> query)
         {
-            return query.FirstOrDefault(x => x.Id == id);
+            Type type = typeof(User);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (User)this.CacheService.GetById(cacheKey);
+
+            var user = query.FirstOrDefault(x => x.Id == id);
+            this.CacheService.Create(cacheKey, user);
+            return user;
         }
         protected override async Task<User> FindAsync(string id, IQueryable<User> query)
         {
-            return await query.FirstOrDefaultAsync(x => x.Id == id);
+            Type type = typeof(User);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (User)this.CacheService.GetById(cacheKey);
+
+            var user = await query.FirstOrDefaultAsync(x => x.Id == id);
+            this.CacheService.Create(cacheKey, user);
+            return user;
         }
         protected override string SecurityEntities
         {
@@ -125,6 +138,8 @@ namespace Jarboo.Admin.BL.Services
                     UnitOfWork.SaveChanges();
 
                     transaction.Commit();
+
+                    ClearCache();
                 }
                 catch (Exception)
                 {
@@ -155,6 +170,7 @@ namespace Jarboo.Admin.BL.Services
                 errors.AddErrorsFromResult(result);
                 return;
             }
+            ClearCache();
         }
 
         private void CheckCanSetPassword(User entity)
@@ -193,6 +209,20 @@ namespace Jarboo.Admin.BL.Services
             {
                 errors.AddErrorsFromResult(result);
                 return;
+            }
+
+            ClearCache();
+        }
+
+        private void ClearCache()
+        {
+            try
+            {
+                Type type = typeof(User);
+                this.CacheService.DeleteByContaining(type.Name);
+            }
+            catch (Exception)
+            {
             }
         }
     }

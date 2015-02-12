@@ -78,6 +78,7 @@ namespace Jarboo.Admin.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<ICacheService>().To<HttpCacheService>().InSingletonScope();
             kernel.Bind<ITaskRegister>().To<NoopTaskRegister>().InRequestScope();
 
             if (Configuration.Instance.UseGoogleDrive)

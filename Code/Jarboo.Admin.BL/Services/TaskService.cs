@@ -14,6 +14,7 @@ using Jarboo.Admin.DAL.Extensions;
 
 using Task = Jarboo.Admin.DAL.Entities.Task;
 using Jarboo.Admin.BL.Services.Interfaces;
+using System.Reflection;
 
 namespace Jarboo.Admin.BL.Services
 {
@@ -39,11 +40,23 @@ namespace Jarboo.Admin.BL.Services
         }
         protected override Task Find(int id, IQueryable<Task> query)
         {
-            return query.ById(id);
+            Type type = typeof(Task);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Task)this.CacheService.GetById(cacheKey);
+
+            var task = query.ById(id);
+            this.CacheService.Create(cacheKey, task);
+            return task;
         }
         protected override async System.Threading.Tasks.Task<Task> FindAsync(int id, IQueryable<Task> query)
         {
-            return await query.ByIdAsync(id);
+            Type type = typeof(Task);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Task)this.CacheService.GetById(cacheKey);
+
+            var task = await query.ByIdAsync(id);
+            this.CacheService.Create(cacheKey, task);
+            return task;
         }
         protected override string SecurityEntities
         {
@@ -106,6 +119,7 @@ namespace Jarboo.Admin.BL.Services
                 });
 
                 Add(entity, model);
+                ClearCache();
             }
             catch (ApplicationException ex)
             {
@@ -239,6 +253,7 @@ namespace Jarboo.Admin.BL.Services
             try
             {
                 UnitOfWork.SaveChanges();
+                ClearCache();
             }
             catch (Exception)
             {
@@ -274,6 +289,20 @@ namespace Jarboo.Admin.BL.Services
 
             this.DeleteFolder(customer.Name, entity.Identifier());
             this.UnregisterTask(entity.Project.Name, entity.Identifier());
+
+            ClearCache();
+        }
+
+        private void ClearCache()
+        {
+            try
+            {
+                Type type = typeof(Task);
+                this.CacheService.DeleteByContaining(type.Name);
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

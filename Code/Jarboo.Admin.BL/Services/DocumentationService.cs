@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,12 +26,24 @@ namespace Jarboo.Admin.BL.Services
         }
         protected override Documentation Find(int id, IQueryable<Documentation> query)
         {
-            return query.FirstOrDefault(x => x.DocumentationId == id);
+            Type type = typeof(Documentation);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Documentation)this.CacheService.GetById(cacheKey);
+
+            var doc = query.FirstOrDefault(x => x.DocumentationId == id);
+            this.CacheService.Create(cacheKey, doc);
+            return doc;
         }
 
         protected override async Task<Documentation> FindAsync(int id, IQueryable<Documentation> query)
         {
-            return await query.FirstOrDefaultAsync(x => x.DocumentationId == id);
+            Type type = typeof(Documentation);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Documentation)this.CacheService.GetById(cacheKey);
+
+            var doc = await query.FirstOrDefaultAsync(x => x.DocumentationId == id);
+            this.CacheService.Create(cacheKey, doc);
+            return doc;
         }
 
         protected override string SecurityEntities
@@ -74,6 +87,8 @@ namespace Jarboo.Admin.BL.Services
                 var entity = new Documentation { DocumentationId = model.DocumentationId };
                 Edit(entity, model);
             }
+
+            ClearCache();
         }
 
         public void Delete(int documentationId, IBusinessErrorCollection errors)
@@ -87,6 +102,20 @@ namespace Jarboo.Admin.BL.Services
             {
                 DocumentationId = documentationId
             });
+
+            ClearCache();
+        }
+
+        private void ClearCache()
+        {
+            try
+            {
+                Type type = typeof(Documentation);
+                this.CacheService.DeleteByContaining(type.Name);
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

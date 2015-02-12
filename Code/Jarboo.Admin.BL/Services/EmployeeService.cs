@@ -14,6 +14,7 @@ using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
 using Microsoft.AspNet.Identity;
 using Jarboo.Admin.BL.Services.Interfaces;
+using System.Reflection;
 
 namespace Jarboo.Admin.BL.Services
 {
@@ -37,12 +38,26 @@ namespace Jarboo.Admin.BL.Services
         }
         protected override Employee Find(int id, IQueryable<Employee> query)
         {
-            return query.ById(id);
+            Type type = typeof(Employee);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Employee)this.CacheService.GetById(cacheKey);
+
+            var employee = query.ById(id);
+            this.CacheService.Create(cacheKey, employee);
+            return employee;
         }
+
         protected override async System.Threading.Tasks.Task<Employee> FindAsync(int id, IQueryable<Employee> query)
         {
-            return await query.ByIdAsync(id);
+            Type type = typeof(Employee);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Employee)this.CacheService.GetById(cacheKey);
+
+            var employee = await query.ByIdAsync(id);
+            this.CacheService.Create(cacheKey, employee);
+            return employee;
         }
+
         protected override string SecurityEntities
         {
             get { return Rights.Employees.Name; }
@@ -155,6 +170,18 @@ namespace Jarboo.Admin.BL.Services
             catch (Exception ex)
             {
                 throw new ApplicationException("Could not set responsible for task", ex);
+            }
+        }
+    
+        private void ClearCache()
+        {
+            try
+            {
+                Type type = typeof(Employee);
+                this.CacheService.DeleteByContaining(type.Name);
+            }
+            catch (Exception)
+            {
             }
         }
     }
