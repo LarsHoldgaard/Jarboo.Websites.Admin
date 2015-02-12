@@ -23,8 +23,8 @@ namespace Jarboo.Admin.BL.Services
         protected ITaskStepEmployeeStrategy TaskStepEmployeeStrategy { get; set; }
         public UserManager<User> UserManager { get; set; }
 
-        public EmployeeService(IUnitOfWork unitOfWork, IAuth auth, ITaskRegister taskRegister, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, UserManager<User> userManager)
-            : base(unitOfWork, auth)
+        public EmployeeService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService, ITaskRegister taskRegister, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, UserManager<User> userManager)
+            : base(unitOfWork, auth, cacheService)
         {
             TaskStepEmployeeStrategy = taskStepEmployeeStrategy;
             TaskRegister = taskRegister;

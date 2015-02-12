@@ -67,6 +67,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -122,6 +123,8 @@
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\DocumentationService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\HttpCacheService.cs" />
+    <Compile Include="Services\Interfaces\ICacheService.cs" />
     <Compile Include="Services\Interfaces\IEntityService.cs" />
     <Compile Include="Services\Interfaces\IAccountService.cs" />
     <Compile Include="Services\Interfaces\ICustomerService.cs" />

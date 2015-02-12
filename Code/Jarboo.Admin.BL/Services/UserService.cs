@@ -21,8 +21,8 @@ namespace Jarboo.Admin.BL.Services
     {
         public UserManager<User> UserManager { get; set; }
 
-        public UserService(IUnitOfWork unitOfWork, IAuth auth, UserManager<User> userManager)
-            : base(unitOfWork, auth)
+        public UserService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService, UserManager<User> userManager)
+            : base(unitOfWork, auth, cacheService)
         {
             UserManager = userManager;
         }

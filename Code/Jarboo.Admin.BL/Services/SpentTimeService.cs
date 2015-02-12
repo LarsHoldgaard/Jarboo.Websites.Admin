@@ -17,8 +17,8 @@ namespace Jarboo.Admin.BL.Services
 {
     public class SpentTimeService : BaseEntityService<int, SpentTime>, ISpentTimeService
     {
-        public SpentTimeService(IUnitOfWork unitOfWork, IAuth auth)
-            : base(unitOfWork, auth)
+        public SpentTimeService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService)
+            : base(unitOfWork, auth, cacheService)
         {
             
         }
@@ -27,24 +27,29 @@ namespace Jarboo.Admin.BL.Services
         {
             get { return UnitOfWork.SpentTimes; }
         }
+
         protected override SpentTime Find(int id, IQueryable<SpentTime> query)
         {
             return query.ById(id);
         }
+
         protected override async Task<SpentTime> FindAsync(int id, IQueryable<SpentTime> query)
         {
             return await query.ByIdAsync(id);
         }
+
         protected override string SecurityEntities
         {
             get { return Rights.SpentTime.Name; }
         }
+
         protected override IQueryable<SpentTime> FilterCanView(IQueryable<SpentTime> query)
         {
             return query.Where(x => (x.ProjectId.HasValue && x.Project.CustomerId == UserCustomerId) || 
                 (x.TaskId.HasValue && x.TaskStep.Task.Project.CustomerId == UserCustomerId) ||
                 x.EmployeeId == UserEmployeeId);
         }
+
         protected override bool HasAccessTo(SpentTime entity)
         {
             if (entity.SpentTimeId != 0)
@@ -97,6 +102,7 @@ namespace Jarboo.Admin.BL.Services
 
             Add(entity, model);
         }
+
         public void SpentTimeOnProject(SpentTimeOnProject model, IBusinessErrorCollection errors)
         {
             if (!model.Validate(errors))
@@ -114,6 +120,7 @@ namespace Jarboo.Admin.BL.Services
         {
             return Can(Rights.SpentTime.AcceptAny);
         }
+
         public void CheckCanAccept()
         {
             if (!CanAccept())
@@ -121,6 +128,7 @@ namespace Jarboo.Admin.BL.Services
                 this.OnAccessDenied();
             }
         }
+
         public void Accept(int id, IBusinessErrorCollection errors)
         {
             var entity = Table.ByIdMust(id);
@@ -141,6 +149,7 @@ namespace Jarboo.Admin.BL.Services
                 this.OnAccessDenied();
             }
         }
+
         public void Deny(int id, IBusinessErrorCollection errors)
         {
             var entity = Table.ByIdMust(id);

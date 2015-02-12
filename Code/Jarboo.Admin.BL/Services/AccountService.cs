@@ -23,8 +23,9 @@ namespace Jarboo.Admin.BL.Services
         public UserManager<User> UserManager { get; set; }
         public IEmailer Emailer { get; set; }
 
-        public AccountService(IUnitOfWork unitOfWork, IAuth auth, UserManager<User> userManager, IEmailer emailer)
-            : base(unitOfWork, auth)
+
+        public AccountService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService, UserManager<User> userManager, IEmailer emailer)
+            : base(unitOfWork, auth, cacheService)
         {
             UserManager = userManager;
             Emailer = emailer;

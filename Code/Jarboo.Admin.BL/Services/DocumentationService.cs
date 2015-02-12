@@ -15,8 +15,8 @@ namespace Jarboo.Admin.BL.Services
 {
     public class DocumentationService : BaseEntityService<int, Documentation>, IDocumentationService
     {
-        public DocumentationService(IUnitOfWork unitOfWork, IAuth auth)
-            : base(unitOfWork, auth)
+        public DocumentationService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService)
+            : base(unitOfWork, auth, cacheService)
         { }
 
         protected override IDbSet<Documentation> Table

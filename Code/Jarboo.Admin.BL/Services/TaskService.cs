@@ -24,8 +24,8 @@ namespace Jarboo.Admin.BL.Services
         protected ITaskStepEmployeeStrategy TaskStepEmployeeStrategy { get; set; }
         protected INotifier Notifier { get; set; }
 
-        public TaskService(IUnitOfWork unitOfWork, IAuth auth, ITaskRegister taskRegister, IFolderCreator folderCreator, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, INotifier notifier)
-            : base(unitOfWork, auth)
+        public TaskService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService, ITaskRegister taskRegister, IFolderCreator folderCreator, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, INotifier notifier)
+            : base(unitOfWork, auth, cacheService)
         {
             TaskRegister = taskRegister;
             FolderCreator = folderCreator;

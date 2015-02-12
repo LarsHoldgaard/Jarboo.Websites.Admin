@@ -15,8 +15,8 @@ namespace Jarboo.Admin.BL.Services
 {
     public class CustomerService : BaseEntityService<int, Customer>, ICustomerService
     {
-        public CustomerService(IUnitOfWork unitOfWork, IAuth auth)
-            : base(unitOfWork, auth)
+        public CustomerService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService)
+            : base(unitOfWork, auth, cacheService)
         { }
 
         protected override System.Data.Entity.IDbSet<Customer> Table
@@ -38,6 +38,7 @@ namespace Jarboo.Admin.BL.Services
         {
             get { return Rights.Customers.Name; }
         }
+
         protected override IQueryable<Customer> FilterCanView(IQueryable<Customer> query)
         {
             return query.Where(x => x.CustomerId == UserCustomerId || x.Projects.Any(y => y.Tasks.Any(z => z.Steps.Any(a => a.EmployeeId == UserEmployeeId))));

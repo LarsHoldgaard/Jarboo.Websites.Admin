@@ -19,8 +19,8 @@ namespace Jarboo.Admin.BL.Services
     {
         protected ITaskRegister TaskRegister { get; set; }
 
-        public ProjectService(IUnitOfWork unitOfWork, IAuth auth, ITaskRegister taskRegister)
-            : base(unitOfWork, auth)
+        public ProjectService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService, ITaskRegister taskRegister)
+            : base(unitOfWork, auth, cacheService)
         {
             TaskRegister = taskRegister;
         }
@@ -29,22 +29,27 @@ namespace Jarboo.Admin.BL.Services
         {
             get { return UnitOfWork.Projects; }
         }
+
         protected override Project Find(int id, IQueryable<Project> query)
         {
             return query.ByIdMust(id);
         }
+
         protected override async Task<Project> FindAsync(int id, IQueryable<Project> query)
         {
             return await query.ByIdAsync(id);
         }
+
         protected override string SecurityEntities
         {
             get { return Rights.Projects.Name; }
         }
+
         protected override IQueryable<Project> FilterCanView(IQueryable<Project> query)
         {
             return query.Where(x => x.CustomerId == UserCustomerId || x.Tasks.Any(y => y.Steps.Any(z => z.EmployeeId == UserEmployeeId)));
         }
+
         protected override bool HasAccessTo(Project entity)
         {
             if (entity.CustomerId != 0)
