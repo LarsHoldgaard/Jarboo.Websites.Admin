@@ -18,6 +18,7 @@ namespace Jarboo.Admin.Integration.Mandrill
         public MandrillNotifierEmailer(IMandrillConfiguration configuration)
         {
             this.Configuration = configuration;
+            EnsureService();
         }
 
         private IMandrillConfiguration Configuration { get; set; }
@@ -30,8 +31,6 @@ namespace Jarboo.Admin.Integration.Mandrill
 
         public void TaskResponsibleChanged(TaskResponsibleChangedData data)
         {
-            this.EnsureService();
-
             var result = api.SendMessage(
                 new EmailAddress[] { new EmailAddress(data.EmployeeEmail) },
                 Configuration.TaskResponsibleChangedNotificationSubject,
@@ -43,8 +42,6 @@ namespace Jarboo.Admin.Integration.Mandrill
 
         public void SendPasswordRecoveryEmail(string email, string link)
         {
-            this.EnsureService();
-
             var result = api.SendMessage(
                 new EmailAddress[] { new EmailAddress(email) },
                 "Jarbo password recovery",
