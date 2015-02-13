@@ -23,8 +23,6 @@ namespace Jarboo.Admin.BL.Models
         public string Email { get; set; }
         public string SkypeName { get; set; }
         [Required]
-        public string TrelloId { get; set; }
-        [Required]
         public string Country { get; set; }
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
         public double HourlyPrice { get; set; }
