@@ -17,6 +17,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
 using Ninject;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.Web.Controllers
 {
@@ -32,11 +33,11 @@ namespace Jarboo.Admin.Web.Controllers
         public virtual ActionResult Login(string returnUrl = "")
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View(new LoginVM());
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
-        public virtual ActionResult Login(LoginVM model, string returnUrl = "")
+        public virtual ActionResult Login(LoginViewModel model, string returnUrl = "")
         {
             if (!ModelState.IsValid)
             {
@@ -73,7 +74,7 @@ namespace Jarboo.Admin.Web.Controllers
         public virtual ActionResult Register(UserCreate model, string returnUrl = "")
         {
             return Handle(model, AccountService.Register,
-                () => this.Login(new LoginVM()
+                () => this.Login(new LoginViewModel()
                                 {
                                     Email = model.Email,
                                     Password = model.Password,
@@ -220,7 +221,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         public virtual ActionResult Index()
         {
-            var users = UserService.GetAll(Query.ForUser().Include(x => x.Customer().Employee().Roles())).Decorate<User, UserVM>();
+            var users = UserService.GetAll(Query.ForUser().Include(x => x.Customer().Employee().Roles())).Decorate<User, UserViewModel>();
             var roles = RoleManager.Roles.ToList();
             foreach (var user in users)
             {
@@ -233,11 +234,11 @@ namespace Jarboo.Admin.Web.Controllers
 
         public virtual ActionResult RecoverPassword()
         {
-            return base.View(new PasswordRecoverVM());
+            return base.View(new PasswordRecoverViewModel());
         }
 
         [HttpPost]
-        public virtual ActionResult RecoverPassword(PasswordRecoverVM model)
+        public virtual ActionResult RecoverPassword(PasswordRecoverViewModel model)
         {
             var recoverUlrTemplate = string.Format("{0}?userId={{0}}&code={{1}}", this.Url.ActionAbsolute(MVC.Accounts.ResetPassword()));
 

@@ -9,6 +9,7 @@ using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Services;
 
 using Ninject;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.Web.Controllers
 {

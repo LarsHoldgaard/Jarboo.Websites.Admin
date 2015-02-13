@@ -14,23 +14,18 @@ using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
 
 using Microsoft.AspNet.Identity;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface IAccountService
-    {
-        void Register(UserCreate model, IBusinessErrorCollection errors);
-        void RecoverPassword(PasswordRecover model, IBusinessErrorCollection errors);
-        void ResetPassword(ResetPassword model, IBusinessErrorCollection errors);
-    }
-
     public class AccountService : BaseService, IAccountService
     {
         public UserManager<User> UserManager { get; set; }
         public IEmailer Emailer { get; set; }
 
-        public AccountService(IUnitOfWork unitOfWork, IAuth auth, UserManager<User> userManager, IEmailer emailer)
-            : base(unitOfWork, auth)
+
+        public AccountService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService, UserManager<User> userManager, IEmailer emailer)
+            : base(unitOfWork, auth, cacheService)
         {
             UserManager = userManager;
             Emailer = emailer;

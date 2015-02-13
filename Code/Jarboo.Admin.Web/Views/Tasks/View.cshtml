@@ -1,6 +1,7 @@
 ﻿@using System.Linq
 @using Jarboo.Admin.BL.Filters
-@model Jarboo.Admin.Web.Models.Task.TaskVM
+@using SmartAdminMvc
+@model Jarboo.Admin.Web.Models.Task.TaskViewModel
 
 @{
         ViewBag.Title = Model.FullTitle();
@@ -9,18 +10,14 @@
 
 <!-- RIBBON -->
 <div id="ribbon">
-    <span class="ribbon-button-alignment">
-        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
-						<i class="fa fa-refresh"></i>
-					</span>
-    </span>
+    @Html.Partial("_RibbonRefresh")
+
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder(this)
-            .Add(MVC.Customers.View(Model.Project.CustomerId), Model.Project.Customer.Name)
-            .Add(MVC.Projects.View(Model.ProjectId), Model.Project.Name)
-            .Add(Model.FullTitle())
-            .Done())
+        @Html.RenderBreadCrumbs(this,
+                     new BreadCrumbItem(MVC.Customers.View(Model.Project.CustomerId), Model.Project.Customer.Name),
+                     new BreadCrumbItem(MVC.Projects.View(Model.ProjectId), Model.Project.Name),
+                     new BreadCrumbItem(Model.FullTitle()))
     </ol>
     <!-- end breadcrumb -->
 </div>
@@ -135,21 +132,6 @@
                                                 else
                                                 {
                                                     <a target="_blank" href="@Model.FolderLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
-                                                }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Card
-                                            </td>
-                                            <td>
-                                                @if (string.IsNullOrEmpty(Model.CardLink))
-                                                {
-                                                    <span>Missing</span>
-                                                }
-                                                else
-                                                {
-                                                    <a target="_blank" href="@Model.CardLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
                                                 }
                                             </td>
                                         </tr>

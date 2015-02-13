@@ -19,6 +19,7 @@ using Jarboo.Admin.Web.Models.Documentation;
 using Jarboo.Admin.Web.Models.Project;
 
 using Ninject;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.Web.Controllers
 {
@@ -90,7 +91,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         private ActionResult CreateEditView(ProjectEdit model)
         {
-            ViewBag.BoardNames = new SelectList(TaskRegister.BoardNames(), model.BoardName);
+            ViewBag.BoardNames = new SelectList(TaskRegister.ProjectNames(), model.BoardName);
             ViewBag.Customer = CustomerService.GetById(model.CustomerId);
             return View(model);
         }

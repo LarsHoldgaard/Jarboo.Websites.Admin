@@ -1,0 +1,110 @@
+﻿@using SmartAdminMvc
+
+@model Jarboo.Admin.Web.Models.SettingsViewModel
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- RIBBON -->
+<div id="ribbon">
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-7">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-5" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+                <!-- widget options:
+                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                data-widget-colorbutton="false"
+                data-widget-editbutton="false"
+                data-widget-togglebutton="false"
+                data-widget-deletebutton="false"
+                data-widget-fullscreenbutton="false"
+                data-widget-custombutton="false"
+                data-widget-collapsed="true"
+                data-widget-sortable="false"
+
+                -->
+                <header>
+                    <span class="widget-icon"><i class="fa fa-cog"></i></span>
+                    <h2>Edit </h2>
+                </header>
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+                        @using (Html.BeginForm("Settings", "Admin", FormMethod.Post, new { @class = "smart-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <header>
+                                Change settings
+                            </header>
+                            <fieldset>
+                                <section>
+                                    @Html.LabelFor(model => model.UseGoogleDrive, "Use Google Drive", new { @class = "label" })
+                                    <label class="cke_dialog_ui_checkbox_input">
+                                        @Html.CheckBoxFor(x => x.UseGoogleDrive)
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.GoogleApiKey, "Google Api Key", new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.GoogleApiKey, new { @placeholder = "Google Api Key" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.GoogleApiSecret, "Google Api Secret", new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.GoogleApiSecret, new { @placeholder = "Google Api Secret" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.GoogleRefreshToken, "Google Refresh Token", new { @class = "label" })
+                                    <label class="input">
+                                        <a href="@Url.Action("RequestRefreshToken", "Admin")">Fetch token here</a>
+                                        <br />
+                                        @Html.TextBoxFor(x => x.GoogleRefreshToken, new { @placeholder = "Google Refresh Token" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.GoogleDrivePath, "Drive Path", new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.GoogleDrivePath, new { @placeholder = "Drive Path" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.GoogleTemplatePath, "Template Path", new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.GoogleTemplatePath, new { @placeholder = "Template Path" })
+                                    </label>
+                                </section>
+                            </fieldset>
+                            <footer>
+                                <button type="submit" class="btn btn-primary">
+                                    Save
+                                </button>
+                            </footer>
+                        }
+                    </div>
+                    <!-- end widget content -->
+                </div>
+                <!-- end widget div -->
+            </div>
+            <!-- end widget -->
+        </article>
+    </div>
+    <!-- end row -->
+</div>

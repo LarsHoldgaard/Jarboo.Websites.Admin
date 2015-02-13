@@ -261,10 +261,10 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void LoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Account.LoginVM model, string returnUrl);
+        partial void LoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Account.LoginViewModel model, string returnUrl);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Login(Jarboo.Admin.Web.Models.Account.LoginVM model, string returnUrl)
+        public override System.Web.Mvc.ActionResult Login(Jarboo.Admin.Web.Models.Account.LoginViewModel model, string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Login);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -428,10 +428,10 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void RecoverPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Account.PasswordRecoverVM model);
+        partial void RecoverPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Account.PasswordRecoverViewModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult RecoverPassword(Jarboo.Admin.Web.Models.Account.PasswordRecoverVM model)
+        public override System.Web.Mvc.ActionResult RecoverPassword(Jarboo.Admin.Web.Models.Account.PasswordRecoverViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RecoverPassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

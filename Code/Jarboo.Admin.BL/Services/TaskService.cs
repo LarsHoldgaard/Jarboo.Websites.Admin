@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
 
 using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Models;
@@ -14,18 +13,11 @@ using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
 
 using Task = Jarboo.Admin.DAL.Entities.Task;
+using Jarboo.Admin.BL.Services.Interfaces;
+using System.Reflection;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface ITaskService : IEntityService<int, Task>
-    {
-        void Create(TaskCreate model, IBusinessErrorCollection errors);
-
-        void NextStep(TaskNextStep model, IBusinessErrorCollection errors);
-
-        void Delete(int taskId, IBusinessErrorCollection errors);
-    }
-
     public class TaskService : BaseEntityService<int, Task>, ITaskService
     {
         protected ITaskRegister TaskRegister { get; set; }
@@ -33,8 +25,8 @@ namespace Jarboo.Admin.BL.Services
         protected ITaskStepEmployeeStrategy TaskStepEmployeeStrategy { get; set; }
         protected INotifier Notifier { get; set; }
 
-        public TaskService(IUnitOfWork unitOfWork, IAuth auth, ITaskRegister taskRegister, IFolderCreator folderCreator, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, INotifier notifier)
-            : base(unitOfWork, auth)
+        public TaskService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService, ITaskRegister taskRegister, IFolderCreator folderCreator, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, INotifier notifier)
+            : base(unitOfWork, auth, cacheService)
         {
             TaskRegister = taskRegister;
             FolderCreator = folderCreator;
@@ -48,9 +40,24 @@ namespace Jarboo.Admin.BL.Services
         }
         protected override Task Find(int id, IQueryable<Task> query)
         {
-            return query.ById(id);
-        }
+            Type type = typeof(Task);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Task)this.CacheService.GetById(cacheKey);
 
+            var task = query.ById(id);
+            this.CacheService.Create(cacheKey, task);
+            return task;
+        }
+        protected override async System.Threading.Tasks.Task<Task> FindAsync(int id, IQueryable<Task> query)
+        {
+            Type type = typeof(Task);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Task)this.CacheService.GetById(cacheKey);
+
+            var task = await query.ByIdAsync(id);
+            this.CacheService.Create(cacheKey, task);
+            return task;
+        }
         protected override string SecurityEntities
         {
             get { return Rights.Tasks.Name; }
@@ -92,20 +99,17 @@ namespace Jarboo.Admin.BL.Services
                 this.UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
             var taskIdentifier = model.Identifier();
-            string taskLink = null;
             string folderLink = null;
 
             try
             {
                 folderLink = CreateFolder(customer.Name, taskIdentifier);
 
-                taskLink = RegisterTask(project.BoardName, taskIdentifier, folderLink);
-                ChangeResponsible(project.BoardName, taskIdentifier, taskLink, employee.TrelloId);
+                ChangeResponsible(project.Name, taskIdentifier, employee.EmployeeId.ToString());
 
                 var entity = new Task()
                 {
-                    FolderLink = folderLink,
-                    CardLink = taskLink
+                    FolderLink = folderLink
                 };
 
                 entity.Steps.Add(new TaskStep()
@@ -115,15 +119,16 @@ namespace Jarboo.Admin.BL.Services
                 });
 
                 Add(entity, model);
+                ClearCache();
             }
             catch (ApplicationException ex)
             {
-                this.Cleanup(customer.Name, project.BoardName, taskIdentifier, taskLink, folderLink);
-                throw;
+                this.Cleanup(customer.Name, project.Name, taskIdentifier, folderLink);
+                throw ex;
             }
             catch (Exception ex)
             {
-                this.Cleanup(customer.Name, project.BoardName, taskIdentifier, taskLink, folderLink);
+                this.Cleanup(customer.Name, project.Name, taskIdentifier, folderLink);
                 throw new ApplicationException("Couldn't create task", ex);
             }
 
@@ -152,11 +157,11 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Could not register task in third party service", ex);
             }
         }
-        private void ChangeResponsible(string boardName, string tasktaskIdentifierTitle, string url, string responsibleUserId)
+        private void ChangeResponsible(string boardName, string tasktaskIdentifierTitle, string responsibleUserId)
         {
             try
             {
-                TaskRegister.ChangeResponsible(boardName, tasktaskIdentifierTitle, url, responsibleUserId);
+                TaskRegister.ChangeResponsible(boardName, tasktaskIdentifierTitle, responsibleUserId);
             }
             catch (ApplicationException)
             {
@@ -167,11 +172,11 @@ namespace Jarboo.Admin.BL.Services
                 throw new ApplicationException("Could not set responsible for task", ex);
             }
         }
-        private void UnregisterTask(string boardName, string taskIdentifier, string url)
+        private void UnregisterTask(string boardName, string taskIdentifier)
         {
             try
             {
-                TaskRegister.Unregister(boardName, taskIdentifier, url);
+                TaskRegister.Unregister(boardName, taskIdentifier);
             }
             catch
             { }
@@ -200,12 +205,9 @@ namespace Jarboo.Admin.BL.Services
             catch
             { }
         }
-        private void Cleanup(string customerName, string boardName, string taskIdentifier, string taskLink, string folderLink)
+        private void Cleanup(string customerName, string projectName, string taskIdentifier, string folderLink)
         {
-            if (!string.IsNullOrEmpty(taskLink))
-            {
-                this.UnregisterTask(boardName, taskIdentifier, taskLink);
-            }
+            this.UnregisterTask(projectName, taskIdentifier);
             if (!string.IsNullOrEmpty(folderLink))
             {
                 this.DeleteFolder(customerName, taskIdentifier);
@@ -237,13 +239,13 @@ namespace Jarboo.Admin.BL.Services
                     this.TaskStepEmployeeStrategy.SelectEmployee(nextStep.Value, task.ProjectId) : 
                     this.UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
-                ChangeResponsible(task.Project.BoardName, task.Identifier(), task.CardLink, employee.TrelloId);
+                ChangeResponsible(task.Project.Name, task.Identifier(), employee.EmployeeId.ToString());
 
                 task.Steps.Add(new TaskStep() { EmployeeId = employee.EmployeeId, Step = nextStep.Value });
             }
             else
             {
-                ChangeResponsible(task.Project.BoardName, task.Identifier(), task.CardLink, null);
+                ChangeResponsible(task.Project.Name, task.Identifier(), null);
 
                 task.Done = true;
             }
@@ -251,10 +253,11 @@ namespace Jarboo.Admin.BL.Services
             try
             {
                 UnitOfWork.SaveChanges();
+                ClearCache();
             }
             catch (Exception)
             {
-                ChangeResponsible(task.Project.BoardName, task.Identifier(), task.CardLink, lastStep.Employee.TrelloId);
+                ChangeResponsible(task.Project.Name, task.Identifier(), lastStep.Employee.EmployeeId.ToString());
                 throw;
             }
 
@@ -285,7 +288,21 @@ namespace Jarboo.Admin.BL.Services
             UnitOfWork.SaveChanges();
 
             this.DeleteFolder(customer.Name, entity.Identifier());
-            this.UnregisterTask(entity.Project.BoardName, entity.Identifier(), entity.CardLink);
+            this.UnregisterTask(entity.Project.Name, entity.Identifier());
+
+            ClearCache();
+        }
+
+        private void ClearCache()
+        {
+            try
+            {
+                Type type = typeof(Task);
+                this.CacheService.DeleteByContaining(type.Name);
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

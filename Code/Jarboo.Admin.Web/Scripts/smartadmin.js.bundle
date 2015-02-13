@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<bundle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://vswebessentials.com/schemas/v1/bundle.xsd">
+  <settings>
+    <!--Determines if the bundle file should be automatically optimized after creation/update.-->
+    <minify>true</minify>
+    <!--Determin whether to generate/re-generate this bundle on building the solution.-->
+    <runOnBuild>true</runOnBuild>
+    <!--Specifies a custom subfolder to save files to. By default, compiled output will be placed in the same folder and nested under the original file.-->
+    <outputDirectory />
+  </settings>
+  <!--The order of the <file> elements determines the order of the files in the bundle.-->
+  <files>
+    <!--SmartAdmin-->
+    <file>/scripts/app.config.js</file>
+    <file>/scripts/plugin/jquery-touch/jquery.ui.touch-punch.min.js</file>
+    <file>/scripts/bootstrap/bootstrap.min.js</file>
+    <file>/scripts/notification/SmartNotification.min.js</file>
+    <file>/scripts/smartwidgets/jarvis.widget.min.js</file>
+    <file>/scripts/plugin/jquery-validate/jquery.validate.min.js</file>
+    <file>/scripts/plugin/masked-input/jquery.maskedinput.min.js</file>
+    <file>/scripts/plugin/select2/select2.min.js</file>
+    <file>/scripts/plugin/bootstrap-slider/bootstrap-slider.min.js</file>
+    <file>/scripts/plugin/bootstrap-progressbar/bootstrap-progressbar.min.js</file>
+    <file>/scripts/plugin/msie-fix/jquery.mb.browser.min.js</file>
+    <file>/scripts/plugin/fastclick/fastclick.min.js</file>
+    <file>/scripts/app.min.js</file>
+
+    <!-- Voice command : plugin -->
+    <file>/scripts/speech/voicecommand.min.js</file>
+
+    <!-- SmartChat UI : plugin -->
+    <file>/scripts/smart-chat-ui/smart.chat.ui.min.js</file>
+    <file>/scripts/smart-chat-ui/smart.chat.manager.min.js</file>
+
+    <!-- DataTables : plugin -->
+    <file>/scripts/plugin/datatables/jquery.dataTables.min.js</file>
+    <file>/scripts/plugin/datatables/dataTables.colVis.min.js</file>
+    <file>/scripts/plugin/datatables/dataTables.tableTools.min.js</file>
+    <file>/scripts/plugin/datatables/dataTables.bootstrap.min.js</file>
+    <file>/scripts/plugin/datatable-responsive/datatables.responsive.min.js</file>
+
+    <!-- jQGrid : plugin -->
+    <file>/scripts/plugin/jqgrid/jquery.jqGrid.min.js</file>
+    <file>/scripts/plugin/jqgrid/grid.locale-en.min.js</file>
+
+    <!-- Forms : plugin -->
+    <file>/scripts/plugin/jquery-form/jquery-form.min.js</file>
+
+    <!-- Flot Chart Plugin: Flot Engine, Flot Resizer, Flot Tooltip, Morris, Sparkline, EasyPie -->
+    <file>/scripts/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js</file>
+    <file>/scripts/plugin/sparkline/jquery.sparkline.min.js</file>
+    <file>/scripts/plugin/morris/morris.min.js</file>
+    <file>/scripts/plugin/morris/raphael.min.js</file>
+    <file>/scripts/plugin/flot/jquery.flot.cust.min.js</file>
+    <file>/scripts/plugin/flot/jquery.flot.resize.min.js</file>
+    <file>/scripts/plugin/flot/jquery.flot.time.min.js</file>
+    <file>/scripts/plugin/flot/jquery.flot.fillbetween.min.js</file>
+    <file>/scripts/plugin/flot/jquery.flot.orderBar.min.js</file>
+    <file>/scripts/plugin/flot/jquery.flot.pie.min.js</file>
+    <file>/scripts/plugin/flot/jquery.flot.tooltip.min.js</file>
+    <file>/scripts/plugin/dygraphs/dygraph-combined.min.js</file>
+    <file>/scripts/plugin/chartjs/chart.min.js</file>
+
+    <!-- Vector Maps Plugin: Vectormap engine, Vectormap language -->
+    <file>/scripts/plugin/vectormap/jquery-jvectormap-1.2.2.min.js</file>
+    <file>/scripts/plugin/vectormap/jquery-jvectormap-world-mill-en.js</file>
+
+    <!-- Full Calendar -->
+    <file>/scripts/plugin/moment/moment.min.js</file>
+    <file>/scripts/plugin/fullcalendar/jquery.fullcalendar.min.js</file>
+
+    <!-- Bottom -->
+    <file>/scripts/bootstrap-datepicker.js</file>
+    <file>/scripts/jquery.validate.min.js</file>
+    <file>/scripts/jquery.validate.unobtrusive.min.js</file>
+    <file>/scripts/Site/smartAdmin.dataTable.js</file>
+    <file>/scripts/jquery.bonnet.ajax-dropdownlist.js</file>
+    <file>/scripts/Site/site.js</file>
+  </files>
+</bundle>

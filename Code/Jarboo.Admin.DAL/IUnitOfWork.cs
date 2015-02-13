@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.DAL
@@ -17,6 +18,8 @@ namespace Jarboo.Admin.DAL
         IDbSet<SpentTime> SpentTimes { get; set; }
 
         DbContextTransaction BeginTransaction();
+
+        DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
         int SaveChanges();
     }

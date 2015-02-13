@@ -16,6 +16,8 @@ using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL;
 
 using Ninject;
+using Jarboo.Admin.BL.Services.Interfaces;
+using Jarboo.Admin.Web.Models.Employee;
 
 namespace Jarboo.Admin.Web.Controllers
 {
@@ -29,7 +31,16 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Employees/
         public virtual ActionResult Index()
         {
-            return View(EmployeeService.GetAll(Query.ForEmployee().Include(x => x.Positions())));
+            bool? isHired = null;
+            if (Request.QueryString["IsHired"] != null) isHired = Boolean.Parse(Request.QueryString["IsHired"]);
+            string keywords = Request.QueryString["Query"];
+            var query = Query.ForEmployee(new EmployeeFilter().IsHired(isHired).FilterBy(keywords)).Include(x => x.Positions());
+            var results = EmployeeService.GetAll(query);
+            var model = new EmployeeListViewModel();
+            model.IsHired = isHired;
+            model.Query = keywords;
+            model.Employees = results.Data;
+            return View(model);
         }
 
         // GET: /Employees/View/5

@@ -44,7 +44,6 @@ namespace Jarboo.Admin.DAL.Tests
             var project = new Project()
                               {
                                   Name = "Project",
-                                  BoardName = "BoardName",
                                   Customer = context.EnsureCustomer()
                               };
 
@@ -62,7 +61,6 @@ namespace Jarboo.Admin.DAL.Tests
             var employee = new Employee()
                                {
                                    FullName = "Employee",
-                                   TrelloId = "TrelloId",
                                    Email = "email@email.com",
                                    Country = "Country",
                                };
@@ -100,7 +98,6 @@ namespace Jarboo.Admin.DAL.Tests
                 Title = "Task",
                 Type = TaskType.Bug,
                 Urgency = TaskUrgency.Medium,
-                CardLink = "card",
                 FolderLink = "folder",
                 Size = 1,
                 Project = context.EnsureProject(),

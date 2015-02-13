@@ -1,21 +1,16 @@
 ﻿@using Jarboo.Admin.DAL.Entities
-
+@using SmartAdminMvc
 @{
     ViewBag.Title = "Jarboo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- RIBBON -->
 <div id="ribbon">
-    <span class="ribbon-button-alignment">
-        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
-						<i class="fa fa-refresh"></i>
-					</span>
-    </span>
+    @Html.Partial("_RibbonRefresh")
+
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder(this)
-            .Add("Dashboard")
-            .Done())
+        @Html.RenderBreadCrumbs(this, new BreadCrumbItem("Dashboard"))
     </ol>
     <!-- end breadcrumb -->
 </div>
@@ -42,7 +37,7 @@
                         data-widget-collapsed="true"
                         data-widget-sortable="false"
 
-                    -->
+                        -->
                     <header>
                         <h2><strong>@Html.ActionLink(customer.Name, MVC.Customers.View(customer.CustomerId))</strong></h2>
                         @if (this.Can(MVC.Projects.Create()))
@@ -90,3 +85,4 @@
             </article>
         }
     </div>
+</div>

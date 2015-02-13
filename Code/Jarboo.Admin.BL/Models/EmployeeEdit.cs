@@ -17,7 +17,10 @@ namespace Jarboo.Admin.BL.Models
         }
 
         public int EmployeeId { get; set; }
+        [Required]
         public string FullName { get; set; }
+        [Required]
+        public string Email { get; set; }
         public string SkypeName { get; set; }
         [Required]
         public string TrelloId { get; set; }
@@ -25,7 +28,7 @@ namespace Jarboo.Admin.BL.Models
         public string Country { get; set; }
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
         public double HourlyPrice { get; set; }
-
+        public bool IsHired { get; set; }
         public virtual List<Position> Positions { get; set; }
     }
 }

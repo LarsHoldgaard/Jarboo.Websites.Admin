@@ -9,17 +9,10 @@
 
 <!-- RIBBON -->
 <div id="ribbon">
-    <span class="ribbon-button-alignment">
-        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
-						<i class="fa fa-refresh"></i>
-					</span>
-    </span>
+    @Html.Partial("_RibbonRefresh")
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder(this)
-            .Add(MVC.Employees.Index(), "Employees")
-            .Add(Model.FullName + " ( Edit )")
-            .Done())
+        @Html.RenderBreadCrumbs(this, new BreadCrumbItem(MVC.Employees.Index(), "Employees"), new BreadCrumbItem(Model.FullName + " ( Edit )"))
     </ol>
     <!-- end breadcrumb -->
 </div>
@@ -69,6 +62,12 @@
                             </header>
                             <fieldset>
                                 <section>
+                                    @Html.LabelFor(model => model.FullName, new { @class = "FullName" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.FullName, new { @placeholder = "FullName" })
+                                    </label>
+                                </section>
+                                <section>
                                     @Html.LabelFor(model => model.SkypeName, new { @class = "label" })
                                     <label class="input">
                                         @Html.TextBoxFor(x => x.SkypeName, new { @placeholder = "SkypeName" })
@@ -81,13 +80,19 @@
                                     </label>
                                 </section>
                                 <section>
-                                    @Html.LabelFor(model => model.Country, new { @class = "label" }) 
+                                    @Html.LabelFor(model => model.Email, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.Email, new { @placeholder = "Email", disabled = "disabled" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.Country, new { @class = "label" })
                                     <label class="input">
                                         @Html.TextBoxFor(x => x.Country, new { @placeholder = "Country" })
                                     </label>
                                 </section>
                                 <section>
-                                    @Html.LabelFor(model => model.HourlyPrice, new { @class = "label" }) 
+                                    @Html.LabelFor(model => model.HourlyPrice, new { @class = "label" })
                                     <label class="input">
                                         <i class="icon-append fa">USD</i>
                                         @Html.TextBoxFor(x => x.HourlyPrice, new { @placeholder = "HourlyPrice" })
@@ -98,10 +103,17 @@
                                     <label class="select select-multiple">
                                         @Html.EnumListBoxFor(x => x.Positions, new { @placeholder = "Positions" })
                                     </label>
-                                </section>                            
+                                </section>
+
+                                <section>
+                                    @Html.LabelFor(model => model.IsHired, "Hired?", new { @class = "label" })
+                                    <label class="cke_dialog_ui_checkbox_input">
+                                        @Html.CheckBoxFor(x => x.IsHired)
+                                    </label>
+                                </section>
                             </fieldset>
                             <footer>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" id="saveButton">
                                     Save
                                 </button>
                             </footer>
@@ -116,3 +128,12 @@
     </div>
     <!-- end row -->   
 </div>
+@section pagespecific {
+<script type="text/javascript">
+    jQuery(function() {
+        jQuery('#saveButton').click(function() {
+            jQuery('#Email').removeAttr('disabled');
+        })
+    })
+</script>
+}

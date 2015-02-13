@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,15 @@ namespace Jarboo.Admin.DAL.Extensions
             }
             return customer;
         }
+
         public static SpentTime ById(this IQueryable<SpentTime> query, int id)
         {
             return query.FirstOrDefault(x => x.SpentTimeId == id);
+        }
+
+        public static async Task<SpentTime> ByIdAsync(this IQueryable<SpentTime> query, int id)
+        {
+            return await query.FirstOrDefaultAsync(x => x.SpentTimeId == id);
         }
     }
 }

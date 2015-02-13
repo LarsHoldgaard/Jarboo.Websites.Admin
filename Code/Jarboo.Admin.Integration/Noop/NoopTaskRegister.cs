@@ -7,25 +7,27 @@ namespace Jarboo.Admin.Integration.Noop
 {
     public class NoopTaskRegister : ITaskRegister
     {
-        public string Register(string boardName, string taskIdentifier, string folderLink)
+        public string DefaultProjectName(string customerName)
         {
-            return null;
+            return "Jarboo";
         }
 
-        public void Unregister(string boardName, string taskIdentifier, string url)
-        { }
-
-        public void ChangeResponsible(string boardName, string taskIdentifier, string url, string responsibleUserId)
-        { }
-
-        public string DefaultBoardName(string customerName)
-        {
-            return "Board";
-        }
-
-        public IEnumerable<string> BoardNames()
+        public IEnumerable<string> ProjectNames()
         {
             return Enumerable.Empty<string>();
+        }
+
+        public string Register(string projectName, string taskIdentifier, string folderLink)
+        {
+            return "#";
+        }
+
+        public void Unregister(string projectName, string taskIdentifier)
+        {
+        }
+
+        public void ChangeResponsible(string projectName, string taskIdentifier, string responsibleUserId)
+        {
         }
     }
 }

@@ -330,6 +330,7 @@
     <Content Include="Content\img\invoice\mastercard.png" />
     <Content Include="Content\img\invoice\paypal.png" />
     <Content Include="Content\img\invoice\visa.png" />
+    <Content Include="Content\img\jarboo_logo_small.png" />
     <Content Include="Content\img\jcrop\Jcrop.gif" />
     <Content Include="Content\img\jqueryui\ui-bg_flat_0_999999_40x100.png" />
     <Content Include="Content\img\jqueryui\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -453,6 +454,12 @@
     <Content Include="Content\img\violate.jpg" />
     <Content Include="Content\img\voicecommand\active-btn.gif" />
     <Content Include="Content\img\vt-menu.png" />
+    <Content Include="Content\jarboo.css">
+      <DependentUpon>jarboo.css.bundle</DependentUpon>
+    </Content>
+    <Content Include="Content\jarboo.min.css">
+      <DependentUpon>jarboo.css</DependentUpon>
+    </Content>
     <Content Include="Content\sound\bigbox.mp3" />
     <Content Include="Content\sound\license.txt" />
     <Content Include="Content\sound\messagebox.mp3" />
@@ -482,6 +489,7 @@
     <Content Include="Content\sound\voice_alert.ogg" />
     <Content Include="Content\sound\voice_off.ogg" />
     <Content Include="Content\sound\voice_on.ogg" />
+    <Content Include="Content\jarboo.css.bundle" />
     <None Include="Properties\PublishProfiles\File.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
@@ -566,6 +574,13 @@
     <Content Include="Scripts\plugin\ckeditor\README.md" />
     <Content Include="Scripts\plugin\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="Scripts\plugin\ckeditor\skins\moono\readme.md" />
+    <Content Include="Scripts\smartadmin.js">
+      <DependentUpon>smartadmin.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Scripts\smartadmin.js.bundle" />
+    <Content Include="Scripts\smartadmin.min.js.map">
+      <DependentUpon>smartadmin.min.js</DependentUpon>
+    </Content>
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Scripts\plugin\bootstrap-duallistbox\jquery.bootstrap-duallistbox.min.js" />
     <Content Include="Scripts\plugin\bootstrap-progressbar\bootstrap-progressbar.min.js" />
@@ -1001,11 +1016,17 @@
     <Content Include="Scripts\Site\validation.style.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.manager.min.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.ui.min.js" />
+    <Content Include="Scripts\smartadmin.min.js">
+      <DependentUpon>smartadmin.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\smartwidgets\jarvis.widget.min.js" />
     <Content Include="Scripts\speech\voicecommand.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Shared\_RibbonRefresh.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Admin\Settings.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1082,18 +1103,20 @@
     <Compile Include="Infrastructure\ThirdPartyIntegration\AppFlowMetadata.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\MemoryDataStore.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
-    <Compile Include="Models\Account\LoginVM.cs" />
-    <Compile Include="Models\Account\PasswordRecoverVM.cs" />
-    <Compile Include="Models\Account\UserVM.cs" />
+    <Compile Include="Models\Account\LoginViewModel.cs" />
+    <Compile Include="Models\Account\PasswordRecoverViewModel.cs" />
+    <Compile Include="Models\Account\UserViewModel.cs" />
     <Compile Include="Models\DataTable\Column.cs" />
     <Compile Include="Models\DataTable\DataTableConfig.cs" />
-    <Compile Include="Models\BtnFormVM.cs" />
+    <Compile Include="Models\BtnFormViewModel.cs" />
     <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
-    <Compile Include="Models\Account\LandingVM.cs" />
+    <Compile Include="Models\Account\LandingViewModel.cs" />
+    <Compile Include="Models\Employee\EmployeeListViewModel.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
+    <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Models\Task\TasksListViewModel.cs" />
     <Compile Include="Models\Task\TaskSorting.cs" />
-    <Compile Include="Models\Task\TaskVM.cs" />
+    <Compile Include="Models\Task\TaskViewModel.cs" />
     <Compile Include="ProjectsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

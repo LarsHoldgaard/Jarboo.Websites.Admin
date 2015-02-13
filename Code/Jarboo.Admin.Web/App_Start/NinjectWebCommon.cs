@@ -7,7 +7,6 @@ using Jarboo.Admin.Integration;
 using Jarboo.Admin.Integration.GoogleDrive;
 using Jarboo.Admin.Integration.Mandrill;
 using Jarboo.Admin.Integration.Noop;
-using Jarboo.Admin.Integration.Trello;
 using Jarboo.Admin.Web.Infrastructure;
 using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
 
@@ -27,6 +26,7 @@ namespace Jarboo.Admin.Web.App_Start
     using Ninject.Web.Common;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security.DataProtection;
+    using Jarboo.Admin.BL.Services.Interfaces;
 
     public static class NinjectWebCommon 
     {
@@ -78,15 +78,8 @@ namespace Jarboo.Admin.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            if (Configuration.Instance.UseTrello)
-            {
-                kernel.Bind<ITrelloConfiguration>().ToConstant(Configuration.Instance);
-                kernel.Bind<ITaskRegister>().To<TrelloTaskRegister>().InRequestScope();
-            }
-            else
-            {
-                kernel.Bind<ITaskRegister>().To<NoopTaskRegister>().InRequestScope();
-            }
+            kernel.Bind<ICacheService>().To<HttpCacheService>().InSingletonScope();
+            kernel.Bind<ITaskRegister>().To<NoopTaskRegister>().InRequestScope();
 
             if (Configuration.Instance.UseGoogleDrive)
             {

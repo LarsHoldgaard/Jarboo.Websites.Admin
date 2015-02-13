@@ -116,8 +116,6 @@
     <Compile Include="Noop\NoopNotifier.cs" />
     <Compile Include="Noop\NoopTaskRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Trello\ITrelloConfiguration.cs" />
-    <Compile Include="Trello\TrelloTaskRegister.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jarboo.Admin.BL\Jarboo.Admin.BL.csproj">

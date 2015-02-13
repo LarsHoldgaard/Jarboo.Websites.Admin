@@ -46,6 +46,62 @@ namespace Jarboo.Admin.BL
             Include = new TInclude();
             Sorter = new TSorter();
         }
+
+        public override string ToString()
+        {
+            var type = GetType();
+
+            var list = new List<string>();
+
+            if (Filter != null) list.Add(Filter.ToString());
+            if (Include != null) list.Add(Include.ToString());
+            if (Sorter != null) list.Add(Sorter.ToString());
+
+            foreach (var prop in type.GetProperties())
+            {
+                if (prop.Name == "Filter" || prop.Name == "Include" || prop.Name == "Sorter") continue;
+
+                var value = GetValue(prop.GetValue(this));
+
+                if (String.IsNullOrEmpty(value)) continue;
+
+                list.Add(String.Format("{0}={1}", prop.Name, value));
+            }
+
+            var res = String.Join("&", list.ToArray());
+            return res;
+        }
+
+        private string GetValue(object value)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            var type = value.GetType();
+
+            if (type.IsGenericType)
+            {
+                if (type.GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    return String.Join(",", (from object val in (value as System.Collections.IList) select GetValue(val)).ToArray());
+                }
+                else
+                {
+                    throw new Exception("Special Generic Type not implemented");
+                }
+            }
+            else
+            {
+                if (type.IsEnum)
+                {
+                    return ((int)value).ToString();
+                }
+
+                return value.ToString();
+            }
+        }
     }
 
     public static class Query
@@ -90,8 +146,7 @@ namespace Jarboo.Admin.BL
 
             return query;
         }
-        public static PagedData<T> Paginate<T>(this IQueryable<T> query, IQuery paging)
-            where T : class, IBaseEntity
+        public static PagedData<T> Paginate<T>(this IQueryable<T> query, IQuery paging) where T : class, IBaseEntity
         {
             if (!paging.PageNumber.HasValue || !paging.PageSize.HasValue)
             {
@@ -104,6 +159,21 @@ namespace Jarboo.Admin.BL
             }
 
             return PagedData.Create(paging.PageSize.Value, paging.PageNumber.Value, query);
+        }
+
+        public static async Task<PagedData<T>> PaginateAsync<T>(this IQueryable<T> query, IQuery paging) where T : class, IBaseEntity
+        {
+            if (!paging.PageNumber.HasValue || !paging.PageSize.HasValue)
+            {
+                return await PagedData.AllOnOnePageAsync(query);
+            }
+
+            if (!query.IsOrdered())
+            {
+                query = query.OrderBy(x => x.DateCreated);
+            }
+
+            return await PagedData.CreateAsync(paging.PageSize.Value, paging.PageNumber.Value, query);
         }
 
         public static IQuery<TEntity, TInclude, TFilter, TSorter> Filter<TEntity, TInclude, TFilter, TSorter>(this IQuery<TEntity, TInclude, TFilter, TSorter> query, Action<TFilter> action)
@@ -146,6 +216,20 @@ namespace Jarboo.Admin.BL
                 filteredData = securityFilter(filteredData);
             }
             return filteredData.SortBy(query.Sorter).Paginate(query);
+        }
+
+        public static async Task<PagedData<TEntity>> ApplyToAsync<TEntity, TInclude, TFilter, TSorter>(this IQuery<TEntity, TInclude, TFilter, TSorter> query, IQueryable<TEntity> data, Func<IQueryable<TEntity>, IQueryable<TEntity>> securityFilter = null)
+            where TEntity : class, IBaseEntity
+            where TFilter : Filter<TEntity>, new()
+            where TInclude : Include<TEntity>, new()
+            where TSorter : Sorter<TEntity>, new()
+        {
+            var filteredData = data.Include(query.Include).FilterBy(query.Filter);
+            if (securityFilter != null)
+            {
+                filteredData = securityFilter(filteredData);
+            }
+            return await filteredData.SortBy(query.Sorter).PaginateAsync(query);
         }
     }
 }
