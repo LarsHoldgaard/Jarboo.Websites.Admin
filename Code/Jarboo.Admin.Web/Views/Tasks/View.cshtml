@@ -17,7 +17,7 @@
         @Html.RenderBreadCrumbs(this,
                      new BreadCrumbItem(MVC.Customers.View(Model.Project.CustomerId), Model.Project.Customer.Name),
                      new BreadCrumbItem(MVC.Projects.View(Model.ProjectId), Model.Project.Name),
-                     new BreadCrumbItem(Model.FullTitle))
+                     new BreadCrumbItem(Model.FullTitle()))
     </ol>
     <!-- end breadcrumb -->
 </div>
@@ -132,21 +132,6 @@
                                                 else
                                                 {
                                                     <a target="_blank" href="@Model.FolderLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
-                                                }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Card
-                                            </td>
-                                            <td>
-                                                @if (string.IsNullOrEmpty(Model.CardLink))
-                                                {
-                                                    <span>Missing</span>
-                                                }
-                                                else
-                                                {
-                                                    <a target="_blank" href="@Model.CardLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
                                                 }
                                             </td>
                                         </tr>
