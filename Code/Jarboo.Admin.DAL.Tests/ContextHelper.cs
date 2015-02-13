@@ -26,6 +26,8 @@ namespace Jarboo.Admin.DAL.Tests
             var customer = new Customer()
                                {
                                    Name = "Customer",
+                                   Country = "Danmark",
+                                   Creator = "EnsureCustomer"
                                };
 
             if (beforeSave != null)
