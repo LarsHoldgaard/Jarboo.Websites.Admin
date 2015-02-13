@@ -13,6 +13,7 @@ using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Web.Models.Account;
 
 using Ninject;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.Web.Controllers
 {

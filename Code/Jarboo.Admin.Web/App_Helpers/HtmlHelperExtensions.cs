@@ -149,5 +149,24 @@ namespace SmartAdminMvc
 
             return new HtmlString(sb.ToString());
         }
+
+        /// <summary>
+        ///     Returns an breadcrumb
+        /// </summary>
+        /// <param name="htmlHelper"></param>
+        /// <param name="page">current view</param>
+        /// <param name="items">BreadCrumb items</param>
+        /// <returns></returns>
+        public static HtmlString RenderBreadCrumbs(this HtmlHelper htmlHelper, WebViewPage page, params Jarboo.Admin.Web.Infrastructure.BreadCrumbItem[] items)
+        {
+            var bc = new Jarboo.Admin.Web.Infrastructure.BreadCrumbsBuilder(page);
+            foreach (var item in items)
+	        {
+		        if (item.Action != null) bc = bc.Add(item.Action, item.Label);
+                else bc = bc.Add(item.Label);
+	        }
+
+            return bc.Done();
+        }
     }
 }

@@ -13,25 +13,19 @@ using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
 using Microsoft.AspNet.Identity;
+using Jarboo.Admin.BL.Services.Interfaces;
+using System.Reflection;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface IEmployeeService : IEntityService<int, Employee>
-    {
-        void Create(EmployeeCreate model, IBusinessErrorCollection errors);
-        void Edit(EmployeeEdit model, IBusinessErrorCollection errors);
-
-        void Delete(int employeeId, IBusinessErrorCollection errors);
-    }
-
     public class EmployeeService : BaseEntityService<int, Employee>, IEmployeeService
     {
         protected ITaskRegister TaskRegister { get; set; }
         protected ITaskStepEmployeeStrategy TaskStepEmployeeStrategy { get; set; }
         public UserManager<User> UserManager { get; set; }
 
-        public EmployeeService(IUnitOfWork unitOfWork, IAuth auth, ITaskRegister taskRegister, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, UserManager<User> userManager)
-            : base(unitOfWork, auth)
+        public EmployeeService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService, ITaskRegister taskRegister, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, UserManager<User> userManager)
+            : base(unitOfWork, auth, cacheService)
         {
             TaskStepEmployeeStrategy = taskStepEmployeeStrategy;
             TaskRegister = taskRegister;
@@ -44,7 +38,24 @@ namespace Jarboo.Admin.BL.Services
         }
         protected override Employee Find(int id, IQueryable<Employee> query)
         {
-            return query.ById(id);
+            Type type = typeof(Employee);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Employee)this.CacheService.GetById(cacheKey);
+
+            var employee = query.ById(id);
+            this.CacheService.Create(cacheKey, employee);
+            return employee;
+        }
+
+        protected override async System.Threading.Tasks.Task<Employee> FindAsync(int id, IQueryable<Employee> query)
+        {
+            Type type = typeof(Employee);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Employee)this.CacheService.GetById(cacheKey);
+
+            var employee = await query.ByIdAsync(id);
+            this.CacheService.Create(cacheKey, employee);
+            return employee;
         }
 
         protected override string SecurityEntities
@@ -162,6 +173,18 @@ namespace Jarboo.Admin.BL.Services
             catch (Exception ex)
             {
                 throw new ApplicationException("Could not set responsible for task", ex);
+            }
+        }
+    
+        private void ClearCache()
+        {
+            try
+            {
+                Type type = typeof(Employee);
+                this.CacheService.DeleteByContaining(type.Name);
+            }
+            catch (Exception)
+            {
             }
         }
     }

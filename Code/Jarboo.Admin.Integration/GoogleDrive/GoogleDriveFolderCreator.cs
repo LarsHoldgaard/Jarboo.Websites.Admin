@@ -26,6 +26,7 @@ namespace Jarboo.Admin.Integration.GoogleDrive
         public GoogleDriveFolderCreator(IGoogleDriveConfiguration configuration)
         {
             Configuration = configuration;
+            EnsureService();
         }
 
         private IGoogleDriveConfiguration Configuration { get; set; }
@@ -70,14 +71,12 @@ namespace Jarboo.Admin.Integration.GoogleDrive
             {
                 this.driveService = null;
 
-                throw;
+                throw ex;
             }
         }
 
         public string Create(string customerName, string taskIdentifier)
         {
-            this.EnsureService();
-
             var driveFolders = this.LoadGoogleDriveFolderHierarchy();
 
             var newFolder = this.CreateFolders(this.CreateFolderPath(customerName, taskIdentifier), driveFolders);
@@ -87,8 +86,6 @@ namespace Jarboo.Admin.Integration.GoogleDrive
         }
         public void Delete(string customerName, string taskIdentifier)
         {
-            this.EnsureService();
-
             this.DeleteFolder(this.CreateFolderPath(customerName, taskIdentifier));
         }
 
@@ -101,7 +98,6 @@ namespace Jarboo.Admin.Integration.GoogleDrive
                 CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(date.Month),
                 taskIdentifier).Split('\\');
         }
-
 
         private FolderHierarchy LoadGoogleDriveFolderHierarchy()
         {

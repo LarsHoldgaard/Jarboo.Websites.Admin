@@ -1,4 +1,5 @@
 ﻿@using Jarboo.Admin.Web.Models
+@using SmartAdminMvc
 @model Jarboo.Admin.Web.Models.Employee.EmployeeListViewModel
 
 @{
@@ -7,16 +8,11 @@
 }
 <!-- RIBBON -->
 <div id="ribbon">
-    <span class="ribbon-button-alignment">
-        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
-						<i class="fa fa-refresh"></i>
-					</span>
-    </span>
+    @Html.Partial("_RibbonRefresh")
+
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder(this)
-            .Add("Employees")
-            .Done())
+        @Html.RenderBreadCrumbs(this, new BreadCrumbItem("Employees"))
     </ol>
     <!-- end breadcrumb -->
 </div>
@@ -69,154 +65,91 @@
                                 <button type="submit" class="btn btn-success">Search</button>
                             </label>
                         </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-2">
-                        <div class="dataTables_length">
-                            <label>
-                                <select class="form-control" name="pageSize">
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-                </form>
-                <div class="no-padding">
-                    <table class="display projects-table table table-striped table-bordered table-hover no-footer" width="100%">
-                        <thead>
-                            <tr>
-                                <th class="sorting_asc">
-                                    FullName
-                                </th>
-                                <th class="sorting">
-                                    SkypeName
-                                </th>
-                                <th class="sorting">
-                                    TrelloId
-                                </th>
-                                <th class="sorting">
-                                    Email
-                                </th>
-                                <th class="sorting">
-                                    Country
-                                </th>
-                                <th class="sorting">
-                                    HourlyPrice
-                                </th>
-                                <th class="sorting">
-                                    Positions
-                                </th>
-                                @if (this.Can(MVC.Employees.Edit()))
-                                {
-                                    <th></th>
-                                }
-                                @if (this.Can(MVC.Employees.Delete()))
-                                {
-                                    <th></th>
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var employee in Model.Employees)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.ActionLink(employee.FullName, MVC.Employees.View(employee.EmployeeId))
-                                    </td>
-                                    <td>
-                                        <a href="skype:@employee.SkypeName">@employee.SkypeName</a>
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => employee.TrelloId)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => employee.Email)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => employee.Country)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => employee.HourlyPrice)
-                                    </td>
-                                    <td>
-                                        @foreach (var position in employee.Positions)
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <table class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th class="sorting_asc">
+                                            @Html.DisplayNameFor(model => model.FullName)
+                                        </th>
+                                        <th class="sorting">
+                                            @Html.DisplayNameFor(model => model.SkypeName)
+                                        </th>
+                                        <th class="sorting">
+                                            @Html.DisplayNameFor(model => model.Email)
+                                        </th>
+                                        <th class="sorting">
+                                            @Html.DisplayNameFor(model => model.Country)
+                                        </th>
+                                        <th class="sorting">
+                                            @Html.DisplayNameFor(model => model.HourlyPrice)
+                                        </th>
+                                        <th class="sorting">
+                                            @Html.DisplayNameFor(model => model.Positions)
+                                        </th>
+                                        @if (this.Can(MVC.Employees.Edit()))
                                         {
-                                            <span class="label label-info">@position.Position</span>
+                                            <th></th>
                                         }
-                                    </td>
-                                    @if (this.Can(MVC.Employees.Edit()))
+                                        @if (this.Can(MVC.Employees.Delete()))
+                                        {
+                                            <th></th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var employee in Model)
                                     {
-                                        <td>
-                                            @Html.ActionLink("Edit", MVC.Employees.Edit(employee.EmployeeId))
-                                        </td>
-                                    }
-                                    @if (this.Can(MVC.Employees.Delete()))
-                                    {
-                                        <td>
-                                            @Html.Partial(MVC.Shared.Views.BtnForm, BtnFormVM.Delete(x =>
+                                        <tr>
+                                            <td>
+                                                @Html.ActionLink(employee.FullName, MVC.Employees.View(employee.EmployeeId))
+                                            </td>
+                                            <td>
+                                                <a href="skype:@employee.SkypeName">@employee.SkypeName</a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => employee.Email)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => employee.Country)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => employee.HourlyPrice)
+                                            </td>
+                                            <td>
+                                                @foreach (var position in employee.Positions)
+                                                {
+                                                    <span class="label label-info">@position.Position</span>
+                                                }
+                                            </td>
+                                            @if (this.Can(MVC.Employees.Edit()))
+                                            {
+                                                <td>
+                                                    @Html.ActionLink("Edit", MVC.Employees.Edit(employee.EmployeeId))
+                                                </td>
+                                            }
+                                            @if (this.Can(MVC.Employees.Delete()))
+                                            {
+                                                <td>
+                                                    @Html.Partial(MVC.Shared.Views.BtnForm, BtnFormViewModel.Delete(x =>
                                                         {
                                                             x.Id = employee.EmployeeId;
                                                             x.Action = MVC.Employees.Delete();
                                                         }))
-                                        </td>
+                                                </td>
+                                            }
+                                        </tr>
                                     }
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="dt-toolbar-footer">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing <span class="txt-color-darken">1</span> to <span class="txt-color-darken">10</span> of <span class="text-primary">10</span> entries</div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
-                            <ul class="pagination pagination-sm">
-                                <li class="paginate_button previous disabled" aria-controls="DataTables_Table_0" tabindex="0" id="DataTables_Table_0_previous"><a href="#">Previous</a></li>
-                                <li class="paginate_button active" aria-controls="DataTables_Table_0" tabindex="0"><a href="#">1</a></li>
-                                <li class="paginate_button next disabled" aria-controls="DataTables_Table_0" tabindex="0" id="DataTables_Table_0_next"><a href="#">Next</a></li>
-                            </ul>
+                                </tbody>
+                            </table>
                         </div>
+                        <!-- end widget content -->
                     </div>
+                    <!-- end widget div -->
                 </div>
-                @*<div class="alert alert-info">
-        <strong>NOTE:</strong> All the data is loaded from a seperate JSON file
-    </div>
-        <!-- Widget ID (each widget will need unique ID)-->
-        <div class="jarviswidget well" id="wid-id-0">
-            <!-- widget options:
-    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-
-    data-widget-colorbutton="false"
-    data-widget-editbutton="false"
-    data-widget-togglebutton="false"
-    data-widget-deletebutton="false"
-    data-widget-fullscreenbutton="false"
-    data-widget-custombutton="false"
-    data-widget-collapsed="true"
-    data-widget-sortable="false"
-     -->
-            <header>
-                <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
-                <h2>Widget Title </h2>
-            </header>
-            <!-- widget div-->
-            <div>
-                <!-- widget edit box -->
-                <div class="jarviswidget-editbox">
-                    <!-- This area used as dropdown edit box -->
-                    <input class="form-control" type="text">
-                </div>
-                <!-- end widget edit box -->
-                <!-- widget content --><!-- end widget content -->
-            </div>
-            <!-- end widget div -->
-        </div>
-        <!-- end widget -->
-                *@
+                <!-- end widget -->
             </article>
             <!-- WIDGET END -->
         </div>

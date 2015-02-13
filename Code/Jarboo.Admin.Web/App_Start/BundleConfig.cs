@@ -10,6 +10,15 @@ namespace Jarboo.Admin.Web.App_Start
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new StyleBundle("~/css/site").Include(
+                "~/Content/main.css"));
+
+            //---SmartAdmin Theme Bundles---
+            bundles.Add(new StyleBundle("~/content/smartadmin").IncludeDirectory("~/content/css", "*.min.css"));
+
+            bundles.Add(new StyleBundle("~/css/bootstrap-datepicker").Include(
+                "~/content/datepicker3.css"));
+
             bundles.Add(new ScriptBundle("~/js/site").Include(
                 "~/Scripts/Site/smartAdmin.dataTable.js",
                 "~/Scripts/jquery.bonnet.ajax-dropdownlist.js",
@@ -21,17 +30,6 @@ namespace Jarboo.Admin.Web.App_Start
 
             bundles.Add(new ScriptBundle("~/js/bootstrap-datepicker").Include(
                 "~/Scripts/bootstrap-datepicker.js"));
-
-
-
-            bundles.Add(new StyleBundle("~/css/site").Include(
-                "~/Content/main.css"));
-
-            //---SmartAdmin Theme Bundles---
-            bundles.Add(new StyleBundle("~/content/smartadmin").IncludeDirectory("~/content/css", "*.min.css"));
-
-            bundles.Add(new StyleBundle("~/css/bootstrap-datepicker").Include(
-                "~/content/datepicker3.css"));
 
             bundles.Add(new ScriptBundle("~/scripts/smartadmin").Include(
                 "~/scripts/app.config.js",

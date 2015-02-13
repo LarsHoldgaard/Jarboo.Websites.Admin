@@ -35,6 +35,7 @@ namespace Jarboo.Admin.Web.Infrastructure
                 </li>", page.Url.Action(action), label));
             return this;
         }
+
         public BreadCrumbsBuilder Add(string label)
         {
             stringBuilder.Append(string.Format("<li>{0}</li>", label));
@@ -46,5 +47,22 @@ namespace Jarboo.Admin.Web.Infrastructure
             stringBuilder.Append("");
             return MvcHtmlString.Create(stringBuilder.ToString());
         }
+    }
+
+    public class BreadCrumbItem
+    {
+        public BreadCrumbItem(ActionResult actionResult, string label)
+        {
+            this.Action = actionResult;
+            this.Label = label;
+        }
+
+        public BreadCrumbItem(string label)
+            : this(null, label)
+        {
+        }
+
+        public ActionResult Action { get; set; }
+        public string Label { get; set; }
     }
 }

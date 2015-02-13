@@ -1,6 +1,7 @@
 ﻿@using Jarboo.Admin.BL.Filters
 @using Jarboo.Admin.Web.Models.Documentation
 @using Jarboo.Admin.Web.Models.Task
+@using SmartAdminMvc
 @model Jarboo.Admin.DAL.Entities.Project
 
 @{
@@ -10,17 +11,11 @@
 
 <!-- RIBBON -->
 <div id="ribbon">
-    <span class="ribbon-button-alignment">
-        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
-            <i class="fa fa-refresh"></i>
-        </span>
-    </span>
+    @Html.Partial("_RibbonRefresh")
+
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @(new BreadCrumbsBuilder(this)
-            .Add(MVC.Customers.View(Model.CustomerId), Model.Customer.Name)
-            .Add(Model.Name)
-            .Done())
+        @Html.RenderBreadCrumbs(this, new BreadCrumbItem(MVC.Customers.View(Model.CustomerId), Model.Customer.Name), new BreadCrumbItem(Model.Name))
     </ol>
     <!-- end breadcrumb -->
 </div>
@@ -90,14 +85,6 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(x => x.Name)
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayNameFor(x => x.BoardName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => x.BoardName)
                                             </td>
                                         </tr>
                                         <tr>

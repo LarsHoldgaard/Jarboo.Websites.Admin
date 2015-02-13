@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
 
 using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Models;
@@ -14,18 +13,11 @@ using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
 
 using Task = Jarboo.Admin.DAL.Entities.Task;
+using Jarboo.Admin.BL.Services.Interfaces;
+using System.Reflection;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface ITaskService : IEntityService<int, Task>
-    {
-        void Create(TaskCreate model, IBusinessErrorCollection errors);
-
-        void NextStep(TaskNextStep model, IBusinessErrorCollection errors);
-
-        void Delete(int taskId, IBusinessErrorCollection errors);
-    }
-
     public class TaskService : BaseEntityService<int, Task>, ITaskService
     {
         protected ITaskRegister TaskRegister { get; set; }
@@ -33,8 +25,8 @@ namespace Jarboo.Admin.BL.Services
         protected ITaskStepEmployeeStrategy TaskStepEmployeeStrategy { get; set; }
         protected INotifier Notifier { get; set; }
 
-        public TaskService(IUnitOfWork unitOfWork, IAuth auth, ITaskRegister taskRegister, IFolderCreator folderCreator, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, INotifier notifier)
-            : base(unitOfWork, auth)
+        public TaskService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService, ITaskRegister taskRegister, IFolderCreator folderCreator, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, INotifier notifier)
+            : base(unitOfWork, auth, cacheService)
         {
             TaskRegister = taskRegister;
             FolderCreator = folderCreator;
@@ -48,9 +40,24 @@ namespace Jarboo.Admin.BL.Services
         }
         protected override Task Find(int id, IQueryable<Task> query)
         {
-            return query.ById(id);
-        }
+            Type type = typeof(Task);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Task)this.CacheService.GetById(cacheKey);
 
+            var task = query.ById(id);
+            this.CacheService.Create(cacheKey, task);
+            return task;
+        }
+        protected override async System.Threading.Tasks.Task<Task> FindAsync(int id, IQueryable<Task> query)
+        {
+            Type type = typeof(Task);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Task)this.CacheService.GetById(cacheKey);
+
+            var task = await query.ByIdAsync(id);
+            this.CacheService.Create(cacheKey, task);
+            return task;
+        }
         protected override string SecurityEntities
         {
             get { return Rights.Tasks.Name; }
@@ -112,6 +119,7 @@ namespace Jarboo.Admin.BL.Services
                 });
 
                 Add(entity, model);
+                ClearCache();
             }
             catch (ApplicationException ex)
             {
@@ -245,6 +253,7 @@ namespace Jarboo.Admin.BL.Services
             try
             {
                 UnitOfWork.SaveChanges();
+                ClearCache();
             }
             catch (Exception)
             {
@@ -280,6 +289,20 @@ namespace Jarboo.Admin.BL.Services
 
             this.DeleteFolder(customer.Name, entity.Identifier());
             this.UnregisterTask(entity.Project.Name, entity.Identifier());
+
+            ClearCache();
+        }
+
+        private void ClearCache()
+        {
+            try
+            {
+                Type type = typeof(Task);
+                this.CacheService.DeleteByContaining(type.Name);
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

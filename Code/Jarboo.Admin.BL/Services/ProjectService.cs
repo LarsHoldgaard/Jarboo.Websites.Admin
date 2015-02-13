@@ -11,20 +11,17 @@ using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL.Extensions;
+using Jarboo.Admin.BL.Services.Interfaces;
+using System.Reflection;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public interface IProjectService : IEntityService<int, Project>
-    {
-        void Save(ProjectEdit model, IBusinessErrorCollection errors);
-    }
-
     public class ProjectService : BaseEntityService<int, Project>, IProjectService
     {
         protected ITaskRegister TaskRegister { get; set; }
 
-        public ProjectService(IUnitOfWork unitOfWork, IAuth auth, ITaskRegister taskRegister)
-            : base(unitOfWork, auth)
+        public ProjectService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService, ITaskRegister taskRegister)
+            : base(unitOfWork, auth, cacheService)
         {
             TaskRegister = taskRegister;
         }
@@ -33,19 +30,39 @@ namespace Jarboo.Admin.BL.Services
         {
             get { return UnitOfWork.Projects; }
         }
+
         protected override Project Find(int id, IQueryable<Project> query)
         {
-            return query.ByIdMust(id);
+            Type type = typeof(Project);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Project)this.CacheService.GetById(cacheKey);
+
+            var project = query.ByIdMust(id);
+            this.CacheService.Create(cacheKey, project);
+            return project;
+        }
+
+        protected override async Task<Project> FindAsync(int id, IQueryable<Project> query)
+        {
+            Type type = typeof(Project);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, id.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (Project)this.CacheService.GetById(cacheKey);
+
+            var project = await query.ByIdAsync(id);
+            this.CacheService.Create(cacheKey, project);
+            return project;
         }
 
         protected override string SecurityEntities
         {
             get { return Rights.Projects.Name; }
         }
+
         protected override IQueryable<Project> FilterCanView(IQueryable<Project> query)
         {
             return query.Where(x => x.CustomerId == UserCustomerId || x.Tasks.Any(y => y.Steps.Any(z => z.EmployeeId == UserEmployeeId)));
         }
+
         protected override bool HasAccessTo(Project entity)
         {
             if (entity.CustomerId != 0)
@@ -86,6 +103,20 @@ namespace Jarboo.Admin.BL.Services
             {
                 var entity = new Project { ProjectId = model.ProjectId };
                 Edit(entity, model);
+            }
+
+            ClearCache();
+        }
+
+        private void ClearCache()
+        {
+            try
+            {
+                Type type = typeof(Project);
+                this.CacheService.DeleteByContaining(type.Name);
+            }
+            catch (Exception)
+            {
             }
         }
     }

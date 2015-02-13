@@ -2,15 +2,17 @@
 
 using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.DAL;
+using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.BL.Services
 {
     public abstract class BaseService
     {
-        protected BaseService(IUnitOfWork unitOfWork, IAuth auth)
+        protected BaseService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService)
         {
             UnitOfWork = unitOfWork;
             Auth = auth;
+            CacheService = cacheService;
         }
 
         protected abstract string SecurityEntities { get; }
@@ -29,6 +31,7 @@ namespace Jarboo.Admin.BL.Services
 
         protected IUnitOfWork UnitOfWork { get; set; }
         protected IAuth Auth { get; set; }
+        protected ICacheService CacheService { get; set; }
 
         protected string UserId
         {

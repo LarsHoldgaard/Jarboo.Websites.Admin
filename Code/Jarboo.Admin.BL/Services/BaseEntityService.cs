@@ -12,14 +12,15 @@ using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Sorters;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
+using Jarboo.Admin.BL.Services.Interfaces;
+using System.Reflection;
 
 namespace Jarboo.Admin.BL.Services
 {
-    public abstract class BaseEntityService<TKey, T> : BaseService, IEntityService<TKey, T>
-        where T : class, IBaseEntity, new()
+    public abstract class BaseEntityService<TKey, T> : BaseService, IEntityService<TKey, T> where T : class, IBaseEntity, new()
     {
-        public BaseEntityService(IUnitOfWork unitOfWork, IAuth auth)
-            : base(unitOfWork, auth)
+        public BaseEntityService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService)
+            : base(unitOfWork, auth, cacheService)
         { }
 
         protected abstract IDbSet<T> Table { get; }
@@ -40,6 +41,12 @@ namespace Jarboo.Admin.BL.Services
         {
             return this.GetByIdEx(id, Include<T>.None);
         }
+
+        public async Task<T> GetByIdAsync(TKey id)
+        {
+            return await this.GetByIdExAsync(id, Include<T>.None);
+        }
+
         public T GetByIdEx(TKey id, Include<T> include)
         {
             if (Cannot(Rights.ViewAll) && Cannot(Rights.ViewSpecial))
@@ -55,6 +62,24 @@ namespace Jarboo.Admin.BL.Services
 
             return Find(id, query);
         }
+
+        public async Task<T> GetByIdExAsync(TKey id, Include<T> include)
+        {
+            if (Cannot(Rights.ViewAll) && Cannot(Rights.ViewSpecial))
+            {
+                return null;
+            }
+
+            var query = TableNoTracking.Include(include);
+            if (Cannot(Rights.ViewAll))
+            {
+                query = this.FilterCanView(query);
+            }
+
+            return await FindAsync(id, query);
+        }
+
+        protected abstract Task<T> FindAsync(TKey id, IQueryable<T> query);
         protected abstract T Find(TKey id, IQueryable<T> query);
 
         public PagedData<T> GetAll(IQuery<T, Include<T>, Filter<T>, Sorter<T>> query)
@@ -64,13 +89,43 @@ namespace Jarboo.Admin.BL.Services
                 return PagedData.AllOnOnePage(Enumerable.Empty<T>().AsQueryable());
             }
 
+            Type type = typeof(T);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, query.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (PagedData<T>)this.CacheService.GetById(cacheKey);
+
             Func<IQueryable<T>, IQueryable<T>> securityFilter = null;
             if (Cannot(Rights.ViewAll))
             {
                 securityFilter = this.FilterCanView;
             }
 
-            return query.ApplyTo(TableNoTracking, securityFilter);
+            var results = query.ApplyTo(TableNoTracking, securityFilter);
+            this.CacheService.Create(cacheKey, results);
+
+            return results;
+        }
+
+        public async Task<PagedData<T>> GetAllAsync(IQuery<T, Include<T>, Filter<T>, Sorter<T>> query)
+        {
+            if (Cannot(Rights.ViewAll) && Cannot(Rights.ViewSpecial))
+            {
+                return await PagedData.AllOnOnePageAsync(Enumerable.Empty<T>().AsQueryable());
+            }
+
+            Type type = typeof(T);
+            var cacheKey = this.CacheService.GetCacheKey(type.Name + MethodBase.GetCurrentMethod().Name, query.ToString());
+            if (this.CacheService.ContainsKey(cacheKey)) return (PagedData<T>)this.CacheService.GetById(cacheKey);
+
+            Func<IQueryable<T>, IQueryable<T>> securityFilter = null;
+            if (Cannot(Rights.ViewAll))
+            {
+                securityFilter = this.FilterCanView;
+            }
+
+            var results = await query.ApplyToAsync(TableNoTracking, securityFilter);
+            this.CacheService.Create(cacheKey, results);
+
+            return results;
         }
 
         protected virtual bool HasAccessTo(T entity)
@@ -126,8 +181,7 @@ namespace Jarboo.Admin.BL.Services
             CheckCan(Rights.DisableAny, Rights.DisableSpecial, CanDisableSpecial, entity);
         }
 
-        protected void Add<TM>(T entity, TM model)
-            where TM : class, new()
+        protected void Add<TM>(T entity, TM model) where TM : class, new()
         {
             model.MapTo(entity);
 
@@ -136,8 +190,7 @@ namespace Jarboo.Admin.BL.Services
             Table.Add(entity);
             Save(entity, model);
         }
-        protected void Edit<TM>(T entity, TM model)
-            where TM : class, new()
+        protected void Edit<TM>(T entity, TM model) where TM : class, new()
         {
             model.MapTo(entity);
 
@@ -150,8 +203,7 @@ namespace Jarboo.Admin.BL.Services
 
             Save(entity, model);
         }
-        protected virtual void Save<TM>(T entity, TM model)
-            where TM : class, new()
+        protected virtual void Save<TM>(T entity, TM model) where TM : class, new()
         {
             UnitOfWork.SaveChanges();
             entity.MapTo(model);

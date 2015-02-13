@@ -114,7 +114,7 @@
                                             <td>
                                                 @if (!time.Accepted.HasValue)
                                                 {
-                                                    @Html.Partial(MVC.Shared.Views.BtnForm, new BtnFormVM() { Id = time.SpentTimeId, Action = MVC.SpentTime.Accept(), Text = "Accept", Style = "success", Icon = "ok" })
+                                                    @Html.Partial(MVC.Shared.Views.BtnForm, new BtnFormViewModel() { Id = time.SpentTimeId, Action = MVC.SpentTime.Accept(), Text = "Accept", Style = "success", Icon = "ok" })
                                                 }
                                             </td>
                                         }
@@ -123,7 +123,7 @@
                                             <td>
                                                 @if (!time.Accepted.HasValue)
                                                 {
-                                                    @Html.Partial(MVC.Shared.Views.BtnForm, BtnFormVM.Delete(x =>
+                                                    @Html.Partial(MVC.Shared.Views.BtnForm, BtnFormViewModel.Delete(x =>
                                                         {
                                                             x.Id = time.SpentTimeId;
                                                             x.Action = MVC.SpentTime.Deny();

@@ -16,6 +16,7 @@ using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL;
 
 using Ninject;
+using Jarboo.Admin.BL.Services.Interfaces;
 using Jarboo.Admin.Web.Models.Employee;
 
 namespace Jarboo.Admin.Web.Controllers
