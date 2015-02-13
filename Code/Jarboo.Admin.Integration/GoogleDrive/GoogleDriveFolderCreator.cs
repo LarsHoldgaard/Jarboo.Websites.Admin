@@ -177,7 +177,7 @@ namespace Jarboo.Admin.Integration.GoogleDrive
             list.Q = query;
             FileList files = list.Execute();
 
-            if (files.Items.Any()) //if the size is zero, then the folder doesn't exist
+            if (files.Items.Any())
             {
                 return null;
             }
