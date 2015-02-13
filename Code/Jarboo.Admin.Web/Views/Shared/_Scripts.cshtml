@@ -10,7 +10,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js" type="text/javascript"></script>
 
 <!-- IMPORTANT: SmartAdmin Core -->
-<script src="@Url.Content("~/Scripts/smartadmin.js")" type="text/javascript"></script>
+@Scripts.Render("~/scripts/smartadmin")
 
 @if (Request.IsAuthenticated)
 {

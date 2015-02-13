@@ -13,7 +13,7 @@ namespace Jarboo.Admin.DAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201502091015043_AddIsHiredColumn"; }
+            get { return "201502130902509_AddIsHiredColumn"; }
         }
         
         string IMigrationMetadata.Source

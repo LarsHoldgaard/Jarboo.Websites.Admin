@@ -43,31 +43,6 @@ namespace Jarboo.Admin.Web.Controllers
             }
         }
 
-        public virtual ActionResult TrelloId(string id)
-        {
-            if (string.IsNullOrEmpty(Configuration.Instance.TrelloApiKey) || string.IsNullOrEmpty(Configuration.Instance.TrelloToken))
-            {
-                throw new ApplicationException("Missing trello configuration");
-            }
-
-            var trello = new Trello(Configuration.Instance.TrelloApiKey);
-            trello.Authorize(Configuration.Instance.TrelloToken);
-
-            var members = trello.Members.Search(id);
-            if (members == null)
-            {
-                return Content("Member not found");
-            }
-
-            var member = members.FirstOrDefault();
-            if (member == null)
-            {
-                return Content("Member not found");
-            }
-
-            return Content(member.Id);
-        }
-
         [HttpGet]
         public ActionResult Settings()
         {
