@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,6 +90,9 @@ namespace Jarboo.Admin.BL.Services
 
         public bool ContainsKey(string cacheKey)
         {
+            bool useCache = bool.Parse(ConfigurationManager.AppSettings["UseCache"]);
+            if (!useCache) return false;
+
             return HttpContext.Current.Cache[cacheKey] != null;
         }
 
