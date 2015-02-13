@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 using DataTables.Mvc;
@@ -12,19 +9,15 @@ using Jarboo.Admin.BL;
 using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
-using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.BL.Sorters;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Web.Infrastructure;
-using Jarboo.Admin.Web.Models;
 using Jarboo.Admin.Web.Models.DataTable;
 using Jarboo.Admin.Web.Models.Task;
 
 using Newtonsoft.Json;
 
 using Ninject;
-
-using RestSharp;
 using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.Web.Controllers
