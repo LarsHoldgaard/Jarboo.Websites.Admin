@@ -116,7 +116,10 @@ namespace Jarboo.Admin.BL.Services
 
             UnitOfWork.EmployeePositions.Where(x => x.EmployeeId == model.EmployeeId).Delete();
 
-            var entity = new Employee { EmployeeId = model.EmployeeId };
+            var entity = Table.ByIdMust(model.EmployeeId);
+
+            model.MapTo(entity);
+
             Edit(entity, model);
         }
 

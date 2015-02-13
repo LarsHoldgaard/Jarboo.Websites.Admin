@@ -140,6 +140,14 @@
                                                 }
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayNameFor(x => x.IsHired)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(x => x.IsHired)
+                                            </td>
+                                        </tr>
                                         @if (this.Can(MVC.Employees.Edit()))
                                         {
                                             <tr>

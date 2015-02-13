@@ -143,6 +143,10 @@
     <Compile Include="Migrations\201502100952486_RemoveTrello.Designer.cs">
       <DependentUpon>201502100952486_RemoveTrello.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502091015043_AddIsHiredColumn.cs" />
+    <Compile Include="Migrations\201502091015043_AddIsHiredColumn.Designer.cs">
+      <DependentUpon>201502091015043_AddIsHiredColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManager.cs" />
@@ -194,9 +198,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502050759302_CustomerCountryAndCreator.resx">
       <DependentUpon>201502050759302_CustomerCountryAndCreator.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502100952486_RemoveTrello.resx">
-      <DependentUpon>201502100952486_RemoveTrello.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

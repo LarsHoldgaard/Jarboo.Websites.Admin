@@ -59,7 +59,9 @@ namespace SmartAdminMvc
         /// <returns>The value of the entry, or the default value, as the specified type.</returns>
         public static T GetValue<T>(string key, string prefix = Prefix)
         {
-            var entry = string.Format("{0}:{1}", prefix, key);
+            var entry = "";
+            if (prefix == "") entry = key;
+            else entry = string.Format("{0}:{1}", prefix, key);
 
             // Make sure the key represents a possible valid entry
             if (entry.IsNullOrWhiteSpace())

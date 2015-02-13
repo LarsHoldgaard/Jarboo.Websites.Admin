@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,9 @@ namespace Jarboo.Admin.DAL.Entities
         public virtual List<TaskStep> TaskSteps { get; set; }
         public virtual List<SpentTime> SpentTimes { get; set; }
 
+        [DisplayName("Is Hired?")]
+        public bool IsHired { get; set; }
+        
         public bool Deleted()
         {
             return DateDeleted.HasValue;
