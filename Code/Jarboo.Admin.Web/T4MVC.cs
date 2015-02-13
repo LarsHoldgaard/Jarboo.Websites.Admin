@@ -36,6 +36,7 @@ public static partial class MVC
     public static Jarboo.Admin.Web.Controllers.GuidesController Guides = new Jarboo.Admin.Web.Controllers.T4MVC_GuidesController();
     public static Jarboo.Admin.Web.Controllers.HomeController Home = new Jarboo.Admin.Web.Controllers.T4MVC_HomeController();
     public static Jarboo.Admin.Web.Controllers.ProjectsController Projects = new Jarboo.Admin.Web.Controllers.T4MVC_ProjectsController();
+    public static Jarboo.Admin.Web.Controllers.ReportingController Reporting = new Jarboo.Admin.Web.Controllers.T4MVC_ReportingController();
     public static Jarboo.Admin.Web.Controllers.SpentTimeController SpentTime = new Jarboo.Admin.Web.Controllers.T4MVC_SpentTimeController();
     public static Jarboo.Admin.Web.Controllers.TasksController Tasks = new Jarboo.Admin.Web.Controllers.T4MVC_TasksController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
@@ -1665,6 +1666,10 @@ namespace Links
             public static readonly string smart_chat_ui_min_js = Url("smart.chat.ui.min.js");
         }
     
+        public static readonly string smartadmin_js_bundle = Url("smartadmin.js.bundle");
+        public static readonly string smartadmin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/smartadmin.min.js") ? Url("smartadmin.min.js") : Url("smartadmin.js");
+        public static readonly string smartadmin_min_js = Url("smartadmin.min.js");
+        public static readonly string smartadmin_min_js_map = Url("smartadmin.min.js.map");
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class smartwidgets {
             private const string URLPATH = "~/Scripts/smartwidgets";
@@ -1842,6 +1847,7 @@ namespace Links
                 public static readonly string visa_png = Url("visa.png");
             }
         
+            public static readonly string jarboo_logo_small_png = Url("jarboo_logo_small.png");
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public static class jcrop {
                 private const string URLPATH = "~/Content/img/jcrop";
@@ -2016,6 +2022,10 @@ namespace Links
             public static readonly string vt_menu_png = Url("vt-menu.png");
         }
     
+        public static readonly string jarboo_css_bundle = Url("jarboo.css.bundle");
+        public static readonly string jarboo_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jarboo.min.css") ? Url("jarboo.min.css") : Url("jarboo.css");
+             
+        public static readonly string jarboo_min_css = Url("jarboo.min.css");
         public static readonly string main_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/main.min.css") ? Url("main.min.css") : Url("main.css");
              
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

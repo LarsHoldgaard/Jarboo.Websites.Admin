@@ -8,6 +8,7 @@ using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
+using Jarboo.Admin.BL.Services.Interfaces;
 using Jarboo.Admin.BL.Sorters;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Web.Infrastructure;

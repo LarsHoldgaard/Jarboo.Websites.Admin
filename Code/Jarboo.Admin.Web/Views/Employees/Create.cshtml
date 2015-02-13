@@ -10,7 +10,7 @@
 <!-- RIBBON -->
 <div id="ribbon">
     @Html.Partial("_RibbonRefresh")
-    
+
     <!-- breadcrumb -->
     <ol class="breadcrumb">
         @Html.RenderBreadCrumbs(this, new BreadCrumbItem(MVC.Employees.Index(), "Employees"), new BreadCrumbItem("Employees"))
@@ -25,18 +25,18 @@
             <!-- Widget ID (each widget will need unique ID)-->
             <div class="jarviswidget jarviswidget-color-darken" id="wid-id-5" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
                 <!-- widget options:
-            usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-            data-widget-colorbutton="false"
-            data-widget-editbutton="false"
-            data-widget-togglebutton="false"
-            data-widget-deletebutton="false"
-            data-widget-fullscreenbutton="false"
-            data-widget-custombutton="false"
-            data-widget-collapsed="true"
-            data-widget-sortable="false"
+                data-widget-colorbutton="false"
+                data-widget-editbutton="false"
+                data-widget-togglebutton="false"
+                data-widget-deletebutton="false"
+                data-widget-fullscreenbutton="false"
+                data-widget-custombutton="false"
+                data-widget-collapsed="true"
+                data-widget-sortable="false"
 
-            -->
+                -->
                 <header>
                     <span class="widget-icon"><i class="fa fa-edit"></i></span>
                     <h2>Edit </h2>
@@ -74,12 +74,6 @@
                                     </label>
                                 </section>
                                 <section>
-                                    @Html.LabelFor(model => model.TrelloId, new { @class = "label" })
-                                    <label class="input">
-                                        @Html.TextBoxFor(x => x.TrelloId, new { @placeholder = "TrelloId" })
-                                    </label>
-                                </section>
-                                <section>
                                     @Html.LabelFor(model => model.Email, new { @class = "label" })
                                     <label class="input">
                                         @Html.TextBoxFor(x => x.Email, new { @placeholder = "Email" })
@@ -107,7 +101,7 @@
                                 <section>
                                     @Html.LabelFor(model => model.Password, new { @class = "label" })
                                     <label class="input">
-                                        @Html.TextBoxFor(x => x.Password, new { type="password" })
+                                        @Html.TextBoxFor(x => x.Password, new { type = "password" })
                                     </label>
                                 </section>
                                 <section>
