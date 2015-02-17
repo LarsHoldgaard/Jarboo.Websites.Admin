@@ -10,6 +10,7 @@ using Jarboo.Admin.BL;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
+using Jarboo.Admin.Web.Infrastructure.BLExternals;
 using Jarboo.Admin.Web.Models.Account;
 using Jarboo.Admin.Web.Infrastructure;
 
@@ -45,10 +46,9 @@ namespace Jarboo.Admin.Web.Controllers
                 return RedirectToAction(MVC.Accounts.Login(returnUrl));
             }
 
-            var user = UserManager.Find(model.Email, model.Password);
-            if (user == null)
+            var user = AccountService.Login(model, ModelState.Wrap());
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Invalid email or password");
                 PreserveModelState();
                 return RedirectToAction(MVC.Accounts.Login(returnUrl));
             }
@@ -105,7 +105,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return HttpNotFound();
             }
 
-            return View(user);
+            return View(user.Decorate());
         }
 
         public virtual ActionResult Edit(string id = null)

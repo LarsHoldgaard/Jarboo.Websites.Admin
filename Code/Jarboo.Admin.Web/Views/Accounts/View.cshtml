@@ -1,5 +1,5 @@
 ﻿@using SmartAdminMvc
-@model Jarboo.Admin.DAL.Entities.User
+@model Jarboo.Admin.Web.Models.Account.UserViewModel
 
 @{
     ViewBag.Title = "Account - " + Model.DisplayName;
@@ -85,6 +85,14 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(x => x.DisplayName)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Last login
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(x => x.LastLogin)
                                             </td>
                                         </tr>
                                         @if (Model.Customer != null)

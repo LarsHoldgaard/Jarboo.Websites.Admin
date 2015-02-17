@@ -36,6 +36,26 @@ namespace Jarboo.Admin.BL.Services
             get { return Rights.Accounts.Name; }
         }
 
+        public User Login(UserLogin model, IBusinessErrorCollection errors)
+        {
+            if (!model.Validate(errors))
+            {
+                return null;
+            }
+
+            var user = UserManager.Find(model.Email, model.Password);
+            if (user == null)
+            {
+                errors.Add("", "Invalid email or password");
+                return null;
+            }
+
+            user.DateLastLogin = DateTime.Now;
+            UnitOfWork.SaveChanges();
+
+            return user;
+        }
+
         public void Register(UserCreate model, IBusinessErrorCollection errors)
         {
             if (!model.Validate(errors))

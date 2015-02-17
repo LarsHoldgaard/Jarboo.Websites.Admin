@@ -147,6 +147,10 @@
     <Compile Include="Migrations\201502130902509_AddIsHiredColumn.Designer.cs">
       <DependentUpon>201502130902509_AddIsHiredColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502170816596_UserLastLogin.cs" />
+    <Compile Include="Migrations\201502170816596_UserLastLogin.Designer.cs">
+      <DependentUpon>201502170816596_UserLastLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManager.cs" />
@@ -204,6 +208,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502130902509_AddIsHiredColumn.resx">
       <DependentUpon>201502130902509_AddIsHiredColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502170816596_UserLastLogin.resx">
+      <DependentUpon>201502170816596_UserLastLogin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

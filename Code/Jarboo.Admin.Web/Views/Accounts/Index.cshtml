@@ -90,6 +90,7 @@
                                         </th>
                                         <th>Employee</th>
                                         <th>Customer</th>
+                                        <th>Last login</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -105,6 +106,9 @@
                                                 <a href="mailto:@user.Email">@user.Email</a>
                                             </td>
                                             <td>
+                                                @user.RoleNames
+                                            </td>
+                                            <td>
                                                 @if (user.Employee != null)
                                                 {
                                                     @: @Html.ActionLink("Link", MVC.Employees.View(user.Employee.EmployeeId))
@@ -117,7 +121,7 @@
                                                 }
                                             </td>
                                             <td>
-                                                @user.RoleNames
+                                                @user.LastLogin
                                             </td>
                                             <td>
                                                 @Html.ActionLink("View", MVC.Accounts.View(user.Id))

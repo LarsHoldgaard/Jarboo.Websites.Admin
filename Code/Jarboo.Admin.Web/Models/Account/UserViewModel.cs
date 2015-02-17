@@ -9,5 +9,13 @@ namespace Jarboo.Admin.Web.Models.Account
     public class UserViewModel : User
     {
         public string RoleNames { get; set; }
+
+        public string LastLogin
+        {
+            get
+            {
+                return DateLastLogin.HasValue ? DateLastLogin.Value.ToString() : "Never";
+            }
+        }
     }
 }

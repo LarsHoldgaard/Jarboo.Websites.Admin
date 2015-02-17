@@ -102,6 +102,7 @@
     <Compile Include="Models\UserCreate.cs" />
     <Compile Include="Models\UserCustomerEdit.cs" />
     <Compile Include="Models\UserEdit.cs" />
+    <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Models\UserPasswordChange.cs" />
     <Compile Include="Models\UserPasswordSet.cs" />
     <Compile Include="Authorization\IAuth.cs" />

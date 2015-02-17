@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Jarboo.Admin.DAL.Entities;
+using Jarboo.Admin.Web.Models.Account;
 using Jarboo.Admin.Web.Models.Report;
 using Jarboo.Admin.Web.Models.Task;
 using Jarboo.Admin.BL;
@@ -12,6 +13,10 @@ namespace Jarboo.Admin.Web.Infrastructure
         public static TaskViewModel Decorate(this Task task)
         {
             return task.MapTo<TaskViewModel>();
+        }
+        public static UserViewModel Decorate(this User task)
+        {
+            return task.MapTo<UserViewModel>();
         }
 
         public static IEnumerable<TaskViewModel> Decorate(this IEnumerable<Task> tasks)
