@@ -49,6 +49,7 @@ namespace Jarboo.Admin.Web.Models.DataTable
         {
             Order = new ArrayList();
             Searching = true;
+            PageLength = 10;
         }
 
         [JsonProperty("serverSide")]
@@ -63,6 +64,8 @@ namespace Jarboo.Admin.Web.Models.DataTable
         public bool Searching { get; set; }
         [JsonProperty("orderMulti")]
         public bool OrderMulti { get; set; }
+        [JsonProperty("pageLength")]
+        public int PageLength { get; set; }
 
         public void AddOrder(int column, DataTables.Mvc.Column.OrderDirection direction)
         {

@@ -251,6 +251,7 @@ namespace Jarboo.Admin.Web.Controllers
         {
             var config = new DataTableConfig();
             config.Searching = true;
+            config.PageLength = 25;
             config.SetupServerDataSource(Url.Action(MVC.Tasks.ListData()), FormMethod.Post);
             config.Columns = new List<DataTableConfig.Column>(columns);
             config.Columns[(int)TaskListColumns.ProjectName].Visible = showProject;

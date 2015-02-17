@@ -102,7 +102,9 @@
                 error: onError
             });
         } else {
-            $this.dataTable();
+            $this.dataTable({
+                "pageLength": 25
+            });
         }
     });
 
