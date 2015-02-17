@@ -63,7 +63,7 @@ namespace Jarboo.Admin.BL.Services
                 return;
             }
 
-            if (UnitOfWork.Users.Any(x => x.DisplayName == model.Name))
+            if (UnitOfWork.Users.Any(x => x.DisplayName == model.Name) || UnitOfWork.Customers.Any(x => x.Name == model.Name))
             {
                 errors.Add("Name", "Name already taken");
                 return;

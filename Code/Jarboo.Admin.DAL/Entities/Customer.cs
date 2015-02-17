@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Jarboo.Admin.DAL.Entities
 {
@@ -12,6 +13,8 @@ namespace Jarboo.Admin.DAL.Entities
         }
 
         public int CustomerId { get; set; }
+        [Index("IX_Name", 1, IsUnique = true)]
+        [StringLength(450)]
         [Required]
         public string Name { get; set; }
         [Required]
