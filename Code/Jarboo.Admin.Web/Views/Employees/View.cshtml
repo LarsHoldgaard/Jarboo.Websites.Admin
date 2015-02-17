@@ -6,6 +6,8 @@
 @{
     ViewBag.Title = "Employee - " + Model.FullName;
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var currentUser = (User)ViewBag.CurrentUser;
 }
 <!-- RIBBON -->
 <div id="ribbon">
@@ -107,14 +109,18 @@
                                                 @Html.DisplayFor(x => x.Country)
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayNameFor(x => x.HourlyPrice)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => x.HourlyPrice) USD
-                                            </td>
-                                        </tr>
+                                        
+                                        @if (this.Can(MVC.Employees.Name, "HourlyPrice") || currentUser.EmployeeId == Model.EmployeeId)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayNameFor(x => x.HourlyPrice)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => x.HourlyPrice) USD
+                                                </td>
+                                            </tr>
+                                        }
                                         <tr>
                                             <td>
                                                 @Html.DisplayNameFor(x => x.Positions)

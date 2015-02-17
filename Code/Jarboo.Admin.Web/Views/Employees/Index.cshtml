@@ -88,9 +88,12 @@
                                 <th class="sorting">
                                     Country
                                 </th>
-                                <th class="sorting">
-                                    HourlyPrice
-                                </th>
+                                @if (this.Can(MVC.Employees.Name, "HourlyPrice"))
+                                {
+                                    <th class="sorting">
+                                        HourlyPrice
+                                    </th>
+                                }
                                 <th class="sorting">
                                     Positions
                                 </th>
@@ -120,9 +123,12 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => employee.Country)
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => employee.HourlyPrice)
-                                    </td>
+                                    @if (this.Can(MVC.Employees.Name, "HourlyPrice"))
+                                    {
+                                        <td>
+                                            @Html.DisplayFor(modelItem => employee.HourlyPrice)
+                                        </td>
+                                    }
                                     <td>
                                         @foreach (var position in employee.Positions)
                                         {
