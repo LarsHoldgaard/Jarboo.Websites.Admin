@@ -1,4 +1,6 @@
-﻿using Jarboo.Admin.Web;
+﻿using System;
+
+using Jarboo.Admin.Web;
 
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
@@ -18,6 +20,7 @@ namespace Jarboo.Admin.Web
                                                 {
                                                     AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                                                     LoginPath = new PathString("/Accounts/Login"),
+                                                    ExpireTimeSpan = new TimeSpan(30, 0, 0, 0)
                                                 });
         }
     }
