@@ -66,24 +66,45 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var task = new TaskCreate();
-            task.ProjectId = projectId.Value;
+            var model = new TaskEdit();
+            model.ProjectId = projectId.Value;
 
-            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee()), "EmployeeId", "FullName");
-            ViewBag.Project = ProjectService.GetByIdEx(task.ProjectId, new ProjectInclude().Customer());
-            return View(task);
+            return CreateEditView(model);
+        }
+
+        public virtual ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var task = TaskService.GetById(id.Value);
+            if (task == null)
+            {
+                return HttpNotFound();
+            }
+
+            var model = task.MapTo<TaskEdit>();
+            return this.CreateEditView(model);
         }
 
         // POST: /Tasks/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Create(TaskCreate model)
+        public virtual ActionResult Edit(TaskEdit model)
         {
-            return Handle(
-                model,
-                TaskService.Create,
+            return Handle(model, TaskService.Save,
                 () => RedirectToAction(MVC.Tasks.View(model.TaskId)),
-                RedirectToAction(MVC.Tasks.Create(model.ProjectId)));
+                () => model.ProjectId == 0 ?
+                    RedirectToAction(MVC.Tasks.Create(model.ProjectId)) :
+                    RedirectToAction(MVC.Tasks.Edit(model.TaskId)));
+        }
+
+        private ActionResult CreateEditView(TaskEdit model)
+        {
+            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee()), "EmployeeId", "FullName");
+            ViewBag.Project = ProjectService.GetByIdEx(model.ProjectId, new ProjectInclude().Customer());
+            return View(model);
         }
 
         // GET: /Tasks/Steps/5

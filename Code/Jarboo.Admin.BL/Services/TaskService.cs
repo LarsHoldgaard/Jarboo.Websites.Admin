@@ -84,13 +84,27 @@ namespace Jarboo.Admin.BL.Services
             }
         }
 
-        public void Create(TaskCreate model, IBusinessErrorCollection errors)
+        public void Save(TaskEdit model, IBusinessErrorCollection errors)
         {
             if (!model.Validate(errors))
             {
                 return;
             }
 
+            if (model.TaskId == 0)
+            {
+                this.Create(model, errors);
+            }
+            else
+            {
+                var entity = new Task { TaskId = model.TaskId };
+                Edit(entity, model);
+            }
+
+            ClearCache();
+        }
+        private void Create(TaskEdit model, IBusinessErrorCollection errors)
+        {
             var project = UnitOfWork.Projects.AsNoTracking().Include(x => x.Customer).ByIdMust(model.ProjectId);
             var customer = project.Customer;
 
@@ -119,7 +133,6 @@ namespace Jarboo.Admin.BL.Services
                 });
 
                 Add(entity, model);
-                ClearCache();
             }
             catch (ApplicationException ex)
             {

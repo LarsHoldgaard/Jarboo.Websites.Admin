@@ -8,7 +8,7 @@ using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Models
 {
-    public class TaskCreate
+    public class TaskEdit
     {
         public int TaskId { get; set; }
         [Required]

@@ -10,7 +10,7 @@ namespace Jarboo.Admin.BL.Services.Interfaces
 {
     public interface ITaskService : IEntityService<int, Task>
     {
-        void Create(TaskCreate model, IBusinessErrorCollection errors);
+        void Save(TaskEdit model, IBusinessErrorCollection errors);
 
         void NextStep(TaskNextStep model, IBusinessErrorCollection errors);
 

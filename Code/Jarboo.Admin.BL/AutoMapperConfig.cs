@@ -53,9 +53,8 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<Project, ProjectEdit>();
             Mapper.CreateMap<ProjectEdit, Project>();
 
-            Mapper.CreateMap<DAL.Entities.Task, TaskCreate>();
-            Mapper.CreateMap<TaskCreate, DAL.Entities.Task>()
-                .ForMember(x => x.TaskId, x => x.Ignore());
+            Mapper.CreateMap<DAL.Entities.Task, TaskEdit>();
+            Mapper.CreateMap<TaskEdit, DAL.Entities.Task>();
 
             Mapper.CreateMap<Employee, EmployeeEdit>()
                 .ForMember(x => x.Positions, x => x.MapFrom(y => y.Positions.Select(z => z.Position).ToList()));

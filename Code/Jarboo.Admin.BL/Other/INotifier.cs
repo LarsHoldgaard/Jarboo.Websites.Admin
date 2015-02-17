@@ -21,7 +21,7 @@ namespace Jarboo.Admin.BL.Other
             EmployeeEmail = employee.Email;
         }
 
-        public TaskResponsibleChangedData(TaskCreate taskCreate, Employee employee)
+        public TaskResponsibleChangedData(TaskEdit taskCreate, Employee employee)
         {
             TaskTitle = taskCreate.Title;
             EmployeeEmail = employee.Email;

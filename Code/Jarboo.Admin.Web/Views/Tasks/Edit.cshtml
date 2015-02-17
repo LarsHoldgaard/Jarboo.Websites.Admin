@@ -2,7 +2,7 @@
 @model Jarboo.Admin.BL.Models.TaskEdit
 
 @{
-    ViewBag.Title = "New task";
+    ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,7 +14,7 @@
         @Html.RenderBreadCrumbs(this,
             new BreadCrumbItem(MVC.Customers.View(ViewBag.Project.CustomerId), ViewBag.Project.Customer.Name),
             new BreadCrumbItem(MVC.Projects.View(ViewBag.Project.ProjectId), ViewBag.Project.Name),
-            new BreadCrumbItem("New task"))
+            new BreadCrumbItem(Model.Title))
     </ol>
 
 

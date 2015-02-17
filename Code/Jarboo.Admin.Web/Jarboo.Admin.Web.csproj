@@ -1021,6 +1021,8 @@
     <Content Include="Views\Shared\_RibbonRefresh.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Admin\Settings.cshtml" />
+    <Content Include="Views\Tasks\_Form.cshtml" />
+    <Content Include="Views\Tasks\Edit.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
