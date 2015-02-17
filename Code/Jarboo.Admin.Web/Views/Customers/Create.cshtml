@@ -1,0 +1,118 @@
+﻿@using SmartAdminMvc
+@model Jarboo.Admin.BL.Models.CustomerCreate
+
+@{
+    ViewBag.Title = "New customer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- RIBBON -->
+<div id="ribbon">
+    @Html.Partial("_RibbonRefresh")
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @Html.RenderBreadCrumbs(this, new BreadCrumbItem("New customer"))
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-7">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+                <!-- widget options:
+                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                data-widget-colorbutton="false"
+                data-widget-editbutton="false"
+                data-widget-togglebutton="false"
+                data-widget-deletebutton="false"
+                data-widget-fullscreenbutton="false"
+                data-widget-custombutton="false"
+                data-widget-collapsed="true"
+                data-widget-sortable="false"
+
+                -->
+                <header>
+                    <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                    <h2>New </h2>
+                </header>
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+                        @using (Html.BeginForm(MVC.Customers.Create(), FormMethod.Post, new { @class = "smart-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            @Html.ValidationBootstrap()
+                            <header>
+                                New Customer
+                            </header>
+                            <fieldset>
+                                <section>
+                                    @Html.LabelFor(model => model.Name, new { @class = "label" })
+                                    <label class="input">
+                                        <i class="icon-append fa fa-user"></i>
+                                        @Html.TextBoxFor(x => x.Name, new { @placeholder = "Name" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.Country, new { @class = "label" })
+                                    <label class="input">
+                                        <i class="icon-append fa fa-user"></i>
+                                        @Html.TextBoxFor(x => x.Country, new { @placeholder = "Country" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.Creator, new { @class = "label" })
+                                    <label class="input">
+                                        <i class="icon-append fa fa-user"></i>
+                                        @Html.TextBoxFor(x => x.Creator, new { @placeholder = "Creator" })
+                                    </label>
+                                </section>
+                            </fieldset>
+                            <header>
+                                User's properties (optional)
+                            </header>
+                            <fieldset>
+                                <section>
+                                    @Html.LabelFor(model => model.Email, new { @class = "label" })
+                                    <label class="input">
+                                        <i class="icon-append fa fa-user"></i>
+                                        @Html.TextBoxFor(x => x.Email, new { @placeholder = "Email" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.Password, new { @class = "label" })
+                                    <label class="input">
+                                        <i class="icon-append fa fa-user"></i>
+                                        @Html.TextBoxFor(x => x.Password, new { @placeholder = "Creator", type = "password" })
+                                    </label>
+                                </section>
+                            </fieldset>
+                            <footer>
+                                <button type="submit" class="btn btn-primary">
+                                    Save
+                                </button>
+                            </footer>
+                        }
+                    </div>
+                    <!-- end widget content -->
+                </div>
+                <!-- end widget div -->
+            </div>
+            <!-- end widget -->
+        </article>
+    </div>
+    <!-- end row -->
+</div>
+

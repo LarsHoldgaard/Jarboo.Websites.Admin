@@ -13,6 +13,7 @@ using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.DAL;
+using Jarboo.Admin.Web.Models.Account;
 
 using Ninject;
 using Jarboo.Admin.BL.Services.Interfaces;
@@ -44,6 +45,19 @@ namespace Jarboo.Admin.Web.Controllers
                 return HttpNotFound();
             }
             return View(customer);
+        }
+
+        public virtual ActionResult Create()
+        {
+            return View(new CustomerCreate());
+        }
+
+        [HttpPost]
+        public virtual ActionResult Create(CustomerCreate model)
+        {
+            return Handle(model, CustomerService.Create,
+                () => RedirectToAction(MVC.Customers.View(model.CustomerId)),
+                RedirectToAction(MVC.Customers.Create()));
         }
     }
 }

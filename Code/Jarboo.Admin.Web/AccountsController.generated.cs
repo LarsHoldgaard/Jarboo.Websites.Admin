@@ -286,10 +286,10 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.UserCreate model, string returnUrl);
+        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.UserRegister model, string returnUrl);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Register(Jarboo.Admin.BL.Models.UserCreate model, string returnUrl)
+        public override System.Web.Mvc.ActionResult Register(Jarboo.Admin.BL.Models.UserRegister model, string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

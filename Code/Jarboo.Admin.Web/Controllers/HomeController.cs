@@ -64,7 +64,7 @@ namespace Jarboo.Admin.Web.Controllers
             }
 
             ViewBag.ReturnUrl = "";
-            return View(MVC.Accounts.Views.Register, new UserCreate()
+            return View(MVC.Accounts.Views.Register, new UserRegister()
                             {
                                 Email = model.Email,
                                 ConfirmEmail = model.Email,

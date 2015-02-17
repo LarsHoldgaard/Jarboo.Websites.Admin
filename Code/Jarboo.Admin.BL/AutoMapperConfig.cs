@@ -49,6 +49,9 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<Customer, CustomerCreate>();
             Mapper.CreateMap<CustomerCreate, Customer>()
                 .ForMember(x => x.CustomerId, x => x.Ignore());
+            Mapper.CreateMap<CustomerCreate, User>()
+                .ForMember(x => x.DisplayName, x => x.MapFrom(y => y.Name))
+                .ForMember(x => x.UserName, x => x.MapFrom(y => y.Email));
 
             Mapper.CreateMap<Project, ProjectEdit>();
             Mapper.CreateMap<ProjectEdit, Project>();
@@ -79,10 +82,6 @@ namespace Jarboo.Admin.BL
 
             Mapper.CreateMap<Documentation, DocumentationEdit>();
             Mapper.CreateMap<DocumentationEdit, Documentation>();
-
-            Mapper.CreateMap<UserCreate, User>()
-                .ForMember(x => x.DisplayName, x => x.MapFrom(y => y.Name))
-                .ForMember(x => x.UserName, x => x.MapFrom(y => y.Email));
 
             Mapper.CreateMap<User, UserEdit>()
                 .ForMember(x => x.UserId, x => x.MapFrom(y => y.Id))

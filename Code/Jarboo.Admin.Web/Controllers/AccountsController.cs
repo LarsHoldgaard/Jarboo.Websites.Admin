@@ -30,6 +30,8 @@ namespace Jarboo.Admin.Web.Controllers
         public IUserService UserService { get; set; }
         [Inject]
         public RoleManager<UserRole> RoleManager { get; set; }
+        [Inject]
+        public ICustomerService CustomerService { get; set; }
 
         public virtual ActionResult Login(string returnUrl = "")
         {
@@ -67,13 +69,28 @@ namespace Jarboo.Admin.Web.Controllers
         public virtual ActionResult Register(string returnUrl = "")
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View(new UserCreate());
+            return View(new UserRegister());
         }
 
         [HttpPost]
-        public virtual ActionResult Register(UserCreate model, string returnUrl = "")
+        public virtual ActionResult Register(UserRegister model, string returnUrl = "")
         {
-            return Handle(model, AccountService.Register,
+            if (!ModelState.IsValid)
+            {
+                PreserveModelState();
+                return RedirectToAction(MVC.Accounts.Register(returnUrl));
+            }
+
+            var customerModel = new CustomerCreate()
+                                    {
+                                        Name = model.Name,
+                                        Country = model.Country,
+                                        Creator = model.Creator,
+                                        Email = model.Email,
+                                        Password = model.Password
+                                    };
+
+            return Handle(customerModel, CustomerService.Create,
                 () => this.Login(new LoginViewModel()
                                 {
                                     Email = model.Email,

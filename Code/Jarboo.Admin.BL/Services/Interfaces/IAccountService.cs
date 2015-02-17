@@ -13,7 +13,6 @@ namespace Jarboo.Admin.BL.Services.Interfaces
     public interface IAccountService
     {
         User Login(UserLogin model, IBusinessErrorCollection errors);
-        void Register(UserCreate model, IBusinessErrorCollection errors);
         void RecoverPassword(PasswordRecover model, IBusinessErrorCollection errors);
         void ResetPassword(ResetPassword model, IBusinessErrorCollection errors);
     }

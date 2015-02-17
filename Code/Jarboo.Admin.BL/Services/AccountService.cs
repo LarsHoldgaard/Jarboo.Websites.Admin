@@ -55,61 +55,7 @@ namespace Jarboo.Admin.BL.Services
 
             return user;
         }
-
-        public void Register(UserCreate model, IBusinessErrorCollection errors)
-        {
-            if (!model.Validate(errors))
-            {
-                return;
-            }
-
-            if (UnitOfWork.Users.Any(x => x.DisplayName == model.Name) || UnitOfWork.Customers.Any(x => x.Name == model.Name))
-            {
-                errors.Add("Name", "Name already taken");
-                return;
-            }
-
-            var user = model.MapTo<User>();
-
-            using (var transaction = UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    var result = UserManager.Create(user, model.Password);
-                    if (!result.Succeeded)
-                    {
-                        errors.AddErrorsFromResult(result);
-                        transaction.Rollback();
-                        return;
-                    }
-
-                    result = UserManager.AddToRole(user.Id, UserRoles.Customer.ToString());
-                    if (!result.Succeeded)
-                    {
-                        errors.AddErrorsFromResult(result);
-                        transaction.Rollback();
-                        return;
-                    }
-
-                    UnitOfWork.Customers.Add(new Customer()
-                                                 {
-                                                     Name = model.Name,
-                                                     User = user,
-                                                     Country = model.Country,
-                                                     Creator = model.Creator
-                                                 });
-                    UnitOfWork.SaveChanges();
-
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    transaction.Rollback();
-                    throw;
-                }
-            }
-        }
-
+        
         public void RecoverPassword(PasswordRecover model, IBusinessErrorCollection errors)
         {
             if (!model.Validate(errors))

@@ -1023,6 +1023,7 @@
     <Content Include="Views\Admin\Settings.cshtml" />
     <Content Include="Views\Tasks\_Form.cshtml" />
     <Content Include="Views\Tasks\Edit.cshtml" />
+    <Content Include="Views\Customers\Create.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
