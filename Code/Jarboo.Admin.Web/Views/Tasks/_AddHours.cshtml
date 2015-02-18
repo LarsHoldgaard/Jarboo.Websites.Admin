@@ -5,12 +5,12 @@
 
     var selectList = (SelectList)ViewBag.EmployeesList;
     var employees = selectList.Items.OfType<Employee>();
-    var requiredPosition = Model.Step.GetPosition();
+    var requiredPosition = Model.Step.Step.GetPosition();
     
     if (Model.EmployeeId == 0)
     {
         selectList = new SelectList(
-            employees.Where(x => x.Positions.Any(y => y.Position == requiredPosition)),
+            employees.Where(x => x.Positions.Any(y => y.Position == requiredPosition) || x.EmployeeId == Model.Step.EmployeeId),
             selectList.DataValueField,
             selectList.DataTextField,
             selectList.DataGroupField,

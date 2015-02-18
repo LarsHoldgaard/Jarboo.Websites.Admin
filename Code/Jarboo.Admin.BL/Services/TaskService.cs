@@ -115,17 +115,15 @@ namespace Jarboo.Admin.BL.Services
             var taskIdentifier = model.Identifier();
             string folderLink = null;
 
+            var entity = new Task();
+
             try
             {
                 folderLink = CreateFolder(customer.Name, taskIdentifier);
 
                 ChangeResponsible(project.Name, taskIdentifier, employee.EmployeeId.ToString());
 
-                var entity = new Task()
-                {
-                    FolderLink = folderLink
-                };
-
+                entity.FolderLink = folderLink;
                 entity.Steps.Add(new TaskStep()
                 {
                     EmployeeId = employee.EmployeeId,
@@ -147,7 +145,8 @@ namespace Jarboo.Admin.BL.Services
 
             try
             {
-                Notifier.TaskResponsibleChanged(new TaskResponsibleChangedData(model, employee));
+                Notifier.NewTask(new NewTaskData(customer, project, entity));
+                Notifier.TaskResponsibleChanged(new TaskResponsibleChangedData(entity, employee));
             }
             catch (Exception ex)
             {

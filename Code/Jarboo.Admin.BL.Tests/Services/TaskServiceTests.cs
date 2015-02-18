@@ -133,9 +133,10 @@ namespace Jarboo.Admin.BL.Tests.Services
 
 
                 Helper.Suppress(() => service.Save(model, null));
+                var task = context.Tasks.First(x => x.TaskId == model.TaskId);
 
 
-                var notifyData = new TaskResponsibleChangedData(model, employee);
+                var notifyData = new TaskResponsibleChangedData(task, employee);
                 A.CallTo(() => mockNotifier.TaskResponsibleChanged(notifyData)).MustHaveHappened();
             }
         }

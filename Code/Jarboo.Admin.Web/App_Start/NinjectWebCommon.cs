@@ -100,6 +100,7 @@ namespace Jarboo.Admin.Web.App_Start
                 kernel.Bind<INotifier>().To<NoopNotifier>().InRequestScope();
             }
 
+            kernel.Bind<IUrlConstructor>().To<UrlConstructor>();
             kernel.Bind<IMandrillConfiguration>().ToConstant(Configuration.Instance);
             kernel.Bind<IEmailer>().To<MandrillNotifierEmailer>().InRequestScope();
             kernel.Bind<ITaskStepEmployeeStrategy>().To<TaskStepEmployeeStrategy>().InRequestScope();

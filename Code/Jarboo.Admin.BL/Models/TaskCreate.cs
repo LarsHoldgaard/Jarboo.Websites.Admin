@@ -22,6 +22,7 @@ namespace Jarboo.Admin.BL.Models
         public int? ForcedPriority { get; set; }
         public decimal? EstimatedPrice { get; set; }
         public DateTime? Deadline { get; set; }
+        public string Description { get; set; }
 
         public string Identifier()
         {

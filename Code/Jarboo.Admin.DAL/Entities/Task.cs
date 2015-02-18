@@ -39,6 +39,7 @@ namespace Jarboo.Admin.DAL.Entities
         public int? ForcedPriority { get; set; }
         public decimal? EstimatedPrice { get; set; }
         public DateTime? Deadline { get; set; }
+        public string Description { get; set; }
 
         public string FolderLink { get; set; }
 

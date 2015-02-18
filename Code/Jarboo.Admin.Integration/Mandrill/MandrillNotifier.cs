@@ -15,13 +15,15 @@ namespace Jarboo.Admin.Integration.Mandrill
 {
     public class MandrillNotifierEmailer : INotifier, IEmailer
     {
-        public MandrillNotifierEmailer(IMandrillConfiguration configuration)
+        public MandrillNotifierEmailer(IMandrillConfiguration configuration, IUrlConstructor urlConstructor)
         {
             this.Configuration = configuration;
+            UrlConstructor = urlConstructor;
             EnsureService();
         }
 
         private IMandrillConfiguration Configuration { get; set; }
+        private IUrlConstructor UrlConstructor { get; set; }
         private MandrillApi api = null;
 
         private void EnsureService()
@@ -31,13 +33,17 @@ namespace Jarboo.Admin.Integration.Mandrill
 
         public void TaskResponsibleChanged(TaskResponsibleChangedData data)
         {
-            var result = api.SendMessage(
-                new EmailAddress[] { new EmailAddress(data.EmployeeEmail) },
-                Configuration.TaskResponsibleChangedNotificationSubject,
-                new EmailAddress(Configuration.MandrillFrom),
-                Configuration.MandrillTaskResponsibleNotificationTemplate,
-                Enumerable.Empty<TemplateContent>()
-                );
+            var message = new EmailMessage
+            {
+                to = new EmailAddress[] { new EmailAddress(data.EmployeeEmail) },
+                from_email = Configuration.MandrillFrom,
+                subject = Configuration.TaskResponsibleChangedNotificationSubject,
+            };
+
+            message.AddGlobalVariable("TASKNAME", data.TaskTitle);
+            message.AddGlobalVariable("TASKROLE", data.Role);
+
+            api.SendMessage(message, Configuration.MandrillTaskResponsibleNotificationTemplate, null);
         }
 
         public void SendPasswordRecoveryEmail(string email, string link)
@@ -52,6 +58,24 @@ namespace Jarboo.Admin.Integration.Mandrill
             message.AddGlobalVariable("QUESTIONLINK", link);
 
             api.SendMessage(message, Configuration.MandrillPasswordRecoveryTemplate, null);
+        }
+
+        public void NewTask(NewTaskData data)
+        {
+            var message = new EmailMessage
+            {
+                to = new EmailAddress[] { new EmailAddress(Configuration.JarbooInfoEmail) },
+                from_email = Configuration.MandrillFrom,
+                subject = "New task",
+            };
+
+            message.AddGlobalVariable("CUSTOMERNAME", data.CustomerName);
+            message.AddGlobalVariable("TASKNAME", data.TaskTitle);
+            message.AddGlobalVariable("PROJECTNAME", data.ProjectName);
+            message.AddGlobalVariable("TASKDESCRIPTION", data.TaskDescription);
+            message.AddGlobalVariable("TASKLINK", UrlConstructor.TaskView(data.TaskId));
+
+            api.SendMessage(message, Configuration.MandrillNewTaskTemplate, null);
         }
     }
 }

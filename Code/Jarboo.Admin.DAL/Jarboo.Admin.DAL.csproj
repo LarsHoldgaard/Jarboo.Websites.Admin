@@ -159,6 +159,10 @@
     <Compile Include="Migrations\201502180711188_TasksEstimatedPriceAndDeadline.Designer.cs">
       <DependentUpon>201502180711188_TasksEstimatedPriceAndDeadline.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502180823256_TaskDescription.cs" />
+    <Compile Include="Migrations\201502180823256_TaskDescription.Designer.cs">
+      <DependentUpon>201502180823256_TaskDescription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManager.cs" />
@@ -225,6 +229,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502180711188_TasksEstimatedPriceAndDeadline.resx">
       <DependentUpon>201502180711188_TasksEstimatedPriceAndDeadline.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502180823256_TaskDescription.resx">
+      <DependentUpon>201502180823256_TaskDescription.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

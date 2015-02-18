@@ -15,6 +15,6 @@ namespace Jarboo.Admin.BL.Models
         [Range(0.5, int.MaxValue, ErrorMessage = "Must be bigger than {1}")]
         public decimal Hours { get; set; }       
         public int TaskId { get; set; }
-        public TaskStepEnum Step { get; set; }
+        public TaskStep Step { get; set; }
     }
 }

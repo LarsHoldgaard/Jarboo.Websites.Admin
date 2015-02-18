@@ -1100,6 +1100,7 @@
     <Compile Include="Infrastructure\Rights.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\AppFlowMetadata.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\MemoryDataStore.cs" />
+    <Compile Include="Infrastructure\UrlConstructor.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
     <Compile Include="Models\Account\LoginViewModel.cs" />
     <Compile Include="Models\Account\PasswordRecoverViewModel.cs" />

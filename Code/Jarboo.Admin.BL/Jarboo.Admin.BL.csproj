@@ -119,6 +119,7 @@
     <Compile Include="Models\TaskNextStep.cs" />
     <Compile Include="Other\IEmailer.cs" />
     <Compile Include="Other\INotifier.cs" />
+    <Compile Include="Other\IUrlConstructor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="Services\AccountService.cs" />

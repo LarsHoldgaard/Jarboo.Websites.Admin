@@ -216,6 +216,19 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
+        private string mandrillNewTaskTemplate;
+        public string MandrillNewTaskTemplate
+        {
+            get
+            {
+                if (mandrillNewTaskTemplate == null)
+                {
+                    mandrillNewTaskTemplate = ConfigurationManager.AppSettings["MandrillNewTaskTemplate"];
+                }
+                return mandrillNewTaskTemplate;
+            }
+        }
+
 
         private CustomErrorsMode? redirectOnError;
         public CustomErrorsMode ErrorMode
@@ -232,6 +245,19 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
+
+        private string jarbooInfoEmail;
+        public string JarbooInfoEmail
+        {
+            get
+            {
+                if (jarbooInfoEmail == null)
+                {
+                    jarbooInfoEmail = ConfigurationManager.AppSettings["JarbooInfoEmail"];
+                }
+                return jarbooInfoEmail;
+            }
+        }
 
         private string adminEmail;
         public string AdminEmail

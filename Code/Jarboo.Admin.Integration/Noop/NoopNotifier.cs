@@ -12,5 +12,7 @@ namespace Jarboo.Admin.Integration.Noop
     {
         public void TaskResponsibleChanged(TaskResponsibleChangedData data)
         { }
+        public void NewTask(NewTaskData data)
+        { }
     }
 }

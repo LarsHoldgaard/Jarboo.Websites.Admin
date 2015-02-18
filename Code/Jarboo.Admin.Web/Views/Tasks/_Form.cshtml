@@ -87,6 +87,12 @@
                                         @Html.TextBoxFor(x => x.Deadline, "{0:d}", new { @placeholder = "Deadline", @class="datepicker" })
                                     </label>
                                 </section>
+                                <section>
+                                    @Html.LabelFor(model => model.Description, new { @class = "label" })
+                                    <label class="textarea">
+                                        @Html.TextAreaFor(x => x.Description, new { @placeholder = "Description", rows="5" })
+                                    </label>
+                                </section>
                                 @if (Model.TaskId == 0)
                                 {
                                     <section>
