@@ -4,9 +4,9 @@
 @model Jarboo.Admin.Web.Models.Task.TaskViewModel
 
 @{
-        ViewBag.Title = Model.FullTitle();
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+    ViewBag.Title = Model.FullTitle();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <!-- RIBBON -->
 <div id="ribbon">
@@ -15,12 +15,13 @@
     <!-- breadcrumb -->
     <ol class="breadcrumb">
         @Html.RenderBreadCrumbs(this,
-                     new BreadCrumbItem(MVC.Customers.View(Model.Project.CustomerId), Model.Project.Customer.Name),
-                     new BreadCrumbItem(MVC.Projects.View(Model.ProjectId), Model.Project.Name),
-                     new BreadCrumbItem(Model.FullTitle()))
+            new BreadCrumbItem(MVC.Customers.View(Model.Project.CustomerId), Model.Project.Customer.Name),
+            new BreadCrumbItem(MVC.Projects.View(Model.ProjectId), Model.Project.Name),
+            new BreadCrumbItem(Model.FullTitle()))
     </ol>
     <!-- end breadcrumb -->
 </div>
+
 <!-- END RIBBON -->
 <div id="content">
     <!-- row -->
@@ -31,161 +32,152 @@
                 <!-- PAGE HEADER -->
                 <i class="fa-fw fa fa-file-text-o"></i>
                 @Html.DisplayFor(x => x.Title)
-                @*<span>
-                        >
-                        Overview
-                    </span>*@
             </h1>
         </div>
         <!-- end col -->
     </div>
     <!-- end row -->
-    <!-- widget grid -->
-    <section id="widget-grid" class="">
-        <!-- row -->
-        <div class="row">
-            <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                @*<div class="alert alert-info">
-                        <strong>NOTE:</strong> All the data is loaded from a seperate JSON file
-                    </div>*@
-                <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget well" id="wid-id-2">
-                    <!-- widget options:
-                        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                        data-widget-colorbutton="false"
-                        data-widget-editbutton="false"
-                        data-widget-togglebutton="false"
-                        data-widget-deletebutton="false"
-                        data-widget-fullscreenbutton="false"
-                        data-widget-custombutton="false"
-                        data-widget-collapsed="true"
-                        data-widget-sortable="false"
-                        -->
-                    <header>
-                        <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
-                        <h2>Widget Title </h2>
-                    </header>
-                    <!-- widget div-->
-                    <div>
-                        <!-- widget edit box -->
-                        <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
-                            <input class="form-control" type="text">
-                        </div>
-                        <!-- end widget edit box -->
-                        <!-- widget content -->
-                        <div class="widget-body no-padding">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayNameFor(x => x.Title)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => x.Title)
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayNameFor(x => x.Priority)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => x.Priority)
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayNameFor(x => x.Type)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => x.Type)
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayNameFor(x => x.Size)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => x.Size) hour(s)
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayNameFor(x => x.Urgency)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => x.Urgency)
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Folder
-                                            </td>
-                                            <td>
-                                                @if (string.IsNullOrEmpty(Model.FolderLink))
-                                                {
-                                                    <span>Missing</span>
-                                                }
-                                                else
-                                                {
-                                                    <a target="_blank" href="@Model.FolderLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
-                                                }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Step
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Tasks.Steps(Model.TaskId))">
-                                                    <i class="glyphicon glyphicon-list"></i> @Model.Step()
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- end widget content -->
-                    </div>
-                    <!-- end widget div -->
-                </div>
-                <!-- end widget -->
-            </article>
-            <!-- WIDGET END -->
-        </div>
-        <!-- end row -->
-        <!-- row -->
-        <div class="row">
-            <!-- a blank row to get started -->
-            <div class="col-sm-12">
-                <!-- your contents here -->
-            </div>
-        </div>
-        <!-- end row -->
-    </section>
-    <!-- end widget grid -->
-    
-    <div class="row">
-        <!-- col -->
-        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-            <h1 class="page-title txt-color-blueDark">
-                <!-- PAGE HEADER -->
-                <i class="fa-fw fa fa-file-text-o"></i>
-                Hours
-            </h1>
-        </div>
-    </div>
 
     <div class="row">
-        <!-- col -->
-        <div class="col-sm-6">
+        <div class="col-sm-12">
             <div class="well">
-                @Html.Action(MVC.SpentTime.GroupedList(new SpentTimeFilter().ByTask(Model.TaskId)))
+                <h1 class="semi-bold">Status</h1>
+                <ul class="list-unstyled">
+                    <li>
+                        <p>
+                            <i class="fa fa-tasks"></i>&nbsp;&nbsp;Progress: <strong>@Model.Step()</strong>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <i class="fa fa-money"></i>&nbsp;&nbsp;Current price: <strong>@Model.CurrentPrice </strong> <i class="fa fa-usd"></i>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <i class="fa fa-money"></i>&nbsp;&nbsp;Estimate: <strong>@Model.EstimatePrice </strong> <i class="fa fa-usd"></i>
+                        </p>
+                    </li>
+                </ul>
             </div>
         </div>
-    </div>
+    </div><!-- widget grid -->
+    @Html.Action(MVC.Questions.ActionNames.QuestionList, MVC.Questions.Name, new
+                                                                       {
+                                                                           questionFilter = new QuestionFilter().ByTask(Model.TaskId),
+                                                                           taskName = Model.Title.ToString()
+                                                                       })
+
+    @Html.Action(MVC.Comments.ActionNames.Create, MVC.Comments.Name, new
+                                                                       {
+                                                                           taskId = Model.TaskId
+                                                                       })
+
+    @Html.Action(MVC.SpentTime.ActionNames.Create, MVC.SpentTime.Name, new
+                                                                       {
+                                                                           taskId = Model.TaskId
+
+                                                                       })
+     
+    <section id="widget-grid-data" class="">
+        <!-- row -->
+        <div class="row">
+            <div class="col-sm-12 ">
+                <!-- panel -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <span class="widget-icon"> <i class="glyphicon glyphicon-stats txt-color-darken"></i> </span>
+                            Data
+                        </h3>
+                    </div>
+                    <div class="panel-body no-padding">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(x => x.Priority)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(x => x.Priority)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(x => x.Type)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(x => x.Type)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(x => x.Size)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(x => x.Size) hour(s)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(x => x.Urgency)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(x => x.Urgency)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Folder
+                                        </td>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(Model.FolderLink))
+                                            {
+                                                <span>Missing</span>
+                                            }
+                                            else
+                                            {
+                                                <a target="_blank" href="@Model.FolderLink">Link <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Step
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-default btn-sm" href="@Url.Action(MVC.Tasks.Steps(Model.TaskId))">
+                                                <i class="glyphicon glyphicon-list"></i> @Model.Step()
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @*<div class="row">
+            <!-- col -->
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+                <h1 class="page-title txt-color-blueDark">
+                    <!-- PAGE HEADER -->
+                    <i class="fa-fw fa fa-file-text-o"></i>
+                    Hours
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- col -->
+            <div class="col-sm-6">
+                <div class="well">
+                    @Html.Action(MVC.SpentTime.GroupedList(new SpentTimeFilter().ByTask(Model.TaskId)))
+                </div>
+            </div>
+        </div>*@
 </div>

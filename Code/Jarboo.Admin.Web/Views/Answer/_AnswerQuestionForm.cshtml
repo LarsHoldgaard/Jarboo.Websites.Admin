@@ -1,0 +1,33 @@
+﻿
+@using SmartAdminMvc
+@model  Jarboo.Admin.Web.Models.Answer.AnswerViewModel
+
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("Create", new AjaxOptions()
+{
+   
+}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(x => x.QuestionId)
+    @Html.HiddenFor(x => x.TaskId)
+    @Html.HiddenFor(x => x.EmployeeId)
+   
+    <div class="textarea-div">
+        <div class="typearea">
+            @Html.TextAreaFor(x => x.Message, new { @placeholder = "Write a reply...", @rows = 3, @class = "custom-scroll" })
+            @*<textarea placeholder="Write a reply..." id="textarea-expand"></textarea>*@
+        </div>
+    </div>
+        <!--  REPLY/SEND -->
+    <span class="textarea-controls">
+        <button type="submit" class="btn btn-sm btn-primary pull-right">
+            Reply
+        </button>
+    </span>
+}
+<!--  TEXTAREA -->

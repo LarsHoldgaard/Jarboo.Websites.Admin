@@ -29,6 +29,7 @@ namespace Jarboo.Admin.DAL.Entities
 
         public int? ProjectId { get; set; }
         public virtual Project Project { get; set; }
+        public string Role { get; set; }
 
         public int GetProjectId()
         {

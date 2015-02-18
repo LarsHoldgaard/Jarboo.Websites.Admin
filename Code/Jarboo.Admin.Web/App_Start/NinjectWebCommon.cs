@@ -3,13 +3,10 @@ using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
-using Jarboo.Admin.Integration;
 using Jarboo.Admin.Integration.GoogleDrive;
 using Jarboo.Admin.Integration.Mandrill;
 using Jarboo.Admin.Integration.Noop;
 using Jarboo.Admin.Web.Infrastructure;
-using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
-
 using Microsoft.AspNet.Identity;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Jarboo.Admin.Web.App_Start.NinjectWebCommon), "Start")]
@@ -121,6 +118,9 @@ namespace Jarboo.Admin.Web.App_Start
             kernel.Bind<IDocumentationService>().To<DocumentationService>().InRequestScope();
             kernel.Bind<IUserService>().To<UserService>().InRequestScope();
             kernel.Bind<ISpentTimeService>().To<SpentTimeService>().InRequestScope();
+            kernel.Bind<ICommentService>().To<CommentService>().InRequestScope();
+            kernel.Bind<IQuestionService>().To<QuestionService>().InRequestScope();
+            kernel.Bind<IAnswerService>().To<AnswerService>().InRequestScope();
         }
     }
 }

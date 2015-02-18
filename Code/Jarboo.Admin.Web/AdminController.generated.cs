@@ -4,8 +4,6 @@
 // to the .tt file (i.e. the T4 template) and save it to regenerate this file.
 
 // Make sure the compiler doesn't complain about missing Xml comments and CLS compliance
-
-using Jarboo.Admin.Web.Models;
 #pragma warning disable 1591, 3008, 3009
 #region T4MVC
 
@@ -139,10 +137,10 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void SettingsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, SettingsViewModel model);
+        partial void SettingsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.SettingsViewModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Settings(SettingsViewModel model)
+        public override System.Web.Mvc.ActionResult Settings(Jarboo.Admin.Web.Models.SettingsViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Settings);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

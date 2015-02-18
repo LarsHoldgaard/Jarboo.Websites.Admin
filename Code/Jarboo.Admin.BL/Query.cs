@@ -27,7 +27,7 @@ namespace Jarboo.Admin.BL
     }
 
     public class Query<TEntity, TInclude, TFilter, TSorter> : IQuery<TEntity, TInclude, TFilter, TSorter>
-        where TEntity: IBaseEntity
+        where TEntity : IBaseEntity
         where TFilter : Filter<TEntity>, new()
         where TInclude : Include<TEntity>, new()
         where TSorter : Sorter<TEntity>, new()
@@ -89,7 +89,7 @@ namespace Jarboo.Admin.BL
                 else
                 {
                     throw new Exception("Special Generic Type not implemented");
-    }
+                }
             }
             else
             {
@@ -143,6 +143,21 @@ namespace Jarboo.Admin.BL
         public static IQuery<SpentTime, SpentTimeInclude, SpentTimeFilter, SpentTimeSorter> ForSpentTime(SpentTimeFilter filter = null)
         {
             return new Query<SpentTime, SpentTimeInclude, SpentTimeFilter, SpentTimeSorter>(filter);
+        }
+
+        public static IQuery<Question, QuestionInclude, QuestionFilter, QuestionSorter> ForQuestion(QuestionFilter filter = null)
+        {
+            return new Query<Question, QuestionInclude, QuestionFilter, QuestionSorter>(filter);
+        }
+
+        public static IQuery<Comment, CommentInclude, CommentFilter, CommentSorter> ForComment(CommentFilter filter = null)
+        {
+            return new Query<Comment, CommentInclude, CommentFilter, CommentSorter>(filter);
+        }
+
+        public static IQuery<Answer, AnswerInclude, AnswerFilter, AnswerSorter> ForAnswer(AnswerFilter filter = null)
+        {
+            return new Query<Answer, AnswerInclude, AnswerFilter, AnswerSorter>(filter);
         }
     }
 

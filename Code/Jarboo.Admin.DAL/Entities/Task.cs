@@ -26,6 +26,8 @@ namespace Jarboo.Admin.DAL.Entities
         public Task()
         {
             Steps = new List<TaskStep>();
+            Comments = new List<Comment>();
+            Questions = new List<Question>();
         }
 
         public int TaskId { get; set; }
@@ -37,15 +39,19 @@ namespace Jarboo.Admin.DAL.Entities
         public TaskUrgency Urgency { get; set; }
         public bool Done { get; set; }
         public int? ForcedPriority { get; set; }
-
         public string FolderLink { get; set; }
+
+        public double EstimatePrice { get; set; }
+        public double CurrentPrice { get; set; }
 
         public DateTime? DateDeleted { get; set; }
 
         public int ProjectId { get; set; }
-        public virtual Project Project { get; set; }
+        public Project Project { get; set; }
 
-        public virtual List<TaskStep> Steps { get; set; }
+        public List<Comment> Comments { get; set; }
+        public List<Question> Questions { get; set; }
+        public List<TaskStep> Steps { get; set; }
 
         public string Identifier()
         {

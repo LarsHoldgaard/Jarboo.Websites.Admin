@@ -180,6 +180,21 @@ namespace Jarboo.Admin.BL.Services
             ClearCache();
         }
 
+        public void Delete(int spentTimeId, IBusinessErrorCollection errors)
+        {
+            if (spentTimeId == 0)
+            {
+                throw new Exception("Incorrect entity id");
+            }
+
+            Delete(new SpentTime()
+            {
+                SpentTimeId = spentTimeId
+            });
+
+            ClearCache();
+        }
+
         private void ClearCache()
         {
             try
