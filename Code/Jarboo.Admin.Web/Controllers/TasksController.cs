@@ -172,6 +172,8 @@ namespace Jarboo.Admin.Web.Controllers
             Folder,
             Step,
             Hours,
+            EstimatedPrice,
+            Deadline,
             Delete
         }
         private static TaskListColumns[] columnsWithClientSorting = new TaskListColumns[] { TaskListColumns.Priority, TaskListColumns.Hours };
@@ -237,6 +239,18 @@ namespace Jarboo.Admin.Web.Controllers
                     Title = "Hours",
                     Orderable = true,
                     Getter = (x) => x.Hours().ToString()
+                },
+            new Column<TaskViewModel>()
+                {
+                    Title = "Estimated price",
+                    Orderable = true,
+                    Getter = (x) => x.EstimatedPrice.ToString()
+                },
+            new Column<TaskViewModel>()
+                {
+                    Title = "Deadline",
+                    Orderable = true,
+                    Getter = (x) => x.DeadlineStr()
                 },
             new Column<TaskViewModel>()
                 {
@@ -368,6 +382,16 @@ namespace Jarboo.Admin.Web.Controllers
                 case TaskListColumns.Urgency:
                     {
                         query.Sort(x => x.ByUrgency(direction));
+                        break;
+                    }
+                case TaskListColumns.EstimatedPrice:
+                    {
+                        query.Sort(x => x.ByEstimatedPrice(direction));
+                        break;
+                    }
+                case TaskListColumns.Deadline:
+                    {
+                        query.Sort(x => x.ByDeadline(direction));
                         break;
                     }
             }

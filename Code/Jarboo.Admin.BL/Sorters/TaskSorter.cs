@@ -19,6 +19,8 @@ namespace Jarboo.Admin.BL.Sorters
         public SortDirection? Type { get; set; }
         public SortDirection? Size { get; set; }
         public SortDirection? Urgency { get; set; }
+        public SortDirection? Deadline { get; set; }
+        public SortDirection? EstimatedPrice { get; set; }
 
         public TaskSorter ByTitle(SortDirection? title = SortDirection.Ascendant)
         {
@@ -43,6 +45,16 @@ namespace Jarboo.Admin.BL.Sorters
         public TaskSorter ByUrgency(SortDirection? urgency = SortDirection.Ascendant)
         {
             Urgency = urgency;
+            return this;
+        }
+        public TaskSorter ByDeadline(SortDirection? deadline = SortDirection.Ascendant)
+        {
+            Deadline = deadline;
+            return this;
+        }
+        public TaskSorter ByEstimatedPrice(SortDirection? estimatedPrice = SortDirection.Ascendant)
+        {
+            EstimatedPrice = estimatedPrice;
             return this;
         }
 
@@ -73,6 +85,16 @@ namespace Jarboo.Admin.BL.Sorters
             if (Urgency.HasValue)
             {
                 query = query.SortBy(Urgency.Value, x => x.Urgency);
+            }
+
+            if (Deadline.HasValue)
+            {
+                query = query.SortBy(Deadline.Value, x => x.Deadline);
+            }
+
+            if (EstimatedPrice.HasValue)
+            {
+                query = query.SortBy(EstimatedPrice.Value, x => x.EstimatedPrice);
             }
 
             return query;
