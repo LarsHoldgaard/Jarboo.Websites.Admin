@@ -18,19 +18,8 @@
                 <div class="panel-body no-padding">
                     <!-- content -->
                     <div id="commentList">
-                        @*@{ Html.RenderPartial("ProductListControl", Model.Products); }*@
                         @Html.Action(MVC.Comments.ActionNames.CommentList, MVC.Comments.Name, new { taskId = Model.TaskId })
                     </div>
-                    @*<form method="post" class="well no-margin" onsubmit="return false;">
-                            <textarea rows="2" class="form-control" placeholder="What are you thinking?"></textarea>
-                            <div class="margin-top-10 ">
-                                <button type="submit" class="btn btn-sm btn-primary pull-right">
-                                    Post
-                                </button>
-                                <div class="btn btn-link profile-link-btn"> <br /></div>
-                            </div>
-                        </form>*@
-
                     @using (Ajax.BeginForm(MVC.Comments.ActionNames.Create, MVC.Comments.Name, new AjaxOptions { UpdateTargetId = "widget-grid-discussion" }, new { @class = "well no-margin" }))
                     {
 
@@ -42,18 +31,22 @@
                         <div class="textarea-div">
                             <div class="typearea">
                                 @Html.TextAreaFor(x => x.Message, new { @placeholder = "What are you thinking?", @rows = 3, @class = "form-control" })
-                              
+
                             </div>
                         </div>
-        <!--  REPLY/SEND -->
+                        
+                        <!--  REPLY/SEND -->
                         <span class="textarea-controls">
                             <button type="submit" class="btn btn-sm btn-primary pull-right">
                                 Reply
                             </button>
                         </span>
                     }
+                    <!--end content -->
                 </div>
             </div>
+            <!--end panel -->
         </div>
     </div>
+    <!--end row -->
 </section>

@@ -55,17 +55,16 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         #region Times
-       
+        // GET:  Times
         public virtual ActionResult TimeList(int taskId)
         {
-
             var timeFilter = new SpentTimeFilter().ByTask(taskId);
             var times = SpentTimeService.GetAll(Query.ForSpentTime(timeFilter).Include(x => x.Employee()));
  
             var model = new TimeListViewModel() { Times = times };
-            return PartialView("_ListTime", model);
+            return PartialView(MVC.SpentTime.Views._ListTime, model);
         }
-
+        // GET: /Times/Create
         public virtual ActionResult Create(int taskId)
         {
            var  spentTimeFilter = new SpentTimeFilter().ByTask(taskId);
@@ -76,10 +75,10 @@ namespace Jarboo.Admin.Web.Controllers
                  TotalHours =  items.GroupBy(time => time.Hours).ToString()
             };
 
-            return PartialView("_AddTimeForm", timeCreate);
+            return PartialView(MVC.SpentTime.Views._AddTimeForm, timeCreate);
         }
 
-        // POST: /Employees/Create
+        // POST: /Times/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Create(TimeViewModel model)

@@ -6,22 +6,19 @@
     Layout = null;
 }
 
-@using (Ajax.BeginForm("Create", new AjaxOptions()
-{
-   
-}))
+@using (Html.BeginForm(MVC.Answer.Create(), FormMethod.Post, new { @class = "smart-form" }))
+                     
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     @Html.HiddenFor(x => x.QuestionId)
     @Html.HiddenFor(x => x.TaskId)
     @Html.HiddenFor(x => x.EmployeeId)
-   
+   <!--  TEXTAREA -->
     <div class="textarea-div">
         <div class="typearea">
             @Html.TextAreaFor(x => x.Message, new { @placeholder = "Write a reply...", @rows = 3, @class = "custom-scroll" })
-            @*<textarea placeholder="Write a reply..." id="textarea-expand"></textarea>*@
-        </div>
+          </div>
     </div>
         <!--  REPLY/SEND -->
     <span class="textarea-controls">
@@ -30,4 +27,3 @@
         </button>
     </span>
 }
-<!--  TEXTAREA -->

@@ -1,15 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
 using Jarboo.Admin.BL;
-using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Filters;
-using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.BL.Services.Interfaces;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Web.Infrastructure;
-using Jarboo.Admin.Web.Models.Documentation;
 using Jarboo.Admin.Web.Models.Question;
 using Ninject;
 
@@ -28,17 +23,14 @@ namespace Jarboo.Admin.Web.Controllers
                 TaskId = questionFilter.TaskId.Value,
                 TaskName = taskName
             };
-           
-            var questions = QuestionService.GetAll(Query.ForQuestion(questionFilter).Include(x=>x.Answers())).Decorate<Question, QuestionViewModel>();
+
+            var questions = QuestionService.GetAll(Query.ForQuestion(questionFilter).Include(x => x.Answers())).Decorate<Question, QuestionViewModel>();
             questionList.AddRange(questions);
-            //foreach (var que in questions)
-            //{
-            //    questionList.Add(new QuestionViewModel(que));
-            //}
-            return PartialView("_QuestionList", questionList);
+
+            return PartialView(MVC.Questions.Views._QuestionList, questionList);
         }
 
-        // GET: /Employees/Create
+        // GET: /Questions/Create
         public virtual ActionResult Create(int? taskId, string taskName)
         {
             if (taskId == null)
@@ -48,10 +40,10 @@ namespace Jarboo.Admin.Web.Controllers
 
             var questionCreate = new QuestionViewModel { TaskId = taskId.Value, Task = new Task { Title = taskName } };
 
-            return View("AskQuestion", questionCreate);
+            return View(MVC.Questions.Views.AskQuestion, questionCreate);
         }
 
-        // POST: /Employees/Create
+        // POST: /Questions/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Create(QuestionViewModel model)

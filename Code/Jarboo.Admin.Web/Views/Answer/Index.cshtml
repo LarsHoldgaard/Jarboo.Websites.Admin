@@ -25,7 +25,7 @@
                 -->
                 <header>
                     <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                    <h2> Answer question for  @Model.Headline on @Model.Task.Title</h2>
+
                 </header>
                 <!-- widget div-->
                 <div>
@@ -35,19 +35,25 @@
                     </div>
                     <!-- end widget edit box -->
                     <!-- widget content -->
-                 
                     <div class="widget-body no-padding">
                         <header>
-                            <p>@Model.Message</p>
-                       </header>
-                        <!--  BODY -->
-                       
-                         @Html.Action(MVC.Answer.ActionNames.AnswerList, MVC.Answer.Name, new { questionId = Model.QuestionId })
-                      
+                            <h5 class="todo-group-title"><i class="fa  fa-question"></i> Answer question for  @Model.Headline on @Model.Task.Title</h5>
+                            <h2></h2>
+                            <ul id="sortable1" class="todo ui-sortable">
+                                <li>
+                                    <span class="handle">
 
-                        <!-- CHAT FOOTER -->
+                                    </span>
+                                    <p>@Model.Message</p>
+                                </li>
+                            </ul>
+                        </header>
+                        <!--  BODY -->
+                        @Html.Action(MVC.Answer.ActionNames.AnswerList, MVC.Answer.Name, new { questionId = Model.QuestionId })
+                        
+                        <!--  FOOTER -->
                         <div class="chat-footer">
-                            @Html.Action(MVC.Answer.ActionNames.Create, MVC.Answer.Name, new { questionId = Model.QuestionId, taskId=Model.TaskId })
+                            @Html.Action(MVC.Answer.ActionNames.Create, MVC.Answer.Name, new { questionId = Model.QuestionId, taskId = Model.TaskId })
 
                         </div>
 

@@ -24,7 +24,7 @@
                             <div class="widget-body no-padding">
                                 <div class="col-sm-12">
                                     <div class="well">
-                                       Total Hours: @Model.
+                                        Total Hours: @Model.Hours
                                     </div>
                                 </div>
                                 @using (Ajax.BeginForm(MVC.SpentTime.ActionNames.Create, MVC.SpentTime.Name, new AjaxOptions { UpdateTargetId = "widget-grid-hours" }, new { @class = "form-inline well no-margin" }))
@@ -48,8 +48,7 @@
                                         @Html.TextBoxFor(x => x.Hours, new { @class = "form-control", data_hours = "true", @id = "hoursId" })
                                     </div>
 
-                                    <button type="submit" class="btn btn-default">Submit</button>
-
+                                    <button type="submit" class="btn btn-primary">Add</button>
                                 }
 
                             </div><!-- end widget content -->
