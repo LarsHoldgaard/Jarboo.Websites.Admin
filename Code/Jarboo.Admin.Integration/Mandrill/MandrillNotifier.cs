@@ -42,12 +42,16 @@ namespace Jarboo.Admin.Integration.Mandrill
 
         public void SendPasswordRecoveryEmail(string email, string link)
         {
-            var result = api.SendMessage(
-                new EmailAddress[] { new EmailAddress(email) },
-                "Jarbo password recovery",
-                "You can reset your password <a href='" +link + "'>here</a>",
-                new EmailAddress(Configuration.MandrillFrom)
-                );
+            var message = new EmailMessage
+            {
+                to = new EmailAddress[] { new EmailAddress(email) },
+                from_email = Configuration.MandrillFrom,
+                subject = "Jarbo password recovery",
+            };
+
+            message.AddGlobalVariable("QUESTIONLINK", link);
+
+            api.SendMessage(message, Configuration.MandrillPasswordRecoveryTemplate, null);
         }
     }
 }

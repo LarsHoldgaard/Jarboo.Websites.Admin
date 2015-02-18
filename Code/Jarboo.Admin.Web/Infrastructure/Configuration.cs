@@ -203,6 +203,19 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
+        private string mandrillPasswordRecoveryTemplate;
+        public string MandrillPasswordRecoveryTemplate
+        {
+            get
+            {
+                if (mandrillPasswordRecoveryTemplate == null)
+                {
+                    mandrillPasswordRecoveryTemplate = ConfigurationManager.AppSettings["MandrillPasswordRecoveryTemplate"];
+                }
+                return mandrillPasswordRecoveryTemplate;
+            }
+        }
+
 
         private CustomErrorsMode? redirectOnError;
         public CustomErrorsMode ErrorMode
