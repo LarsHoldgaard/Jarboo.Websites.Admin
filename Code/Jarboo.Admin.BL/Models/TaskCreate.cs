@@ -20,6 +20,8 @@ namespace Jarboo.Admin.BL.Models
         public int ProjectId { get; set; }
         public int? EmployeeId { get; set; }
         public int? ForcedPriority { get; set; }
+        public decimal? EstimatedPrice { get; set; }
+        public DateTime? Deadline { get; set; }
 
         public string Identifier()
         {

@@ -14,6 +14,7 @@
     });
 
     $(".input-daterange").datepicker({});
+    $("input.datepicker").datepicker({});
 
     $("input[data-hours]").blur(formatHoursInput);
     function formatHoursInput() {

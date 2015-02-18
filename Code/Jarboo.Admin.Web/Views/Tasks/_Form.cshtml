@@ -75,6 +75,18 @@
                                         @Html.TextBoxFor(x => x.ForcedPriority, new { @placeholder = "Priority" })
                                     </label>
                                 </section>
+                                <section>
+                                    @Html.LabelFor(model => model.EstimatedPrice, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.EstimatedPrice, new { @placeholder = "EstimatedPrice" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.Deadline, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.Deadline, "{0:d}", new { @placeholder = "Deadline", @class="datepicker" })
+                                    </label>
+                                </section>
                                 @if (Model.TaskId == 0)
                                 {
                                     <section>
