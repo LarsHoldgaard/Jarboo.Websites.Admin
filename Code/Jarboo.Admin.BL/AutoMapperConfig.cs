@@ -107,8 +107,15 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<SpentTimeOnProject, SpentTime>();
             Mapper.CreateMap<SpentTime, SpentTimeOnProject>();
 
-            Mapper.CreateMap<Quiz, QuizEdit>();
-            Mapper.CreateMap<QuizEdit, Quiz>();
+            Mapper.CreateMap<Question, Question>();
+            Mapper.CreateMap<Question, Question>();
+
+            Mapper.CreateMap<Answer, Answer>();
+            Mapper.CreateMap<Answer, Answer>();
+
+            Mapper.CreateMap<Comment, Comment>();
+            Mapper.CreateMap<Comment, Comment>();
+ 
         }
     }
 }

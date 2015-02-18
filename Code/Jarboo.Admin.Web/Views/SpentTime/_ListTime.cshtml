@@ -1,0 +1,37 @@
+﻿@using Jarboo.Admin.Web.Models
+@model Jarboo.Admin.Web.Models.Time.TimeListViewModel
+@if (Model != null)
+{
+    <table id="dt_basic" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" aria-describedby="dt_basic_info" style="width: 100%;">
+        <thead>
+            <tr role="row">
+                <th class="sorting_asc">Name</th>
+                <th class="sorting">Date</th>
+                <th class="sorting">Role</th>
+                <th class="sorting">Amount</th>
+                <th class="sorting">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tim in Model.Times)
+            {
+                <tr role="row" class="odd">
+                    <td class="sorting_1">@tim.Employee.FullName</td>
+                    <td>@tim.DateCreated</td>
+                    <td>@tim.Role</td>
+                    <td>@tim.Hours</td>
+                    <td>
+                        @if (this.Can(MVC.SpentTime.Delete()))
+                        {
+
+                            using (Ajax.BeginForm(MVC.SpentTime.ActionNames.Create, MVC.SpentTime.Name, new { id = tim.SpentTimeId, taskId = tim.TaskId }, new AjaxOptions { UpdateTargetId = "widget-grid-hours" }, null))
+                            {                                   @Html.AntiForgeryToken()
+                            <input type="submit" value="Delete" class="btn  btn-danger" />
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

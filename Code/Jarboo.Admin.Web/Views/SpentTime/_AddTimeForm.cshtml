@@ -1,0 +1,62 @@
+﻿@model Jarboo.Admin.Web.Models.Time.TimeViewModel
+<section id="widget-grid-hours" class="">
+    <!-- row -->
+    <div class="row">
+        <div class="col-sm-12 ">
+            <!-- panel -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="widget-icon"> <i class="glyphicon glyphicon-stats txt-color-darken"></i> </span>
+                        Registered hours
+                    </h2>
+                </div>
+                <div class="panel-body no-padding">
+                    @Html.Action(MVC.SpentTime.ActionNames.TimeList, MVC.SpentTime.Name, new { taskId = Model.TaskId })
+                    <div class="jarviswidget jarviswidget-sortable no-margin" id="wid-id-3" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+                        <header role="heading">
+                            <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                            <h2>Actions</h2>
+                        </header>
+                        <!-- widget div-->
+                        <div role="content">
+                            <!-- widget content -->
+                            <div class="widget-body no-padding">
+                                <div class="col-sm-12">
+                                    <div class="well">
+                                        Total Hours: @Model.Hours
+                                    </div>
+                                </div>
+                                @using (Ajax.BeginForm(MVC.SpentTime.ActionNames.Create, MVC.SpentTime.Name, new AjaxOptions { UpdateTargetId = "widget-grid-hours" }, new { @class = "form-inline well no-margin" }))
+                                {
+
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true)
+                                    @Html.HiddenFor(x => x.TaskId)
+                                    @Html.HiddenFor(x => x.EmployeeId)
+
+                                    <div class="form-group">
+                                        <label for="roleId">Select roles: </label>
+                                        @Html.EnumDropDownListFor(x => x.Roles, new { @class = "form-control", @id = "roleId" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="statusId">Set status: </label>
+                                        @Html.EnumDropDownListFor(x => x.Step, new { @class = "form-control", @id = "statusId" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="hoursId">Hours: </label>
+                                        @Html.TextBoxFor(x => x.Hours, new { @class = "form-control", data_hours = "true", @id = "hoursId" })
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Add</button>
+                                }
+
+                            </div><!-- end widget content -->
+                        </div><!-- end widget div -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

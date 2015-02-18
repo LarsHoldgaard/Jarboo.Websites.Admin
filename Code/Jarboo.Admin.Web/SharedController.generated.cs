@@ -37,6 +37,7 @@ namespace T4MVC
             public class _ViewNamesClass
             {
                 public readonly string _Aside = "_Aside";
+                public readonly string _CreateComment = "_CreateComment";
                 public readonly string _CurrentUser = "_CurrentUser";
                 public readonly string _Footer = "_Footer";
                 public readonly string _Header = "_Header";
@@ -51,6 +52,7 @@ namespace T4MVC
                 public readonly string Messages = "Messages";
             }
             public readonly string _Aside = "~/Views/Shared/_Aside.cshtml";
+            public readonly string _CreateComment = "~/Views/Shared/_CreateComment.cshtml";
             public readonly string _CurrentUser = "~/Views/Shared/_CurrentUser.cshtml";
             public readonly string _Footer = "~/Views/Shared/_Footer.cshtml";
             public readonly string _Header = "~/Views/Shared/_Header.cshtml";

@@ -64,13 +64,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
+    <Compile Include="Entities\Answer.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Documentation.cs" />
     <Compile Include="Entities\EmployeePosition.cs" />
     <Compile Include="Entities\Enums.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\Quiz.cs" />
+    <Compile Include="Entities\Question.cs" />
     <Compile Include="Entities\SpentTime.cs" />
     <Compile Include="Entities\Task.cs" />
     <Compile Include="Entities\Employee.cs" />
@@ -168,6 +171,14 @@
     <Compile Include="Migrations\201502181440361_Quizzes.Designer.cs">
       <DependentUpon>201502181440361_Quizzes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502181558112_AddedTablesCommentsQuestionAnswerAndFieldRoleToSpentsTime.cs" />
+    <Compile Include="Migrations\201502181558112_AddedTablesCommentsQuestionAnswerAndFieldRoleToSpentsTime.Designer.cs">
+      <DependentUpon>201502181558112_AddedTablesCommentsQuestionAnswerAndFieldRoleToSpentsTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502182235551_MergeTableTask.cs" />
+    <Compile Include="Migrations\201502182235551_MergeTableTask.Designer.cs">
+      <DependentUpon>201502182235551_MergeTableTask.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManager.cs" />
@@ -240,6 +251,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502181440361_Quizzes.resx">
       <DependentUpon>201502181440361_Quizzes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502181558112_AddedTablesCommentsQuestionAnswerAndFieldRoleToSpentsTime.resx">
+      <DependentUpon>201502181558112_AddedTablesCommentsQuestionAnswerAndFieldRoleToSpentsTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502182235551_MergeTableTask.resx">
+      <DependentUpon>201502182235551_MergeTableTask.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

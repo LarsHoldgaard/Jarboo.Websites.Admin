@@ -1,0 +1,24 @@
+﻿@using System.Activities.Expressions
+@model Jarboo.Admin.Web.Models.Comment.CommentListViewModel
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    foreach (var com in Model.Comments)
+    {
+        <span class="timeline-seperator text-center">
+            <span>@com.DateCreated</span>
+        </span>
+        <div class="chat-body no-padding profile-message">
+            <ul>
+                <li class="message">
+                    <a href="javascript:void(0);" class="username"><strong>@com.Employee.FullName</strong> </a>
+                    <p class="message-text">
+                        @com.Message
+                    </p>
+                </li>
+            </ul>
+        </div>
+    }
+}

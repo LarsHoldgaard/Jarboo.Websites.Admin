@@ -1,0 +1,54 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using Jarboo.Admin.BL.Filters
+@model Jarboo.Admin.Web.Models.Question.QuestionListViewModel
+@{
+    Layout = null;
+}
+<section id="widget-grid-question" class="">
+    <!-- row -->
+    <div class="row">
+        <div class="col-sm-12 ">
+            <!-- panel -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="btn-group pull-right">
+                        <a href="@Url.Action(MVC.Questions.Create(Model.TaskId, Model.TaskName))" class="btn btn-primary ">Ask Question</a>
+                    </div>
+                    <h4>
+
+                        <span class="widget-icon"> <i class="glyphicon glyphicon-stats txt-color-darken"></i> </span>
+                        Question on task
+                    </h4>
+                </div>
+                <div class="panel-body no-padding">
+                    <!-- content -->
+                    <table id="dt_basic" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" aria-describedby="dt_basic_info" style="width: 100%;">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting">Question</th>
+                                <th class="sorting">Status</th>
+                                <th class="sorting_asc">Date Created</th>
+                                <th class="sorting">Last update</th>
+                                <th class="sorting">Read</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var question in Model)
+                            {
+                                <tr role="row" class="odd">
+                                    <td>@Html.ActionLink(question.Headline ?? "question", MVC.Answer.Index(question.QuestionId))</td>
+                                    <td>@question.Status</td>
+                                    <td>@question.DateCreated</td>
+                                    <td>@(question.LastUpdate ?? question.DateCreated)</td>
+                                    <td>  <input type="checkbox" onclick="return false" @(question.IsRead ? "checked" : string.Empty)></td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>   <!--end panel-->
+        </div>
+    </div>   <!--end row -->
+</section>

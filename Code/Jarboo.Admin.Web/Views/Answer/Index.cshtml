@@ -1,0 +1,70 @@
+﻿@using SmartAdminMvc
+@model  Jarboo.Admin.Web.Models.Question.QuestionViewModel
+@{
+    ViewBag.Title = "Answers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-7">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+                <!-- widget options:
+                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                data-widget-colorbutton="false"
+                data-widget-editbutton="false"
+                data-widget-togglebutton="false"
+                data-widget-deletebutton="false"
+                data-widget-fullscreenbutton="false"
+                data-widget-custombutton="false"
+                data-widget-collapsed="true"
+                data-widget-sortable="false"
+
+                -->
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+
+                </header>
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+                        <header>
+                            <h5 class="todo-group-title"><i class="fa  fa-question"></i> Answer question for  @Model.Headline on @Model.Task.Title</h5>
+                            <h2></h2>
+                            <ul id="sortable1" class="todo ui-sortable">
+                                <li>
+                                    <span class="handle">
+
+                                    </span>
+                                    <p>@Model.Message</p>
+                                </li>
+                            </ul>
+                        </header>
+                        <!--  BODY -->
+                        @Html.Action(MVC.Answer.ActionNames.AnswerList, MVC.Answer.Name, new { questionId = Model.QuestionId })
+                        
+                        <!--  FOOTER -->
+                        <div class="chat-footer">
+                            @Html.Action(MVC.Answer.ActionNames.Create, MVC.Answer.Name, new { questionId = Model.QuestionId, taskId = Model.TaskId })
+
+                        </div>
+
+                        <!-- end widget div -->
+                    </div>
+                    <!-- end widget content -->
+                </div>
+                <!-- end widget div -->
+            </div>
+            <!-- end widget -->
+        </article>
+    </div>
+    <!-- end row -->
+</div>
