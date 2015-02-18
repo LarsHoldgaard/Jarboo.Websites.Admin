@@ -216,5 +216,28 @@
                                                                                    {
                                                                                        documentationFilter = new DocumentationFilter().ByProjectId(Model.ProjectId)
                                                                                    })
+    @if (this.Can(MVC.Quizzes.List()))
+    {
+        <!-- row -->
+        <div class="row">
+            <!-- col -->
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+                <h1 class="page-title txt-color-blueDark">
+                    <!-- PAGE HEADER -->
+                    <i class="fa-fw fa fa-file-text-o"></i>
+                    Quizzes
+                </h1>
 
+            </div>
+        </div>
+        if (this.Can(MVC.Quizzes.Create()))
+         {
+             <p>
+                 <a class="btn btn-success" href="@Url.Action(MVC.Quizzes.Create(Model.ProjectId))">
+                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>Add quiz
+                 </a>
+             </p>
+         }
+        @Html.Action(MVC.Quizzes.ActionNames.List, MVC.Quizzes.Name, new { quizFilter = new QuizFilter().ByProjectId(Model.ProjectId) })
+    }
 </div>

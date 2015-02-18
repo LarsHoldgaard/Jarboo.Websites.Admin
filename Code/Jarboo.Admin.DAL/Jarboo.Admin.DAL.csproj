@@ -70,6 +70,7 @@
     <Compile Include="Entities\EmployeePosition.cs" />
     <Compile Include="Entities\Enums.cs" />
     <Compile Include="Entities\Project.cs" />
+    <Compile Include="Entities\Quiz.cs" />
     <Compile Include="Entities\SpentTime.cs" />
     <Compile Include="Entities\Task.cs" />
     <Compile Include="Entities\Employee.cs" />
@@ -163,6 +164,10 @@
     <Compile Include="Migrations\201502180823256_TaskDescription.Designer.cs">
       <DependentUpon>201502180823256_TaskDescription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502181440361_Quizzes.cs" />
+    <Compile Include="Migrations\201502181440361_Quizzes.Designer.cs">
+      <DependentUpon>201502181440361_Quizzes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManager.cs" />
@@ -232,6 +237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502180823256_TaskDescription.resx">
       <DependentUpon>201502180823256_TaskDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502181440361_Quizzes.resx">
+      <DependentUpon>201502181440361_Quizzes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

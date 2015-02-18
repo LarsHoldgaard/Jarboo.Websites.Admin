@@ -144,6 +144,11 @@ namespace Jarboo.Admin.BL
         {
             return new Query<SpentTime, SpentTimeInclude, SpentTimeFilter, SpentTimeSorter>(filter);
         }
+
+        public static IQuery<Quiz, QuizInclude, QuizFilter, QuizSorter> ForQuiz(QuizFilter filter = null)
+        {
+            return new Query<Quiz, QuizInclude, QuizFilter, QuizSorter>(filter);
+        }
     }
 
     public static class QueryExtensions

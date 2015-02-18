@@ -62,6 +62,10 @@ namespace Jarboo.Admin.BL.Authorization
             public const string AcceptAny = "AcceptAny";
             public const string DenyAny = "DenyAny";
         }
+        public class Quizzes
+        {
+            public static readonly string Name = typeof(Quizzes).Name;
+        }
 
         private static readonly Dictionary<UserRoles, Dictionary<string, HashSet<string>>> rightsByRoles = new Dictionary<UserRoles, Dictionary<string, HashSet<string>>>();
         private static readonly Dictionary<string, HashSet<string>> authorizedUserRights = new Dictionary<string, HashSet<string>>();
@@ -134,6 +138,8 @@ namespace Jarboo.Admin.BL.Authorization
             rights.Add(Employees.Name, ViewAll);
 
             rights.Add(Documentations.Name, ViewSpecial);
+
+            rights.Add(Quizzes.Name, ViewSpecial);
 
             rights.Add(SpentTime.Name, ViewSpecial);
             rights.Add(SpentTime.Name, AddSpecial);

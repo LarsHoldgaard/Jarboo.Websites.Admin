@@ -1,0 +1,74 @@
+﻿@using SmartAdminMvc
+@model Jarboo.Admin.BL.Models.QuizEdit
+
+<!-- row -->
+<div class="row">
+    <article class="col-sm-12 col-md-12 col-lg-7">
+        <!-- Widget ID (each widget will need unique ID)-->
+        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+            <!-- widget options:
+            usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+            data-widget-colorbutton="false"
+            data-widget-editbutton="false"
+            data-widget-togglebutton="false"
+            data-widget-deletebutton="false"
+            data-widget-fullscreenbutton="false"
+            data-widget-custombutton="false"
+            data-widget-collapsed="true"
+            data-widget-sortable="false"
+
+            -->
+            <header>
+                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                <h2>Edit </h2>
+            </header>
+            <!-- widget div-->
+            <div>
+                <!-- widget edit box -->
+                <div class="jarviswidget-editbox">
+                    <!-- This area used as dropdown edit box -->
+                </div>
+                <!-- end widget edit box -->
+                <!-- widget content -->
+                <div class="widget-body no-padding">
+                    @using (Html.BeginForm(MVC.Quizzes.Edit(), FormMethod.Post, new { @class = "smart-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.QuizId)
+                        @Html.HiddenFor(x => x.ProjectId)
+
+                        @Html.ValidationBootstrap()
+
+                        <header>
+                            Edit form
+                        </header>
+                        <fieldset>
+                            <section>
+                                @Html.LabelFor(model => model.Title, new { @class = "label" })
+                                <label class="input">
+                                    @Html.TextBoxFor(x => x.Title, new { @placeholder = "Title" })
+                                </label>
+                            </section>
+                            <section>
+                                @Html.LabelFor(model => model.Link, new { @class = "label" })
+                                <label class="input">
+                                    @Html.TextBoxFor(x => x.Link, new { @placeholder = "Link" })
+                                </label>
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button type="submit" class="btn btn-primary">
+                                Save
+                            </button>
+                        </footer>
+                    }
+                </div>
+                <!-- end widget content -->
+            </div>
+            <!-- end widget div -->
+        </div>
+        <!-- end widget -->
+    </article>
+</div>
+<!-- end row -->

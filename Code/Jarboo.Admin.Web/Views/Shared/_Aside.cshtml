@@ -106,6 +106,12 @@
                     <a href="@Url.Action(MVC.Documentations.Index())" title="Documentations"><i class="fa fa-lg fa-fw fa-stack-overflow"></i><span class="menu-item-parent">Documentations</span></a>
                 </li>
             }
+            @if (this.Can(MVC.Quizzes.Index()))
+            {
+                <li class="@Html.RouteIf("quizzes", "active")">
+                    <a href="@Url.Action(MVC.Quizzes.Index())" title="Quizzes"><i class="fa fa-lg fa-fw fa-list-ul"></i><span class="menu-item-parent">Quizzes</span></a>
+                </li>
+            }
             @if (this.Can(MVC.Guides.Index()))
             {
                 <li class="@Html.RouteIf("guides", "active")">

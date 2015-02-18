@@ -1,0 +1,33 @@
+﻿@using SmartAdminMvc
+@{
+    ViewBag.Title = "Quizzes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- RIBBON -->
+<div id="ribbon">
+    @Html.Partial("_RibbonRefresh")
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @Html.RenderBreadCrumbs(this, new BreadCrumbItem("Quizzes"))
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
+                Quizzes
+            </h1>
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end row -->
+
+    @Html.Action(MVC.Quizzes.ActionNames.List, MVC.Quizzes.Name, new { showProject = true})
+</div>

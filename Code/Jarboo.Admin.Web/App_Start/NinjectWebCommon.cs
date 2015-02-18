@@ -122,6 +122,7 @@ namespace Jarboo.Admin.Web.App_Start
             kernel.Bind<IDocumentationService>().To<DocumentationService>().InRequestScope();
             kernel.Bind<IUserService>().To<UserService>().InRequestScope();
             kernel.Bind<ISpentTimeService>().To<SpentTimeService>().InRequestScope();
+            kernel.Bind<IQuizService>().To<QuizService>().InRequestScope();
         }
     }
 }

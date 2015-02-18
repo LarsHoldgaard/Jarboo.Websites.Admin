@@ -10,6 +10,7 @@ namespace Jarboo.Admin.DAL.Entities
             Documentations = new List<Documentation>();
             Tasks = new List<Task>();
             SpentTimes = new List<SpentTime>();
+            Quizzes = new List<Quiz>();
         }
 
         public int ProjectId { get; set; }
@@ -22,5 +23,6 @@ namespace Jarboo.Admin.DAL.Entities
         public virtual List<Documentation> Documentations { get; set; }
         public virtual List<Task> Tasks { get; set; }
         public virtual List<SpentTime> SpentTimes { get; set; }
+        public virtual List<Quiz> Quizzes { get; set; }
     }
 }
