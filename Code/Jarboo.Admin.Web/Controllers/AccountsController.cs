@@ -167,6 +167,11 @@ namespace Jarboo.Admin.Web.Controllers
         }
         private ActionResult OnEditSuccess(UserEdit model)
         {
+            if (model.UserId != CurrentUser.Id)
+            {
+                return RedirectToAction(MVC.Accounts.View(model.UserId));
+            }
+
             var user = UserManager.FindByEmail(model.Email);
             if (user == null)
             {
