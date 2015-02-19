@@ -13,7 +13,7 @@
         <div class="chat-body no-padding profile-message">
             <ul>
                 <li class="message">
-                    <a href="javascript:void(0);" class="username"><strong>@com.Employee.FullName</strong> </a>
+                 <strong>  @Html.ActionLink(com.Employee.FullName, MVC.Employees.View(com.Employee.EmployeeId), new { @class = "username" })</strong>
                     <p class="message-text">
                         @com.Message
                     </p>

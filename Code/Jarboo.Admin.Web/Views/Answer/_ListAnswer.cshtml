@@ -1,17 +1,14 @@
-﻿
-@model  Jarboo.Admin.Web.Models.Answer.AnswerListViewModel
+﻿@model  Jarboo.Admin.Web.Models.Answer.AnswerListViewModel
 @{
     Layout = null;
 }
-
 
 <div id="answers-body" class="chat-body custom-scroll">
     <ul>
         @foreach (var ans in Model.Answers)
         {
-
             <li class="message">
-                <a href="javascript:void(0);" class="username">@ans.Employee.FullName</a>
+                <strong> @Html.ActionLink(ans.Employee.FullName, MVC.Employees.View(ans.Employee.EmployeeId), new { @class = "username" })</strong>
                 <div class="message-text">
                     <time>
                         @ans.DateCreated

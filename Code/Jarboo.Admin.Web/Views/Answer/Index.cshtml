@@ -38,7 +38,6 @@
                     <div class="widget-body no-padding">
                         <header>
                             <h5 class="todo-group-title"><i class="fa  fa-question"></i> Answer question for  @Model.Headline on @Model.Task.Title</h5>
-                            <h2></h2>
                             <ul id="sortable1" class="todo ui-sortable">
                                 <li>
                                     <span class="handle">
@@ -50,13 +49,12 @@
                         </header>
                         <!--  BODY -->
                         @Html.Action(MVC.Answer.ActionNames.AnswerList, MVC.Answer.Name, new { questionId = Model.QuestionId })
-                        
+
                         <!--  FOOTER -->
                         <div class="chat-footer">
                             @Html.Action(MVC.Answer.ActionNames.Create, MVC.Answer.Name, new { questionId = Model.QuestionId, taskId = Model.TaskId })
 
                         </div>
-
                         <!-- end widget div -->
                     </div>
                     <!-- end widget content -->

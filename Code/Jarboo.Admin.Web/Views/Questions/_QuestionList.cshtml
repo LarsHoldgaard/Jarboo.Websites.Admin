@@ -1,6 +1,7 @@
 ﻿@using System.Web.Mvc
 @using System.Web.Mvc.Html
 @using Jarboo.Admin.BL.Filters
+@using Jarboo.Admin.DAL.Entities
 @model Jarboo.Admin.Web.Models.Question.QuestionListViewModel
 @{
     Layout = null;
@@ -38,10 +39,13 @@
                             {
                                 <tr role="row" class="odd">
                                     <td>@Html.ActionLink(question.Headline ?? "question", MVC.Answer.Index(question.QuestionId))</td>
-                                    <td>@question.Status</td>
+                                    <td><span class="label @(question.Status == Status.Answered ? "label-success" : "label-default")">@question.Status</span> </td>
                                     <td>@question.DateCreated</td>
                                     <td>@(question.LastUpdate ?? question.DateCreated)</td>
-                                    <td>  <input type="checkbox" onclick="return false" @(question.IsRead ? "checked" : string.Empty)></td>
+                                    <td>
+                                        
+                                        <input type="checkbox" onclick="return false" @(question.IsRead ? "checked" : string.Empty)>
+                                    </td>
                                 </tr>
                             }
 
