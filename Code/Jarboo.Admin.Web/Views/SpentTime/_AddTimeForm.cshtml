@@ -27,7 +27,7 @@
                                         Total Hours: @Model.Hours
                                     </div>
                                 </div>
-                                @using (Ajax.BeginForm(MVC.SpentTime.ActionNames.Create, MVC.SpentTime.Name, new AjaxOptions { UpdateTargetId = "widget-grid-hours", OnSuccess = "updateTableTimes" }, new { @class = "form-inline well no-margin" }))
+                                @using (Ajax.BeginForm(MVC.SpentTime.ActionNames.Create, MVC.SpentTime.Name, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "widget-grid-hours", OnSuccess = "updateTableTimes" }, new { @class = "form-inline well no-margin" }))
                                 {
 
                                     @Html.AntiForgeryToken()
@@ -37,11 +37,11 @@
                                     @Html.HiddenFor(x => x.ProjectId)
                                     <div class="form-group">
                                         <label for="roleId">Select roles: </label>
-                                        @Html.EnumDropDownListFor(x => x.Roles, new { @class = "form-control", @id = "roleId" })
+                                        @Html.EnumDropDownListFor(x => x.Roles,"Select role" , new { @class = "form-control", @id = "roleId"})
                                     </div>
                                     <div class="form-group">
                                         <label for="statusId">Set status: </label>
-                                        @Html.EnumDropDownListFor(x => x.Step, new { @class = "form-control", @id = "statusId" })
+                                        @Html.EnumDropDownListFor(x => x.Step, "Select status", new { @class = "form-control", @id = "statusId" })
                                     </div>
                                     <div class="form-group">
                                         <label for="hoursId">Hours: </label>
@@ -60,3 +60,13 @@
         </div>
     </div>
 </section>
+
+<script type="text/javascript">
+
+    $('#Taskview_dt_basic_times').dataTable({
+        "order": [[1, "desc"]],
+        "bDestroy": true
+
+    });
+
+</script>

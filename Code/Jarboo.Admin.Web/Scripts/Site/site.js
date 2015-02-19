@@ -170,17 +170,7 @@
 
         return undefined;
     }
-
-    function updateTableTimes() {
-        timesTable();
-        }
-
-var timesTable =  $('#Taskview_dt_basic_times').dataTable({
-        "order": [[1, "desc"]],
-        "bDestroy": true
-       
-        });
-
+ 
     $('#Taskview_dt_basic_question').dataTable({
         "order": [[3, "desc"]],
          "bDestroy": true
