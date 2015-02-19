@@ -23,10 +23,9 @@
                     <td>
                         @if (this.Can(MVC.SpentTime.Delete()))
                         {
-
-                            using (Ajax.BeginForm(MVC.SpentTime.ActionNames.Create, MVC.SpentTime.Name, new { id = tim.SpentTimeId, taskId = tim.TaskId }, new AjaxOptions { UpdateTargetId = "widget-grid-hours" }, null))
+                            using (Ajax.BeginForm(MVC.SpentTime.ActionNames.Delete, MVC.SpentTime.Name, new { id = tim.SpentTimeId, taskId = tim.TaskId, projectId = tim.ProjectId}, new AjaxOptions { UpdateTargetId = "widget-grid-hours" }, null))
                             {                                   @Html.AntiForgeryToken()
-                            <input type="submit" value="Delete" class="btn  btn-danger" />
+    <input type="submit" value="Delete" class="btn  btn-danger delete-btn-form" />
                             }
                         }
                     </td>

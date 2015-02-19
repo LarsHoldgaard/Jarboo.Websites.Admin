@@ -38,8 +38,8 @@ public static partial class MVC
     public static Jarboo.Admin.Web.Controllers.GuidesController Guides = new Jarboo.Admin.Web.Controllers.T4MVC_GuidesController();
     public static Jarboo.Admin.Web.Controllers.HomeController Home = new Jarboo.Admin.Web.Controllers.T4MVC_HomeController();
     public static Jarboo.Admin.Web.Controllers.ProjectsController Projects = new Jarboo.Admin.Web.Controllers.T4MVC_ProjectsController();
-    public static Jarboo.Admin.Web.Controllers.QuizzesController Quizzes = new Jarboo.Admin.Web.Controllers.T4MVC_QuizzesController();
     public static Jarboo.Admin.Web.Controllers.QuestionsController Questions = new Jarboo.Admin.Web.Controllers.T4MVC_QuestionsController();
+    public static Jarboo.Admin.Web.Controllers.QuizzesController Quizzes = new Jarboo.Admin.Web.Controllers.T4MVC_QuizzesController();
     public static Jarboo.Admin.Web.Controllers.ReportingController Reporting = new Jarboo.Admin.Web.Controllers.T4MVC_ReportingController();
     public static Jarboo.Admin.Web.Controllers.SpentTimeController SpentTime = new Jarboo.Admin.Web.Controllers.T4MVC_SpentTimeController();
     public static Jarboo.Admin.Web.Controllers.TasksController Tasks = new Jarboo.Admin.Web.Controllers.T4MVC_TasksController();

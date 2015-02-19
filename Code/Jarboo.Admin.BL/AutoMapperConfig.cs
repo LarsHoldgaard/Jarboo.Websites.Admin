@@ -101,8 +101,10 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<User, UserPasswordSet>()
                 .ForMember(x => x.UserId, x => x.MapFrom(y => y.Id));
 
-            Mapper.CreateMap<SpentTimeOnTask, SpentTime>();
-            Mapper.CreateMap<SpentTime, SpentTimeOnTask>();
+            Mapper.CreateMap<SpentTimeOnTask, SpentTime>()
+                    .ForMember(x => x.Role, x => x.MapFrom(y => y.Roles)); 
+            Mapper.CreateMap<SpentTime, SpentTimeOnTask>()
+                     .ForMember(x => x.Roles, x => x.MapFrom(y => y.Role)); 
 
             Mapper.CreateMap<SpentTimeOnProject, SpentTime>();
             Mapper.CreateMap<SpentTime, SpentTimeOnProject>();

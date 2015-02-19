@@ -27,14 +27,14 @@
                                         Total Hours: @Model.Hours
                                     </div>
                                 </div>
-                                @using (Ajax.BeginForm(MVC.SpentTime.ActionNames.Create, MVC.SpentTime.Name, new AjaxOptions { UpdateTargetId = "widget-grid-hours" }, new { @class = "form-inline well no-margin" }))
+                                @using (Ajax.BeginForm(MVC.SpentTime.ActionNames.Create, MVC.SpentTime.Name, new AjaxOptions { UpdateTargetId = "widget-grid-hours", OnSuccess = "updateTableTimes" }, new { @class = "form-inline well no-margin" }))
                                 {
 
                                     @Html.AntiForgeryToken()
                                     @Html.ValidationSummary(true)
                                     @Html.HiddenFor(x => x.TaskId)
                                     @Html.HiddenFor(x => x.EmployeeId)
-
+                                    @Html.HiddenFor(x => x.ProjectId)
                                     <div class="form-group">
                                         <label for="roleId">Select roles: </label>
                                         @Html.EnumDropDownListFor(x => x.Roles, new { @class = "form-control", @id = "roleId" })

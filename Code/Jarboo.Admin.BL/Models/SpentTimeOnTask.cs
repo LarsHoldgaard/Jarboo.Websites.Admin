@@ -11,7 +11,8 @@ namespace Jarboo.Admin.BL.Models
         public int TaskId { get; set; }
         public string Roles { get; set; }
         public TaskStep Steps { get; set; }
-         public TaskStepEnum Step { get; set; }
+        public TaskStepEnum Step { get; set; }
+        public int ProjectId { get; set; }
      
     }
 }

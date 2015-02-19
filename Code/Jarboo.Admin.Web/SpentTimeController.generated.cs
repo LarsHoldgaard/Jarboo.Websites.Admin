@@ -176,6 +176,7 @@ namespace Jarboo.Admin.Web.Controllers
         public class ActionParamsClass_Create
         {
             public readonly string taskId = "taskId";
+            public readonly string projectId = "projectId";
             public readonly string model = "model";
         }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
@@ -186,6 +187,7 @@ namespace Jarboo.Admin.Web.Controllers
         {
             public readonly string id = "id";
             public readonly string taskId = "taskId";
+            public readonly string projectId = "projectId";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -290,14 +292,15 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int taskId);
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int taskId, int projectId);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(int taskId)
+        public override System.Web.Mvc.ActionResult Create(int taskId, int projectId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
-            CreateOverride(callInfo, taskId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "projectId", projectId);
+            CreateOverride(callInfo, taskId, projectId);
             return callInfo;
         }
 
@@ -314,15 +317,16 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, int taskId);
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, int taskId, int projectId);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Delete(int id, int taskId)
+        public override System.Web.Mvc.ActionResult Delete(int id, int taskId, int projectId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
-            DeleteOverride(callInfo, id, taskId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "projectId", projectId);
+            DeleteOverride(callInfo, id, taskId, projectId);
             return callInfo;
         }
 
