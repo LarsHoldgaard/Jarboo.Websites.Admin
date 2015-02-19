@@ -1,4 +1,4 @@
-﻿$(function() {
+﻿$(function () {
     // When rending an underscore template, we want top-level
     // variables to be referenced as part of an object. For
     // technical reasons (scope-chain search), this speeds up
@@ -35,9 +35,9 @@
         $input.val(number);
     }
 
-    $(".dataTable").each(function() {
+    $(".dataTable").each(function () {
         var $this = $(this);
-        var onError = function() {
+        var onError = function () {
             $this.replaceWith('<div class="alert alert-danger" role="alert">Coudn\'t load table data.</div>');
         }
 
@@ -49,7 +49,7 @@
             $.ajax({
                 url: configUrl,
                 dataType: "json",
-                success: function(config) {
+                success: function (config) {
                     console.log('datatable config: ', config);
 
                     var ajax = config.ajax;
@@ -62,7 +62,7 @@
                                 dataType: "json",
                                 type: ajax.type,
                                 data: data,
-                                success: function(data) {
+                                success: function (data) {
                                     callback(data);
                                 },
                                 error: onError
@@ -93,7 +93,7 @@
                             ajax.url = initUrl + (initUrl.indexOf("?") == -1 ? "?" : "&");
                             ajax.url += $filter.find("input, textarea, select").serialize().replace(/=on\b/, "=true");
                         }
-                        $filter.on("change", function() {
+                        $filter.on("change", function () {
                             $this.DataTable().draw();
                         });
                     }
@@ -170,4 +170,13 @@
 
         return undefined;
     }
+    $('#Taskview_dt_basic_question').dataTable({
+        "order": [[3, "desc"]],
+         "bDestroy": true
+    });
+    $('#Taskview_dt_basic_times').dataTable({
+        "order": [[1, "desc"]],
+        "bDestroy": true
+    });
+   
 });
