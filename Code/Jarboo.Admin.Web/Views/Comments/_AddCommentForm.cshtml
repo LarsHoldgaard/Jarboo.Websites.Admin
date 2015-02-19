@@ -17,7 +17,7 @@
                 </div>
                 <div class="panel-body no-padding">
                     <!-- content -->
-                    <div id="commentList">
+                    <div id="commentList" class="chat-body custom-scroll">
                         @Html.Action(MVC.Comments.ActionNames.CommentList, MVC.Comments.Name, new { taskId = Model.TaskId })
                     </div>
                     @using (Ajax.BeginForm(MVC.Comments.ActionNames.Create, MVC.Comments.Name, new AjaxOptions { UpdateTargetId = "widget-grid-discussion" }, new { @class = "well no-margin" }))
