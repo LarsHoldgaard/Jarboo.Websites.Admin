@@ -24,28 +24,32 @@ namespace Jarboo.Admin.Web.Controllers
 
             return View(model);
         }
-
+       
+        // GET: /Answer/List
+        [ChildActionOnly]
         public virtual ActionResult AnswerList(int questionId)
         {
             var answerFilter = new AnswerFilter().ByQuestion(questionId);
             var answers = AnswerService.GetAll(Query.ForAnswer(answerFilter).Include(x => x.Employee()));
-          
+
             var model = new AnswerListViewModel { Answers = answers };
 
             return PartialView(MVC.Answer.Views._ListAnswer, model);
         }
 
-        public virtual ActionResult Create(int questionId, int taskId)
+        // GET: /Answer/Create
+       public virtual ActionResult Create(int questionId, int taskId)
         {
             var answerCreate = new AnswerViewModel { QuestionId = questionId, TaskId = taskId, EmployeeId = UserEmployeeId ?? 1 };
             var questionUpdate = QuestionService.GetById(questionId);
-          
+
             questionUpdate.IsRead = true;
             QuestionService.Edit(questionUpdate);
 
             return PartialView(MVC.Answer.Views._AnswerQuestionForm, answerCreate);
         }
 
+        // POST: /Answer/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Create(AnswerViewModel model)

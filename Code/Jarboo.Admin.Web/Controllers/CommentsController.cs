@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Jarboo.Admin.BL;
 using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Services.Interfaces;
@@ -13,6 +12,8 @@ namespace Jarboo.Admin.Web.Controllers
         [Inject]
         public ICommentService CommentService { get; set; }
 
+        // GET: /Comments
+        [ChildActionOnly]
         public virtual ActionResult CommentList(int taskId)
         {
             var commentFilter = new CommentFilter().ByTask(taskId);
@@ -22,13 +23,15 @@ namespace Jarboo.Admin.Web.Controllers
             return PartialView(MVC.Comments.Views._ListComment, model);
         }
 
+        // GET: /Comment/Create
         public virtual ActionResult Create(int taskId)
         {
-            var questionCreate = new CommentViewModel { TaskId = taskId, EmployeeId = UserEmployeeId ?? 1 };
+            var commentsCreate = new CommentViewModel { TaskId = taskId, EmployeeId = UserEmployeeId ?? 1 };
 
-            return PartialView(MVC.Comments.Views._AddCommentForm, questionCreate);
+            return PartialView(MVC.Comments.Views._AddCommentForm, commentsCreate);
         }
 
+        // POST: /Comment/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Create(CommentViewModel model)

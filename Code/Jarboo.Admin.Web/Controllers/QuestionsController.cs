@@ -16,6 +16,7 @@ namespace Jarboo.Admin.Web.Controllers
         public IQuestionService QuestionService { get; set; }
 
         // GET: Questions
+        [ChildActionOnly]
         public virtual ActionResult QuestionList(QuestionFilter questionFilter = null, string taskName = null)
         {
             var questionList = new QuestionListViewModel

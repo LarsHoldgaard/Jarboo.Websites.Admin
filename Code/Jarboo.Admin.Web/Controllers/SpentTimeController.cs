@@ -55,7 +55,9 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         #region Times
+
         // GET:  Times
+        [ChildActionOnly]
         public virtual ActionResult TimeList(int taskId)
         {
             var timeFilter = new SpentTimeFilter().ByTask(taskId);
@@ -64,6 +66,7 @@ namespace Jarboo.Admin.Web.Controllers
             var model = new TimeListViewModel() { Times = times };
             return PartialView(MVC.SpentTime.Views._ListTime, model);
         }
+
         // GET: /Times/Create
         public virtual ActionResult Create(int taskId, int projectId)
         {
