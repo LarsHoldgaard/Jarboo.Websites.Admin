@@ -10,6 +10,7 @@ using Jarboo.Admin.BL;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL.Entities;
+using Jarboo.Admin.Web.Infrastructure.BLExternals;
 using Jarboo.Admin.Web.Models.Account;
 using Jarboo.Admin.Web.Infrastructure;
 
@@ -29,6 +30,8 @@ namespace Jarboo.Admin.Web.Controllers
         public IUserService UserService { get; set; }
         [Inject]
         public RoleManager<UserRole> RoleManager { get; set; }
+        [Inject]
+        public ICustomerService CustomerService { get; set; }
 
         public virtual ActionResult Login(string returnUrl = "")
         {
@@ -45,10 +48,9 @@ namespace Jarboo.Admin.Web.Controllers
                 return RedirectToAction(MVC.Accounts.Login(returnUrl));
             }
 
-            var user = UserManager.Find(model.Email, model.Password);
-            if (user == null)
+            var user = AccountService.Login(model, ModelState.Wrap());
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Invalid email or password");
                 PreserveModelState();
                 return RedirectToAction(MVC.Accounts.Login(returnUrl));
             }
@@ -67,13 +69,28 @@ namespace Jarboo.Admin.Web.Controllers
         public virtual ActionResult Register(string returnUrl = "")
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View(new UserCreate());
+            return View(new UserRegister());
         }
 
         [HttpPost]
-        public virtual ActionResult Register(UserCreate model, string returnUrl = "")
+        public virtual ActionResult Register(UserRegister model, string returnUrl = "")
         {
-            return Handle(model, AccountService.Register,
+            if (!ModelState.IsValid)
+            {
+                PreserveModelState();
+                return RedirectToAction(MVC.Accounts.Register(returnUrl));
+            }
+
+            var customerModel = new CustomerCreate()
+                                    {
+                                        Name = model.Name,
+                                        Country = model.Country,
+                                        Creator = model.Creator,
+                                        Email = model.Email,
+                                        Password = model.Password
+                                    };
+
+            return Handle(customerModel, CustomerService.Create,
                 () => this.Login(new LoginViewModel()
                                 {
                                     Email = model.Email,
@@ -105,7 +122,7 @@ namespace Jarboo.Admin.Web.Controllers
                 return HttpNotFound();
             }
 
-            return View(user);
+            return View(user.Decorate());
         }
 
         public virtual ActionResult Edit(string id = null)
@@ -150,6 +167,11 @@ namespace Jarboo.Admin.Web.Controllers
         }
         private ActionResult OnEditSuccess(UserEdit model)
         {
+            if (model.UserId != CurrentUser.Id)
+            {
+                return RedirectToAction(MVC.Accounts.View(model.UserId));
+            }
+
             var user = UserManager.FindByEmail(model.Email);
             if (user == null)
             {

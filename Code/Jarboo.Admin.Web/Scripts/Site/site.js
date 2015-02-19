@@ -14,6 +14,7 @@
     });
 
     $(".input-daterange").datepicker({});
+    $("input.datepicker").datepicker({});
 
     $("input[data-hours]").blur(formatHoursInput);
     function formatHoursInput() {
@@ -102,7 +103,9 @@
                 error: onError
             });
         } else {
-            $this.dataTable();
+            $this.dataTable({
+                "pageLength": 25
+            });
         }
     });
 

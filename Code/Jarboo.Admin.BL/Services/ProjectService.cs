@@ -88,6 +88,12 @@ namespace Jarboo.Admin.BL.Services
                 return;
             }
 
+            if (UnitOfWork.Projects.Any(x => x.CustomerId == model.CustomerId && x.Name == model.Name && x.ProjectId != model.ProjectId))
+            {
+                errors.Add("", "Project with this name already exists");
+                return;
+            }
+
             if (string.IsNullOrEmpty(model.BoardName))
             {
                 var customer = UnitOfWork.Customers.AsNoTracking().ByIdMust(model.CustomerId);

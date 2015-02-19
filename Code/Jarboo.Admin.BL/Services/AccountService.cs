@@ -36,60 +36,26 @@ namespace Jarboo.Admin.BL.Services
             get { return Rights.Accounts.Name; }
         }
 
-        public void Register(UserCreate model, IBusinessErrorCollection errors)
+        public User Login(UserLogin model, IBusinessErrorCollection errors)
         {
             if (!model.Validate(errors))
             {
-                return;
+                return null;
             }
 
-            if (UnitOfWork.Users.Any(x => x.DisplayName == model.Name))
+            var user = UserManager.Find(model.Email, model.Password);
+            if (user == null)
             {
-                errors.Add("Name", "Name already taken");
-                return;
+                errors.Add("", "Invalid email or password");
+                return null;
             }
 
-            var user = model.MapTo<User>();
+            user.DateLastLogin = DateTime.Now;
+            UnitOfWork.SaveChanges();
 
-            using (var transaction = UnitOfWork.BeginTransaction())
-            {
-                try
-                {
-                    var result = UserManager.Create(user, model.Password);
-                    if (!result.Succeeded)
-                    {
-                        errors.AddErrorsFromResult(result);
-                        transaction.Rollback();
-                        return;
-                    }
-
-                    result = UserManager.AddToRole(user.Id, UserRoles.Customer.ToString());
-                    if (!result.Succeeded)
-                    {
-                        errors.AddErrorsFromResult(result);
-                        transaction.Rollback();
-                        return;
-                    }
-
-                    UnitOfWork.Customers.Add(new Customer()
-                                                 {
-                                                     Name = model.Name,
-                                                     User = user,
-                                                     Country = model.Country,
-                                                     Creator = model.Creator
-                                                 });
-                    UnitOfWork.SaveChanges();
-
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    transaction.Rollback();
-                    throw;
-                }
-            }
+            return user;
         }
-
+        
         public void RecoverPassword(PasswordRecover model, IBusinessErrorCollection errors)
         {
             if (!model.Validate(errors))

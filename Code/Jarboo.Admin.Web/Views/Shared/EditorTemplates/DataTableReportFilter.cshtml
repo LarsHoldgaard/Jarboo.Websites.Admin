@@ -1,0 +1,36 @@
+﻿@using Share.Bonnet.AjaxDropDownList
+@model Jarboo.Admin.BL.Filters.ReportFilter
+<style type="text/css">
+    .dataTables_filter label {
+        display: none;
+    }
+</style>
+<div class="data-table-filter">
+
+    <div class="input-daterange input-group" id="datepicker">
+        @Html.TextBoxFor(x => x.DateModifiedFrom, new { @class = "form-control", placeholder = "Date from" })
+        @Html.TextBoxFor(x => x.DateModifiedTo, new { @class = "form-control", placeholder = "Date to" })
+    </div>
+
+    @if (Model.CustomerId.HasValue)
+    {   
+      
+        @Html.HiddenFor(x => x.CustomerId)
+        @Html.DropDownListFor(x => x.ProjectId, (IEnumerable<SelectListItem>)ViewBag.ProjectsList, "Any project", new { @class = "form-control" })
+    }
+    else
+    {
+        @Html.DropDownListFor(x => x.CustomerId, (SelectList)ViewBag.CustomersList, "Any customer", new { @class = "form-control" },
+            new AjaxUpdateOptions
+            {
+                Target = Html.IdFor(x => x.ProjectId).ToString(),
+                DisableTargetWhenEmpty = false,
+                Url = Url.Action(MVC.Projects.ProductListByCustomerForSelectJson())
+            })
+        @Html.DropDownListFor(x => x.ProjectId, (SelectList)ViewBag.ProjectsList, "Any project", new { @class = "form-control" })
+    }
+
+
+
+
+</div>

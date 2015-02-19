@@ -15,8 +15,8 @@
     <!-- breadcrumb -->
     <ol class="breadcrumb">
         @Html.RenderBreadCrumbs(this,
-            new BreadCrumbItem(MVC.Customers.View(ViewBag.Project.CustomerId), ViewBag.Project.Customer.Name),
-            new BreadCrumbItem(MVC.Projects.View(ViewBag.Project.ProjectId), ViewBag.Project.Name),
+            new BreadCrumbItem(MVC.Customers.View(Model.Project.CustomerId), Model.Project.Customer.Name),
+            new BreadCrumbItem(MVC.Projects.View(Model.Project.ProjectId), Model.Project.Name),
             new BreadCrumbItem("Documentation"))
     </ol>
     <!-- end breadcrumb -->
@@ -51,7 +51,7 @@
                         <strong>NOTE:</strong> All the data is loaded from a seperate JSON file
                     </div>*@
                 <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget well" id="wid-id-0">
+                <div class="jarviswidget well" id="wid-id-2">
                     <!-- widget options:
                         usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 

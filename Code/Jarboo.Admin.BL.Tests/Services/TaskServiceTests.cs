@@ -29,7 +29,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var service = Factory.CreateTaskService(context, folderCreator: mockFolderCreator);
 
 
-                Helper.Suppress(() =>service.Create(model, null));
+                Helper.Suppress(() =>service.Save(model, null));
 
 
                 A.CallTo(() => mockFolderCreator.Create(customer.Name, model.Identifier())).MustHaveHappened();
@@ -49,7 +49,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var service = Factory.CreateTaskService(context, folderCreator: mockFolderCreator);
 
 
-                Helper.Suppress(() => service.Create(model, null));
+                Helper.Suppress(() => service.Save(model, null));
 
 
                 A.CallTo(() => mockFolderCreator.Delete(customer.Name, model.Identifier())).MustHaveHappened();
@@ -95,7 +95,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var service = Factory.CreateTaskService(context, taskRegister: mockTaskRegister);
 
 
-                Helper.Suppress(() => service.Create(model, null));
+                Helper.Suppress(() => service.Save(model, null));
 
 
                 A.CallTo(() => mockTaskRegister.Unregister(project.Name, model.Identifier())).MustHaveHappened();
@@ -112,7 +112,7 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var mockTaskStepEmployeeStrategy = A.Fake<ITaskStepEmployeeStrategy>();
                 var service = Factory.CreateTaskService(context, taskStepEmployeeStrategy: mockTaskStepEmployeeStrategy);
 
-                Helper.Suppress(() => service.Create(model, null));
+                Helper.Suppress(() => service.Save(model, null));
 
                 A.CallTo(() => mockTaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId)).MustHaveHappened();
             }
@@ -132,10 +132,11 @@ namespace Jarboo.Admin.BL.Tests.Services
                 var service = Factory.CreateTaskService(context, notifier: mockNotifier);
 
 
-                Helper.Suppress(() => service.Create(model, null));
+                Helper.Suppress(() => service.Save(model, null));
+                var task = context.Tasks.First(x => x.TaskId == model.TaskId);
 
 
-                var notifyData = new TaskResponsibleChangedData(model, employee);
+                var notifyData = new TaskResponsibleChangedData(task, employee);
                 A.CallTo(() => mockNotifier.TaskResponsibleChanged(notifyData)).MustHaveHappened();
             }
         }
@@ -266,9 +267,9 @@ namespace Jarboo.Admin.BL.Tests.Services
             }
         }
 
-        public TaskCreate ValidTaskCreate(IUnitOfWork context)
+        public TaskEdit ValidTaskCreate(IUnitOfWork context)
         {
-            return new TaskCreate()
+            return new TaskEdit()
             {
                 Title = "Title",
                 Type = TaskType.Bug,

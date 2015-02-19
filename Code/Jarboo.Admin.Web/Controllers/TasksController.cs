@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 using DataTables.Mvc;
@@ -12,19 +9,15 @@ using Jarboo.Admin.BL;
 using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
-using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.BL.Sorters;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Web.Infrastructure;
-using Jarboo.Admin.Web.Models;
 using Jarboo.Admin.Web.Models.DataTable;
 using Jarboo.Admin.Web.Models.Task;
 
 using Newtonsoft.Json;
 
 using Ninject;
-
-using RestSharp;
 using Jarboo.Admin.BL.Services.Interfaces;
 
 namespace Jarboo.Admin.Web.Controllers
@@ -73,24 +66,45 @@ namespace Jarboo.Admin.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var task = new TaskCreate();
-            task.ProjectId = projectId.Value;
+            var model = new TaskEdit();
+            model.ProjectId = projectId.Value;
 
-            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee()), "EmployeeId", "FullName");
-            ViewBag.Project = ProjectService.GetByIdEx(task.ProjectId, new ProjectInclude().Customer());
-            return View(task);
+            return CreateEditView(model);
+        }
+
+        public virtual ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var task = TaskService.GetById(id.Value);
+            if (task == null)
+            {
+                return HttpNotFound();
+            }
+
+            var model = task.MapTo<TaskEdit>();
+            return this.CreateEditView(model);
         }
 
         // POST: /Tasks/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Create(TaskCreate model)
+        public virtual ActionResult Edit(TaskEdit model)
         {
-            return Handle(
-                model,
-                TaskService.Create,
+            return Handle(model, TaskService.Save,
                 () => RedirectToAction(MVC.Tasks.View(model.TaskId)),
-                RedirectToAction(MVC.Tasks.Create(model.ProjectId)));
+                () => model.ProjectId == 0 ?
+                    RedirectToAction(MVC.Tasks.Create(model.ProjectId)) :
+                    RedirectToAction(MVC.Tasks.Edit(model.TaskId)));
+        }
+
+        private ActionResult CreateEditView(TaskEdit model)
+        {
+            ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee()), "EmployeeId", "FullName");
+            ViewBag.Project = ProjectService.GetByIdEx(model.ProjectId, new ProjectInclude().Customer());
+            return View(model);
         }
 
         // GET: /Tasks/Steps/5
@@ -158,6 +172,8 @@ namespace Jarboo.Admin.Web.Controllers
             Folder,
             Step,
             Hours,
+            EstimatedPrice,
+            Deadline,
             Delete
         }
         private static TaskListColumns[] columnsWithClientSorting = new TaskListColumns[] { TaskListColumns.Priority, TaskListColumns.Hours };
@@ -226,6 +242,18 @@ namespace Jarboo.Admin.Web.Controllers
                 },
             new Column<TaskViewModel>()
                 {
+                    Title = "Estimated price",
+                    Orderable = true,
+                    Getter = (x) => x.EstimatedPrice.ToString()
+                },
+            new Column<TaskViewModel>()
+                {
+                    Title = "Deadline",
+                    Orderable = true,
+                    Getter = (x) => x.DeadlineStr()
+                },
+            new Column<TaskViewModel>()
+                {
                     Title = "",
                     Type = DataTableConfig.Column.ColumnSpecialType.DeleteBtn,
                     Getter = (x) => new object[] {x.TaskId, new UrlHelper(Helper.GetRequestContext()).Action(MVC.Tasks.Delete())}
@@ -237,6 +265,7 @@ namespace Jarboo.Admin.Web.Controllers
         {
             var config = new DataTableConfig();
             config.Searching = true;
+            config.PageLength = 25;
             config.SetupServerDataSource(Url.Action(MVC.Tasks.ListData()), FormMethod.Post);
             config.Columns = new List<DataTableConfig.Column>(columns);
             config.Columns[(int)TaskListColumns.ProjectName].Visible = showProject;
@@ -353,6 +382,16 @@ namespace Jarboo.Admin.Web.Controllers
                 case TaskListColumns.Urgency:
                     {
                         query.Sort(x => x.ByUrgency(direction));
+                        break;
+                    }
+                case TaskListColumns.EstimatedPrice:
+                    {
+                        query.Sort(x => x.ByEstimatedPrice(direction));
+                        break;
+                    }
+                case TaskListColumns.Deadline:
+                    {
+                        query.Sort(x => x.ByDeadline(direction));
                         break;
                     }
             }

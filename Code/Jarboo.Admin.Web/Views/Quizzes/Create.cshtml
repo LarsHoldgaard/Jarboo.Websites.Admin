@@ -1,0 +1,24 @@
+﻿@using SmartAdminMvc
+@model Jarboo.Admin.BL.Models.QuizEdit
+
+@{
+    ViewBag.Title = "New quiz";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- RIBBON -->
+<div id="ribbon">
+    @Html.Partial("_RibbonRefresh")
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @Html.RenderBreadCrumbs(this,
+            new BreadCrumbItem(MVC.Customers.View(ViewBag.Project.CustomerId), ViewBag.Project.Customer.Name),
+            new BreadCrumbItem(MVC.Projects.View(ViewBag.Project.ProjectId), ViewBag.Project.Name),
+            new BreadCrumbItem("New quiz"))
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+<div id="content">
+    @Html.Partial(MVC.Quizzes.Views._Form, Model)
+</div>

@@ -8,7 +8,7 @@ using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Models
 {
-    public class TaskCreate
+    public class TaskEdit
     {
         public int TaskId { get; set; }
         [Required]
@@ -20,6 +20,9 @@ namespace Jarboo.Admin.BL.Models
         public int ProjectId { get; set; }
         public int? EmployeeId { get; set; }
         public int? ForcedPriority { get; set; }
+        public decimal? EstimatedPrice { get; set; }
+        public DateTime? Deadline { get; set; }
+        public string Description { get; set; }
 
         public string Identifier()
         {

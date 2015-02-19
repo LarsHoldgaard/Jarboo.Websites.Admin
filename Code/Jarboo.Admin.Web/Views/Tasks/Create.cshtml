@@ -1,5 +1,5 @@
 ﻿@using SmartAdminMvc
-@model Jarboo.Admin.BL.Models.TaskCreate
+@model Jarboo.Admin.BL.Models.TaskEdit
 
 @{
     ViewBag.Title = "New task";
@@ -12,9 +12,9 @@
     <!-- breadcrumb -->
     <ol class="breadcrumb">
         @Html.RenderBreadCrumbs(this,
-                     new BreadCrumbItem(MVC.Customers.View(ViewBag.Project.CustomerId), ViewBag.Project.Customer.Name),
-                     new BreadCrumbItem(MVC.Projects.View(ViewBag.Project.ProjectId), ViewBag.Project.Name),
-                     new BreadCrumbItem("New task"))
+            new BreadCrumbItem(MVC.Customers.View(ViewBag.Project.CustomerId), ViewBag.Project.Customer.Name),
+            new BreadCrumbItem(MVC.Projects.View(ViewBag.Project.ProjectId), ViewBag.Project.Name),
+            new BreadCrumbItem("New task"))
     </ol>
 
 
@@ -22,99 +22,4 @@
 </div>
 <!-- END RIBBON -->
 
-<div id="content">
-    <!-- row -->
-    <div class="row">
-        <article class="col-sm-12 col-md-12 col-lg-7">
-            <!-- Widget ID (each widget will need unique ID)-->
-            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-5" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
-                <!-- widget options:
-                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                data-widget-colorbutton="false"
-                data-widget-editbutton="false"
-                data-widget-togglebutton="false"
-                data-widget-deletebutton="false"
-                data-widget-fullscreenbutton="false"
-                data-widget-custombutton="false"
-                data-widget-collapsed="true"
-                data-widget-sortable="false"
-
-                -->
-                <header>
-                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                    <h2>New </h2>
-                </header>
-                <!-- widget div-->
-                <div>
-                    <!-- widget edit box -->
-                    <div class="jarviswidget-editbox">
-                        <!-- This area used as dropdown edit box -->
-                    </div>
-                    <!-- end widget edit box -->
-                    <!-- widget content -->
-                    <div class="widget-body no-padding">
-                        @using (Html.BeginForm(MVC.Tasks.Create(), FormMethod.Post, new { @class = "smart-form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            @Html.ValidationBootstrap()
-                            @Html.HiddenFor(x => x.ProjectId)
-                            
-                            <header>
-                                New Tasks
-                            </header>
-                            <fieldset>
-                                <section>
-                                    @Html.LabelFor(model => model.Title, new { @class = "label" })
-                                    <label class="input">
-                                        @Html.TextBoxFor(x => x.Title, new { @placeholder = "Title", @class="form-control" })
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.Type, new { @class = "select" })
-                                    <label class="select select-multiple">
-                                        @Html.EnumDropDownListFor(x => x.Type)
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.Size, new { @class = "label" })
-                                    <label class="input">
-                                        <i class="icon-append fa">hours</i>
-                                        @Html.TextBoxFor(x => x.Size, new { @placeholder = "Size" })
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.Urgency, new { @class = "label" })
-                                    <label class="select select-multiple">
-                                        @Html.EnumDropDownListFor(x => x.Urgency)
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.ForcedPriority, "Priority ( left blank for automatic calculation )", new { @class = "label" })
-                                    <label class="input">
-                                        @Html.TextBoxFor(x => x.ForcedPriority, new { @placeholder = "Priority" })
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.EmployeeId, new { @class = "label" })
-                                    <label class="select select-multiple">
-                                        @Html.DropDownListFor(x => x.EmployeeId, (SelectList)ViewBag.EmployeesList, "Select automatically", new { @class = "form-control" })
-                                    </label>
-                                </section>
-                            </fieldset>
-                            <footer>
-                                <button type="submit" class="btn btn-primary">
-                                    Create
-                                </button>
-                            </footer>
-                        }
-                    </div>
-                    <!-- end widget content -->
-                </div>
-                <!-- end widget div -->
-            </div>
-            <!-- end widget -->
-        </article>
-    </div>
-    <!-- end row -->
-</div>
+@Html.Partial(MVC.Tasks.Views._Form, Model)

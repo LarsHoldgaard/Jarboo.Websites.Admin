@@ -74,6 +74,12 @@ namespace Jarboo.Admin.BL.Services
                     customer.Name = model.Name;
                     customer.Country = model.Country;
                     customer.Creator = model.Creator;
+
+                    if (UnitOfWork.Customers.Any(x => x.Name == model.Name && x.CustomerId != customer.CustomerId))
+                    {
+                        errors.Add("Name", "Name already taken");
+                        return;
+                    }
                 });
         }
         public void Edit(UserEdit model, IBusinessErrorCollection errors)
@@ -122,17 +128,22 @@ namespace Jarboo.Admin.BL.Services
             {
                 try
                 {
+                    if (updateRelatedEntities != null)
+                    {
+                        updateRelatedEntities();
+                    }
+
+                    if (errors.HasErrors())
+                    {
+                        return;
+                    }
+
                     result = UserManager.Update(user);
                     if (!result.Succeeded)
                     {
                         errors.AddErrorsFromResult(result);
                         transaction.Rollback();
                         return;
-                    }
-
-                    if (updateRelatedEntities != null)
-                    {
-                        updateRelatedEntities();
                     }
 
                     UnitOfWork.SaveChanges();

@@ -1,0 +1,25 @@
+﻿@using SmartAdminMvc
+@model Jarboo.Admin.BL.Models.TaskEdit
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- RIBBON -->
+<div id="ribbon">
+    @Html.Partial("_RibbonRefresh")
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @Html.RenderBreadCrumbs(this,
+            new BreadCrumbItem(MVC.Customers.View(ViewBag.Project.CustomerId), ViewBag.Project.Customer.Name),
+            new BreadCrumbItem(MVC.Projects.View(ViewBag.Project.ProjectId), ViewBag.Project.Name),
+            new BreadCrumbItem(Model.Title))
+    </ol>
+
+
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+
+@Html.Partial(MVC.Tasks.Views._Form, Model)

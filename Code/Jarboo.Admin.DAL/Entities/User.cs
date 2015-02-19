@@ -23,6 +23,7 @@ namespace Jarboo.Admin.DAL.Entities
         public string DisplayName { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
+        public DateTime? DateLastLogin{ get; set; }
 
         public Customer Customer { get; set; }
         public Employee Employee { get; set; }

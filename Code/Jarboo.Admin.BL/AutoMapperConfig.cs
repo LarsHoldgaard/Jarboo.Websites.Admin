@@ -49,13 +49,15 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<Customer, CustomerCreate>();
             Mapper.CreateMap<CustomerCreate, Customer>()
                 .ForMember(x => x.CustomerId, x => x.Ignore());
+            Mapper.CreateMap<CustomerCreate, User>()
+                .ForMember(x => x.DisplayName, x => x.MapFrom(y => y.Name))
+                .ForMember(x => x.UserName, x => x.MapFrom(y => y.Email));
 
             Mapper.CreateMap<Project, ProjectEdit>();
             Mapper.CreateMap<ProjectEdit, Project>();
 
-            Mapper.CreateMap<DAL.Entities.Task, TaskCreate>();
-            Mapper.CreateMap<TaskCreate, DAL.Entities.Task>()
-                .ForMember(x => x.TaskId, x => x.Ignore());
+            Mapper.CreateMap<DAL.Entities.Task, TaskEdit>();
+            Mapper.CreateMap<TaskEdit, DAL.Entities.Task>();
 
             Mapper.CreateMap<Employee, EmployeeEdit>()
                 .ForMember(x => x.Positions, x => x.MapFrom(y => y.Positions.Select(z => z.Position).ToList()));
@@ -81,10 +83,6 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<Documentation, DocumentationEdit>();
             Mapper.CreateMap<DocumentationEdit, Documentation>();
 
-            Mapper.CreateMap<UserCreate, User>()
-                .ForMember(x => x.DisplayName, x => x.MapFrom(y => y.Name))
-                .ForMember(x => x.UserName, x => x.MapFrom(y => y.Email));
-
             Mapper.CreateMap<User, UserEdit>()
                 .ForMember(x => x.UserId, x => x.MapFrom(y => y.Id))
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.DisplayName));
@@ -108,6 +106,9 @@ namespace Jarboo.Admin.BL
 
             Mapper.CreateMap<SpentTimeOnProject, SpentTime>();
             Mapper.CreateMap<SpentTime, SpentTimeOnProject>();
+
+            Mapper.CreateMap<Quiz, QuizEdit>();
+            Mapper.CreateMap<QuizEdit, Quiz>();
         }
     }
 }

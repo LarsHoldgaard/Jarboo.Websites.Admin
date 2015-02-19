@@ -98,6 +98,9 @@ namespace Jarboo.Admin.Web.Infrastructure
             rights.Add(MVC.Documentations.View());
             rights.Add(MVC.Documentations.List());
 
+            rights.Add(MVC.Quizzes.View());
+            rights.Add(MVC.Quizzes.List());
+
             rights.Add(MVC.Employees.Index());
             rights.Add(MVC.Employees.View());
 

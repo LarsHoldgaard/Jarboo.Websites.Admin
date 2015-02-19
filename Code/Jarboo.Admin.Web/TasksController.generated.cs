@@ -71,6 +71,12 @@ namespace Jarboo.Admin.Web.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Edit()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ActionResult Steps()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Steps);
@@ -130,6 +136,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Index = "Index";
             public readonly string View = "View";
             public readonly string Create = "Create";
+            public readonly string Edit = "Edit";
             public readonly string Steps = "Steps";
             public readonly string NextStep = "NextStep";
             public readonly string Delete = "Delete";
@@ -146,6 +153,7 @@ namespace Jarboo.Admin.Web.Controllers
             public const string Index = "Index";
             public const string View = "View";
             public const string Create = "Create";
+            public const string Edit = "Edit";
             public const string Steps = "Steps";
             public const string NextStep = "NextStep";
             public const string Delete = "Delete";
@@ -172,6 +180,14 @@ namespace Jarboo.Admin.Web.Controllers
         public class ActionParamsClass_Create
         {
             public readonly string projectId = "projectId";
+        }
+        static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Edit
+        {
+            public readonly string id = "id";
             public readonly string model = "model";
         }
         static readonly ActionParamsClass_Steps s_params_Steps = new ActionParamsClass_Steps();
@@ -252,8 +268,10 @@ namespace Jarboo.Admin.Web.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _AddHours = "_AddHours";
+                public readonly string _Form = "_Form";
                 public readonly string _NextStep = "_NextStep";
                 public readonly string Create = "Create";
+                public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
                 public readonly string List = "List";
                 public readonly string NextTask = "NextTask";
@@ -261,8 +279,10 @@ namespace Jarboo.Admin.Web.Controllers
                 public readonly string View = "View";
             }
             public readonly string _AddHours = "~/Views/Tasks/_AddHours.cshtml";
+            public readonly string _Form = "~/Views/Tasks/_Form.cshtml";
             public readonly string _NextStep = "~/Views/Tasks/_NextStep.cshtml";
             public readonly string Create = "~/Views/Tasks/Create.cshtml";
+            public readonly string Edit = "~/Views/Tasks/Edit.cshtml";
             public readonly string Index = "~/Views/Tasks/Index.cshtml";
             public readonly string List = "~/Views/Tasks/List.cshtml";
             public readonly string NextTask = "~/Views/Tasks/NextTask.cshtml";
@@ -312,14 +332,26 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.TaskCreate model);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? id);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(Jarboo.Admin.BL.Models.TaskCreate model)
+        public override System.Web.Mvc.ActionResult Edit(int? id)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            EditOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.TaskEdit model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Edit(Jarboo.Admin.BL.Models.TaskEdit model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            CreateOverride(callInfo, model);
+            EditOverride(callInfo, model);
             return callInfo;
         }
 

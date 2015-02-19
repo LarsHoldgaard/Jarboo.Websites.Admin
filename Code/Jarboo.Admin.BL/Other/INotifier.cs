@@ -11,6 +11,7 @@ namespace Jarboo.Admin.BL.Other
     public interface INotifier
     {
         void TaskResponsibleChanged(TaskResponsibleChangedData data);
+        void NewTask(NewTaskData data);
     }
 
     public struct TaskResponsibleChangedData
@@ -19,15 +20,29 @@ namespace Jarboo.Admin.BL.Other
         {
             TaskTitle = task.Title;
             EmployeeEmail = employee.Email;
-        }
-
-        public TaskResponsibleChangedData(TaskCreate taskCreate, Employee employee)
-        {
-            TaskTitle = taskCreate.Title;
-            EmployeeEmail = employee.Email;
+            Role = task.Steps.Last().Step.ToString();
         }
 
         public string TaskTitle;
+        public string Role;
         public string EmployeeEmail;
+    }
+
+    public struct NewTaskData
+    {
+        public NewTaskData(Customer customer, Project project, Task task)
+        {
+            CustomerName = customer.Name;
+            ProjectName = project.Name;
+            TaskTitle = task.Title;
+            TaskDescription = task.Description;
+            TaskId = task.TaskId;
+        }
+
+        public string CustomerName;
+        public string TaskTitle;
+        public string ProjectName;
+        public string TaskDescription;
+        public int TaskId;
     }
 }

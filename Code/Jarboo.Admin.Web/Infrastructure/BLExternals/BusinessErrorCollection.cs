@@ -20,7 +20,7 @@ namespace Jarboo.Admin.Web.Infrastructure.BLExternals
 
         public bool HasErrors()
         {
-            return this._modelState.IsValid;
+            return !this._modelState.IsValid;
         }
     }
 

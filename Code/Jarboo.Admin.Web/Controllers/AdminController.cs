@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 using Google.Apis.Auth.OAuth2.Mvc;
-using Google.Apis.Auth.OAuth2.Responses;
-
-using Jarboo.Admin.Web.Infrastructure;
 using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
 
 using Nito.AsyncEx.Synchronous;
-
-using TrelloNet;
 using Jarboo.Admin.Web.Models;
 
 namespace Jarboo.Admin.Web.Controllers
@@ -44,7 +35,7 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Settings()
+        public virtual ActionResult Settings()
         {
             var model = new SettingsViewModel();
             model.UseGoogleDrive = SmartAdminMvc.Settings.GetValue<bool>("UseGoogleDrive", "");
@@ -57,7 +48,7 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Settings(SettingsViewModel model)
+        public virtual ActionResult Settings(SettingsViewModel model)
         {
             try
             {

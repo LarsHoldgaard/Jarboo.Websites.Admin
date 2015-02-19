@@ -57,12 +57,6 @@ namespace Jarboo.Admin.Web.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult TrelloId()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TrelloId);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public AdminController Actions { get { return MVC.Admin; } }
@@ -80,24 +74,24 @@ namespace Jarboo.Admin.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string RequestRefreshToken = "RequestRefreshToken";
-            public readonly string TrelloId = "TrelloId";
+            public readonly string Settings = "Settings";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string RequestRefreshToken = "RequestRefreshToken";
-            public const string TrelloId = "TrelloId";
+            public const string Settings = "Settings";
         }
 
 
-        static readonly ActionParamsClass_TrelloId s_params_TrelloId = new ActionParamsClass_TrelloId();
+        static readonly ActionParamsClass_Settings s_params_Settings = new ActionParamsClass_Settings();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_TrelloId TrelloIdParams { get { return s_params_TrelloId; } }
+        public ActionParamsClass_Settings SettingsParams { get { return s_params_Settings; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_TrelloId
+        public class ActionParamsClass_Settings
         {
-            public readonly string id = "id";
+            public readonly string model = "model";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -109,7 +103,9 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string Settings = "Settings";
             }
+            public readonly string Settings = "~/Views/Admin/Settings.cshtml";
         }
     }
 
@@ -130,7 +126,28 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void TrelloIdOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id);
+        partial void SettingsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Settings()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Settings);
+            SettingsOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void SettingsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.SettingsViewModel model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Settings(Jarboo.Admin.Web.Models.SettingsViewModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Settings);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            SettingsOverride(callInfo, model);
+            return callInfo;
+        }
+
     }
 }
 

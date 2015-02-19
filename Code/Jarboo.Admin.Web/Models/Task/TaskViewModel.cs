@@ -31,5 +31,29 @@ namespace Jarboo.Admin.Web.Models.Task
         {
             return DateModified.ToString();
         }
+
+        public string DeadlineStr()
+        {
+            if (Deadline.HasValue)
+            {
+                return Deadline.Value.ToShortDateString();
+            }
+            else
+            {
+                return "No deadline";
+            }
+        }
+
+        public string EstimatedPriceStr()
+        {
+            if (EstimatedPrice.HasValue)
+            {
+                return EstimatedPrice.Value.ToString();
+            }
+            else
+            {
+                return "None";
+            }
+        }
     }
 }

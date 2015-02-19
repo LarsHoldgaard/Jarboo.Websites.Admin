@@ -175,9 +175,6 @@
     <Reference Include="Owin">
       <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
@@ -236,9 +233,6 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="T4MVCExtensions">
       <HintPath>packages\T4MVCExtensions.3.10.0\lib\net40\T4MVCExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="TrelloNet">
-      <HintPath>packages\TrelloNet.Temp.Fork.0.6.2\lib\net40-Client\TrelloNet.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
@@ -1027,6 +1021,15 @@
     <Content Include="Views\Shared\_RibbonRefresh.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Admin\Settings.cshtml" />
+    <Content Include="Views\Tasks\_Form.cshtml" />
+    <Content Include="Views\Tasks\Edit.cshtml" />
+    <Content Include="Views\Customers\Create.cshtml" />
+    <Content Include="Views\Quizzes\View.cshtml" />
+    <Content Include="Views\Quizzes\Index.cshtml" />
+    <Content Include="Views\Quizzes\List.cshtml" />
+    <Content Include="Views\Quizzes\Create.cshtml" />
+    <Content Include="Views\Quizzes\_Form.cshtml" />
+    <Content Include="Views\Quizzes\Edit.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1067,6 +1070,8 @@
     <Compile Include="Controllers\GuidesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
+    <Compile Include="Controllers\QuizzesController.cs" />
+    <Compile Include="Controllers\ReportingController.cs" />
     <Compile Include="Controllers\SpentTimeController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="CustomersController.generated.cs">
@@ -1102,6 +1107,7 @@
     <Compile Include="Infrastructure\Rights.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\AppFlowMetadata.cs" />
     <Compile Include="Infrastructure\ThirdPartyIntegration\MemoryDataStore.cs" />
+    <Compile Include="Infrastructure\UrlConstructor.cs" />
     <Compile Include="Infrastructure\ValidateAntiForgeryTokenWrapperAttribute.cs" />
     <Compile Include="Models\Account\LoginViewModel.cs" />
     <Compile Include="Models\Account\PasswordRecoverViewModel.cs" />
@@ -1113,6 +1119,10 @@
     <Compile Include="Models\Account\LandingViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeListViewModel.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
+    <Compile Include="Models\Quiz\QuizzesListViewModel.cs" />
+    <Compile Include="Models\Report\ReportsListViewModel.cs" />
+    <Compile Include="Models\Report\ReportSorting.cs" />
+    <Compile Include="Models\Report\ReportViewModel.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Models\Task\TasksListViewModel.cs" />
     <Compile Include="Models\Task\TaskSorting.cs" />
@@ -1121,6 +1131,12 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuizzesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportingController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1206,6 +1222,9 @@
     <Content Include="Views\SpentTime\Index.cshtml" />
     <Content Include="Views\Home\Landing.cshtml" />
     <Content Include="Views\Accounts\CustomerEdit.cshtml" />
+    <Content Include="Views\Reporting\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DataTableReportFilter.cshtml" />
+    <Content Include="Views\Reporting\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -12,13 +12,23 @@ using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.BL.Services.Interfaces;
 using System.Reflection;
 
+using Microsoft.AspNet.Identity;
+
 namespace Jarboo.Admin.BL.Services
 {
     public class CustomerService : BaseEntityService<int, Customer>, ICustomerService
     {
-        public CustomerService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService)
+        public UserManager<User> UserManager { get; set; }
+
+        public CustomerService(
+            IUnitOfWork unitOfWork,
+            IAuth auth,
+            ICacheService cacheService,
+            UserManager<User> userManager)
             : base(unitOfWork, auth, cacheService)
-        { }
+        {
+            UserManager = userManager;
+        }
 
         protected override System.Data.Entity.IDbSet<Customer> Table
         {
@@ -64,9 +74,57 @@ namespace Jarboo.Admin.BL.Services
                 return;
             }
 
-            var entity = new Customer();
-            Add(entity, model);
-            ClearCache();
+            if (UnitOfWork.Users.Any(x => x.DisplayName == model.Name) || UnitOfWork.Customers.Any(x => x.Name == model.Name))
+            {
+                errors.Add("Name", "Name already taken");
+                return;
+            }
+
+            using (var transaction = UnitOfWork.BeginTransaction())
+            {
+                try
+                {
+                    User user = null;
+
+                    if (!string.IsNullOrEmpty(model.Email))
+                    {
+                        user = model.MapTo<User>();
+
+                        var result = UserManager.Create(user, model.Password);
+                        if (!result.Succeeded)
+                        {
+                            errors.AddErrorsFromResult(result);
+                            transaction.Rollback();
+                            return;
+                        }
+
+                        result = UserManager.AddToRole(user.Id, UserRoles.Customer.ToString());
+                        if (!result.Succeeded)
+                        {
+                            errors.AddErrorsFromResult(result);
+                            transaction.Rollback();
+                            return;
+                        }
+                    }
+
+                    var customer = model.MapTo<Customer>();
+                    customer.User = user;
+
+                    UnitOfWork.Customers.Add(customer);
+                    UnitOfWork.SaveChanges();
+
+                    transaction.Commit();
+
+                    customer.MapTo(model);
+
+                    ClearCache();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
         }
 
         private void ClearCache()

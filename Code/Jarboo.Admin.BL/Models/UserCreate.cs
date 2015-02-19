@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Jarboo.Admin.BL.Models
 {
-    public class UserCreate
+    public class UserRegister
     {
         [Required]
         [EmailAddress]

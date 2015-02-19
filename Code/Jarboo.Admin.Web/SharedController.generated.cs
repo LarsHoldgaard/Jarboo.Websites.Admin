@@ -42,6 +42,7 @@ namespace T4MVC
                 public readonly string _Header = "_Header";
                 public readonly string _Layout = "_Layout";
                 public readonly string _Ribbon = "_Ribbon";
+                public readonly string _RibbonRefresh = "_RibbonRefresh";
                 public readonly string _Scripts = "_Scripts";
                 public readonly string _Tiles = "_Tiles";
                 public readonly string _TopRight = "_TopRight";
@@ -55,6 +56,7 @@ namespace T4MVC
             public readonly string _Header = "~/Views/Shared/_Header.cshtml";
             public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
             public readonly string _Ribbon = "~/Views/Shared/_Ribbon.cshtml";
+            public readonly string _RibbonRefresh = "~/Views/Shared/_RibbonRefresh.cshtml";
             public readonly string _Scripts = "~/Views/Shared/_Scripts.cshtml";
             public readonly string _Tiles = "~/Views/Shared/_Tiles.cshtml";
             public readonly string _TopRight = "~/Views/Shared/_TopRight.cshtml";
@@ -66,6 +68,7 @@ namespace T4MVC
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public partial class _EditorTemplatesClass
             {
+                public readonly string DataTableReportFilter = "DataTableReportFilter";
                 public readonly string DataTableTaskFilter = "DataTableTaskFilter";
             }
         }
