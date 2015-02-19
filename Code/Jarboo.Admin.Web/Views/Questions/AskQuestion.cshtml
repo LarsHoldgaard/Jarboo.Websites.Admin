@@ -1,7 +1,21 @@
 ﻿@using SmartAdminMvc
 @model  Jarboo.Admin.Web.Models.Question.QuestionViewModel
 
+@{
+    ViewBag.Title = "Question";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
+<!-- RIBBON -->
+<div id="ribbon">
+    @Html.Partial("_RibbonRefresh")
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @Html.RenderBreadCrumbs(this, new BreadCrumbItem("Question"))
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
 <div id="content">
     <!-- row -->
     <div class="row">
