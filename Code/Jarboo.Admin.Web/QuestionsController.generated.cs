@@ -98,7 +98,6 @@ namespace Jarboo.Admin.Web.Controllers
         public class ActionParamsClass_QuestionList
         {
             public readonly string questionFilter = "questionFilter";
-            public readonly string taskName = "taskName";
         }
         static readonly ActionParamsClass_Create s_params_Create = new ActionParamsClass_Create();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -107,7 +106,6 @@ namespace Jarboo.Admin.Web.Controllers
         public class ActionParamsClass_Create
         {
             public readonly string taskId = "taskId";
-            public readonly string taskName = "taskName";
             public readonly string model = "model";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -134,28 +132,26 @@ namespace Jarboo.Admin.Web.Controllers
         public T4MVC_QuestionsController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void QuestionListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Filters.QuestionFilter questionFilter, string taskName);
+        partial void QuestionListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Filters.QuestionFilter questionFilter);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult QuestionList(Jarboo.Admin.BL.Filters.QuestionFilter questionFilter, string taskName)
+        public override System.Web.Mvc.ActionResult QuestionList(Jarboo.Admin.BL.Filters.QuestionFilter questionFilter)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.QuestionList);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "questionFilter", questionFilter);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskName", taskName);
-            QuestionListOverride(callInfo, questionFilter, taskName);
+            QuestionListOverride(callInfo, questionFilter);
             return callInfo;
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? taskId, string taskName);
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? taskId);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(int? taskId, string taskName)
+        public override System.Web.Mvc.ActionResult Create(int? taskId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskName", taskName);
-            CreateOverride(callInfo, taskId, taskName);
+            CreateOverride(callInfo, taskId);
             return callInfo;
         }
 

@@ -75,7 +75,7 @@
                         @Html.Partial(MVC.Tasks.Views._AddHours, new SpentTimeOnTask()
                                                                      {
                                                                          TaskId = Model.TaskId, 
-                                                                         Step = step,
+                                                                         Steps = step,
                                                                          EmployeeId = currentEmployee == null ? 0 : currentEmployee.EmployeeId
                                                                      })
                     </div>

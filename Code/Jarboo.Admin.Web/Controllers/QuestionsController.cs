@@ -15,14 +15,16 @@ namespace Jarboo.Admin.Web.Controllers
         [Inject]
         public IQuestionService QuestionService { get; set; }
 
+        [Inject]
+        public ITaskService TaskService { get; set; }
+
         // GET: Questions
-        [ChildActionOnly]
-        public virtual ActionResult QuestionList(QuestionFilter questionFilter = null, string taskName = null)
+        public virtual ActionResult QuestionList(QuestionFilter questionFilter = null)
         {
             var questionList = new QuestionListViewModel
             {
                 TaskId = questionFilter.TaskId.Value,
-                TaskName = taskName
+                TaskName = TaskService.GetById(questionFilter.TaskId.Value).Title
             };
 
             var questions = QuestionService.GetAll(Query.ForQuestion(questionFilter).Include(x => x.Answers())).Decorate<Question, QuestionViewModel>();
@@ -32,14 +34,14 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         // GET: /Questions/Create
-        public virtual ActionResult Create(int? taskId, string taskName)
+        public virtual ActionResult Create(int? taskId)
         {
             if (taskId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var questionCreate = new QuestionViewModel { TaskId = taskId.Value, Task = new Task { Title = taskName } };
+            var questionCreate = new QuestionViewModel { TaskId = taskId.Value, Task = new Task { Title =  TaskService.GetById(taskId.Value).Title } };
 
             return View(MVC.Questions.Views.AskQuestion, questionCreate);
         }

@@ -57,7 +57,6 @@ namespace Jarboo.Admin.Web.Controllers
         #region Times
 
         // GET:  Times
-        [ChildActionOnly]
         public virtual ActionResult TimeList(int taskId)
         {
             var timeFilter = new SpentTimeFilter().ByTask(taskId);
@@ -66,23 +65,23 @@ namespace Jarboo.Admin.Web.Controllers
             var model = new TimeListViewModel()
             {
                 Times = times,
-
+                ProjectId = times.FirstOrDefault().ProjectId,
+                TaskId = taskId,
+                TotalHours = times.Sum(x => x.Hours)
             };
+
             return PartialView(MVC.SpentTime.Views._ListTime, model);
         }
 
         // GET: /Times/Create
         public virtual ActionResult Create(int taskId, int projectId)
         {
-            var spentTimeFilter = new SpentTimeFilter().ByTask(taskId);
-            var items = SpentTimeService.GetAll(Query.ForSpentTime(spentTimeFilter));
             var timeCreate = new TimeViewModel
-            {
-                TaskId = taskId,
-                EmployeeId = UserEmployeeId ?? 1,
-                ProjectId = projectId,
-                TotalHours = items.Sum(x => x.Hours)
-            };
+           {
+               TaskId = taskId,
+               EmployeeId = UserEmployeeId ?? 1,
+               ProjectId = projectId
+           };
 
             return PartialView(MVC.SpentTime.Views._AddTimeForm, timeCreate);
         }
@@ -94,14 +93,14 @@ namespace Jarboo.Admin.Web.Controllers
         {
             var entity = model.MapTo<SpentTimeOnTask>();
 
-            return Handle(entity, SpentTimeService.SpentTimeOnTask, () => RedirectToAction(MVC.SpentTime.Create(model.TaskId.Value, model.ProjectId.Value)), new EmptyResult());
+            return Handle(entity, SpentTimeService.SpentTimeOnTask, () => RedirectToAction(MVC.SpentTime.TimeList(model.TaskId.Value)), new EmptyResult());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(int id, int taskId, int projectId)
+        public virtual ActionResult Delete(int id, int taskId)
         {
-            return Handle(id, SpentTimeService.Delete, () => RedirectToAction(MVC.SpentTime.Create(taskId, projectId)), new EmptyResult(), "Time successfully deleted");
+            return Handle(id, SpentTimeService.Delete, () => RedirectToAction(MVC.SpentTime.TimeList(taskId)), new EmptyResult(), "Time successfully deleted");
         }
         #endregion
     }

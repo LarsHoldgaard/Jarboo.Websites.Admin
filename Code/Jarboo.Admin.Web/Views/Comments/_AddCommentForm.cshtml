@@ -3,50 +3,26 @@
 @{
     Layout = null;
 }
-<section id="widget-grid-discussion" class="">
-    <!-- row -->
-    <div class="row">
-        <div class="col-sm-12 ">
-            <!-- panel -->
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
-                        <span class="widget-icon"> <i class="glyphicon glyphicon-stats txt-color-darken"></i> </span>
-                        Internal discussion
-                    </h2>
-                </div>
-                <div class="panel-body no-padding">
-                    <!-- content -->
-                    <div id="commentList" class="chat-body custom-scroll">
-                        @Html.Action(MVC.Comments.ActionNames.CommentList, MVC.Comments.Name, new { taskId = Model.TaskId })
-                    </div>
-                    @using (Ajax.BeginForm(MVC.Comments.ActionNames.Create, MVC.Comments.Name, new AjaxOptions { HttpMethod = "POST",UpdateTargetId = "widget-grid-discussion" }, new { @class = "well no-margin" }))
-                    {
 
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true)
-                        @Html.HiddenFor(x => x.TaskId)
-                        @Html.HiddenFor(x => x.EmployeeId)
+@using (Ajax.BeginForm(MVC.Comments.ActionNames.Create, MVC.Comments.Name, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "widget-grid-discussion" }, new { @class = "well no-margin" }))
+{
 
-                        <div class="textarea-div">
-                            <div class="typearea">
-                                @Html.TextAreaFor(x => x.Message, new { @placeholder = "What are you thinking?", @rows = 3, @class = "form-control" })
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(x => x.TaskId)
+    @Html.HiddenFor(x => x.EmployeeId)
 
-                            </div>
-                        </div>
-                        
-                        <!--  REPLY/SEND -->
-                        <span class="textarea-controls">
-                            <button type="submit" class="btn btn-sm btn-primary pull-right">
-                                Reply
-                            </button>
-                        </span>
-                    }
-                    <!--end content -->
-                </div>
-            </div>
-            <!--end panel -->
+    <div class="textarea-div">
+        <div class="typearea">
+            @Html.TextAreaFor(x => x.Message, new { @placeholder = "What are you thinking?", @rows = 3, @class = "form-control" })
+
         </div>
     </div>
-    <!--end row -->
-</section>
+
+    <!--  REPLY/SEND -->
+    <span class="textarea-controls">
+        <button type="submit" class="btn btn-sm btn-primary pull-right">
+            Reply
+        </button>
+    </span>
+}
