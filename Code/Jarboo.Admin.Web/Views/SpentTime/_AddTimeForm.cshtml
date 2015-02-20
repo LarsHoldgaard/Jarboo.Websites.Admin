@@ -13,20 +13,23 @@
                 </div>
                 <div class="panel-body no-padding">
                     @Html.Action(MVC.SpentTime.ActionNames.TimeList, MVC.SpentTime.Name, new { taskId = Model.TaskId })
-                    <div class="jarviswidget jarviswidget-sortable no-margin" id="wid-id-3" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+                    <header>
+                        <div class="alert alert-info">
+                            <strong> Total Hours:</strong> @Model.TotalHours
+                        </div>
+                    </header>
+                     <div class="jarviswidget jarviswidget-sortable no-margin" id="wid-id-3" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
                         <header role="heading">
                             <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                             <h2>Actions</h2>
                         </header>
                         <!-- widget div-->
                         <div role="content">
+                          
                             <!-- widget content -->
                             <div class="widget-body no-padding">
-                                <div class="col-sm-12">
-                                    <div class="well">
-                                        Total Hours: @Model.Hours
-                                    </div>
-                                </div>
+                             
+                              
                                 @using (Ajax.BeginForm(MVC.SpentTime.ActionNames.Create, MVC.SpentTime.Name, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "widget-grid-hours", OnSuccess = "updateTableTimes" }, new { @class = "form-inline well no-margin" }))
                                 {
 

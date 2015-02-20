@@ -27,7 +27,7 @@ namespace Jarboo.Admin.Web.Models.Time
     public class TimeViewModel : DAL.Entities.SpentTime
     {
         public PositionRole Roles { get; set; }
-        public string TotalHours { get; set; }
+        public decimal TotalHours { get; set; }
 
     }
 }

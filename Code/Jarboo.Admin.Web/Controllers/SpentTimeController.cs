@@ -63,7 +63,11 @@ namespace Jarboo.Admin.Web.Controllers
             var timeFilter = new SpentTimeFilter().ByTask(taskId);
             var times = SpentTimeService.GetAll(Query.ForSpentTime(timeFilter).Include(x => x.Employee()));
 
-            var model = new TimeListViewModel() { Times = times };
+            var model = new TimeListViewModel()
+            {
+                Times = times,
+
+            };
             return PartialView(MVC.SpentTime.Views._ListTime, model);
         }
 
@@ -77,7 +81,7 @@ namespace Jarboo.Admin.Web.Controllers
                 TaskId = taskId,
                 EmployeeId = UserEmployeeId ?? 1,
                 ProjectId = projectId,
-                TotalHours = items.GroupBy(time => time.Hours).ToString()
+                TotalHours = items.Sum(x => x.Hours)
             };
 
             return PartialView(MVC.SpentTime.Views._AddTimeForm, timeCreate);
