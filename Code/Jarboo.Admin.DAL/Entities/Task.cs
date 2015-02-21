@@ -44,10 +44,11 @@ namespace Jarboo.Admin.DAL.Entities
         public string Description { get; set; }
 
         public string FolderLink { get; set; }
-        
+
         public double CurrentPrice { get; set; }
 
         public DateTime? DateDeleted { get; set; }
+        public DateTime? FollowUpDate { get; set; }
 
         public int ProjectId { get; set; }
         public virtual Project Project { get; set; }

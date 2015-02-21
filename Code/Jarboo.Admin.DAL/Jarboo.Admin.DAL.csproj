@@ -179,6 +179,10 @@
     <Compile Include="Migrations\201502182235551_MergeTableTask.Designer.cs">
       <DependentUpon>201502182235551_MergeTableTask.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502211108163_AddFieldFollowUpDateToTableTask.cs" />
+    <Compile Include="Migrations\201502211108163_AddFieldFollowUpDateToTableTask.Designer.cs">
+      <DependentUpon>201502211108163_AddFieldFollowUpDateToTableTask.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManager.cs" />
@@ -257,6 +261,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502182235551_MergeTableTask.resx">
       <DependentUpon>201502182235551_MergeTableTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502211108163_AddFieldFollowUpDateToTableTask.resx">
+      <DependentUpon>201502211108163_AddFieldFollowUpDateToTableTask.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

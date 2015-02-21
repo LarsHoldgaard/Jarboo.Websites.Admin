@@ -14,8 +14,12 @@ namespace Jarboo.Admin.Web.Controllers
     {
         [Inject]
         public ISpentTimeService SpentTimeService { get; set; }
+
         [Inject]
         public IEmployeeService EmployeeService { get; set; }
+
+        [Inject]
+        public ITaskService TaskService { get; set; }
 
         public virtual ActionResult Index()
         {
@@ -60,12 +64,12 @@ namespace Jarboo.Admin.Web.Controllers
         public virtual ActionResult TimeList(int taskId)
         {
             var timeFilter = new SpentTimeFilter().ByTask(taskId);
-            var times = SpentTimeService.GetAll(Query.ForSpentTime(timeFilter).Include(x => x.Employee()));
+            var times = SpentTimeService.GetAll(Query.ForSpentTime(timeFilter).Include(x => x.Employee())).ToList();
 
             var model = new TimeListViewModel()
             {
                 Times = times,
-                ProjectId = times.FirstOrDefault().ProjectId,
+                ProjectId = TaskService.GetById(taskId).ProjectId,
                 TaskId = taskId,
                 TotalHours = times.Sum(x => x.Hours)
             };
