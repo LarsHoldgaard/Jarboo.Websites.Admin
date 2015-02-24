@@ -252,10 +252,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Jarboo.Admin.mdf" />
-    <Content Include="App_Data\Jarboo.Admin_log.ldf">
-      <DependentUpon>Jarboo.Admin.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\invoice.min.css" />
