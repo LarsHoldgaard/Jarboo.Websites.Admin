@@ -44,7 +44,7 @@
                                                                            taskFilter = ViewBag.UserCustomerId != null ? new TaskFilter().WithEstimated().ByCustomerId(ViewBag.UserCustomerId) : new TaskFilter().WithEstimated()
                                                                        })
     
-@if (this.Can(MVC.Tasks.PendingTask()))
+@if (this.Can(MVC.Tasks.PendingTaskListEstimated()))
 {
     @Html.Action(MVC.Tasks.ActionNames.PendingTaskListEstimated, MVC.Tasks.Name, new
     {

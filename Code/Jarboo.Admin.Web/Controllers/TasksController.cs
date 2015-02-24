@@ -356,7 +356,7 @@ namespace Jarboo.Admin.Web.Controllers
         }
         private PagedData<Task> GetSortedOnServerTasks(IQuery<Task, TaskInclude, TaskFilter, TaskSorter> query, int pageSize, int pageNumber, TaskListColumns column, SortDirection direction)
         {
-           query.WithPaging(pageSize, pageNumber);
+            query.WithPaging(pageSize, pageNumber);
 
             switch (column)
             {
@@ -401,7 +401,7 @@ namespace Jarboo.Admin.Web.Controllers
         }
         private PagedData<Task> GetTasksWithoutSorting(IQuery<Task, TaskInclude, TaskFilter, TaskSorter> query, int pageSize, int pageNumber)
         {
-           return TaskService.GetAll(query.WithPaging(pageSize, pageNumber));
+            return TaskService.GetAll(query.WithPaging(pageSize, pageNumber));
         }
 
         // GET: /Tasks/NextTask/5
@@ -442,7 +442,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         public virtual ActionResult PendingTask()
         {
-            var projects = ProjectService.GetAll(Query.ForProject().Filter(x => x.ByCustomerId(UserCustomerId.Value)));
+            var projects = ProjectService.GetAll(Query.ForProject().Filter(x => x.ByCustomerId(UserCustomerId ?? 1)));
 
             if (projects == null)
             {
@@ -457,19 +457,15 @@ namespace Jarboo.Admin.Web.Controllers
 
             var model = new TaskEdit();
             ViewBag.Projects = projectsList;
-            return View(MVC.Tasks.Views.PendingTask, model);
+            return View(MVC.Tasks.Views.PendingTaskCreate, model);
         }
 
-        // POST: /Tasks/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult PendingTask(TaskEdit model)
         {
             return Handle(model, TaskService.Save,
-                () => RedirectToAction(MVC.Tasks.PendingTaskView()),
-                () => model.ProjectId == 0 ?
-                    RedirectToAction(MVC.Tasks.Create(model.ProjectId)) :
-                    RedirectToAction(MVC.Tasks.Edit(model.TaskId)));
+                () => RedirectToAction(MVC.Tasks.PendingTaskView()), RedirectToAction(MVC.Tasks.Views.PendingTaskCreate));
         }
 
         public virtual ActionResult PendingTaskList(TaskFilter taskFilter)
@@ -478,7 +474,7 @@ namespace Jarboo.Admin.Web.Controllers
 
             var model = new TasksListViewModel { Tasks = tasks };
 
-            return PartialView( MVC.Tasks.Views.PendingTaskList, model);
+            return PartialView(MVC.Tasks.Views.PendingTaskList, model);
         }
 
         public virtual ActionResult PendingTaskListEstimated(TaskFilter taskFilter)
@@ -489,7 +485,7 @@ namespace Jarboo.Admin.Web.Controllers
 
             return PartialView(MVC.Tasks.Views.PendingTaskListEstimated, model);
         }
-        
+
         public virtual ActionResult PendingTaskView()
         {
             if (UserCustomerId != null) ViewBag.UserCustomerId = UserCustomerId.Value;

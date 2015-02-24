@@ -54,15 +54,7 @@
                                         @Html.EnumDropDownListFor(x => x.Type)
                                     </label>
                                 </section>
-
-                                <section>
-                                    @Html.LabelFor(model => model.EstimatedPrice, new { @class = "label" })
-                                    <label class="input">
-                                        @Html.TextBoxFor(x => x.EstimatedPrice, new { @placeholder = "EstimatedPrice" })
-                                    </label>
-                                </section>
-
-                                <section>
+                                 <section>
                                     @Html.LabelFor(model => model.Description, new { @class = "label" })
                                     <label class="textarea">
                                         @Html.TextAreaFor(x => x.Description, new { @placeholder = "Description", rows = "5" })

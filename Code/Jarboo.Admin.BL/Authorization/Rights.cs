@@ -136,6 +136,17 @@ namespace Jarboo.Admin.BL.Authorization
             rights.Add(Documentations.Name, DeleteSpecial);
 
             rights.Add(SpentTime.Name, ViewSpecial);
+
+            rights.Add(Question.Name, ViewAll);
+            rights.Add(Question.Name, AddAny);
+            rights.Add(Question.Name, EditAny);
+            rights.Add(Question.Name, DeleteSpecial);
+
+            rights.Add(Answer.Name, ViewAll);
+            rights.Add(Answer.Name, AddAny);
+            rights.Add(Answer.Name, EditAny);
+            rights.Add(Answer.Name, DeleteSpecial);
+         
         }
         private static void FillEmployeeRights(Dictionary<string, HashSet<string>> rights)
         {
