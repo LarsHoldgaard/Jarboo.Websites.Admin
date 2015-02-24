@@ -1,81 +1,87 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Jarboo.Admin.BL.Other;
+﻿using Jarboo.Admin.BL.Other;
+using Jarboo.Admin.BL.Services.Interfaces;
 using Jarboo.Admin.DAL.Entities;
-
 using Mandrill;
-
-using Task = Jarboo.Admin.DAL.Entities.Task;
 
 namespace Jarboo.Admin.Integration.Mandrill
 {
     public class MandrillNotifierEmailer : INotifier, IEmailer
     {
-        public MandrillNotifierEmailer(IMandrillConfiguration configuration, IUrlConstructor urlConstructor)
-        {
-            this.Configuration = configuration;
-            UrlConstructor = urlConstructor;
-            EnsureService();
-        }
+        private readonly Setting _setting;
+        private readonly IUrlConstructor _urlConstructor;
+        private readonly MandrillApi _api;
 
-        private IMandrillConfiguration Configuration { get; set; }
-        private IUrlConstructor UrlConstructor { get; set; }
-        private MandrillApi api = null;
-
-        private void EnsureService()
+        public MandrillNotifierEmailer(IUrlConstructor urlConstructor, ISettingService settingService)
         {
-            api = new MandrillApi(Configuration.MandrillApiKey);
+            _setting= settingService.GetCurrentSetting();
+            _urlConstructor = urlConstructor;
+
+            if (_setting.UseMandrill)
+            {
+                _api = new MandrillApi(_setting.MandrillApiKey);
+            }
         }
 
         public void TaskResponsibleChanged(TaskResponsibleChangedData data)
         {
+            if (!_setting.UseMandrill)
+            {
+                return;
+            }
+
             var message = new EmailMessage
             {
-                to = new EmailAddress[] { new EmailAddress(data.EmployeeEmail) },
-                from_email = Configuration.MandrillFrom,
-                subject = Configuration.TaskResponsibleChangedNotificationSubject,
+                to = new[] { new EmailAddress(data.EmployeeEmail) },
+                from_email = _setting.MandrillFrom,
+                subject = _setting.MandrillTaskResponsibleChangedNotificationSubject
             };
 
             message.AddGlobalVariable("TASKNAME", data.TaskTitle);
             message.AddGlobalVariable("TASKROLE", data.Role);
 
-            api.SendMessage(message, Configuration.MandrillTaskResponsibleNotificationTemplate, null);
+            _api.SendMessage(message, _setting.MandrillTaskResponsibleNotificationTemplate, null);
         }
 
         public void SendPasswordRecoveryEmail(string email, string link)
         {
+            if (!_setting.UseMandrill)
+            {
+                return;
+            }
+
             var message = new EmailMessage
             {
-                to = new EmailAddress[] { new EmailAddress(email) },
-                from_email = Configuration.MandrillFrom,
-                subject = "Jarbo password recovery",
+                to = new[] { new EmailAddress(email) },
+                from_email = _setting.MandrillFrom,
+                subject = "Jarbo password recovery"
             };
 
             message.AddGlobalVariable("QUESTIONLINK", link);
 
-            api.SendMessage(message, Configuration.MandrillPasswordRecoveryTemplate, null);
+            _api.SendMessage(message, _setting.MandrillPasswordRecoveryTemplate, null);
         }
 
         public void NewTask(NewTaskData data)
         {
+            if (!_setting.UseMandrill)
+            {
+                return;
+            }
+
             var message = new EmailMessage
             {
-                to = new EmailAddress[] { new EmailAddress(Configuration.JarbooInfoEmail) },
-                from_email = Configuration.MandrillFrom,
-                subject = "New task",
+                to = new[] { new EmailAddress(_setting.JarbooInfoEmail) },
+                from_email = _setting.MandrillFrom,
+                subject = "New task"
             };
 
             message.AddGlobalVariable("CUSTOMERNAME", data.CustomerName);
             message.AddGlobalVariable("TASKNAME", data.TaskTitle);
             message.AddGlobalVariable("PROJECTNAME", data.ProjectName);
             message.AddGlobalVariable("TASKDESCRIPTION", data.TaskDescription);
-            message.AddGlobalVariable("TASKLINK", UrlConstructor.TaskView(data.TaskId));
+            message.AddGlobalVariable("TASKLINK", _urlConstructor.TaskView(data.TaskId));
 
-            api.SendMessage(message, Configuration.MandrillNewTaskTemplate, null);
+            _api.SendMessage(message, _setting.MandrillNewTaskTemplate, null);
         }
     }
 }

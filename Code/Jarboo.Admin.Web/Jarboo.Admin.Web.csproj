@@ -1046,6 +1046,7 @@
     <Content Include="Views\Tasks\PendingTaskList.cshtml" />
     <Content Include="Views\Tasks\PendingTaskCreate.cshtml" />
     <Content Include="Views\Tasks\PendingTaskListEstimated.cshtml" />
+    <Content Include="Views\Settings\Edit.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1097,6 +1098,7 @@
     <Compile Include="Controllers\QuizzesController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\ReportingController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SpentTimeController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="CustomersController.generated.cs">
@@ -1171,6 +1173,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="ReportingController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SharedController.generated.cs">

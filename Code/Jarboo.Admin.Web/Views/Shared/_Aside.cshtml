@@ -124,6 +124,13 @@
                     <a href="@Url.Action(MVC.Guides.Index())" title="Guide"><i class="fa fa-lg fa-fw fa-book"></i><span class="menu-item-parent">Guide</span></a>
                 </li>
             }
+
+            @if (this.Can(MVC.Settings.Edit()))
+            {
+                <li class="@Html.RouteIf("settings", "edit")">
+                    <a href="@Url.Action(MVC.Settings.Edit())" title="Settings"><i class="fa fa-lg fa-fw fa-wrench"></i><span class="menu-item-parent">Settings</span></a>
+                </li>
+            }
         </ul>
     </nav>
     <span class="minifyme" data-action="minifyMenu">

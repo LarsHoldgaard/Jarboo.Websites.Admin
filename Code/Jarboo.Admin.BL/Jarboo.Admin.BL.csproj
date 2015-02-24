@@ -106,6 +106,7 @@
     <Compile Include="Models\PasswordRecover.cs" />
     <Compile Include="Models\QuizEdit.cs" />
     <Compile Include="Models\ResetPassword.cs" />
+    <Compile Include="Models\SettingEdit.cs" />
     <Compile Include="Models\SpentTimeOnProject.cs" />
     <Compile Include="Models\SpentTimeOnTask.cs" />
     <Compile Include="Models\UserCreate.cs" />
@@ -151,12 +152,14 @@
     <Compile Include="Services\Interfaces\IProjectService.cs" />
     <Compile Include="Services\Interfaces\IQuestionService.cs" />
     <Compile Include="Services\Interfaces\IQuizService.cs" />
+    <Compile Include="Services\Interfaces\ISettingService.cs" />
     <Compile Include="Services\Interfaces\ISpentTimeService.cs" />
     <Compile Include="Services\Interfaces\ITaskService.cs" />
     <Compile Include="Services\Interfaces\IUserService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\QuestionService.cs" />
     <Compile Include="Services\QuizService.cs" />
+    <Compile Include="Services\SettingService.cs" />
     <Compile Include="Services\SpentTimeService.cs" />
     <Compile Include="Services\TaskService.cs" />
     <Compile Include="Other\IFolderCreator.cs" />
