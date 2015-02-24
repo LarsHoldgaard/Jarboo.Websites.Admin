@@ -38,7 +38,7 @@
                                         @Html.ActionLink("Discuss", MVC.Questions.Create(task.TaskId), new { @class = "btn btn-warning" })
                                 </td>
                                 <td>
-                                    @if (this.Can(MVC.SpentTime.Delete()))
+                                    @if (this.Can(MVC.Tasks.Delete()))
                                     {
                                         using (Html.BeginForm(MVC.Tasks.ActionNames.Delete, MVC.Tasks.Name, new { id = task.TaskId, returnUrl = MVC.Tasks.PendingTaskView() }, FormMethod.Post, null))
                                         {

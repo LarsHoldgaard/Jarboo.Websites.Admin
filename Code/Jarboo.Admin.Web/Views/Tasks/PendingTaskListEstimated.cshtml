@@ -18,9 +18,7 @@
                             <tr role="row">
                                 <th>Project</th>
                                 <th>Task</th>
-                                <th>Jarbo price estimate</th>
-                                <th>Accept</th>
-                                <th>Discuss</th>
+                                <th>Update Task</th>
                                 <th>Close</th>
                             </tr>
                         </thead>
@@ -30,28 +28,20 @@
                                 <tr role="row" class="odd">
                                     <td>@task.Project.Name</td>
                                     <td>@task.Title</td>
-                                    <td>@task.EstimatedPrice</td>
                                     <td>
-                                        @using (Html.BeginForm(MVC.Tasks.ActionNames.ApproveTask, MVC.Tasks.Name, new { id = task.TaskId, returnUrl = MVC.Tasks.PendingTaskView() }, FormMethod.Post, null))
-                                        {
-                                            @Html.AntiForgeryToken()
-                                            <input type="submit" value="Approve" class="btn  btn-info" />
-                                        }
+                                        @Html.ActionLink("Update", MVC.Tasks.Edit(task.TaskId), new { @class = "btn btn-primary" })
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Discuss", MVC.Questions.Create(task.TaskId), new { @class = "btn btn-warning" })
-                                </td>
-                                <td>
-                                    @if (this.Can(MVC.SpentTime.Delete()))
-                                    {
-                                        using (Html.BeginForm(MVC.Tasks.ActionNames.Delete, MVC.Tasks.Name, new { id = task.TaskId, returnUrl = MVC.Tasks.PendingTaskView() }, FormMethod.Post, null))
+                                        @if (this.Can(MVC.Tasks.Delete()))
                                         {
-                                            @Html.AntiForgeryToken()
-                                            <input type="submit" value="Close" class="btn  btn-danger delete-btn-form" />
+                                            using (Html.BeginForm(MVC.Tasks.ActionNames.Delete, MVC.Tasks.Name, new { id = task.TaskId, returnUrl = MVC.Tasks.PendingTaskView() }, FormMethod.Post, null))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <input type="submit" value="Close" class="btn  btn-danger delete-btn-form" />
+                                            }
                                         }
-                                    }
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             }
 
                         </tbody>
