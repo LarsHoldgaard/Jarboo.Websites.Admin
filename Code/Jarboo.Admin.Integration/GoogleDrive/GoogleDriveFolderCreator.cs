@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Drive.v2;
 using Google.Apis.Drive.v2.Data;
 using Google.Apis.Services;
-
 using Jarboo.Admin.BL.Other;
-using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
-
+using Jarboo.Admin.BL.Services.Interfaces;
+using Jarboo.Admin.DAL.Entities;
 using File = Google.Apis.Drive.v2.Data.File;
 
 namespace Jarboo.Admin.Integration.GoogleDrive
@@ -23,24 +21,33 @@ namespace Jarboo.Admin.Integration.GoogleDrive
         public const string FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
         public const string DOC_MIME_TYPE = "application/vnd.google-apps.document";
 
-        public GoogleDriveFolderCreator(IGoogleDriveConfiguration configuration)
+        private readonly Setting _setting;
+        private readonly IGoogleDriveConfiguration Configuration;
+        private DriveService _driveService;
+
+
+        public GoogleDriveFolderCreator(ISettingService settingService, IGoogleDriveConfiguration configuration)
         {
+            _setting = settingService.GetCurrentSetting();
             Configuration = configuration;
+
             EnsureService();
         }
 
-        private IGoogleDriveConfiguration Configuration { get; set; }
-        private DriveService driveService = null;
-
         private void EnsureService()
         {
-            if (this.driveService != null)
+            if (!_setting.UseGoogleDrive)
             {
                 return;
             }
 
-            if (string.IsNullOrEmpty(Configuration.GoogleClientId) || string.IsNullOrEmpty(Configuration.GoogleClientSecret) ||
-                 string.IsNullOrEmpty(Configuration.GoogleRefreshToken))
+            if (_driveService != null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(_setting.GoogleClientId) || string.IsNullOrEmpty(_setting.GoogleClientSecret) ||
+                 string.IsNullOrEmpty(_setting.GoogleRefreshToken))
             {
                 throw new ApplicationException("Missing google drive configuration");
             }
@@ -49,44 +56,55 @@ namespace Jarboo.Admin.Integration.GoogleDrive
             {
                 var initializer = new GoogleAuthorizationCodeFlow.Initializer
                 {
-                    ClientSecrets = new ClientSecrets()
+                    ClientSecrets = new ClientSecrets
                     {
-                        ClientId = Configuration.GoogleClientId,
-                        ClientSecret = Configuration.GoogleClientSecret
+                        ClientId = _setting.GoogleClientId,
+                        ClientSecret = _setting.GoogleClientSecret
                     }
                 };
                 var flow = new AuthorizationCodeFlow(initializer);
                 //flow.RefreshTokenAsync("user", Configuration.GoogleRefreshToken, new CancellationTokenSource().Token);
 
-                var tokenResponse = new TokenResponse { RefreshToken = Configuration.GoogleRefreshToken };
-                var userCredential = new UserCredential(flow, Configuration.GoogleLocalUserId, tokenResponse);
+                var tokenResponse = new TokenResponse { RefreshToken = _setting.GoogleRefreshToken };
+                var userCredential = new UserCredential(flow, _setting.GoogleLocalUserId, tokenResponse);
 
-                this.driveService = new DriveService(new BaseClientService.Initializer()
+                _driveService = new DriveService(new BaseClientService.Initializer
                 {
                     HttpClientInitializer = userCredential,
-                    ApplicationName = "Jarboo.Admin",
+                    ApplicationName = "Jarboo.Admin"
                 });
             }
             catch (Exception ex)
             {
-                this.driveService = null;
+                _driveService = null;
 
-                throw ex;
+                throw;
             }
         }
 
         public string Create(string customerName, string taskIdentifier)
         {
-            var driveFolders = this.LoadGoogleDriveFolderHierarchy();
+            if (!_setting.UseGoogleDrive)
+            {
+                return null;
+            }
 
-            var newFolder = this.CreateFolders(this.CreateFolderPath(customerName, taskIdentifier), driveFolders);
-            this.CopyTemplate(taskIdentifier, driveFolders, newFolder);
+
+            var driveFolders = LoadGoogleDriveFolderHierarchy();
+
+            var newFolder = CreateFolders(CreateFolderPath(customerName, taskIdentifier), driveFolders);
+            CopyTemplate(taskIdentifier, driveFolders, newFolder);
 
             return newFolder.File.AlternateLink;
         }
         public void Delete(string customerName, string taskIdentifier)
         {
-            this.DeleteFolder(this.CreateFolderPath(customerName, taskIdentifier));
+            if (!_setting.UseGoogleDrive)
+            {
+                return;
+            }
+
+            DeleteFolder(CreateFolderPath(customerName, taskIdentifier));
         }
 
         private string[] CreateFolderPath(string customerName, string taskIdentifier)
@@ -101,11 +119,11 @@ namespace Jarboo.Admin.Integration.GoogleDrive
 
         private FolderHierarchy LoadGoogleDriveFolderHierarchy()
         {
-            var files = this.driveService.Files.List();
+            var files = _driveService.Files.List();
             files.MaxResults = int.MaxValue;
             var driveFiles = files.Execute();
 
-            var about = this.driveService.About.Get().Execute();
+            var about = _driveService.About.Get().Execute();
 
             return new FolderHierarchy(about.RootFolderId, driveFiles);
         }
@@ -128,7 +146,6 @@ namespace Jarboo.Admin.Integration.GoogleDrive
                     parentFolder = new FolderHierarchy.Folder(driveFile);
 
                 }
-
             }
 
             return parentFolder;
@@ -136,12 +153,12 @@ namespace Jarboo.Admin.Integration.GoogleDrive
 
         private File CreateFolder(string title, string parentId)
         {
-            return this.CreateFile(title, parentId, FOLDER_MIME_TYPE);
+            return CreateFile(title, parentId, FOLDER_MIME_TYPE);
         }
 
         private File CreateDoc(string title, string parentId)
         {
-            return this.CreateFile(title, parentId, DOC_MIME_TYPE);
+            return CreateFile(title, parentId, DOC_MIME_TYPE);
         }
  
         private File CreateFile(string title, string parentId, string mimeType)
@@ -150,16 +167,16 @@ namespace Jarboo.Admin.Integration.GoogleDrive
             {
                 Title = title,
                 MimeType = mimeType,
-                Parents = new ParentReference[]
+                Parents = new[]
                               {
-                                  new ParentReference()
-                                      {
+                                  new ParentReference
+                                  {
                                           Id = parentId
                                       }
                               }
             };
 
-            var request = this.driveService.Files.Insert(body);
+            var request = _driveService.Files.Insert(body);
             var file = request.Execute();
             if (file == null)
             {
@@ -172,7 +189,7 @@ namespace Jarboo.Admin.Integration.GoogleDrive
         private File GetExistsFolder(string title, string parentId)
         {
             string query = "mimeType='" + FOLDER_MIME_TYPE + "' AND trashed=false AND title='" + title + "' AND '" + parentId + "' in parents";
-            FilesResource.ListRequest list = this.driveService.Files.List();
+            FilesResource.ListRequest list = _driveService.Files.List();
             list.MaxResults = int.MaxValue;
             list.Q = query;
             FileList files = list.Execute();
@@ -182,10 +199,7 @@ namespace Jarboo.Admin.Integration.GoogleDrive
                 return null;
             }
 
-            else
-            {
-                return this.CreateFolder(title, parentId);
-            }
+            return CreateFolder(title, parentId);
         }
 
         private File CopyFile(string newFileName, File file, string parentId)
@@ -194,16 +208,16 @@ namespace Jarboo.Admin.Integration.GoogleDrive
             {
                 Title = newFileName,
                 MimeType = file.MimeType,
-                Parents = new ParentReference[]
+                Parents = new[]
                               {
-                                  new ParentReference()
-                                      {
+                                  new ParentReference
+                                  {
                                           Id = parentId
                                       }
                               }
             };
 
-            var request = this.driveService.Files.Copy(body, file.Id);
+            var request = _driveService.Files.Copy(body, file.Id);
             var copy = request.Execute();
             if (copy == null)
             {
@@ -241,12 +255,12 @@ namespace Jarboo.Admin.Integration.GoogleDrive
                 throw new ApplicationException("Couldn't find template to copy. File is missing");
             }
 
-            this.CopyFile(newFileName, templateFile, newFolder.Id);
+            CopyFile(newFileName, templateFile, newFolder.Id);
         }
 
         private void DeleteFolder(IEnumerable<string> folders)
         {
-            var driveFolders = this.LoadGoogleDriveFolderHierarchy();
+            var driveFolders = LoadGoogleDriveFolderHierarchy();
 
             var parentFolder = driveFolders.Root;
             foreach (var folderName in folders)
@@ -260,7 +274,7 @@ namespace Jarboo.Admin.Integration.GoogleDrive
                 parentFolder = driveFolder;
             }
 
-            this.driveService.Files.Delete(parentFolder.Id).Execute();
+            _driveService.Files.Delete(parentFolder.Id).Execute();
         }
     }
 }

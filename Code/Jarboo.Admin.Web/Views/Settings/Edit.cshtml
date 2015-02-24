@@ -1,0 +1,144 @@
+﻿@using SmartAdminMvc
+@model Jarboo.Admin.BL.Models.SettingEdit
+@{
+    ViewBag.Title = "Edit settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ 
+<!-- RIBBON -->
+<div id="ribbon">
+    @Html.Partial("_RibbonRefresh")
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @Html.RenderBreadCrumbs(this, new BreadCrumbItem(MVC.Settings.Edit(), "Settings"))
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-7">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                    <h2>Edit setting</h2>
+                </header>
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+                        @using (Html.BeginForm(MVC.Settings.Edit(), FormMethod.Post, new { @class = "smart-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(x => x.Id)
+
+                            @Html.ValidationBootstrap()
+
+                            <header>
+                                Edit form
+                            </header>
+                            <fieldset>
+                                <section>
+                                    @Html.LabelFor(model => model.UseGoogleDrive, new { @class = "label" })
+                                    <label class="select select-multiple">
+                                        @Html.CheckBoxFor(x => x.UseGoogleDrive)
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.GoogleClientId, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.GoogleClientId, new { @placeholder = "GoogleClientId" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.GoogleClientSecret, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.GoogleClientSecret, new { @placeholder = "GoogleClientSecret" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.GoogleRefreshToken, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.GoogleRefreshToken, new { @placeholder = "GoogleRefreshToken" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.GoogleLocalUserId, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.GoogleLocalUserId, new { @placeholder = "GoogleLocalUserId" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.UseMandrill, new { @class = "label" })
+                                    <label class="select select-multiple">
+                                        @Html.CheckBoxFor(x => x.UseMandrill)
+                                    </label>
+                                </section>
+
+                                <section>
+                                    @Html.LabelFor(model => model.MandrillApiKey, new {@class = "label"})
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.MandrillApiKey, new { @placeholder = "MandrillApiKey" })
+                                    </label>
+                                </section>
+
+                                <section>
+                                    @Html.LabelFor(model => model.MandrillFrom, new {@class = "label"})
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.MandrillFrom, new { @placeholder = "Mandrill From" })
+                                    </label>
+                                </section>
+
+                                <section>
+                                    @Html.LabelFor(model => model.MandrillNewTaskTemplate, new {@class = "label"})
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.MandrillNewTaskTemplate, new { @placeholder = "MandrillNewTaskTemplate" })
+                                    </label>
+                                </section>
+
+                                <section>
+                                    @Html.LabelFor(model => model.MandrillPasswordRecoveryTemplate, new {@class = "label"})
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.MandrillPasswordRecoveryTemplate, new { @placeholder = "MandrillPasswordRecoveryTemplate" })
+                                    </label>
+                                </section>
+
+                                <section>
+                                    @Html.LabelFor(model => model.MandrillTaskResponsibleChangedNotificationSubject, new {@class = "label"})
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.MandrillTaskResponsibleChangedNotificationSubject, new { @placeholder = "MandrillTaskResponsibleChangedNotificationSubject" })
+                                    </label>
+                                </section>
+
+                                <section>
+                                    @Html.LabelFor(model => model.MandrillTaskResponsibleNotificationTemplate, new {@class = "label"})
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.MandrillTaskResponsibleNotificationTemplate, new {@placeholder = "MandrillTaskResponsibleNotificationTemplate"})
+                                    </label>
+                                </section>
+
+                            </fieldset>
+                            <footer>
+                                <button type="submit" class="btn btn-primary" id="saveButton">
+                                    Save
+                                </button>
+                            </footer>
+                        }
+                    </div>
+                    <!-- end widget content -->
+                </div>
+                <!-- end widget div -->
+            </div>
+            <!-- end widget -->
+        </article>
+    </div>
+    <!-- end row -->
+</div>

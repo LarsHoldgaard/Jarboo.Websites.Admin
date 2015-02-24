@@ -14,7 +14,7 @@ namespace Jarboo.Admin.Web.Controllers
     {
         public virtual ActionResult RequestRefreshToken()
         {
-            var result = new AuthorizationCodeMvcApp(this, new AppFlowMetadata()).
+            var result = new AuthorizationCodeMvcApp(this, new AppFlowMetadata(SettingService)).
                 AuthorizeAsync(new CancellationTokenSource().Token).WaitAndUnwrapException();
 
             if (result.Credential != null)

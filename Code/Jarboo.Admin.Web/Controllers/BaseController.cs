@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 using Jarboo.Admin.BL;
 using Jarboo.Admin.BL.Other;
+using Jarboo.Admin.BL.Services.Interfaces;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Web.Infrastructure;
 using Jarboo.Admin.Web.Infrastructure.BLExternals;
@@ -23,6 +24,8 @@ namespace Jarboo.Admin.Web.Controllers
     {
         [Inject]
         public UserManager<User> UserManager { get; set; }
+        [Inject]
+        public ISettingService SettingService { get; set; }
 
         public virtual IAuthenticationManager AuthenticationManager
         {

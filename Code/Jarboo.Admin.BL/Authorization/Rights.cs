@@ -78,6 +78,13 @@ namespace Jarboo.Admin.BL.Authorization
         {
             public static readonly string Name = typeof(Quizzes).Name;
         }
+
+        public class Settings
+        {
+            public static readonly string Name = typeof (Settings).Name;
+        }
+
+
         private static readonly Dictionary<UserRoles, Dictionary<string, HashSet<string>>> rightsByRoles = new Dictionary<UserRoles, Dictionary<string, HashSet<string>>>();
         private static readonly Dictionary<string, HashSet<string>> authorizedUserRights = new Dictionary<string, HashSet<string>>();
         private static readonly Dictionary<string, HashSet<string>> anonymousRights = new Dictionary<string, HashSet<string>>();
@@ -165,6 +172,11 @@ namespace Jarboo.Admin.BL.Authorization
 
             rights.Add(SpentTime.Name, ViewSpecial);
             rights.Add(SpentTime.Name, AddSpecial);
+        }
+
+        private static void FillAdminRights(Dictionary<string, HashSet<string>> rights)
+        {
+            
         }
 
         public static void Add(this Dictionary<string, HashSet<string>> dict, string s1, string s2)
