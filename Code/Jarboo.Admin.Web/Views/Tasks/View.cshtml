@@ -4,9 +4,9 @@
 @model Jarboo.Admin.Web.Models.Task.TaskViewModel
 
 @{
-        ViewBag.Title = Model.FullTitle();
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+    ViewBag.Title = Model.FullTitle();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <!-- RIBBON -->
 <div id="ribbon">
@@ -63,29 +63,34 @@
         </div>
     </div><!-- widget grid -->
     @Html.Action(MVC.Questions.ActionNames.QuestionList, MVC.Questions.Name, new
-                                                                       {
-                                                                           questionFilter = new QuestionFilter().ByTask(Model.TaskId)
-                                                                       })
+    {
+        questionFilter = new QuestionFilter().ByTask(Model.TaskId)
+    })
 
-    @Html.Action(MVC.Comments.ActionNames.CommentList, MVC.Comments.Name, new
-                                                                       {
-                                                                           taskId = Model.TaskId
-                                                                       })
+    @if (this.Can(MVC.Comments.CommentList()))
+    {
+        @Html.Action(MVC.Comments.ActionNames.CommentList, MVC.Comments.Name, new
+    {
+        taskId = Model.TaskId
+    })
+    }
+    @if (this.Can(MVC.SpentTime.TimeList()))
+    {
+        @Html.Action(MVC.SpentTime.ActionNames.TimeList, MVC.SpentTime.Name, new
+    {
+        taskId = Model.TaskId,
+        projectId = Model.ProjectId
 
-    @Html.Action(MVC.SpentTime.ActionNames.TimeList, MVC.SpentTime.Name, new
-                                                                       {
-                                                                           taskId = Model.TaskId,
-                                                                           projectId = Model.ProjectId
-
-                                                                       })
+    })
+    }
 
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div class="jarviswidget well" id="wid-id-2">
-                 <div>
+                <div class="jarviswidget well" id="wid-id-2">
+                    <div>
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
@@ -240,4 +245,3 @@
         </div>
     </div>
 </div>
-   

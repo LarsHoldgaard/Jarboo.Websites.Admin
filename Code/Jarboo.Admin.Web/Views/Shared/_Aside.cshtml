@@ -82,6 +82,12 @@
                     <a href="@Url.Action(MVC.Tasks.Index())" title="Tasks"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i><span class="menu-item-parent">Tasks</span></a>
                 </li>
             }
+            @if (this.Can(MVC.Tasks.PendingTaskView()))
+            {
+                <li class="@Html.RouteIf("PendingTaskView", "active")">
+                    <a href="@Url.Action(MVC.Tasks.PendingTaskView())" title="Pending task"><i class="fa fa-lg fa-fw  fa-recycle"></i><span class="menu-item-parent">Pending Task</span></a>
+                </li>
+            }
             @if (this.Can(MVC.Employees.Index()))
             {
                 <li class="@Html.RouteIf("employees", "active")">

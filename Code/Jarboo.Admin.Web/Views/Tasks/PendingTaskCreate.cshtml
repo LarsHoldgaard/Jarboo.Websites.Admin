@@ -1,0 +1,89 @@
+﻿@using SmartAdminMvc
+@model Jarboo.Admin.BL.Models.TaskEdit
+
+<!-- RIBBON -->
+<div id="ribbon">
+    @Html.Partial("_RibbonRefresh")
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @Html.RenderBreadCrumbs(this, new BreadCrumbItem("Pending Tasks"))
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-7">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                    <h2>New </h2>
+                </header>
+                <!-- widget div-->
+                <div>
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+                        @using (Html.BeginForm(MVC.Tasks.PendingTask(), FormMethod.Post, new { @class = "smart-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationBootstrap()
+                          
+                            <header>
+                                Create new task
+                            </header>
+                            <fieldset>
+                                <section>
+                                    <label for="ProjectId">Select project: </label>
+                                    <label class="input">
+                                        @Html.DropDownListFor(model => model.ProjectId, ViewBag.Projects as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                    </label>
+                                </section>
+
+                                <section>
+                                    @Html.LabelFor(model => model.Title, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.Title, new { @placeholder = "Title", @class = "form-control" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.Type, new { @class = "select" })
+                                    <label class="select select-multiple">
+                                        @Html.EnumDropDownListFor(x => x.Type)
+                                    </label>
+                                </section>
+
+                                <section>
+                                    @Html.LabelFor(model => model.EstimatedPrice, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.EstimatedPrice, new { @placeholder = "EstimatedPrice" })
+                                    </label>
+                                </section>
+
+                                <section>
+                                    @Html.LabelFor(model => model.Description, new { @class = "label" })
+                                    <label class="textarea">
+                                        @Html.TextAreaFor(x => x.Description, new { @placeholder = "Description", rows = "5" })
+                                    </label>
+                                </section>
+
+                            </fieldset>
+                            <footer>
+                                <button type="submit" class="btn btn-primary">
+                                    Save
+                                </button>
+                            </footer>
+                        }
+                    </div>
+                    <!-- end widget content -->
+                </div>
+                <!-- end widget div -->
+            </div>
+            <!-- end widget -->
+        </article>
+    </div>
+    <!-- end row -->
+</div>
+<!-- end content -->

@@ -1042,6 +1042,10 @@
     <Content Include="Views\Comments\_AddCommentForm.cshtml" />
     <Content Include="Views\SpentTime\_ListTime.cshtml" />
     <Content Include="Views\SpentTime\_AddTimeForm.cshtml" />
+    <Content Include="Views\Tasks\PendingTask.cshtml" />
+    <Content Include="Views\Tasks\PendingTaskList.cshtml" />
+    <Content Include="Views\Tasks\PendingTaskCreate.cshtml" />
+    <Content Include="Views\Tasks\PendingTaskListEstimated.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

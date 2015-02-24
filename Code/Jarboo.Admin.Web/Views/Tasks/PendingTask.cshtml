@@ -1,0 +1,56 @@
+﻿@using Jarboo.Admin.BL.Filters
+@using Jarboo.Admin.Web.Models.Task
+@using SmartAdminMvc
+@{
+    ViewBag.Title = "Pending Tasks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- RIBBON -->
+<div id="ribbon">
+    @Html.Partial("_RibbonRefresh")
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+        @Html.RenderBreadCrumbs(this, new BreadCrumbItem("Pending Tasks"))
+    </ol>
+    <!-- end breadcrumb -->
+</div>
+<!-- END RIBBON -->
+
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
+                Pending Tasks
+            </h1>
+        </div>
+     
+    </div>
+    <!-- end col -->
+    @if (this.Can(MVC.Tasks.PendingTask()))
+    {
+        <p>
+            <a class="btn btn-success" href="@Url.Action(MVC.Tasks.PendingTask())">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
+            </a>
+        </p>
+    }
+    <!-- end row -->
+    @Html.Action(MVC.Tasks.ActionNames.PendingTaskList, MVC.Tasks.Name, new
+                                                                       {
+                                                                           taskFilter = ViewBag.UserCustomerId != null ? new TaskFilter().WithEstimated().ByCustomerId(ViewBag.UserCustomerId) : new TaskFilter().WithEstimated()
+                                                                       })
+    
+@if (this.Can(MVC.Tasks.PendingTask()))
+{
+    @Html.Action(MVC.Tasks.ActionNames.PendingTaskListEstimated, MVC.Tasks.Name, new
+    {
+        taskFilter = new TaskFilter().WithOutEstimated()
+    })
+}
+ </div>
+
+

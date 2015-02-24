@@ -49,6 +49,7 @@ namespace Jarboo.Admin.DAL.Entities
 
         public DateTime? DateDeleted { get; set; }
         public DateTime? FollowUpDate { get; set; }
+        public DateTime? DateApproved { get; set; }
 
         public int ProjectId { get; set; }
         public virtual Project Project { get; set; }
