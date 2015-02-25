@@ -42,6 +42,10 @@
              <div class="input-group-addon">hours</div>
          </div>
 
+         <div class="input-group">
+             @Html.TextBoxFor(x => x.Date, "{0:d}", new { @placeholder = "Date", @class = "form-control datepicker", data_end_date = DateTime.Now.ToString("d") })
+         </div>
+
          <button type="submit" class="btn btn-primary">Add</button>
      }
 }

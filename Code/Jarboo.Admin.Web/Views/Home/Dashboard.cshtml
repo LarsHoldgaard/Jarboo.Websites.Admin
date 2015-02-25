@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     var spentTimes = ViewBag.SpentTimes as List<SpentTime>;
-    var incomingGroupedByDate = spentTimes.GroupBy(x => x.DateCreated.Date).OrderBy(x => x.Key).Select(x => x.Aggregate(0d, (a, y) => a + y.HourlyPrice * (double)y.Hours));
+    var incomingGroupedByDate = spentTimes.GroupBy(x => x.Date.Date).OrderBy(x => x.Key).Select(x => x.Aggregate(0d, (a, y) => a + y.HourlyPrice * (double)y.Hours));
     var allIncoming = incomingGroupedByDate.Sum();
 }
 <!-- RIBBON -->

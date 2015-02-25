@@ -78,6 +78,12 @@
                                         @Html.DropDownListFor(x => x.EmployeeId, (SelectList)ViewBag.EmployeesList, new { @class = "form-control" })
                                     </label>
                                 </section>
+                                <section>
+                                    @Html.LabelFor(model => model.Date, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.Date, "{0:d}", new { @placeholder = "Date", @class="datepicker", data_end_date = DateTime.Now.ToString("d") })
+                                    </label>
+                                </section>
                             </fieldset>
                             <footer>
                                 <button type="submit" class="btn btn-primary">

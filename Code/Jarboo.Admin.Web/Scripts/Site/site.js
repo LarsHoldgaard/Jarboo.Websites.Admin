@@ -14,7 +14,13 @@
     });
 
     $(".input-daterange").datepicker({});
-    $("input.datepicker").datepicker({});
+    $("input.datepicker").each(function () {
+        $this = $(this);
+        $this.datepicker({
+            startDate: $this.data("start-date"),
+            endDate: $this.data("end-date")
+        });
+    });
 
     $("input[data-hours]").blur(formatHoursInput);
     function formatHoursInput() {
