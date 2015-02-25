@@ -33,16 +33,16 @@ namespace Jarboo.Admin.Web.Infrastructure
 #endif
         }
 
-        private string[] predefinedCustomers;
+        private string[] _predefinedCustomers;
         public string[] PredefinedCustomers
         {
             get
             {
-                if (predefinedCustomers == null)
+                if (_predefinedCustomers == null)
                 {
-                    predefinedCustomers = ConfigurationManager.AppSettings["PredefinedCustomers"].Split(';');
+                    _predefinedCustomers = ConfigurationManager.AppSettings["PredefinedCustomers"].Split(';');
                 }
-                return predefinedCustomers;
+                return _predefinedCustomers;
             }
         }
 
@@ -72,16 +72,16 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
-        private string googleDrivePath;
+        private string _googleDrivePath;
         public string GoogleDrivePath
         {
             get
             {
-                if (googleDrivePath == null)
+                if (_googleDrivePath == null)
                 {
-                    googleDrivePath = ConfigurationManager.AppSettings["GoogleDrivePath"];
+                    _googleDrivePath = ConfigurationManager.AppSettings["GoogleDrivePath"];
                 }
-                return googleDrivePath;
+                return _googleDrivePath;
             }
         }
 
@@ -249,8 +249,8 @@ namespace Jarboo.Admin.Web.Infrastructure
             {
                 if (redirectOnError == null)
                 {
-                    var configuration = WebConfigurationManager.OpenWebConfiguration("~");
-                    var section = (CustomErrorsSection)configuration.GetSection("system.web/customErrors");
+                    var conf = WebConfigurationManager.OpenWebConfiguration("~");
+                    var section = (CustomErrorsSection)conf.GetSection("system.web/customErrors");
                     redirectOnError = section.Mode;
                 }
                 return redirectOnError.Value;

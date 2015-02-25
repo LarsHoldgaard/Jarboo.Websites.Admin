@@ -21,6 +21,7 @@ namespace Jarboo.Admin.DAL.Migrations
         {
             EnsureRoles(context);
             EnsureEmployeeUsers(context);
+            EnsureSettings(context);
         }
         private void EnsureRoles(Context context)
         {
@@ -59,6 +60,81 @@ namespace Jarboo.Admin.DAL.Migrations
 
                 result = userManager.AddToRole(user.Id, Entities.UserRoles.Employee.ToString());
                 this.CheckResult(result);
+            }
+
+            context.SaveChanges();
+        }
+
+        private void EnsureSettings(Context context)
+        {
+            if (!context.Settings.Any(a => a.Configuration == "Debug"))
+            {
+                var debug = new Setting
+                {
+                    Configuration = "Debug",
+                    JarbooInfoEmail = "info@jarboo.com",
+
+                    UseGoogleDrive = false,
+                    GoogleClientId = "396782749590-7aikes2ama76giic9ck1ntt8tdbrr6t8.apps.googleusercontent.com",
+                    GoogleClientSecret = "d45IRhkND0S0OQIJI5gS0pcy",
+                    GoogleRefreshToken = "1/6hpzsG_HnbHWB_m_xm1Qwd02EUnCWzxlN5Rq-bbdFZA",
+                    GoogleLocalUserId = "user",
+
+                    UseMandrill = false,
+                    MandrillApiKey = "IRWMe1g1dCTrG6uOZEy7gQ",
+                    MandrillFrom = "admin@jarboo.com",
+                    MandrillNewTaskTemplate = "a-customer-created-a-new-task",
+                    MandrillPasswordRecoveryTemplate = "forgot-password-e-mail",
+                    MandrillTaskResponsibleChangedNotificationSubject = "Task was assigned to you",
+                    MandrillTaskResponsibleNotificationTemplate = "task-update"
+                };
+                context.Settings.Add(debug);
+            }
+            if (!context.Settings.Any(a => a.Configuration == "Staging"))
+            {
+                var staging = new Setting
+                {
+                    Configuration = "Staging",
+                    JarbooInfoEmail = "info@jarboo.com",
+
+                    UseGoogleDrive = true,
+                    GoogleClientId = "396782749590-7aikes2ama76giic9ck1ntt8tdbrr6t8.apps.googleusercontent.com",
+                    GoogleClientSecret = "d45IRhkND0S0OQIJI5gS0pcy",
+                    GoogleRefreshToken = "1/uFhKbK-2wWnsLdpecq0QZnF7F5RrUYIWWupZoj9ew0MMEudVrK5jSpoR30zcRFq6",
+                    GoogleLocalUserId = "user",
+
+                    UseMandrill = true,
+                    MandrillApiKey = "IRWMe1g1dCTrG6uOZEy7gQ",
+                    MandrillFrom = "admin@jarboo.com",
+                    MandrillNewTaskTemplate = "a-customer-created-a-new-task",
+                    MandrillPasswordRecoveryTemplate = "forgot-password-e-mail",
+                    MandrillTaskResponsibleChangedNotificationSubject = "Task was assigned to you",
+                    MandrillTaskResponsibleNotificationTemplate = "task-update"
+                };
+                context.Settings.Add(staging);
+            }
+            if (!context.Settings.Any(a => a.Configuration == "Release"))
+            {
+                var release = new Setting
+                {
+                    Configuration = "Release",
+                    JarbooInfoEmail = "info@jarboo.com",
+
+                    UseGoogleDrive = true,
+                    GoogleClientId = "396782749590-7aikes2ama76giic9ck1ntt8tdbrr6t8.apps.googleusercontent.com",
+                    GoogleClientSecret = "d45IRhkND0S0OQIJI5gS0pcy",
+                    GoogleRefreshToken = "1/uFhKbK-2wWnsLdpecq0QZnF7F5RrUYIWWupZoj9ew0MMEudVrK5jSpoR30zcRFq6",
+                    GoogleLocalUserId = "user",
+
+                    UseMandrill = true,
+                    MandrillApiKey = "IRWMe1g1dCTrG6uOZEy7gQ",
+                    MandrillFrom = "admin@jarboo.com",
+                    MandrillNewTaskTemplate = "a-customer-created-a-new-task",
+                    MandrillPasswordRecoveryTemplate = "forgot-password-e-mail",
+                    MandrillTaskResponsibleChangedNotificationSubject = "Task was assigned to you",
+                    MandrillTaskResponsibleNotificationTemplate = "task-update"
+                };
+                context.Settings.Add(release);
             }
 
             context.SaveChanges();

@@ -15,7 +15,7 @@ namespace Jarboo.Admin.Web.Infrastructure
         private static readonly Dictionary<UserRoles, Dictionary<string, HashSet<string>>> rightsByRoles = new Dictionary<UserRoles, Dictionary<string, HashSet<string>>>();
         private static readonly Dictionary<string, HashSet<string>> authorizedUserRights = new Dictionary<string, HashSet<string>>();
         private static readonly Dictionary<string, HashSet<string>> anonymousRights = new Dictionary<string, HashSet<string>>();
-        
+
         static Rights()
         {
             FillRights();
@@ -89,6 +89,26 @@ namespace Jarboo.Admin.Web.Infrastructure
             rights.Add(MVC.Tasks.ListConfig());
             rights.Add(MVC.Tasks.ListData());
             rights.Add(MVC.Tasks.List());
+
+
+            rights.Add(MVC.Tasks.PendingTask());
+            rights.Add(MVC.Tasks.PendingTaskView());
+            rights.Add(MVC.Tasks.ApproveTask());
+            rights.Add(MVC.Tasks.PendingTaskList());
+          
+
+            rights.Add(MVC.Reporting.Index());
+            rights.Add(MVC.Reporting.List());
+            rights.Add(MVC.Reporting.ListConfig());
+            rights.Add(MVC.Reporting.ListData());
+
+            rights.Add(MVC.Questions.QuestionList());
+            rights.Add(MVC.Questions.Create());
+
+            rights.Add(MVC.Answer.Index());
+            rights.Add(MVC.Answer.AnswerList());
+            rights.Add(MVC.Answer.Create());
+            rights.Add(MVC.Tasks.View());
         }
         private static void FillEmployeeRights(Dictionary<string, HashSet<string>> rights)
         {
@@ -118,6 +138,20 @@ namespace Jarboo.Admin.Web.Infrastructure
             rights.Add(MVC.Tasks.AddHours());
 
             rights.Add(MVC.SpentTime.Index());
+
+            rights.Add(MVC.Answer.Index());
+            rights.Add(MVC.Answer.AnswerList());
+            rights.Add(MVC.Answer.Create());
+
+            rights.Add(MVC.Comments.CommentList());
+            rights.Add(MVC.Comments.Create());
+
+            rights.Add(MVC.Questions.QuestionList());
+            rights.Add(MVC.Questions.Create());
+
+            rights.Add(MVC.SpentTime.TimeList());
+            rights.Add(MVC.SpentTime.Delete());
+            rights.Add(MVC.SpentTime.Create());
         }
 
         public static bool Can(this WebViewPage view, ActionResult action)

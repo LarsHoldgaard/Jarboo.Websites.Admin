@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-
 using Google.Apis.Drive.v2.Data;
 
-using Jarboo.Admin.Integration.GoogleDrive;
-
-namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
+namespace Jarboo.Admin.Integration.GoogleDrive
 {
     public class FolderHierarchy
     {
@@ -19,9 +15,9 @@ namespace Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration
 
         private void CreateRoot(string rootFolderId)
         {
-            this.Root = new Folder()
-                            {
-                                Id = rootFolderId,
+            Root = new Folder
+            {
+                                Id = rootFolderId
                             };
         }
 
