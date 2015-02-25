@@ -7,20 +7,7 @@
         <article class="col-sm-12 col-md-12 col-lg-7">
             <!-- Widget ID (each widget will need unique ID)-->
             <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
-                <!-- widget options:
-                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                data-widget-colorbutton="false"
-                data-widget-editbutton="false"
-                data-widget-togglebutton="false"
-                data-widget-deletebutton="false"
-                data-widget-fullscreenbutton="false"
-                data-widget-custombutton="false"
-                data-widget-collapsed="true"
-                data-widget-sortable="false"
-
-                -->
-                <header>
+             <header>
                     <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                     <h2>New </h2>
                 </header>
@@ -38,71 +25,112 @@
                             @Html.AntiForgeryToken()
                             @Html.ValidationBootstrap()
                             @Html.HiddenFor(x => x.TaskId)
-                            @Html.HiddenFor(x => x.ProjectId)
-                            
+                            if (Model.ProjectId != 0)
+                            {
+                                @Html.HiddenFor(x => x.ProjectId)
+                            }
+
                             <header>
                                 New Tasks
                             </header>
+                            
                             <fieldset>
+                                @if (Model.Projects != null)
+                                {
+                                    <section>
+                                        @Html.LabelFor(model => model.Projects, new { @class = "label" })
+                                        <label class="input">
+                                            @Html.DropDownListFor(x => x.ProjectId, Model.Projects, "Select Project", new { @placeholder = "Select project", @class = "form-control" })
+                                        </label>
+                                    </section>
+                                }
+                                else
+                                {
+                                    <section>
+                                        @Html.LabelFor(model => model.ProjectName, new { @class = "label" })
+                                        <label class="input">
+                                            @Html.TextBoxFor(x => x.ProjectName, new { @readonly = "readonly", @class = "form-control" })
+                                        </label>
+                                    </section>
+                                }
+
                                 <section>
                                     @Html.LabelFor(model => model.Title, new { @class = "label" })
                                     <label class="input">
-                                        @Html.TextBoxFor(x => x.Title, new { @placeholder = "Title", @class="form-control" })
+                                        @Html.TextBoxFor(x => x.Title, new { @placeholder = "Title", @class = "form-control" })
                                     </label>
                                 </section>
+
+                                <section>
+                                    @Html.LabelFor(model => model.Description, new { @class = "label" })
+                                    <label class="textarea">
+                                        @Html.TextAreaFor(x => x.Description, new { @placeholder = "Description", rows = "5" })
+                                    </label>
+                                </section>
+
                                 <section>
                                     @Html.LabelFor(model => model.Type, new { @class = "select" })
                                     <label class="select select-multiple">
                                         @Html.EnumDropDownListFor(x => x.Type)
                                     </label>
                                 </section>
-                                <section>
-                                    @Html.LabelFor(model => model.Size, new { @class = "label" })
-                                    <label class="input">
-                                        <i class="icon-append fa">hours</i>
-                                        @Html.TextBoxFor(x => x.Size, new { @placeholder = "Size" })
-                                    </label>
-                                </section>
+
                                 <section>
                                     @Html.LabelFor(model => model.Urgency, new { @class = "label" })
                                     <label class="select select-multiple">
                                         @Html.EnumDropDownListFor(x => x.Urgency)
                                     </label>
                                 </section>
-                                <section>
-                                    @Html.LabelFor(model => model.ForcedPriority, "Priority ( left blank for automatic calculation )", new { @class = "label" })
-                                    <label class="input">
-                                        @Html.TextBoxFor(x => x.ForcedPriority, new { @placeholder = "Priority" })
-                                    </label>
-                                </section>
+
                                 <section>
                                     @Html.LabelFor(model => model.EstimatedPrice, new { @class = "label" })
                                     <label class="input">
                                         @Html.TextBoxFor(x => x.EstimatedPrice, new { @placeholder = "EstimatedPrice" })
                                     </label>
                                 </section>
-                                <section>
-                                    @Html.LabelFor(model => model.Deadline, new { @class = "label" })
-                                    <label class="input">
-                                        @Html.TextBoxFor(x => x.Deadline, "{0:d}", new { @placeholder = "Deadline", @class="datepicker" })
-                                    </label>
-                                </section>
-                                <section>
-                                    @Html.LabelFor(model => model.Description, new { @class = "label" })
-                                    <label class="textarea">
-                                        @Html.TextAreaFor(x => x.Description, new { @placeholder = "Description", rows="5" })
-                                    </label>
-                                </section>
-                                @if (Model.TaskId == 0)
-                                {
+
+                                <div class="advanced" style="display: none">
                                     <section>
-                                        @Html.LabelFor(model => model.EmployeeId, new { @class = "label" })
-                                        <label class="select select-multiple">
-                                            @Html.DropDownListFor(x => x.EmployeeId, (SelectList)ViewBag.EmployeesList, "Select automatically", new { @class = "form-control" })
+                                        @Html.LabelFor(model => model.Size, new { @class = "label" })
+                                        <label class="input">
+                                            <i class="icon-append fa">hours</i>
+                                            @Html.TextBoxFor(x => x.Size, new { @placeholder = "Size" })
                                         </label>
                                     </section>
-                                }
+
+                                    <section>
+                                        @Html.LabelFor(model => model.ForcedPriority, "Priority ( left blank for automatic calculation )", new { @class = "label" })
+                                        <label class="input">
+                                            @Html.TextBoxFor(x => x.ForcedPriority, new { @placeholder = "Priority" })
+                                        </label>
+                                    </section>
+
+                                    <section>
+                                        @Html.LabelFor(model => model.Deadline, new { @class = "label" })
+                                        <label class="input">
+                                            @Html.TextBoxFor(x => x.Deadline, "{0:d}", new { @placeholder = "Deadline", @class = "datepicker" })
+                                        </label>
+                                    </section>
+                                    <section>
+                                        @Html.LabelFor(model => model.FollowUpDate, new { @class = "label" })
+                                        <label class="input">
+                                            @Html.TextBoxFor(x => x.FollowUpDate, "{0:d}", new { @placeholder = "Follow Up Date", @class = "datepicker" })
+                                        </label>
+                                    </section>
+
+                                    @if (Model.TaskId == 0)
+                                    {
+                                        <section>
+                                            @Html.LabelFor(model => model.EmployeeId, new { @class = "label" })
+                                            <label class="select select-multiple">
+                                                @Html.DropDownListFor(x => x.EmployeeId, (SelectList)ViewBag.EmployeesList, "Select automatically", new { @class = "form-control" })
+                                            </label>
+                                        </section>
+                                    }
+                                </div>
+                                <p><a href="#" class="btn btn-info show_hide center-block" data-content="toggle-text">See advanced fields</a></p>
                             </fieldset>
+
                             <footer>
                                 <button type="submit" class="btn btn-primary">
                                     Save
