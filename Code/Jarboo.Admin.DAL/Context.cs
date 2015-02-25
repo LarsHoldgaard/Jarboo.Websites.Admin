@@ -68,6 +68,9 @@ namespace Jarboo.Admin.DAL
         public IDbSet<Comment> Comments { get; set; }
         public IDbSet<Question> Questions { get; set; }
         public IDbSet<Answer> Answers { get; set; }
+
+        public IDbSet<Setting> Settings { get; set; }
+
         public IDbSet<Quiz> Quizzes { get; set; }
 
         public DbContextTransaction BeginTransaction()

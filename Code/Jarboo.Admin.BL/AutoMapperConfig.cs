@@ -56,6 +56,9 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<Project, ProjectEdit>();
             Mapper.CreateMap<ProjectEdit, Project>();
 
+            Mapper.CreateMap<Setting, SettingEdit>();
+            Mapper.CreateMap<SettingEdit, Setting>();
+
             Mapper.CreateMap<DAL.Entities.Task, TaskEdit>();
             Mapper.CreateMap<TaskEdit, DAL.Entities.Task>();
 

@@ -20,7 +20,8 @@ namespace Jarboo.Admin.DAL
         IDbSet<Comment> Comments { get; set; }
         IDbSet<Question> Questions { get; set; }
         IDbSet<Answer> Answers { get; set; }
-
+        IDbSet<Setting> Settings { get; set; }
+            
         DbContextTransaction BeginTransaction();
 
         DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;

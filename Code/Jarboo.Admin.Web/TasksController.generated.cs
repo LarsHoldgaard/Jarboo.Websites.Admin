@@ -117,6 +117,24 @@ namespace Jarboo.Admin.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddHours);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult PendingTaskList()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.PendingTaskList);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult PendingTaskListEstimated()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.PendingTaskListEstimated);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult ApproveTask()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ApproveTask);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public TasksController Actions { get { return MVC.Tasks; } }
@@ -146,6 +164,11 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string NextTask = "NextTask";
             public readonly string AddHours = "AddHours";
             public readonly string TasksPerDayChartData = "TasksPerDayChartData";
+            public readonly string PendingTask = "PendingTask";
+            public readonly string PendingTaskList = "PendingTaskList";
+            public readonly string PendingTaskListEstimated = "PendingTaskListEstimated";
+            public readonly string PendingTaskView = "PendingTaskView";
+            public readonly string ApproveTask = "ApproveTask";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -164,6 +187,11 @@ namespace Jarboo.Admin.Web.Controllers
             public const string NextTask = "NextTask";
             public const string AddHours = "AddHours";
             public const string TasksPerDayChartData = "TasksPerDayChartData";
+            public const string PendingTask = "PendingTask";
+            public const string PendingTaskList = "PendingTaskList";
+            public const string PendingTaskListEstimated = "PendingTaskListEstimated";
+            public const string PendingTaskView = "PendingTaskView";
+            public const string ApproveTask = "ApproveTask";
         }
 
 
@@ -259,6 +287,38 @@ namespace Jarboo.Admin.Web.Controllers
         {
             public readonly string model = "model";
         }
+        static readonly ActionParamsClass_PendingTask s_params_PendingTask = new ActionParamsClass_PendingTask();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_PendingTask PendingTaskParams { get { return s_params_PendingTask; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_PendingTask
+        {
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_PendingTaskList s_params_PendingTaskList = new ActionParamsClass_PendingTaskList();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_PendingTaskList PendingTaskListParams { get { return s_params_PendingTaskList; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_PendingTaskList
+        {
+            public readonly string taskFilter = "taskFilter";
+        }
+        static readonly ActionParamsClass_PendingTaskListEstimated s_params_PendingTaskListEstimated = new ActionParamsClass_PendingTaskListEstimated();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_PendingTaskListEstimated PendingTaskListEstimatedParams { get { return s_params_PendingTaskListEstimated; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_PendingTaskListEstimated
+        {
+            public readonly string taskFilter = "taskFilter";
+        }
+        static readonly ActionParamsClass_ApproveTask s_params_ApproveTask = new ActionParamsClass_ApproveTask();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ApproveTask ApproveTaskParams { get { return s_params_ApproveTask; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ApproveTask
+        {
+            public readonly string taskId = "taskId";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -277,6 +337,10 @@ namespace Jarboo.Admin.Web.Controllers
                 public readonly string Index = "Index";
                 public readonly string List = "List";
                 public readonly string NextTask = "NextTask";
+                public readonly string PendingTask = "PendingTask";
+                public readonly string PendingTaskCreate = "PendingTaskCreate";
+                public readonly string PendingTaskList = "PendingTaskList";
+                public readonly string PendingTaskListEstimated = "PendingTaskListEstimated";
                 public readonly string Steps = "Steps";
                 public readonly string View = "View";
             }
@@ -288,6 +352,10 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Index = "~/Views/Tasks/Index.cshtml";
             public readonly string List = "~/Views/Tasks/List.cshtml";
             public readonly string NextTask = "~/Views/Tasks/NextTask.cshtml";
+            public readonly string PendingTask = "~/Views/Tasks/PendingTask.cshtml";
+            public readonly string PendingTaskCreate = "~/Views/Tasks/PendingTaskCreate.cshtml";
+            public readonly string PendingTaskList = "~/Views/Tasks/PendingTaskList.cshtml";
+            public readonly string PendingTaskListEstimated = "~/Views/Tasks/PendingTaskListEstimated.cshtml";
             public readonly string Steps = "~/Views/Tasks/Steps.cshtml";
             public readonly string View = "~/Views/Tasks/View.cshtml";
         }
@@ -464,6 +532,76 @@ namespace Jarboo.Admin.Web.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TasksPerDayChartData);
             TasksPerDayChartDataOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void PendingTaskOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult PendingTask()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.PendingTask);
+            PendingTaskOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void PendingTaskOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.TaskEdit model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult PendingTask(Jarboo.Admin.BL.Models.TaskEdit model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.PendingTask);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            PendingTaskOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void PendingTaskListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Filters.TaskFilter taskFilter);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult PendingTaskList(Jarboo.Admin.BL.Filters.TaskFilter taskFilter)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.PendingTaskList);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskFilter", taskFilter);
+            PendingTaskListOverride(callInfo, taskFilter);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void PendingTaskListEstimatedOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Filters.TaskFilter taskFilter);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult PendingTaskListEstimated(Jarboo.Admin.BL.Filters.TaskFilter taskFilter)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.PendingTaskListEstimated);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskFilter", taskFilter);
+            PendingTaskListEstimatedOverride(callInfo, taskFilter);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void PendingTaskViewOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult PendingTaskView()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.PendingTaskView);
+            PendingTaskViewOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ApproveTaskOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int taskId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ApproveTask(int taskId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ApproveTask);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
+            ApproveTaskOverride(callInfo, taskId);
             return callInfo;
         }
 

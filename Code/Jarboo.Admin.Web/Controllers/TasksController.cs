@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -260,7 +261,7 @@ namespace Jarboo.Admin.Web.Controllers
                     Type = DataTableConfig.Column.ColumnSpecialType.DeleteBtn,
                     Getter = (x) => new object[] {x.TaskId, new UrlHelper(Helper.GetRequestContext()).Action(MVC.Tasks.Delete())}
                 },
-        }; 
+        };
 
         #endregion
         public virtual ActionResult ListConfig(bool showProject = false, TaskSorting sorting = TaskSorting.Title)
@@ -275,12 +276,12 @@ namespace Jarboo.Admin.Web.Controllers
 
             switch (sorting)
             {
-                    case TaskSorting.Title:
+                case TaskSorting.Title:
                     {
                         config.AddOrder((int)TaskListColumns.Title, DataTables.Mvc.Column.OrderDirection.Ascendant);
                         break;
                     }
-                    case TaskSorting.Priority:
+                case TaskSorting.Priority:
                     {
                         config.AddOrder((int)TaskListColumns.Priority, DataTables.Mvc.Column.OrderDirection.Descendant);
                         break;
@@ -303,7 +304,7 @@ namespace Jarboo.Admin.Web.Controllers
         private PagedData<Task> GetTasks(IDataTablesRequest request, TaskFilter taskFilter)
         {
             var filter = (taskFilter ?? new TaskFilter()).ByString(request.Search.Value);
-                //.WithPaging(request.Length, request.Start / request.Length);
+            //.WithPaging(request.Length, request.Start / request.Length);
             var query = Query.ForTask(filter).Include(x => x.Project().TaskSteps().SpentTimes());
 
             var pageSize = request.Length;
@@ -440,6 +441,7 @@ namespace Jarboo.Admin.Web.Controllers
                 RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
         }
 
+
         public virtual ActionResult TasksPerDayChartData()
         {
             var tasks = TaskService.GetAll(Query.ForTask()
@@ -458,6 +460,73 @@ namespace Jarboo.Admin.Web.Controllers
 
             var json = JsonConvert.SerializeObject(config);
             return Content(json, "application/json");
+        }
+
+        public virtual ActionResult PendingTask()
+        {
+            var projects = ProjectService.GetAll(Query.ForProject().Filter(x => x.ByCustomerId(UserCustomerId ?? 1)));
+
+            if (projects == null)
+            {
+                return HttpNotFound();
+            }
+
+            var projectsList = projects.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.ProjectId.ToString()
+            }).ToList();
+
+            var model = new TaskEdit();
+            ViewBag.Projects = projectsList;
+            return View(MVC.Tasks.Views.PendingTaskCreate, model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult PendingTask(TaskEdit model)
+        {
+            return Handle(model, TaskService.Save,
+                () => RedirectToAction(MVC.Tasks.PendingTaskView()), RedirectToAction(MVC.Tasks.Views.PendingTaskCreate));
+        }
+
+        public virtual ActionResult PendingTaskList(TaskFilter taskFilter)
+        {
+            var tasks = TaskService.GetAll(Query.ForTask(taskFilter).Include(x => x.Project())).ToList();
+
+            var model = new TasksListViewModel { Tasks = tasks };
+
+            return PartialView(MVC.Tasks.Views.PendingTaskList, model);
+        }
+
+        public virtual ActionResult PendingTaskListEstimated(TaskFilter taskFilter)
+        {
+            var tasks = TaskService.GetAll(Query.ForTask(taskFilter).Include(x => x.Project())).ToList();
+
+            var model = new TasksListViewModel { Tasks = tasks };
+
+            return PartialView(MVC.Tasks.Views.PendingTaskListEstimated, model);
+        }
+
+        public virtual ActionResult PendingTaskView()
+        {
+            if (UserCustomerId != null) ViewBag.UserCustomerId = UserCustomerId.Value;
+            return View(MVC.Tasks.Views.PendingTask);
+        }
+
+        public virtual ActionResult ApproveTask(int taskId)
+        {
+            var task = TaskService.GetById(taskId);
+            if (task == null)
+            {
+                return HttpNotFound();
+            }
+            task.DateApproved = DateTime.Now;
+            var model = task.MapTo<TaskEdit>();
+
+            return Handle(model, TaskService.Save,
+                RedirectToAction(MVC.Tasks.PendingTaskView()),
+                RedirectToAction(MVC.Tasks.PendingTaskView()));
         }
     }
 }
