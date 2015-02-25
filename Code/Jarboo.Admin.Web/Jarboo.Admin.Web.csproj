@@ -1143,6 +1143,7 @@
     <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
     <Compile Include="Models\Account\LandingViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeListViewModel.cs" />
+    <Compile Include="Models\Morris\MorrisConfig.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
     <Compile Include="Models\Quiz\QuizzesListViewModel.cs" />
     <Compile Include="Models\Question\QuestionListViewModel.cs" />

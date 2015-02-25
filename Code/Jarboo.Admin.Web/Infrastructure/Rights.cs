@@ -66,6 +66,8 @@ namespace Jarboo.Admin.Web.Infrastructure
         {
             rights.Add(MVC.Accounts.CustomerEdit());
 
+            rights.Add(MVC.Home.Dashboard());
+            
             rights.Add(MVC.Customers.View());
 
             rights.Add(MVC.Documentations.View());
@@ -89,6 +91,7 @@ namespace Jarboo.Admin.Web.Infrastructure
             rights.Add(MVC.Tasks.ListConfig());
             rights.Add(MVC.Tasks.ListData());
             rights.Add(MVC.Tasks.List());
+            rights.Add(MVC.Tasks.TasksPerDayChartData());
         }
         private static void FillEmployeeRights(Dictionary<string, HashSet<string>> rights)
         {

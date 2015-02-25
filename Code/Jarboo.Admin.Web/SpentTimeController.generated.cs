@@ -111,6 +111,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string TimeList = "TimeList";
             public readonly string Create = "Create";
             public readonly string Delete = "Delete";
+            public readonly string HoursPerDayChartData = "HoursPerDayChartData";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -124,6 +125,7 @@ namespace Jarboo.Admin.Web.Controllers
             public const string TimeList = "TimeList";
             public const string Create = "Create";
             public const string Delete = "Delete";
+            public const string HoursPerDayChartData = "HoursPerDayChartData";
         }
 
 
@@ -325,6 +327,17 @@ namespace Jarboo.Admin.Web.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
             DeleteOverride(callInfo, id, taskId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void HoursPerDayChartDataOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult HoursPerDayChartData()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.HoursPerDayChartData);
+            HoursPerDayChartDataOverride(callInfo);
             return callInfo;
         }
 

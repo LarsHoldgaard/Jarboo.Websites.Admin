@@ -88,7 +88,7 @@ namespace Jarboo.Admin.BL.Filters
 
             if (FromDate.HasValue)
             {
-                query = query.Where(x => x.DateCreated >= FromDate);
+                query = query.Where(x => x.Date >= FromDate);
             }
 
             return base.Execute(query);

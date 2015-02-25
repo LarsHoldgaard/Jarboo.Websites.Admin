@@ -19,6 +19,8 @@ using Newtonsoft.Json;
 
 using Ninject;
 using Jarboo.Admin.BL.Services.Interfaces;
+using System;
+using Jarboo.Admin.Web.Models.Morris;
 
 namespace Jarboo.Admin.Web.Controllers
 {
@@ -436,6 +438,26 @@ namespace Jarboo.Admin.Web.Controllers
             return Handle(model, SpentTimeService.SpentTimeOnTask,
                 RedirectToAction(MVC.Tasks.Steps(model.TaskId)),
                 RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
+        }
+
+        public virtual ActionResult TasksPerDayChartData()
+        {
+            var tasks = TaskService.GetAll(Query.ForTask()
+                .Filter(x => x.ByDateCreatedFrom(DateTime.Now.AddMonths(-1))))
+                .Data
+                .GroupBy(x => x.DateCreated.Date).OrderBy(x => x.Key)
+                .Select(x => new { date = x.Key, tasks = x.Count() });
+
+            var config = new MorrisConfig()
+            {
+                Data = tasks,
+                XKey = "date",
+                YKeys = new[] { "tasks" },
+                Labels = new[] { "Tasks" }
+            };
+
+            var json = JsonConvert.SerializeObject(config);
+            return Content(json, "application/json");
         }
     }
 }

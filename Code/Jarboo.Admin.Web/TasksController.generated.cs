@@ -145,6 +145,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string ListData = "ListData";
             public readonly string NextTask = "NextTask";
             public readonly string AddHours = "AddHours";
+            public readonly string TasksPerDayChartData = "TasksPerDayChartData";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -162,6 +163,7 @@ namespace Jarboo.Admin.Web.Controllers
             public const string ListData = "ListData";
             public const string NextTask = "NextTask";
             public const string AddHours = "AddHours";
+            public const string TasksPerDayChartData = "TasksPerDayChartData";
         }
 
 
@@ -451,6 +453,17 @@ namespace Jarboo.Admin.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddHours);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             AddHoursOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void TasksPerDayChartDataOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult TasksPerDayChartData()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TasksPerDayChartData);
+            TasksPerDayChartDataOverride(callInfo);
             return callInfo;
         }
 
