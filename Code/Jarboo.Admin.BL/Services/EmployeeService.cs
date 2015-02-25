@@ -23,13 +23,15 @@ namespace Jarboo.Admin.BL.Services
         protected ITaskRegister TaskRegister { get; set; }
         protected ITaskStepEmployeeStrategy TaskStepEmployeeStrategy { get; set; }
         public UserManager<User> UserManager { get; set; }
+        protected INotifier Notifier { get; set; }
 
-        public EmployeeService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService, ITaskRegister taskRegister, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, UserManager<User> userManager)
+        public EmployeeService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService, ITaskRegister taskRegister, ITaskStepEmployeeStrategy taskStepEmployeeStrategy, UserManager<User> userManager, INotifier notifier)
             : base(unitOfWork, auth, cacheService)
         {
             TaskStepEmployeeStrategy = taskStepEmployeeStrategy;
             TaskRegister = taskRegister;
             UserManager = userManager;
+            Notifier = notifier;
         }
 
         protected override IDbSet<Employee> Table
@@ -110,6 +112,8 @@ namespace Jarboo.Admin.BL.Services
                     Add(entity, model);
 
                     transaction.Commit();
+
+                    Notifier.NewEmployee(new NewEmployeeData(entity));
                 }
                 catch (Exception)
                 {

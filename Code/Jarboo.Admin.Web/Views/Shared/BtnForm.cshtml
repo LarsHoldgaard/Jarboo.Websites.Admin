@@ -2,9 +2,10 @@
 
 @{
     string btnClass = Model.Small ? "btn-xs" : "";
+    string floatClass = Model.Float ? "pull-left" : "";
 }
 
-@using (@Html.BeginForm(Model.Action, FormMethod.Post, new { @class = "btn-form pull-left"}))
+@using (@Html.BeginForm(Model.Action, FormMethod.Post, new { @class = "btn-form " + floatClass }))
 {
     @Html.AntiForgeryToken()
     @Html.Hidden("id", Model.Id)

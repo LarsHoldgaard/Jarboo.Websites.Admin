@@ -77,5 +77,19 @@ namespace Jarboo.Admin.Integration.Mandrill
 
             api.SendMessage(message, Configuration.MandrillNewTaskTemplate, null);
         }
+
+        public void NewEmployee(NewEmployeeData data)
+        {
+            var message = new EmailMessage
+            {
+                to = new EmailAddress[] { new EmailAddress(data.Email) },
+                from_email = Configuration.MandrillFrom,
+                subject = "Welcome to Jarboo",
+            };
+
+            message.AddGlobalVariable("FULLNAME", data.Email);
+
+            api.SendMessage(message, Configuration.MandrillNewEmployeeTemplate, null);
+        }
     }
 }

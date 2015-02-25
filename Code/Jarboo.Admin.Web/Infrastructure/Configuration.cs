@@ -229,6 +229,18 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
+        private string mandrillNewEmployeeTemplate;
+        public string MandrillNewEmployeeTemplate
+        {
+            get
+            {
+                if (mandrillNewEmployeeTemplate == null)
+                {
+                    mandrillNewEmployeeTemplate = ConfigurationManager.AppSettings["MandrillNewEmployeeTemplate"];
+                }
+                return mandrillNewEmployeeTemplate;
+            }
+        }
 
         private CustomErrorsMode? redirectOnError;
         public CustomErrorsMode ErrorMode

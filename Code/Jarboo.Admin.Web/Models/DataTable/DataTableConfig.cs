@@ -62,6 +62,8 @@ namespace Jarboo.Admin.Web.Models.DataTable
         public List<Column> Columns { get; set; }
         [JsonProperty("searching")]
         public bool Searching { get; set; }
+        [JsonProperty("paging")]
+        public bool Paging { get; set; }
         [JsonProperty("orderMulti")]
         public bool OrderMulti { get; set; }
         [JsonProperty("pageLength")]

@@ -15,7 +15,7 @@ namespace Jarboo.Admin.Integration.Mandrill
         string MandrillFrom { get; }
         string MandrillPasswordRecoveryTemplate { get; }
         string MandrillNewTaskTemplate { get; }
-
+        string MandrillNewEmployeeTemplate { get; }
         string JarbooInfoEmail { get; }
     }
 }

@@ -11,11 +11,13 @@ namespace Jarboo.Admin.Web.Models
         public BtnFormViewModel()
         {
             Small = true;
+            Float = true;
         }
 
         public int Id { get; set; }
         public ActionResult Action { get; set; }
         public bool Small { get; set; }
+        public bool Float { get; set; }
         public string Text { get; set; }
         public string Style { get; set; }
         public string Icon { get; set; }

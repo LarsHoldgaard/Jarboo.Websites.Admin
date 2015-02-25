@@ -14,5 +14,7 @@ namespace Jarboo.Admin.Integration.Noop
         { }
         public void NewTask(NewTaskData data)
         { }
+        public void NewEmployee(NewEmployeeData data)
+        { }
     }
 }

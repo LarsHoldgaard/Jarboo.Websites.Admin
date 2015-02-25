@@ -265,6 +265,7 @@ namespace Jarboo.Admin.Web.Controllers
         {
             var config = new DataTableConfig();
             config.Searching = true;
+            config.Paging = true;
             config.PageLength = 25;
             config.SetupServerDataSource(Url.Action(MVC.Tasks.ListData()), FormMethod.Post);
             config.Columns = new List<DataTableConfig.Column>(columns);
@@ -300,10 +301,10 @@ namespace Jarboo.Admin.Web.Controllers
 
         private PagedData<Task> GetTasks(IDataTablesRequest request, TaskFilter taskFilter)
         {
-            var filter = (taskFilter ?? new TaskFilter()).ByString(request.Search.Value);
+            var filter = taskFilter ?? new TaskFilter();
                 //.WithPaging(request.Length, request.Start / request.Length);
             var query = Query.ForTask(filter).Include(x => x.Project().TaskSteps().SpentTimes());
-
+            
             var pageSize = request.Length;
             var pageNumber = request.Start / request.Length;
 

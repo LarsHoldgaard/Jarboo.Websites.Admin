@@ -1,12 +1,16 @@
-﻿@{
+﻿@using Jarboo.Admin.Integration
+@using SmartAdminMvc
+@{
     var viewLinkHref = User.Identity.IsAuthenticated ? Url.Action(MVC.Accounts.View()) : "javascript:void(0);";
 }
-
-<div class="login-info">
-    <span>
-        <a href="@viewLinkHref">
-            <img src="~/content/img/avatars/sunny.png" alt="me" class="online" />
-            <span>@ViewBag.CurrentUser.DisplayName</span>
-        </a>
-    </span>
-</div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="login-info">
+        <span>
+            <a href="@viewLinkHref">
+                @Html.Gravatar((string) ViewBag.CurrentUser.Email, 50, GravatarRating.Default, GravatarDefaultImage.Identicon, new {@class = "online", alt = "me"})
+                <span>@ViewBag.CurrentUser.DisplayName</span>
+            </a>
+        </span>
+    </div>
+}
