@@ -23,6 +23,8 @@ namespace Jarboo.Admin.Web.Controllers
         public IProjectService ProjectService { get; set; }
         [Inject]
         public ICustomerService CustomerService { get; set; }
+        [Inject]
+        public ISpentTimeService SpentTimeService { get; set; }
 
         public virtual ActionResult Index()
         {
@@ -44,6 +46,10 @@ namespace Jarboo.Admin.Web.Controllers
 
         public virtual ActionResult Dashboard()
         {
+            ViewBag.SpentTimes = SpentTimeService.GetAll(Query.ForSpentTime()
+                .Filter(x => x.ByAccepted(true).ByFromDate(DateTime.Now.AddMonths(-1)))
+                .Include(x => x.Employee())).Data;
+
             ViewBag.Customers = CustomerService.GetAll(Query.ForCustomer().Include(x => x.Projects()));
 
             return View();

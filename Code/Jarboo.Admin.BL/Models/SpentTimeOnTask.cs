@@ -10,9 +10,9 @@ namespace Jarboo.Admin.BL.Models
         public decimal Hours { get; set; }       
         public int TaskId { get; set; }
         public string Roles { get; set; }
-        public TaskStep Steps { get; set; }
+        public TaskStep TaskStep { get; set; }
         public TaskStepEnum Step { get; set; }
-        public int ProjectId { get; set; }
+        public int? ProjectId { get; set; }
      
     }
 }

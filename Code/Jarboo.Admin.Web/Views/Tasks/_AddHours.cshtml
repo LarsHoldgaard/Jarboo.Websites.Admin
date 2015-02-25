@@ -5,17 +5,19 @@
 
     var selectList = (SelectList)ViewBag.EmployeesList;
     var employees = selectList.Items.OfType<Employee>();
-    var requiredPosition = Model.Steps.Step.GetPosition();
+    var requiredPosition = Model.TaskStep.Step.GetPosition();
     
     if (Model.EmployeeId == 0)
     {
         selectList = new SelectList(
-            employees.Where(x => x.Positions.Any(y => y.Position == requiredPosition) || x.EmployeeId == Model.Steps.EmployeeId),
+            employees.Where(x => x.Positions.Any(y => y.Position == requiredPosition) || x.EmployeeId == Model.TaskStep.EmployeeId),
             selectList.DataValueField,
             selectList.DataTextField,
             selectList.DataGroupField,
             selectList.SelectedValue);
     }
+
+    Model.Step = Model.TaskStep.Step;
 }
 
 @if (Model.EmployeeId == 0 || employees.Any(x => x.EmployeeId == Model.EmployeeId && x.Positions.Any(y => y.Position == requiredPosition)))

@@ -3,6 +3,10 @@
 @{
     ViewBag.Title = "Jarboo";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var spentTimes = ViewBag.SpentTimes as List<SpentTime>;
+    var incomingGroupedByDate = spentTimes.GroupBy(x => x.DateCreated.Date).OrderBy(x => x.Key).Select(x => x.Aggregate(0d, (a, y) => a + y.HourlyPrice * (double)y.Hours));
+    var allIncoming = incomingGroupedByDate.Sum();
 }
 <!-- RIBBON -->
 <div id="ribbon">
@@ -16,8 +20,23 @@
 </div>
 <!-- END RIBBON -->
 <div id="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+        </div>
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+            <ul id="sparks" class="">
+                <li class="sparks-info">
+                    <h5>My Income <span class="txt-color-blue">$@allIncoming</span></h5>
+                    <span class="sparkline txt-color-blueLight text-center" data-sparkline-type="bar" data-sparkline-width="50px" data-sparkline-height="26px">
+                        @string.Join(",", incomingGroupedByDate.Select(x => x.ToString()))
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
     <!-- row -->
     <div class="row">
+        
         <!-- NEW WIDGET START -->
         @foreach (Customer customer in ViewBag.Customers)
         {
@@ -44,7 +63,7 @@
                         {
                             <div class="widget-toolbar">
                                 <a class="btn btn-success" href="@Url.Action(MVC.Projects.Create(customer.CustomerId))">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Project
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Project
                                 </a>
                             </div>
                         }
@@ -71,7 +90,7 @@
                                                 <a class="btn btn-xs btn-primary" href="@Url.Action(MVC.Tasks.Create(project.ProjectId))">Add Task</a>
                                             </span>
                                         }
-                                        <span> @project.Name</span>
+                                        <span>@project.Name</span>
                                     </div>
                                     <hr />
                                 </div>
