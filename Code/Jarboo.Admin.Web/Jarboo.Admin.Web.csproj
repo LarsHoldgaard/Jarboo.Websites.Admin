@@ -252,10 +252,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Jarboo.Admin.mdf" />
-    <Content Include="App_Data\Jarboo.Admin_log.ldf">
-      <DependentUpon>Jarboo.Admin.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\invoice.min.css" />
@@ -1274,7 +1270,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jarboo.Admin.BL\Jarboo.Admin.BL.csproj">
       <Project>{bb94a70c-f2a8-43a2-8357-4d790131aa89}</Project>

@@ -16,10 +16,17 @@
             new BreadCrumbItem(MVC.Projects.View(ViewBag.Project.ProjectId), ViewBag.Project.Name),
             new BreadCrumbItem(Model.Title))
     </ol>
-
-
     <!-- end breadcrumb -->
 </div>
 <!-- END RIBBON -->
-
 @Html.Partial(MVC.Tasks.Views._Form, Model)
+
+
+@section pagespecific {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".show_hide").hide();
+            $('.advanced').show();
+        });
+    </script>
+}
