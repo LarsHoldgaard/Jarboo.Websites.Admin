@@ -191,6 +191,9 @@
 
         $.get(src, function (config) {
             config.element = id;
+            config.xLabelFormat = function(d) {
+                return (d.getMonth() + 1) + '/' + d.getDate();
+            };
             switch (type) {
                 case "line":
                     new Morris.Line(config);
