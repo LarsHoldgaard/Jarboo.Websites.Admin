@@ -10,12 +10,12 @@ using Jarboo.Admin.Integration.Mandrill;
 
 namespace Jarboo.Admin.Web.Infrastructure
 {
-    public class Configuration : IGoogleDriveConfiguration
+    public class Configuration : IGoogleDriveConfiguration, IMandrillConfiguration
     {
         private Configuration()
         { }
 
-        private static readonly Lazy<Configuration> configuration = new Lazy<Configuration>(() => new Configuration());
+        private static Lazy<Configuration> configuration = new Lazy<Configuration>(() => new Configuration());
         public static Configuration Instance
         {
             get
@@ -46,16 +46,29 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
-        private string _googleDriveTemplatePath;
+        private bool? useGoogleDrive;
+        public bool UseGoogleDrive
+        {
+            get
+            {
+                if (useGoogleDrive == null)
+                {
+                    useGoogleDrive = bool.Parse(ConfigurationManager.AppSettings["UseGoogleDrive"]);
+                }
+                return useGoogleDrive.Value;
+            }
+        }
+
+        private string googleDriveTemplatePath;
         public string GoogleDriveTemplatePath
         {
             get
             {
-                if (_googleDriveTemplatePath == null)
+                if (googleDriveTemplatePath == null)
                 {
-                    _googleDriveTemplatePath = ConfigurationManager.AppSettings["GoogleDriveTemplatePath"];
+                    googleDriveTemplatePath = ConfigurationManager.AppSettings["GoogleDriveTemplatePath"];
                 }
-                return _googleDriveTemplatePath;
+                return googleDriveTemplatePath;
             }
         }
 
@@ -72,44 +85,215 @@ namespace Jarboo.Admin.Web.Infrastructure
             }
         }
 
-        private CustomErrorsMode? _redirectOnError;
+        private string googleClientId;
+        public string GoogleClientId
+        {
+            get
+            {
+                if (googleClientId == null)
+                {
+                    googleClientId = ConfigurationManager.AppSettings["GoogleClientId"];
+                }
+                return googleClientId;
+            }
+        }
+
+        private string googleClientSecret;
+        public string GoogleClientSecret
+        {
+            get
+            {
+                if (googleClientSecret == null)
+                {
+                    googleClientSecret = ConfigurationManager.AppSettings["GoogleClientSecret"];
+                }
+                return googleClientSecret;
+            }
+        }
+
+        private string googleRefreshToken;
+        public string GoogleRefreshToken
+        {
+            get
+            {
+                if (googleRefreshToken == null)
+                {
+                    googleRefreshToken = ConfigurationManager.AppSettings["GoogleRefreshToken"];
+                }
+                return googleRefreshToken;
+            }
+        }
+
+        private string googleLocalUserId;
+        public string GoogleLocalUserId
+        {
+            get
+            {
+                if (googleLocalUserId == null)
+                {
+                    googleLocalUserId = ConfigurationManager.AppSettings["GoogleLocalUserId"];
+                }
+                return googleLocalUserId;
+            }
+        }
+
+
+        private bool? useNotifier;
+        public bool UseNotifier
+        {
+            get
+            {
+                if (useNotifier == null)
+                {
+                    useNotifier = bool.Parse(ConfigurationManager.AppSettings["UseNotifier"]);
+                }
+                return useNotifier.Value;
+            }
+        }
+
+        private string taskResponsibleChangedNotificationSubject;
+        public string TaskResponsibleChangedNotificationSubject
+        {
+            get
+            {
+                if (taskResponsibleChangedNotificationSubject == null)
+                {
+                    taskResponsibleChangedNotificationSubject = ConfigurationManager.AppSettings["TaskResponsibleChangedNotificationSubject"];
+                }
+                return taskResponsibleChangedNotificationSubject;
+            }
+        }
+
+        private string mandrillApiKey;
+        public string MandrillApiKey
+        {
+            get
+            {
+                if (mandrillApiKey == null)
+                {
+                    mandrillApiKey = ConfigurationManager.AppSettings["MandrillApiKey"];
+                }
+                return mandrillApiKey;
+            }
+        }
+
+        private string mandrillTaskResponsibleNotificationTemplate;
+        public string MandrillTaskResponsibleNotificationTemplate
+        {
+            get
+            {
+                if (mandrillTaskResponsibleNotificationTemplate == null)
+                {
+                    mandrillTaskResponsibleNotificationTemplate = ConfigurationManager.AppSettings["MandrillTaskResponsibleNotificationTemplate"];
+                }
+                return mandrillTaskResponsibleNotificationTemplate;
+            }
+        }
+
+        private string mandrillFrom;
+        public string MandrillFrom
+        {
+            get
+            {
+                if (mandrillFrom == null)
+                {
+                    mandrillFrom = ConfigurationManager.AppSettings["MandrillFrom"];
+                }
+                return mandrillFrom;
+            }
+        }
+
+        private string mandrillPasswordRecoveryTemplate;
+        public string MandrillPasswordRecoveryTemplate
+        {
+            get
+            {
+                if (mandrillPasswordRecoveryTemplate == null)
+                {
+                    mandrillPasswordRecoveryTemplate = ConfigurationManager.AppSettings["MandrillPasswordRecoveryTemplate"];
+                }
+                return mandrillPasswordRecoveryTemplate;
+            }
+        }
+
+        private string mandrillNewTaskTemplate;
+        public string MandrillNewTaskTemplate
+        {
+            get
+            {
+                if (mandrillNewTaskTemplate == null)
+                {
+                    mandrillNewTaskTemplate = ConfigurationManager.AppSettings["MandrillNewTaskTemplate"];
+                }
+                return mandrillNewTaskTemplate;
+            }
+        }
+
+        private string mandrillNewEmployeeTemplate;
+        public string MandrillNewEmployeeTemplate
+        {
+            get
+            {
+                if (mandrillNewEmployeeTemplate == null)
+                {
+                    mandrillNewEmployeeTemplate = ConfigurationManager.AppSettings["MandrillNewEmployeeTemplate"];
+                }
+                return mandrillNewEmployeeTemplate;
+            }
+        }
+
+        private CustomErrorsMode? redirectOnError;
         public CustomErrorsMode ErrorMode
         {
             get
             {
-                if (_redirectOnError == null)
+                if (redirectOnError == null)
                 {
                     var conf = WebConfigurationManager.OpenWebConfiguration("~");
                     var section = (CustomErrorsSection)conf.GetSection("system.web/customErrors");
-                    _redirectOnError = section.Mode;
+                    redirectOnError = section.Mode;
                 }
-                return _redirectOnError.Value;
+                return redirectOnError.Value;
             }
         }
-       
-        private string _adminEmail;
+
+
+        private string jarbooInfoEmail;
+        public string JarbooInfoEmail
+        {
+            get
+            {
+                if (jarbooInfoEmail == null)
+                {
+                    jarbooInfoEmail = ConfigurationManager.AppSettings["JarbooInfoEmail"];
+                }
+                return jarbooInfoEmail;
+            }
+        }
+
+        private string adminEmail;
         public string AdminEmail
         {
             get
             {
-                if (_adminEmail == null)
+                if (adminEmail == null)
                 {
-                    _adminEmail = ConfigurationManager.AppSettings["AdminEmail"];
+                    adminEmail = ConfigurationManager.AppSettings["AdminEmail"];
                 }
-                return _adminEmail;
+                return adminEmail;
             }
         }
 
-        private string _adminPassword;
+        private string adminPassword;
         public string AdminPassword
         {
             get
             {
-                if (_adminPassword == null)
+                if (adminPassword == null)
                 {
-                    _adminPassword = ConfigurationManager.AppSettings["AdminPassword"];
+                    adminPassword = ConfigurationManager.AppSettings["AdminPassword"];
                 }
-                return _adminPassword;
+                return adminPassword;
             }
         }
     }

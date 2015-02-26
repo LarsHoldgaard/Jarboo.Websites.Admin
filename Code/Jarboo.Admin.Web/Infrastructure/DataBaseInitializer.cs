@@ -42,6 +42,8 @@ namespace Jarboo.Admin.Web.Infrastructure
                 context.Customers.Add(new Customer()
                                           {
                                               Name = customer,
+                                              Country = "Danmark",
+                                              Creator = "Administrator",
                                               DateCreated = DateTime.Now,
                                               DateModified = DateTime.Now
                                           });

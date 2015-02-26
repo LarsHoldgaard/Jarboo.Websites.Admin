@@ -43,7 +43,8 @@ namespace Jarboo.Admin.BL.Tests
             ICacheService cacheService = null,
             ITaskRegister taskRegister = null,
             ITaskStepEmployeeStrategy taskStepEmployeeStrategy = null,
-            UserManager<User> userManager = null)
+            UserManager<User> userManager = null,
+            INotifier notifier = null)
         {
             unitOfWork = unitOfWork ?? A.Fake<IUnitOfWork>();
             auth = auth ?? A.Fake<IAuth>();
@@ -52,8 +53,9 @@ namespace Jarboo.Admin.BL.Tests
             taskRegister = taskRegister ?? A.Fake<ITaskRegister>();
             taskStepEmployeeStrategy = taskStepEmployeeStrategy ?? A.Fake<ITaskStepEmployeeStrategy>();
             userManager = userManager ?? A.Fake<UserManager<User>>();
+            notifier = notifier ?? A.Fake<INotifier>();
 
-            return new EmployeeService(unitOfWork, auth, cacheService, taskRegister, taskStepEmployeeStrategy, userManager);
+            return new EmployeeService(unitOfWork, auth, cacheService, taskRegister, taskStepEmployeeStrategy, userManager, notifier);
         }
 
         public static ProjectService CreateProjectService(
