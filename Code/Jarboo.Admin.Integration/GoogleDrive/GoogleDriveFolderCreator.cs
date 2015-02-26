@@ -22,14 +22,12 @@ namespace Jarboo.Admin.Integration.GoogleDrive
         public const string DOC_MIME_TYPE = "application/vnd.google-apps.document";
 
         private readonly Setting _setting;
-        private readonly IGoogleDriveConfiguration Configuration;
         private DriveService _driveService;
 
 
-        public GoogleDriveFolderCreator(ISettingService settingService, IGoogleDriveConfiguration configuration)
+        public GoogleDriveFolderCreator(ISettingService settingService)
         {
             _setting = settingService.GetCurrentSetting();
-            Configuration = configuration;
 
             EnsureService();
         }
@@ -110,7 +108,7 @@ namespace Jarboo.Admin.Integration.GoogleDrive
         private string[] CreateFolderPath(string customerName, string taskIdentifier)
         {
             var date = DateTime.Now;
-            return Path.Combine(Configuration.GoogleDrivePath,
+            return Path.Combine(_setting.GoogleBasePath,
                 customerName,
                 date.Year.ToString(CultureInfo.CurrentCulture),
                 CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(date.Month),
@@ -229,12 +227,12 @@ namespace Jarboo.Admin.Integration.GoogleDrive
 
         private void CopyTemplate(string newFileName, FolderHierarchy driveFolders, FolderHierarchy.Folder newFolder)
         {
-            if (string.IsNullOrEmpty(Configuration.GoogleDriveTemplatePath))
+            if (string.IsNullOrEmpty(_setting.GoogleTemplatePath))
             {
                 return;
             }
 
-            var path = Configuration.GoogleDriveTemplatePath.Split('\\');
+            var path = _setting.GoogleTemplatePath.Split('\\');
             var fileName = path[path.Length - 1];
 
             var parentFolder = driveFolders.Root;

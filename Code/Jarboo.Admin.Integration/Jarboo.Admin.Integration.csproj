@@ -105,7 +105,6 @@
   <ItemGroup>
     <Compile Include="GoogleDrive\FolderHierarchy.cs" />
     <Compile Include="GoogleDrive\GoogleDriveFolderCreator.cs" />
-    <Compile Include="GoogleDrive\IGoogleDriveConfiguration.cs" />
     <Compile Include="Mandrill\MandrillNotifier.cs" />
     <Compile Include="Noop\NoopEmailer.cs" />
     <Compile Include="Noop\NoopFolderCrator.cs" />

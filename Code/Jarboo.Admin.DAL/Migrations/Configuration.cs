@@ -67,75 +67,83 @@ namespace Jarboo.Admin.DAL.Migrations
 
         private void EnsureSettings(Context context)
         {
-            if (!context.Settings.Any(a => a.Configuration == "Debug"))
+            var previous = context.Settings.ToList();
+            foreach (var previou in previous)
             {
-                var debug = new Setting
-                {
-                    Configuration = "Debug",
-                    JarbooInfoEmail = "info@jarboo.com",
-
-                    UseGoogleDrive = false,
-                    GoogleClientId = "396782749590-7aikes2ama76giic9ck1ntt8tdbrr6t8.apps.googleusercontent.com",
-                    GoogleClientSecret = "d45IRhkND0S0OQIJI5gS0pcy",
-                    GoogleRefreshToken = "1/6hpzsG_HnbHWB_m_xm1Qwd02EUnCWzxlN5Rq-bbdFZA",
-                    GoogleLocalUserId = "user",
-
-                    UseMandrill = false,
-                    MandrillApiKey = "IRWMe1g1dCTrG6uOZEy7gQ",
-                    MandrillFrom = "admin@jarboo.com",
-                    MandrillNewTaskTemplate = "a-customer-created-a-new-task",
-                    MandrillPasswordRecoveryTemplate = "forgot-password-e-mail",
-                    MandrillTaskResponsibleChangedNotificationSubject = "Task was assigned to you",
-                    MandrillTaskResponsibleNotificationTemplate = "task-update"
-                };
-                context.Settings.Add(debug);
+                context.Settings.Remove(previou);
             }
-            if (!context.Settings.Any(a => a.Configuration == "Staging"))
+
+            context.SaveChanges();
+
+            var staging = new Setting
             {
-                var staging = new Setting
-                {
-                    Configuration = "Staging",
-                    JarbooInfoEmail = "info@jarboo.com",
+                Configuration = "Staging",
+                JarbooInfoEmail = "info@jarboo.com",
 
-                    UseGoogleDrive = true,
-                    GoogleClientId = "396782749590-7aikes2ama76giic9ck1ntt8tdbrr6t8.apps.googleusercontent.com",
-                    GoogleClientSecret = "d45IRhkND0S0OQIJI5gS0pcy",
-                    GoogleRefreshToken = "1/uFhKbK-2wWnsLdpecq0QZnF7F5RrUYIWWupZoj9ew0MMEudVrK5jSpoR30zcRFq6",
-                    GoogleLocalUserId = "user",
+                UseGoogleDrive = true,
+                GoogleClientId = "396782749590-7aikes2ama76giic9ck1ntt8tdbrr6t8.apps.googleusercontent.com",
+                GoogleClientSecret = "d45IRhkND0S0OQIJI5gS0pcy",
+                GoogleRefreshToken = "1/uFhKbK-2wWnsLdpecq0QZnF7F5RrUYIWWupZoj9ew0MMEudVrK5jSpoR30zcRFq6",
+                GoogleBasePath = @"Tasks\",
+                GoogleTemplatePath = @"Tasks\Template",
+                GoogleLocalUserId = "user",
 
-                    UseMandrill = true,
-                    MandrillApiKey = "IRWMe1g1dCTrG6uOZEy7gQ",
-                    MandrillFrom = "admin@jarboo.com",
-                    MandrillNewTaskTemplate = "a-customer-created-a-new-task",
-                    MandrillPasswordRecoveryTemplate = "forgot-password-e-mail",
-                    MandrillTaskResponsibleChangedNotificationSubject = "Task was assigned to you",
-                    MandrillTaskResponsibleNotificationTemplate = "task-update"
-                };
-                context.Settings.Add(staging);
-            }
-            if (!context.Settings.Any(a => a.Configuration == "Release"))
+                UseMandrill = true,
+                MandrillApiKey = "IRWMe1g1dCTrG6uOZEy7gQ",
+                MandrillFrom = "admin@jarboo.com",
+                MandrillNewTaskTemplate = "a-customer-created-a-new-task",
+                MandrillPasswordRecoveryTemplate = "forgot-password-e-mail",
+                MandrillTaskResponsibleChangedNotificationSubject = "Task was assigned to you",
+                MandrillTaskResponsibleNotificationTemplate = "task-update"
+            };
+
+            var debug = new Setting
             {
-                var release = new Setting
-                {
-                    Configuration = "Release",
-                    JarbooInfoEmail = "info@jarboo.com",
+                Configuration = "Debug",
+                JarbooInfoEmail = "info@jarboo.com",
 
-                    UseGoogleDrive = true,
-                    GoogleClientId = "396782749590-7aikes2ama76giic9ck1ntt8tdbrr6t8.apps.googleusercontent.com",
-                    GoogleClientSecret = "d45IRhkND0S0OQIJI5gS0pcy",
-                    GoogleRefreshToken = "1/uFhKbK-2wWnsLdpecq0QZnF7F5RrUYIWWupZoj9ew0MMEudVrK5jSpoR30zcRFq6",
-                    GoogleLocalUserId = "user",
+                UseGoogleDrive = false,
+                GoogleClientId = "396782749590-7aikes2ama76giic9ck1ntt8tdbrr6t8.apps.googleusercontent.com",
+                GoogleClientSecret = "d45IRhkND0S0OQIJI5gS0pcy",
+                GoogleRefreshToken = "1/6hpzsG_HnbHWB_m_xm1Qwd02EUnCWzxlN5Rq-bbdFZA",
+                GoogleBasePath = @"Tasks\",
+                GoogleTemplatePath = @"Tasks\Template",
+                GoogleLocalUserId = "user",
 
-                    UseMandrill = true,
-                    MandrillApiKey = "IRWMe1g1dCTrG6uOZEy7gQ",
-                    MandrillFrom = "admin@jarboo.com",
-                    MandrillNewTaskTemplate = "a-customer-created-a-new-task",
-                    MandrillPasswordRecoveryTemplate = "forgot-password-e-mail",
-                    MandrillTaskResponsibleChangedNotificationSubject = "Task was assigned to you",
-                    MandrillTaskResponsibleNotificationTemplate = "task-update"
-                };
-                context.Settings.Add(release);
-            }
+                UseMandrill = false,
+                MandrillApiKey = "IRWMe1g1dCTrG6uOZEy7gQ",
+                MandrillFrom = "admin@jarboo.com",
+                MandrillNewTaskTemplate = "a-customer-created-a-new-task",
+                MandrillPasswordRecoveryTemplate = "forgot-password-e-mail",
+                MandrillTaskResponsibleChangedNotificationSubject = "Task was assigned to you",
+                MandrillTaskResponsibleNotificationTemplate = "task-update"
+            };
+
+            var release = new Setting
+            {
+                Configuration = "Release",
+                JarbooInfoEmail = "info@jarboo.com",
+
+                UseGoogleDrive = true,
+                GoogleClientId = "396782749590-7aikes2ama76giic9ck1ntt8tdbrr6t8.apps.googleusercontent.com",
+                GoogleClientSecret = "d45IRhkND0S0OQIJI5gS0pcy",
+                GoogleRefreshToken = "1/uFhKbK-2wWnsLdpecq0QZnF7F5RrUYIWWupZoj9ew0MMEudVrK5jSpoR30zcRFq6",
+                GoogleBasePath = @"Tasks\",
+                GoogleTemplatePath = @"Tasks\Template",
+                GoogleLocalUserId = "user",
+
+                UseMandrill = true,
+                MandrillApiKey = "IRWMe1g1dCTrG6uOZEy7gQ",
+                MandrillFrom = "admin@jarboo.com",
+                MandrillNewTaskTemplate = "a-customer-created-a-new-task",
+                MandrillPasswordRecoveryTemplate = "forgot-password-e-mail",
+                MandrillTaskResponsibleChangedNotificationSubject = "Task was assigned to you",
+                MandrillTaskResponsibleNotificationTemplate = "task-update"
+            };
+
+            context.Settings.Add(debug);
+            context.Settings.Add(staging);
+            context.Settings.Add(release);
 
             context.SaveChanges();
         }

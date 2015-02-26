@@ -9,6 +9,9 @@
         public string GoogleClientSecret { get; set; }
         public string GoogleRefreshToken { get; set; }
         public string GoogleLocalUserId { get; set; }
+
+        public string GoogleTemplatePath { get; set; }
+        public string GoogleBasePath { get; set; }
         #endregion
 
         #region Mandrill
