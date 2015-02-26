@@ -191,16 +191,27 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                        @if (this.Can(MVC.Tasks.Edit()))
-                                        {
+                                        
                                             <tr>
                                                 <td colspan="2">
-                                                    <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Edit(Model.TaskId))">
-                                                        <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>Edit
-                                                    </a>
+                                                    @if (this.Can(MVC.Tasks.Edit()))
+                                                    {
+                                                        <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Edit(Model.TaskId))">
+                                                            <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>Edit
+                                                        </a>
+                                                    }
+                                                    @if (this.Can(MVC.Tasks.Delete()))
+                                                    {
+                                                        @Html.Partial(MVC.Shared.Views.BtnForm, Jarboo.Admin.Web.Models.BtnFormViewModel.Delete(x =>
+                                                        {
+                                                            x.Id = Model.TaskId;
+                                                            x.Action = MVC.Tasks.Delete();
+                                                            x.Small = false;
+                                                            x.Float = false;
+                                                        }))
+                                                    }
                                                 </td>
                                             </tr>
-                                        }
                                     </tbody>
                                 </table>
                             </div>

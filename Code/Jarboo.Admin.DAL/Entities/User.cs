@@ -26,7 +26,12 @@ namespace Jarboo.Admin.DAL.Entities
         public DateTime? DateLastLogin{ get; set; }
 
         public Customer Customer { get; set; }
+        [InverseProperty("UserCustomers")]
+        public virtual Customer UserCustomer { get; set; }
         public Employee Employee { get; set; }
+
+        [ForeignKey("UserCustomer")]
+        public int? UserCustomerId { get; set; }
 
         public int? CustomerId
         {
@@ -35,6 +40,7 @@ namespace Jarboo.Admin.DAL.Entities
                 return Customer == null ? null : (int?)Customer.CustomerId;
             }
         }
+        
         public int? EmployeeId
         {
             get

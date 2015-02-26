@@ -44,6 +44,7 @@ public static partial class MVC
     public static Jarboo.Admin.Web.Controllers.SettingsController Settings = new Jarboo.Admin.Web.Controllers.T4MVC_SettingsController();
     public static Jarboo.Admin.Web.Controllers.SpentTimeController SpentTime = new Jarboo.Admin.Web.Controllers.T4MVC_SpentTimeController();
     public static Jarboo.Admin.Web.Controllers.TasksController Tasks = new Jarboo.Admin.Web.Controllers.T4MVC_TasksController();
+    public static Jarboo.Admin.Web.Controllers.UsersController Users = new Jarboo.Admin.Web.Controllers.T4MVC_UsersController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -1673,10 +1674,6 @@ namespace Links
             public static readonly string smart_chat_ui_min_js = Url("smart.chat.ui.min.js");
         }
     
-        public static readonly string smartadmin_js_bundle = Url("smartadmin.js.bundle");
-        public static readonly string smartadmin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/smartadmin.min.js") ? Url("smartadmin.min.js") : Url("smartadmin.js");
-        public static readonly string smartadmin_min_js = Url("smartadmin.min.js");
-        public static readonly string smartadmin_min_js_map = Url("smartadmin.min.js.map");
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class smartwidgets {
             private const string URLPATH = "~/Scripts/smartwidgets";

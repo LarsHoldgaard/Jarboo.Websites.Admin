@@ -46,4 +46,21 @@
                                                                        {
                                                                            projectFilter = new ProjectFilter().ByCustomerId(Model.CustomerId)
                                                                        })
+
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
+                Users
+            </h1>
+
+        </div>
+    </div>
+    
+    @Html.Action(MVC.Users.ActionNames.CustomerUsers, MVC.Users.Name, new { customerId = Model.CustomerId })
+
+    <!-- end row -->
 </div>
