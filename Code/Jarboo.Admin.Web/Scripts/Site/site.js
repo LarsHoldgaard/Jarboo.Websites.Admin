@@ -1,4 +1,4 @@
-﻿$(function() {
+﻿$(function () {
     // When rending an underscore template, we want top-level
     // variables to be referenced as part of an object. For
     // technical reasons (scope-chain search), this speeds up
@@ -14,7 +14,13 @@
     });
 
     $(".input-daterange").datepicker({});
-    $("input.datepicker").datepicker({});
+    $("input.datepicker").each(function () {
+        var $this = $(this);
+        $this.datepicker({
+            startDate: $this.data("start-date"),
+            endDate: $this.data("end-date")
+        });
+    });
 
     $("input[data-hours]").blur(formatHoursInput);
     function formatHoursInput() {
@@ -35,9 +41,9 @@
         $input.val(number);
     }
 
-    $(".dataTable").each(function() {
+    $(".dataTable").each(function () {
         var $this = $(this);
-        var onError = function() {
+        var onError = function () {
             $this.replaceWith('<div class="alert alert-danger" role="alert">Coudn\'t load table data.</div>');
         }
 
@@ -49,7 +55,7 @@
             $.ajax({
                 url: configUrl,
                 dataType: "json",
-                success: function(config) {
+                success: function (config) {
                     console.log('datatable config: ', config);
 
                     var ajax = config.ajax;
@@ -62,7 +68,7 @@
                                 dataType: "json",
                                 type: ajax.type,
                                 data: data,
-                                success: function(data) {
+                                success: function (data) {
                                     callback(data);
                                 },
                                 error: onError
@@ -93,7 +99,7 @@
                             ajax.url = initUrl + (initUrl.indexOf("?") == -1 ? "?" : "&");
                             ajax.url += $filter.find("input, textarea, select").serialize().replace(/=on\b/, "=true");
                         }
-                        $filter.on("change", function() {
+                        $filter.on("change", function () {
                             $this.DataTable().draw();
                         });
                     }
@@ -170,4 +176,38 @@
 
         return undefined;
     }
+ 
+    $('#Taskview_dt_basic_question').dataTable({
+        "order": [[3, "desc"]],
+         "bDestroy": true
+    });
+   
+    $('[data-morris-chart-src]').each(function () {
+        var $this = $(this);
+
+        var id = this.id;
+        var type = $this.data("morris-chart-type");
+        var src = $this.data("morris-chart-src");
+
+        $.get(src, function (config) {
+            config.element = id;
+            config.xLabelFormat = function(d) {
+                return (d.getMonth() + 1) + '/' + d.getDate();
+            };
+            switch (type) {
+                case "line":
+                    new Morris.Line(config);
+                    break;
+                case "area":
+                    new Morris.Area(config);
+                    break;
+                case "donut":
+                    new Morris.Donut(config);
+                    break;
+                case "bar":
+                    new Morris.Bar(config);
+                    break;
+            }
+        });
+    });
 });

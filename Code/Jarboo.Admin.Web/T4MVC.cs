@@ -27,8 +27,10 @@ public static partial class MVC
 {
     public static Jarboo.Admin.Web.Controllers.AccountsController Accounts = new Jarboo.Admin.Web.Controllers.T4MVC_AccountsController();
     public static Jarboo.Admin.Web.Controllers.AdminController Admin = new Jarboo.Admin.Web.Controllers.T4MVC_AdminController();
+    public static Jarboo.Admin.Web.Controllers.AnswerController Answer = new Jarboo.Admin.Web.Controllers.T4MVC_AnswerController();
     public static Jarboo.Admin.Web.Controllers.AuthCallbackController AuthCallback = new Jarboo.Admin.Web.Controllers.T4MVC_AuthCallbackController();
     public static Jarboo.Admin.Web.Controllers.BaseController Base = new Jarboo.Admin.Web.Controllers.T4MVC_BaseController();
+    public static Jarboo.Admin.Web.Controllers.CommentsController Comments = new Jarboo.Admin.Web.Controllers.T4MVC_CommentsController();
     public static Jarboo.Admin.Web.Controllers.CustomersController Customers = new Jarboo.Admin.Web.Controllers.T4MVC_CustomersController();
     public static Jarboo.Admin.Web.Controllers.DocumentationsController Documentations = new Jarboo.Admin.Web.Controllers.T4MVC_DocumentationsController();
     public static Jarboo.Admin.Web.Controllers.EmployeesController Employees = new Jarboo.Admin.Web.Controllers.T4MVC_EmployeesController();
@@ -36,8 +38,10 @@ public static partial class MVC
     public static Jarboo.Admin.Web.Controllers.GuidesController Guides = new Jarboo.Admin.Web.Controllers.T4MVC_GuidesController();
     public static Jarboo.Admin.Web.Controllers.HomeController Home = new Jarboo.Admin.Web.Controllers.T4MVC_HomeController();
     public static Jarboo.Admin.Web.Controllers.ProjectsController Projects = new Jarboo.Admin.Web.Controllers.T4MVC_ProjectsController();
+    public static Jarboo.Admin.Web.Controllers.QuestionsController Questions = new Jarboo.Admin.Web.Controllers.T4MVC_QuestionsController();
     public static Jarboo.Admin.Web.Controllers.QuizzesController Quizzes = new Jarboo.Admin.Web.Controllers.T4MVC_QuizzesController();
     public static Jarboo.Admin.Web.Controllers.ReportingController Reporting = new Jarboo.Admin.Web.Controllers.T4MVC_ReportingController();
+    public static Jarboo.Admin.Web.Controllers.SettingsController Settings = new Jarboo.Admin.Web.Controllers.T4MVC_SettingsController();
     public static Jarboo.Admin.Web.Controllers.SpentTimeController SpentTime = new Jarboo.Admin.Web.Controllers.T4MVC_SpentTimeController();
     public static Jarboo.Admin.Web.Controllers.TasksController Tasks = new Jarboo.Admin.Web.Controllers.T4MVC_TasksController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
@@ -98,6 +102,8 @@ namespace Links
         public static readonly string jquery_2_1_1_min_js = Url("jquery-2.1.1.min.js");
         public static readonly string jquery_2_1_1_min_map = Url("jquery-2.1.1.min.map");
         public static readonly string jquery_bonnet_ajax_dropdownlist_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.bonnet.ajax-dropdownlist.min.js") ? Url("jquery.bonnet.ajax-dropdownlist.min.js") : Url("jquery.bonnet.ajax-dropdownlist.js");
+        public static readonly string jquery_unobtrusive_ajax_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.unobtrusive-ajax.min.js") ? Url("jquery.unobtrusive-ajax.min.js") : Url("jquery.unobtrusive-ajax.js");
+        public static readonly string jquery_unobtrusive_ajax_min_js = Url("jquery.unobtrusive-ajax.min.js");
         public static readonly string jquery_validate_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate-vsdoc.min.js") ? Url("jquery.validate-vsdoc.min.js") : Url("jquery.validate-vsdoc.js");
         public static readonly string jquery_validate_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate.min.js") ? Url("jquery.validate.min.js") : Url("jquery.validate.js");
         public static readonly string jquery_validate_min_js = Url("jquery.validate.min.js");

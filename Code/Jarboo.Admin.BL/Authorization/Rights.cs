@@ -62,10 +62,28 @@ namespace Jarboo.Admin.BL.Authorization
             public const string AcceptAny = "AcceptAny";
             public const string DenyAny = "DenyAny";
         }
+        public class Question
+        {
+            public static readonly string Name = typeof(Question).Name;
+        }
+        public class Comment
+        {
+            public static readonly string Name = typeof(Comment).Name;
+        }
+        public class Answer
+        {
+            public static readonly string Name = typeof(Answer).Name;
+        }
         public class Quizzes
         {
             public static readonly string Name = typeof(Quizzes).Name;
         }
+
+        public class Settings
+        {
+            public static readonly string Name = typeof (Settings).Name;
+        }
+
 
         private static readonly Dictionary<UserRoles, Dictionary<string, HashSet<string>>> rightsByRoles = new Dictionary<UserRoles, Dictionary<string, HashSet<string>>>();
         private static readonly Dictionary<string, HashSet<string>> authorizedUserRights = new Dictionary<string, HashSet<string>>();
@@ -125,6 +143,17 @@ namespace Jarboo.Admin.BL.Authorization
             rights.Add(Documentations.Name, DeleteSpecial);
 
             rights.Add(SpentTime.Name, ViewSpecial);
+
+            rights.Add(Question.Name, ViewAll);
+            rights.Add(Question.Name, AddAny);
+            rights.Add(Question.Name, EditAny);
+            rights.Add(Question.Name, DeleteSpecial);
+
+            rights.Add(Answer.Name, ViewAll);
+            rights.Add(Answer.Name, AddAny);
+            rights.Add(Answer.Name, EditAny);
+            rights.Add(Answer.Name, DeleteSpecial);
+         
         }
         private static void FillEmployeeRights(Dictionary<string, HashSet<string>> rights)
         {
@@ -143,6 +172,11 @@ namespace Jarboo.Admin.BL.Authorization
 
             rights.Add(SpentTime.Name, ViewSpecial);
             rights.Add(SpentTime.Name, AddSpecial);
+        }
+
+        private static void FillAdminRights(Dictionary<string, HashSet<string>> rights)
+        {
+            
         }
 
         public static void Add(this Dictionary<string, HashSet<string>> dict, string s1, string s2)

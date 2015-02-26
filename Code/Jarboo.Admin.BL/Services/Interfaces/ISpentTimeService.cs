@@ -16,5 +16,7 @@ namespace Jarboo.Admin.BL.Services.Interfaces
 
         void Accept(int id, IBusinessErrorCollection errors);
         void Deny(int id, IBusinessErrorCollection errors);
+
+        void Delete(int timeId, IBusinessErrorCollection errors);
     }
 }

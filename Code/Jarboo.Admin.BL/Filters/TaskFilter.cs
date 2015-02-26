@@ -20,9 +20,15 @@ namespace Jarboo.Admin.BL.Filters
 
         public DateTime? DateModifiedFrom { get; set; }
         public DateTime? DateModifiedTo { get; set; }
+        public DateTime? DateCreatedFrom { get; set; }
 
         public bool ShowDeleted { get; set; }
         public bool ShowDone { get; set; }
+        public bool ExceededDeadline { get; set; }
+        public bool ExceededFollowUp { get; set; }
+        public bool ShowApproved { get; set; }
+        public bool ShowEstimated { get; set; }
+        public bool ShowWithoutEstimated { get; set; }
 
         public TaskFilter ByString(string s)
         {
@@ -52,6 +58,12 @@ namespace Jarboo.Admin.BL.Filters
             return this;
         }
 
+        public TaskFilter ByDateCreatedFrom(DateTime? dateCreatedFrom)
+        {
+            this.DateCreatedFrom = dateCreatedFrom;
+            return this;
+        }
+
         public TaskFilter WithDone()
         {
             this.ShowDone = true;
@@ -62,12 +74,38 @@ namespace Jarboo.Admin.BL.Filters
             this.ShowDeleted = true;
             return this;
         }
+        public TaskFilter WithExceededDeadline()
+        {
+            this.ExceededDeadline = true;
+            return this;
+        }
+        public TaskFilter WithExceededFollowUp()
+        {
+            this.ExceededFollowUp = true;
+            return this;
+        }
+        public TaskFilter WithApproved()
+        {
+            this.ShowApproved = true;
+            return this;
+        }
+        public TaskFilter WithEstimated()
+        {
+            this.ShowEstimated = true;
+            return this;
+        }
+
+        public TaskFilter WithOutEstimated()
+        {
+            this.ShowWithoutEstimated = true;
+            return this;
+        }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (DateModifiedFrom.HasValue && DateModifiedTo.HasValue && DateModifiedTo.Value < DateModifiedFrom.Value)
             {
-                yield return new ValidationResult("DateModifiedFrom goes after DateModifiedTo", new [] { "DateModifiedTo", "DateModifiedFrom" });
+                yield return new ValidationResult("DateModifiedFrom goes after DateModifiedTo", new[] { "DateModifiedTo", "DateModifiedFrom" });
             }
         }
 
@@ -117,9 +155,24 @@ namespace Jarboo.Admin.BL.Filters
                 query = query.Where(x => !x.Done);
             }
 
+            if (ShowApproved)
+            {
+                query = query.Where(x => x.DateApproved.HasValue);
+            }
+
+            if (ShowEstimated)
+            {
+                query = query.Where(x => x.EstimatedPrice.HasValue && !x.DateApproved.HasValue);
+            }
+
+            if (ShowWithoutEstimated)
+            {
+                query = query.Where(x => !x.EstimatedPrice.HasValue && !x.DateApproved.HasValue);
+            }
+
             if (!string.IsNullOrEmpty(String))
             {
-                var values = String.Split(new [] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                var values = String.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var value in values)
                 {
                     query = query.Where(x => x.Title.IndexOf(value) != -1);
@@ -129,6 +182,21 @@ namespace Jarboo.Admin.BL.Filters
             if (Type.HasValue)
             {
                 query = query.Where(x => x.Type == Type.Value);
+            }
+
+            if (DateCreatedFrom.HasValue)
+            {
+                var date = DateCreatedFrom.Value.StartOfDay();
+                query = query.Where(x => x.DateCreated >= date);
+            }
+
+            if (ExceededDeadline)
+            {
+                query = query.Where(x => x.Deadline < DateTime.Now);
+            }
+            if (ExceededFollowUp)
+            {
+                query = query.Where(x => x.FollowUpDate < DateTime.Now);
             }
 
             return base.Execute(query);

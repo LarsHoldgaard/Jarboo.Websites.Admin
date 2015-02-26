@@ -11,15 +11,26 @@
     @Html.Partial("_RibbonRefresh")
     <!-- breadcrumb -->
     <ol class="breadcrumb">
-        @Html.RenderBreadCrumbs(this,
+        @(ViewBag.Project != null ? @Html.RenderBreadCrumbs(this,
             new BreadCrumbItem(MVC.Customers.View(ViewBag.Project.CustomerId), ViewBag.Project.Customer.Name),
             new BreadCrumbItem(MVC.Projects.View(ViewBag.Project.ProjectId), ViewBag.Project.Name),
-            new BreadCrumbItem("New task"))
+            new BreadCrumbItem("New task")) : @Html.RenderBreadCrumbs(this, new BreadCrumbItem("New task")))
     </ol>
 
 
     <!-- end breadcrumb -->
 </div>
 <!-- END RIBBON -->
-
 @Html.Partial(MVC.Tasks.Views._Form, Model)
+
+@section pagespecific {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".show_hide").on("click", function () {
+                var txt = $(".advanced").is(':visible') ? 'See advanced fields' : 'Hide advanced fields';
+                $(".show_hide").text(txt);
+                $(".advanced").is(':visible') ? $('.advanced').hide() : $('.advanced').show();
+            });
+        });
+    </script>
+}

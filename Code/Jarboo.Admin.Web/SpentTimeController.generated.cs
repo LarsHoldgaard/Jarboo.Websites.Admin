@@ -69,6 +69,24 @@ namespace Jarboo.Admin.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Deny);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult TimeList()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TimeList);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Create()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Delete()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public SpentTimeController Actions { get { return MVC.SpentTime; } }
@@ -90,6 +108,10 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string List = "List";
             public readonly string Accept = "Accept";
             public readonly string Deny = "Deny";
+            public readonly string TimeList = "TimeList";
+            public readonly string Create = "Create";
+            public readonly string Delete = "Delete";
+            public readonly string HoursPerDayChartData = "HoursPerDayChartData";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -100,6 +122,10 @@ namespace Jarboo.Admin.Web.Controllers
             public const string List = "List";
             public const string Accept = "Accept";
             public const string Deny = "Deny";
+            public const string TimeList = "TimeList";
+            public const string Create = "Create";
+            public const string Delete = "Delete";
+            public const string HoursPerDayChartData = "HoursPerDayChartData";
         }
 
 
@@ -137,6 +163,33 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string id = "id";
             public readonly string returnUrl = "returnUrl";
         }
+        static readonly ActionParamsClass_TimeList s_params_TimeList = new ActionParamsClass_TimeList();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_TimeList TimeListParams { get { return s_params_TimeList; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_TimeList
+        {
+            public readonly string taskId = "taskId";
+        }
+        static readonly ActionParamsClass_Create s_params_Create = new ActionParamsClass_Create();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Create CreateParams { get { return s_params_Create; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Create
+        {
+            public readonly string taskId = "taskId";
+            public readonly string projectId = "projectId";
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Delete
+        {
+            public readonly string id = "id";
+            public readonly string taskId = "taskId";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -147,10 +200,14 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _AddTimeForm = "_AddTimeForm";
+                public readonly string _ListTime = "_ListTime";
                 public readonly string GroupedList = "GroupedList";
                 public readonly string Index = "Index";
                 public readonly string List = "List";
             }
+            public readonly string _AddTimeForm = "~/Views/SpentTime/_AddTimeForm.cshtml";
+            public readonly string _ListTime = "~/Views/SpentTime/_ListTime.cshtml";
             public readonly string GroupedList = "~/Views/SpentTime/GroupedList.cshtml";
             public readonly string Index = "~/Views/SpentTime/Index.cshtml";
             public readonly string List = "~/Views/SpentTime/List.cshtml";
@@ -220,6 +277,67 @@ namespace Jarboo.Admin.Web.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
             DenyOverride(callInfo, id, returnUrl);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void TimeListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int taskId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult TimeList(int taskId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TimeList);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
+            TimeListOverride(callInfo, taskId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int taskId, int projectId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Create(int taskId, int projectId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "projectId", projectId);
+            CreateOverride(callInfo, taskId, projectId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Time.TimeViewModel model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Create(Jarboo.Admin.Web.Models.Time.TimeViewModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            CreateOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, int taskId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Delete(int id, int taskId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
+            DeleteOverride(callInfo, id, taskId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void HoursPerDayChartDataOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult HoursPerDayChartData()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.HoursPerDayChartData);
+            HoursPerDayChartDataOverride(callInfo);
             return callInfo;
         }
 

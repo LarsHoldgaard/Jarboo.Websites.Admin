@@ -13,6 +13,7 @@ namespace Jarboo.Admin.DAL.Entities
         Specification,
         Architecture,
         Developing,
+        [Display(Name = "Code Review")]
         CodeReview,
         Test
     }
@@ -24,9 +25,11 @@ namespace Jarboo.Admin.DAL.Entities
             SpentTimes = new List<SpentTime>();
         }
 
-        [Key][Column(Order = 0)]
+        [Key]
+        [Column(Order = 0)]
         public int TaskId { get; set; }
-        [Key][Column(Order = 1)]
+        [Key]
+        [Column(Order = 1)]
         public TaskStepEnum Step { get; set; }
         public DateTime? DateEnd { get; set; }
 
@@ -48,8 +51,8 @@ namespace Jarboo.Admin.DAL.Entities
         }
         public static TaskStepEnum? Next(TaskStepEnum taskStep)
         {
-            var nextVal = ((int)taskStep)+1;
-            if(Enum.IsDefined(typeof(TaskStepEnum), nextVal))
+            var nextVal = ((int)taskStep) + 1;
+            if (Enum.IsDefined(typeof(TaskStepEnum), nextVal))
             {
                 return (TaskStepEnum)nextVal;
             }

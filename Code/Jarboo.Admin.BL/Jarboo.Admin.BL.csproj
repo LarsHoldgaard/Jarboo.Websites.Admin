@@ -64,11 +64,39 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jarboo.Admin.Web\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -79,18 +107,24 @@
     <Compile Include="Authorization\Rights.cs" />
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Filters\AnswerFilter.cs" />
+    <Compile Include="Filters\CommentFilter.cs" />
     <Compile Include="Filters\CustomerFilter.cs" />
     <Compile Include="Filters\DocumentationFilter.cs" />
     <Compile Include="Filters\EmployeeFilter.cs" />
     <Compile Include="Filters\Filter.cs" />
     <Compile Include="Filters\PagedData.cs" />
     <Compile Include="Filters\ProjectFilter.cs" />
+    <Compile Include="Filters\QuestionFilter.cs" />
     <Compile Include="Filters\QuizFilter.cs" />
     <Compile Include="Filters\ReportFilter.cs" />
     <Compile Include="Filters\SpentTimeFilter.cs" />
     <Compile Include="Filters\TaskFilter.cs" />
     <Compile Include="Filters\UserFilter.cs" />
+    <Compile Include="Includes\AnswerInclude.cs" />
+    <Compile Include="Includes\CommentInclude.cs" />
     <Compile Include="Includes\DocumentationInclude.cs" />
+    <Compile Include="Includes\QuestionInclude.cs" />
     <Compile Include="Includes\QuizInclude.cs" />
     <Compile Include="Includes\ReportInclude.cs" />
     <Compile Include="Includes\SpentTimeInclude.cs" />
@@ -100,6 +134,7 @@
     <Compile Include="Models\PasswordRecover.cs" />
     <Compile Include="Models\QuizEdit.cs" />
     <Compile Include="Models\ResetPassword.cs" />
+    <Compile Include="Models\SettingEdit.cs" />
     <Compile Include="Models\SpentTimeOnProject.cs" />
     <Compile Include="Models\SpentTimeOnTask.cs" />
     <Compile Include="Models\UserCreate.cs" />
@@ -126,35 +161,46 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\AnswerService.cs" />
     <Compile Include="Services\BaseEntityService.cs" />
     <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\DocumentationService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\HttpCacheService.cs" />
+    <Compile Include="Services\Interfaces\IAnswerService.cs" />
     <Compile Include="Services\Interfaces\ICacheService.cs" />
+    <Compile Include="Services\Interfaces\ICommentService.cs" />
     <Compile Include="Services\Interfaces\IEntityService.cs" />
     <Compile Include="Services\Interfaces\IAccountService.cs" />
     <Compile Include="Services\Interfaces\ICustomerService.cs" />
     <Compile Include="Services\Interfaces\IDocumentationService.cs" />
     <Compile Include="Services\Interfaces\IEmployeeService.cs" />
     <Compile Include="Services\Interfaces\IProjectService.cs" />
+    <Compile Include="Services\Interfaces\IQuestionService.cs" />
     <Compile Include="Services\Interfaces\IQuizService.cs" />
+    <Compile Include="Services\Interfaces\ISettingService.cs" />
     <Compile Include="Services\Interfaces\ISpentTimeService.cs" />
     <Compile Include="Services\Interfaces\ITaskService.cs" />
     <Compile Include="Services\Interfaces\IUserService.cs" />
     <Compile Include="Services\ProjectService.cs" />
+    <Compile Include="Services\QuestionService.cs" />
     <Compile Include="Services\QuizService.cs" />
+    <Compile Include="Services\SettingService.cs" />
     <Compile Include="Services\SpentTimeService.cs" />
     <Compile Include="Services\TaskService.cs" />
     <Compile Include="Other\IFolderCreator.cs" />
     <Compile Include="Other\ITaskRegister.cs" />
     <Compile Include="Other\TaskStepEmployeeStrategy.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Sorters\AnswerSorter.cs" />
+    <Compile Include="Sorters\CommentSorter.cs" />
     <Compile Include="Sorters\CustomerSorter.cs" />
     <Compile Include="Sorters\DocumentationSorter.cs" />
     <Compile Include="Sorters\EmployeeSorter.cs" />
     <Compile Include="Sorters\ProjectSorter.cs" />
+    <Compile Include="Sorters\QuestionSorter.cs" />
     <Compile Include="Sorters\QuizSorter.cs" />
     <Compile Include="Sorters\ReportSorter.cs" />
     <Compile Include="Sorters\Sorter.cs" />
@@ -163,7 +209,9 @@
     <Compile Include="Sorters\UserSorter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

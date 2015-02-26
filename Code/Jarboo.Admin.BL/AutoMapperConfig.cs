@@ -56,6 +56,9 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<Project, ProjectEdit>();
             Mapper.CreateMap<ProjectEdit, Project>();
 
+            Mapper.CreateMap<Setting, SettingEdit>();
+            Mapper.CreateMap<SettingEdit, Setting>();
+
             Mapper.CreateMap<DAL.Entities.Task, TaskEdit>();
             Mapper.CreateMap<TaskEdit, DAL.Entities.Task>();
 
@@ -101,14 +104,22 @@ namespace Jarboo.Admin.BL
             Mapper.CreateMap<User, UserPasswordSet>()
                 .ForMember(x => x.UserId, x => x.MapFrom(y => y.Id));
 
-            Mapper.CreateMap<SpentTimeOnTask, SpentTime>();
-            Mapper.CreateMap<SpentTime, SpentTimeOnTask>();
+            Mapper.CreateMap<SpentTimeOnTask, SpentTime>()
+                    .ForMember(x => x.TaskStep, x => x.Ignore());
+            Mapper.CreateMap<SpentTime, SpentTimeOnTask>(); 
 
             Mapper.CreateMap<SpentTimeOnProject, SpentTime>();
             Mapper.CreateMap<SpentTime, SpentTimeOnProject>();
 
-            Mapper.CreateMap<Quiz, QuizEdit>();
-            Mapper.CreateMap<QuizEdit, Quiz>();
+            Mapper.CreateMap<Question, Question>();
+            Mapper.CreateMap<Question, Question>();
+
+            Mapper.CreateMap<Answer, Answer>();
+            Mapper.CreateMap<Answer, Answer>();
+
+            Mapper.CreateMap<Comment, Comment>();
+            Mapper.CreateMap<Comment, Comment>();
+ 
         }
     }
 }

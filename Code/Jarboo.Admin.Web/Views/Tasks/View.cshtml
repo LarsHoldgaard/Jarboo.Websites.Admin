@@ -4,9 +4,9 @@
 @model Jarboo.Admin.Web.Models.Task.TaskViewModel
 
 @{
-        ViewBag.Title = Model.FullTitle();
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+    ViewBag.Title = Model.FullTitle();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <!-- RIBBON -->
 <div id="ribbon">
@@ -21,6 +21,7 @@
     </ol>
     <!-- end breadcrumb -->
 </div>
+
 <!-- END RIBBON -->
 <div id="content">
     <!-- row -->
@@ -31,43 +32,64 @@
                 <!-- PAGE HEADER -->
                 <i class="fa-fw fa fa-file-text-o"></i>
                 @Html.DisplayFor(x => x.Title)
-                @*<span>
-                        >
-                        Overview
-                    </span>*@
             </h1>
         </div>
         <!-- end col -->
     </div>
     <!-- end row -->
-    <!-- widget grid -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="well">
+                <h1 class="semi-bold">Status</h1>
+                <ul class="list-unstyled">
+                    <li>
+                        <p>
+                            <i class="fa fa-tasks"></i>&nbsp;&nbsp;Progress: <strong>@Model.Step()</strong>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <i class="fa fa-money"></i>&nbsp;&nbsp;Current price: <strong>@Model.CurrentPrice </strong> <i class="fa fa-usd"></i>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <i class="fa fa-money"></i>&nbsp;&nbsp;Estimate: <strong>@Model.EstimatedPrice </strong> <i class="fa fa-usd"></i>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div><!-- widget grid -->
+    @Html.Action(MVC.Questions.ActionNames.QuestionList, MVC.Questions.Name, new
+    {
+        questionFilter = new QuestionFilter().ByTask(Model.TaskId)
+    })
+
+    @if (this.Can(MVC.Comments.CommentList()))
+    {
+        @Html.Action(MVC.Comments.ActionNames.CommentList, MVC.Comments.Name, new
+    {
+        taskId = Model.TaskId
+    })
+    }
+    @if (this.Can(MVC.SpentTime.TimeList()))
+    {
+        @Html.Action(MVC.SpentTime.ActionNames.TimeList, MVC.SpentTime.Name, new
+    {
+        taskId = Model.TaskId,
+        projectId = Model.ProjectId
+
+    })
+    }
+
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                @*<div class="alert alert-info">
-                        <strong>NOTE:</strong> All the data is loaded from a seperate JSON file
-                    </div>*@
-                <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget well" id="wid-id-2">
-                    <!-- widget options:
-                        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                        data-widget-colorbutton="false"
-                        data-widget-editbutton="false"
-                        data-widget-togglebutton="false"
-                        data-widget-deletebutton="false"
-                        data-widget-fullscreenbutton="false"
-                        data-widget-custombutton="false"
-                        data-widget-collapsed="true"
-                        data-widget-sortable="false"
-                        -->
-                    <header>
-                        <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
-                        <h2>Widget Title </h2>
-                    </header>
-                    <!-- widget div-->
                     <div>
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
@@ -202,7 +224,7 @@
         <!-- end row -->
     </section>
     <!-- end widget grid -->
-    
+
     <div class="row">
         <!-- col -->
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">

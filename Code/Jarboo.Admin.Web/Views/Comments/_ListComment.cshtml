@@ -1,0 +1,52 @@
+﻿@using System.Activities.Expressions
+@model Jarboo.Admin.Web.Models.Comment.CommentListViewModel
+
+@{
+    Layout = null;
+}
+
+<section id="widget-grid-discussion" class="">
+    <!-- row -->
+    <div class="row">
+        <div class="col-sm-12 ">
+            <!-- panel -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="widget-icon"> <i class="glyphicon glyphicon-stats txt-color-darken"></i> </span>
+                        Internal discussion
+                    </h2>
+                </div>
+                <div class="panel-body no-padding">
+                    <!-- content -->
+                    <div id="commentList" class="chat-body custom-scroll">
+                        @if (Model != null)
+                        {
+                            foreach (var com in Model.Comments)
+                            {
+                                <span class="timeline-seperator text-center">
+                                    <span>@com.DateCreated</span>
+                                </span>
+                                <div class="chat-body no-padding profile-message">
+                                    <ul>
+                                        <li class="message">
+                                            <strong>  @Html.ActionLink(com.Employee.FullName, MVC.Employees.View(com.Employee.EmployeeId), new { @class = "username" })</strong>
+                                            <p class="message-text">
+                                                @com.Message
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                    @Html.Action(MVC.Comments.ActionNames.Create, MVC.Comments.Name, new { taskId = Model.TaskId })
+                    <!--end content -->
+                </div>
+            </div>
+            <!--end panel -->
+        </div>
+    </div>
+    <!--end row -->
+</section>

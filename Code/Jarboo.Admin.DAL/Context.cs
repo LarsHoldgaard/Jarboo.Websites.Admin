@@ -65,6 +65,12 @@ namespace Jarboo.Admin.DAL
         public IDbSet<Employee> Employees { get; set; }
         public IDbSet<EmployeePosition> EmployeePositions { get; set; }
         public IDbSet<SpentTime> SpentTimes { get; set; }
+        public IDbSet<Comment> Comments { get; set; }
+        public IDbSet<Question> Questions { get; set; }
+        public IDbSet<Answer> Answers { get; set; }
+
+        public IDbSet<Setting> Settings { get; set; }
+
         public IDbSet<Quiz> Quizzes { get; set; }
 
         public DbContextTransaction BeginTransaction()

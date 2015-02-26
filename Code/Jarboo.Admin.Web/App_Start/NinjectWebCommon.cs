@@ -3,13 +3,10 @@ using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Services;
 using Jarboo.Admin.DAL;
 using Jarboo.Admin.DAL.Entities;
-using Jarboo.Admin.Integration;
 using Jarboo.Admin.Integration.GoogleDrive;
 using Jarboo.Admin.Integration.Mandrill;
 using Jarboo.Admin.Integration.Noop;
 using Jarboo.Admin.Web.Infrastructure;
-using Jarboo.Admin.Web.Infrastructure.ThirdPartyIntegration;
-
 using Microsoft.AspNet.Identity;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Jarboo.Admin.Web.App_Start.NinjectWebCommon), "Start")]
@@ -81,27 +78,11 @@ namespace Jarboo.Admin.Web.App_Start
             kernel.Bind<ICacheService>().To<HttpCacheService>().InSingletonScope();
             kernel.Bind<ITaskRegister>().To<NoopTaskRegister>().InRequestScope();
 
-            if (Configuration.Instance.UseGoogleDrive)
-            {
-                kernel.Bind<IGoogleDriveConfiguration>().ToConstant(Configuration.Instance);
-                kernel.Bind<IFolderCreator>().To<GoogleDriveFolderCreator>().InRequestScope();
-            }
-            else
-            {
-                kernel.Bind<IFolderCreator>().To<NoopFolderCrator>().InRequestScope();
-            }
-
-            if (Configuration.Instance.UseNotifier)
-            {
-                kernel.Bind<INotifier>().To<MandrillNotifierEmailer>().InRequestScope();
-            }
-            else
-            {
-                kernel.Bind<INotifier>().To<NoopNotifier>().InRequestScope();
-            }
+            kernel.Bind<IGoogleDriveConfiguration>().ToConstant(Configuration.Instance);
+            kernel.Bind<IFolderCreator>().To<GoogleDriveFolderCreator>().InRequestScope();
 
             kernel.Bind<IUrlConstructor>().To<UrlConstructor>();
-            kernel.Bind<IMandrillConfiguration>().ToConstant(Configuration.Instance);
+            kernel.Bind<INotifier>().To<MandrillNotifierEmailer>().InRequestScope();
             kernel.Bind<IEmailer>().To<MandrillNotifierEmailer>().InRequestScope();
             kernel.Bind<ITaskStepEmployeeStrategy>().To<TaskStepEmployeeStrategy>().InRequestScope();
 
@@ -123,6 +104,10 @@ namespace Jarboo.Admin.Web.App_Start
             kernel.Bind<IUserService>().To<UserService>().InRequestScope();
             kernel.Bind<ISpentTimeService>().To<SpentTimeService>().InRequestScope();
             kernel.Bind<IQuizService>().To<QuizService>().InRequestScope();
+            kernel.Bind<ICommentService>().To<CommentService>().InRequestScope();
+            kernel.Bind<IQuestionService>().To<QuestionService>().InRequestScope();
+            kernel.Bind<IAnswerService>().To<AnswerService>().InRequestScope();
+            kernel.Bind<ISettingService>().To<SettingService>().InRequestScope();
         }
     }
 }

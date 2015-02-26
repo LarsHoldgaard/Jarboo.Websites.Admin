@@ -1,0 +1,28 @@
+﻿@using SmartAdminMvc
+@model  Jarboo.Admin.Web.Models.Comment.CommentViewModel
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm(MVC.Comments.ActionNames.Create, MVC.Comments.Name, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "widget-grid-discussion" }, new { @class = "well no-margin" }))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(x => x.TaskId)
+    @Html.HiddenFor(x => x.EmployeeId)
+
+    <div class="textarea-div">
+        <div class="typearea">
+            @Html.TextAreaFor(x => x.Message, new { @placeholder = "What are you thinking?", @rows = 3, @class = "form-control" })
+
+        </div>
+    </div>
+
+    <!--  REPLY/SEND -->
+    <span class="textarea-controls">
+        <button type="submit" class="btn btn-sm btn-primary pull-right">
+            Reply
+        </button>
+    </span>
+}

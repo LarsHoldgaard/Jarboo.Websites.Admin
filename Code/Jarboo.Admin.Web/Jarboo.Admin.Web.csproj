@@ -252,10 +252,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Jarboo.Admin.mdf" />
-    <Content Include="App_Data\Jarboo.Admin_log.ldf">
-      <DependentUpon>Jarboo.Admin.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\invoice.min.css" />
@@ -492,6 +488,8 @@
     <Content Include="Content\main.css" />
     <Content Include="Scripts\jquery.bonnet.ajax-dropdownlist.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1030,6 +1028,21 @@
     <Content Include="Views\Quizzes\Create.cshtml" />
     <Content Include="Views\Quizzes\_Form.cshtml" />
     <Content Include="Views\Quizzes\Edit.cshtml" />
+    <Content Include="Views\Shared\_CreateComment.cshtml" />
+    <Content Include="Views\Questions\AskQuestion.cshtml" />
+    <Content Include="Views\Questions\_QuestionList.cshtml" />
+    <Content Include="Views\Answer\Index.cshtml" />
+    <Content Include="Views\Answer\_AnswerQuestionForm.cshtml" />
+    <Content Include="Views\Answer\_ListAnswer.cshtml" />
+    <Content Include="Views\Comments\_ListComment.cshtml" />
+    <Content Include="Views\Comments\_AddCommentForm.cshtml" />
+    <Content Include="Views\SpentTime\_ListTime.cshtml" />
+    <Content Include="Views\SpentTime\_AddTimeForm.cshtml" />
+    <Content Include="Views\Tasks\PendingTask.cshtml" />
+    <Content Include="Views\Tasks\PendingTaskList.cshtml" />
+    <Content Include="Views\Tasks\PendingTaskCreate.cshtml" />
+    <Content Include="Views\Tasks\PendingTaskListEstimated.cshtml" />
+    <Content Include="Views\Settings\Edit.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1040,6 +1053,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="AdminController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AnswerController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Helpers\HtmlHelperExtensions.cs" />
@@ -1059,10 +1075,15 @@
     <Compile Include="BaseController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="CommentsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\AuthCallbackController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DocumentationsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
@@ -1071,7 +1092,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\QuizzesController.cs" />
+    <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\ReportingController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SpentTimeController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="CustomersController.generated.cs">
@@ -1112,14 +1135,21 @@
     <Compile Include="Models\Account\LoginViewModel.cs" />
     <Compile Include="Models\Account\PasswordRecoverViewModel.cs" />
     <Compile Include="Models\Account\UserViewModel.cs" />
+    <Compile Include="Models\Answer\AnswerListViewModel.cs" />
+    <Compile Include="Models\Answer\AnswerViewModel.cs" />
+    <Compile Include="Models\Comment\CommentListViewModel.cs" />
+    <Compile Include="Models\Comment\CommentViewModel.cs" />
     <Compile Include="Models\DataTable\Column.cs" />
     <Compile Include="Models\DataTable\DataTableConfig.cs" />
     <Compile Include="Models\BtnFormViewModel.cs" />
     <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
     <Compile Include="Models\Account\LandingViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeListViewModel.cs" />
+    <Compile Include="Models\Morris\MorrisConfig.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
     <Compile Include="Models\Quiz\QuizzesListViewModel.cs" />
+    <Compile Include="Models\Question\QuestionListViewModel.cs" />
+    <Compile Include="Models\Question\QuestionViewModel.cs" />
     <Compile Include="Models\Report\ReportsListViewModel.cs" />
     <Compile Include="Models\Report\ReportSorting.cs" />
     <Compile Include="Models\Report\ReportViewModel.cs" />
@@ -1127,6 +1157,8 @@
     <Compile Include="Models\Task\TasksListViewModel.cs" />
     <Compile Include="Models\Task\TaskSorting.cs" />
     <Compile Include="Models\Task\TaskViewModel.cs" />
+    <Compile Include="Models\Time\TimeListViewModel.cs" />
+    <Compile Include="Models\Time\TimeViewModel.cs" />
     <Compile Include="ProjectsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1134,7 +1166,13 @@
     <Compile Include="QuizzesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="QuestionsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="ReportingController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SharedController.generated.cs">
@@ -1232,14 +1270,16 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jarboo.Admin.BL\Jarboo.Admin.BL.csproj">
       <Project>{bb94a70c-f2a8-43a2-8357-4d790131aa89}</Project>
       <Name>Jarboo.Admin.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Jarboo.Admin.DAL\Jarboo.Admin.DAL.csproj">
-      <Project>{286ff3f8-7581-4bf0-af2c-47a88b50ff3a}</Project>
+      <Project>{286FF3F8-7581-4BF0-AF2C-47A88B50FF3A}</Project>
       <Name>Jarboo.Admin.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Jarboo.Admin.Integration\Jarboo.Admin.Integration.csproj">
