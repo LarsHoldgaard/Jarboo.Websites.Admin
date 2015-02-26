@@ -16,6 +16,7 @@ namespace Jarboo.Admin.BL.Filters
         public int? ProjectId { get; set; }
         public bool OnlyTopLevelProjectsHours { get; set; }
         public bool? Accepted { get; set; }
+        public DateTime? FromDate { get; set; }
 
         public bool ShowDeleted { get; set; }
 
@@ -38,6 +39,11 @@ namespace Jarboo.Admin.BL.Filters
         public SpentTimeFilter ByAccepted(bool? accepted)
         {
             this.Accepted = accepted;
+            return this;
+        }
+        public SpentTimeFilter ByFromDate(DateTime? fromDate)
+        {
+            this.FromDate = fromDate;
             return this;
         }
 
@@ -78,6 +84,11 @@ namespace Jarboo.Admin.BL.Filters
             if (!ShowDeleted)
             {
                 query = query.Where(x => !x.DateDeleted.HasValue);
+            }
+
+            if (FromDate.HasValue)
+            {
+                query = query.Where(x => x.Date >= FromDate);
             }
 
             return base.Execute(query);

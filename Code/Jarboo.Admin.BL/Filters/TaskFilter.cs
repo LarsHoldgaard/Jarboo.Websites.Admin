@@ -20,9 +20,12 @@ namespace Jarboo.Admin.BL.Filters
 
         public DateTime? DateModifiedFrom { get; set; }
         public DateTime? DateModifiedTo { get; set; }
+        public DateTime? DateCreatedFrom { get; set; }
 
         public bool ShowDeleted { get; set; }
         public bool ShowDone { get; set; }
+        public bool ExceededDeadline { get; set; }
+        public bool ExceededFollowUp { get; set; }
         public bool ShowApproved { get; set; }
         public bool ShowEstimated { get; set; }
         public bool ShowWithoutEstimated { get; set; }
@@ -55,6 +58,12 @@ namespace Jarboo.Admin.BL.Filters
             return this;
         }
 
+        public TaskFilter ByDateCreatedFrom(DateTime? dateCreatedFrom)
+        {
+            this.DateCreatedFrom = dateCreatedFrom;
+            return this;
+        }
+
         public TaskFilter WithDone()
         {
             this.ShowDone = true;
@@ -63,6 +72,16 @@ namespace Jarboo.Admin.BL.Filters
         public TaskFilter WithDeleted()
         {
             this.ShowDeleted = true;
+            return this;
+        }
+        public TaskFilter WithExceededDeadline()
+        {
+            this.ExceededDeadline = true;
+            return this;
+        }
+        public TaskFilter WithExceededFollowUp()
+        {
+            this.ExceededFollowUp = true;
             return this;
         }
         public TaskFilter WithApproved()
@@ -163,6 +182,21 @@ namespace Jarboo.Admin.BL.Filters
             if (Type.HasValue)
             {
                 query = query.Where(x => x.Type == Type.Value);
+            }
+
+            if (DateCreatedFrom.HasValue)
+            {
+                var date = DateCreatedFrom.Value.StartOfDay();
+                query = query.Where(x => x.DateCreated >= date);
+            }
+
+            if (ExceededDeadline)
+            {
+                query = query.Where(x => x.Deadline < DateTime.Now);
+            }
+            if (ExceededFollowUp)
+            {
+                query = query.Where(x => x.FollowUpDate < DateTime.Now);
             }
 
             return base.Execute(query);

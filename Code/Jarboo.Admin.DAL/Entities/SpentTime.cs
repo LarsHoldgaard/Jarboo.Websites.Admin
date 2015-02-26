@@ -17,6 +17,7 @@ namespace Jarboo.Admin.DAL.Entities
         public DateTime? DateVerified { get; set; }
         public DateTime? DateDeleted { get; set; }
         public bool? Accepted { get; set; }
+        public DateTime Date { get; set; }
 
         public int EmployeeId { get; set; }
         public virtual Employee Employee { get; set; }

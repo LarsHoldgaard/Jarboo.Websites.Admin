@@ -1135,6 +1135,7 @@
     <Compile Include="Models\Documentation\DocumentationsListViewModel.cs" />
     <Compile Include="Models\Account\LandingViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeListViewModel.cs" />
+    <Compile Include="Models\Morris\MorrisConfig.cs" />
     <Compile Include="Models\Project\ProjectsListViewModel.cs" />
     <Compile Include="Models\Quiz\QuizzesListViewModel.cs" />
     <Compile Include="Models\Question\QuestionListViewModel.cs" />
@@ -1259,7 +1260,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jarboo.Admin.BL\Jarboo.Admin.BL.csproj">
       <Project>{bb94a70c-f2a8-43a2-8357-4d790131aa89}</Project>

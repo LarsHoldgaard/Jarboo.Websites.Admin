@@ -7,6 +7,9 @@ using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.Web.Models.Time;
 using Ninject;
 using Jarboo.Admin.BL.Services.Interfaces;
+using System;
+using Newtonsoft.Json;
+using Jarboo.Admin.Web.Models.Morris;
 
 namespace Jarboo.Admin.Web.Controllers
 {
@@ -107,5 +110,25 @@ namespace Jarboo.Admin.Web.Controllers
             return Handle(id, SpentTimeService.Delete, () => RedirectToAction(MVC.SpentTime.TimeList(taskId)), new EmptyResult(), "Time successfully deleted");
         }
         #endregion
+
+        public virtual ActionResult HoursPerDayChartData()
+        {
+            var spentTimes = SpentTimeService.GetAll(Query.ForSpentTime()
+                .Filter(x => x.ByAccepted(true).ByFromDate(DateTime.Now.AddMonths(-1))))
+                .Data
+                .GroupBy(x => x.Date.Date).OrderBy(x => x.Key)
+                .Select(x => new { date = x.Key, hours = (int)x.Aggregate(0m, (h, y) => h + y.Hours) });
+
+            var config = new MorrisConfig()
+                {
+                    Data = spentTimes,
+                    XKey = "date",  
+                    YKeys = new [] {"hours"},
+                    Labels = new [] {"Hours"}
+                };
+            
+            var json = JsonConvert.SerializeObject(config);
+            return Content(json, "application/json");
+        }
     }
 }

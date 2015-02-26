@@ -14,7 +14,13 @@
     });
 
     $(".input-daterange").datepicker({});
-    $("input.datepicker").datepicker({});
+    $("input.datepicker").each(function () {
+        var $this = $(this);
+        $this.datepicker({
+            startDate: $this.data("start-date"),
+            endDate: $this.data("end-date")
+        });
+    });
 
     function formatHoursInput() {
         var $input = $(this);
@@ -178,5 +184,32 @@
          "bDestroy": true
     });
    
-   
+    $('[data-morris-chart-src]').each(function () {
+        var $this = $(this);
+
+        var id = this.id;
+        var type = $this.data("morris-chart-type");
+        var src = $this.data("morris-chart-src");
+
+        $.get(src, function (config) {
+            config.element = id;
+            config.xLabelFormat = function(d) {
+                return (d.getMonth() + 1) + '/' + d.getDate();
+            };
+            switch (type) {
+                case "line":
+                    new Morris.Line(config);
+                    break;
+                case "area":
+                    new Morris.Area(config);
+                    break;
+                case "donut":
+                    new Morris.Donut(config);
+                    break;
+                case "bar":
+                    new Morris.Bar(config);
+                    break;
+            }
+        });
+    });
 });

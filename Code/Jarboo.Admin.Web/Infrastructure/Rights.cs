@@ -66,6 +66,8 @@ namespace Jarboo.Admin.Web.Infrastructure
         {
             rights.Add(MVC.Accounts.CustomerEdit());
 
+            rights.Add(MVC.Home.Dashboard());
+            
             rights.Add(MVC.Customers.View());
 
             rights.Add(MVC.Documentations.View());
@@ -89,7 +91,7 @@ namespace Jarboo.Admin.Web.Infrastructure
             rights.Add(MVC.Tasks.ListConfig());
             rights.Add(MVC.Tasks.ListData());
             rights.Add(MVC.Tasks.List());
-
+            rights.Add(MVC.Tasks.TasksPerDayChartData());
 
             rights.Add(MVC.Tasks.PendingTask());
             rights.Add(MVC.Tasks.PendingTaskView());
@@ -108,7 +110,6 @@ namespace Jarboo.Admin.Web.Infrastructure
             rights.Add(MVC.Answer.Index());
             rights.Add(MVC.Answer.AnswerList());
             rights.Add(MVC.Answer.Create());
-            rights.Add(MVC.Tasks.View());
         }
         private static void FillEmployeeRights(Dictionary<string, HashSet<string>> rights)
         {

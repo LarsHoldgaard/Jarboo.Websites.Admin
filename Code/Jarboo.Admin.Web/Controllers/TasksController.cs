@@ -15,11 +15,12 @@ using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Web.Infrastructure;
 using Jarboo.Admin.Web.Models.DataTable;
 using Jarboo.Admin.Web.Models.Task;
-
 using Newtonsoft.Json;
 
 using Ninject;
 using Jarboo.Admin.BL.Services.Interfaces;
+using System;
+using Jarboo.Admin.Web.Models.Morris;
 
 namespace Jarboo.Admin.Web.Controllers
 {
@@ -59,16 +60,32 @@ namespace Jarboo.Admin.Web.Controllers
             return View(task.Decorate());
         }
 
-        // GET: /Tasks/Create
+        // GET: /Tasks/Create with Project Id
         public virtual ActionResult Create(int? projectId)
         {
-            if (projectId == null)
+            TaskEdit model;
+            if (projectId == null || projectId == 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                model = new TaskEdit
+                {
+                    Projects = ProjectService.GetAll(Query.ForProject())
+                        .Select(x =>
+                            new SelectListItem
+                            {
+                                Value = x.ProjectId.ToString(),
+                                Text = x.Name,
+                                //Selected = 
+                            }).ToList()
+                };
+            }
+            else
+            {
+                model = new TaskEdit
+                {
+                    ProjectId = projectId.Value
+                };
             }
 
-            var model = new TaskEdit();
-            model.ProjectId = projectId.Value;
 
             return CreateEditView(model);
         }
@@ -94,17 +111,25 @@ namespace Jarboo.Admin.Web.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(TaskEdit model)
         {
+
+            ActionResult result = null;
+            result = RedirectToAction(model.TaskId !=0 ? MVC.Tasks.Edit(model.TaskId) : MVC.Tasks.Create(model.ProjectId));
             return Handle(model, TaskService.Save,
                 () => RedirectToAction(MVC.Tasks.View(model.TaskId)),
                 () => model.ProjectId == 0 ?
-                    RedirectToAction(MVC.Tasks.Create(model.ProjectId)) :
-                    RedirectToAction(MVC.Tasks.Edit(model.TaskId)));
+                    RedirectToAction(MVC.Tasks.Create(model.ProjectId)) : result);
         }
 
         private ActionResult CreateEditView(TaskEdit model)
         {
             ViewBag.EmployeesList = new SelectList(EmployeeService.GetAll(Query.ForEmployee()), "EmployeeId", "FullName");
-            ViewBag.Project = ProjectService.GetByIdEx(model.ProjectId, new ProjectInclude().Customer());
+            if (model.ProjectId != 0)
+            {
+                var project = ProjectService.GetByIdEx(model.ProjectId, new ProjectInclude().Customer());
+                ViewBag.Project = project;
+                model.ProjectName = project.Name;
+            }
+
             return View(model);
         }
 
@@ -440,6 +465,26 @@ namespace Jarboo.Admin.Web.Controllers
                 RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
         }
 
+
+        public virtual ActionResult TasksPerDayChartData()
+        {
+            var tasks = TaskService.GetAll(Query.ForTask()
+                .Filter(x => x.ByDateCreatedFrom(DateTime.Now.AddMonths(-1))))
+                .Data
+                .GroupBy(x => x.DateCreated.Date).OrderBy(x => x.Key)
+                .Select(x => new { date = x.Key, tasks = x.Count() });
+
+            var config = new MorrisConfig()
+            {
+                Data = tasks,
+                XKey = "date",
+                YKeys = new[] { "tasks" },
+                Labels = new[] { "Tasks" }
+            };
+
+            var json = JsonConvert.SerializeObject(config);
+            return Content(json, "application/json");
+        }
 
         public virtual ActionResult PendingTask()
         {

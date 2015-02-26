@@ -101,7 +101,9 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string Edit = "Edit";
             }
+            public readonly string Edit = "~/Views/Settings/Edit.cshtml";
         }
     }
 
