@@ -94,12 +94,6 @@ namespace Jarboo.Admin.BL.Services
                 return;
             }
 
-            if (string.IsNullOrEmpty(model.BoardName))
-            {
-                var customer = UnitOfWork.Customers.AsNoTracking().ByIdMust(model.CustomerId);
-                model.BoardName = TaskRegister.DefaultProjectName(customer.Name);
-            }
-
             if (model.ProjectId == 0)
             {
                 var entity = new Project();

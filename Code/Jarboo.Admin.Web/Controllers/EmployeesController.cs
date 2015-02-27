@@ -34,7 +34,7 @@ namespace Jarboo.Admin.Web.Controllers
             bool? isHired = null;
             if (Request.QueryString["IsHired"] != null) isHired = Boolean.Parse(Request.QueryString["IsHired"]);
             string keywords = Request.QueryString["Query"];
-            var query = Query.ForEmployee(new EmployeeFilter().IsHired(isHired).FilterBy(keywords)).Include(x => x.Positions());
+            var query = Query.ForEmployee(new EmployeeFilter().IsHired(isHired).FilterBy(keywords)).Include(x => x.Positions()).Include(x => x.User());
             var results = EmployeeService.GetAll(query);
             var model = new EmployeeListViewModel();
             model.IsHired = isHired;

@@ -51,12 +51,6 @@
                                         @Html.TextBoxFor(x => x.Name, new { @placeholder = "Name" })
                                     </label>
                                 </section>
-                                <section>
-                                    @Html.LabelFor(model => model.BoardName, new { @class = "label" })
-                                    <label class="select select-multiple">
-                                        @Html.DropDownListFor(x => x.BoardName, (SelectList)ViewBag.BoardNames, "Fill automatically", new { @class = "form-control" })
-                                    </label>
-                                </section>
                             </fieldset>
                             <footer>
                                 <button type="submit" class="btn btn-primary">

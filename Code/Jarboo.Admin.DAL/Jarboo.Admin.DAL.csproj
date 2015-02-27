@@ -197,6 +197,14 @@
     <Compile Include="Migrations\201502251025581_SpentTimeDate.Designer.cs">
       <DependentUpon>201502251025581_SpentTimeDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502260722591_AddMandrillNewEmployeeTemplate.cs" />
+    <Compile Include="Migrations\201502260722591_AddMandrillNewEmployeeTemplate.Designer.cs">
+      <DependentUpon>201502260722591_AddMandrillNewEmployeeTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502260941145_AddUsersToCustomer.cs" />
+    <Compile Include="Migrations\201502260941145_AddUsersToCustomer.Designer.cs">
+      <DependentUpon>201502260941145_AddUsersToCustomer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201502261430325_updated settings.cs" />
     <Compile Include="Migrations\201502261430325_updated settings.Designer.cs">
       <DependentUpon>201502261430325_updated settings.cs</DependentUpon>
@@ -291,6 +299,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502251025581_SpentTimeDate.resx">
       <DependentUpon>201502251025581_SpentTimeDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502260722591_AddMandrillNewEmployeeTemplate.resx">
+      <DependentUpon>201502260722591_AddMandrillNewEmployeeTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502260941145_AddUsersToCustomer.resx">
+      <DependentUpon>201502260941145_AddUsersToCustomer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502261430325_updated settings.resx">
       <DependentUpon>201502261430325_updated settings.cs</DependentUpon>

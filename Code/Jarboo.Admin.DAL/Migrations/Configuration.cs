@@ -92,6 +92,7 @@ namespace Jarboo.Admin.DAL.Migrations
                 MandrillApiKey = "IRWMe1g1dCTrG6uOZEy7gQ",
                 MandrillFrom = "admin@jarboo.com",
                 MandrillNewTaskTemplate = "a-customer-created-a-new-task",
+                MandrillNewEmployeeTemplate = "a-admin-created-a-new-employee",
                 MandrillPasswordRecoveryTemplate = "forgot-password-e-mail",
                 MandrillTaskResponsibleChangedNotificationSubject = "Task was assigned to you",
                 MandrillTaskResponsibleNotificationTemplate = "task-update"
@@ -114,6 +115,7 @@ namespace Jarboo.Admin.DAL.Migrations
                 MandrillApiKey = "IRWMe1g1dCTrG6uOZEy7gQ",
                 MandrillFrom = "admin@jarboo.com",
                 MandrillNewTaskTemplate = "a-customer-created-a-new-task",
+                MandrillNewEmployeeTemplate = "a-admin-created-a-new-employee",
                 MandrillPasswordRecoveryTemplate = "forgot-password-e-mail",
                 MandrillTaskResponsibleChangedNotificationSubject = "Task was assigned to you",
                 MandrillTaskResponsibleNotificationTemplate = "task-update"
@@ -136,6 +138,7 @@ namespace Jarboo.Admin.DAL.Migrations
                 MandrillApiKey = "IRWMe1g1dCTrG6uOZEy7gQ",
                 MandrillFrom = "admin@jarboo.com",
                 MandrillNewTaskTemplate = "a-customer-created-a-new-task",
+                MandrillNewEmployeeTemplate = "a-admin-created-a-new-employee",
                 MandrillPasswordRecoveryTemplate = "forgot-password-e-mail",
                 MandrillTaskResponsibleChangedNotificationSubject = "Task was assigned to you",
                 MandrillTaskResponsibleNotificationTemplate = "task-update"

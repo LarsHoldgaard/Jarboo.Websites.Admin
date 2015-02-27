@@ -12,6 +12,7 @@ namespace Jarboo.Admin.BL.Other
     {
         void TaskResponsibleChanged(TaskResponsibleChangedData data);
         void NewTask(NewTaskData data);
+        void NewEmployee(NewEmployeeData data);
     }
 
     public struct TaskResponsibleChangedData
@@ -44,5 +45,17 @@ namespace Jarboo.Admin.BL.Other
         public string ProjectName;
         public string TaskDescription;
         public int TaskId;
+    }
+
+    public struct NewEmployeeData
+    {
+        public NewEmployeeData(Employee employee)
+        {
+            FullName = employee.FullName;
+            Email = employee.Email;
+        }
+
+        public string FullName;
+        public string Email;
     }
 }

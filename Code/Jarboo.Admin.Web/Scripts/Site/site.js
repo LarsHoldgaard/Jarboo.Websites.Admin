@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿$(function() {
     // When rending an underscore template, we want top-level
     // variables to be referenced as part of an object. For
     // technical reasons (scope-chain search), this speeds up
@@ -22,7 +22,6 @@
         });
     });
 
-    $("input[data-hours]").blur(formatHoursInput);
     function formatHoursInput() {
         var $input = $(this);
 
@@ -40,6 +39,7 @@
 
         $input.val(number);
     }
+    $("input[data-hours]").blur(formatHoursInput);
 
     $(".dataTable").each(function () {
         var $this = $(this);
@@ -68,7 +68,7 @@
                                 dataType: "json",
                                 type: ajax.type,
                                 data: data,
-                                success: function (data) {
+                                success: function(data) {
                                     callback(data);
                                 },
                                 error: onError
@@ -93,6 +93,8 @@
                             $filter.detach();
                             $filter.appendTo($this.parent().find(".dataTables_filter"));
                             $filter.show();
+
+                            $this.parent().find(".dataTables_filter > label").hide();
                         };
                         var initUrl = ajax.url;
                         config.preDrawCallback = function () {

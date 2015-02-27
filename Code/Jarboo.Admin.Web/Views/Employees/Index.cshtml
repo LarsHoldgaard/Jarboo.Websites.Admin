@@ -75,47 +75,40 @@
                 <div class="no-padding">
                     <table class="display projects-table table table-striped table-bordered table-hover no-footer" width="100%">
                         <thead>
-                            <tr>
-                                <th class="sorting_asc">
-                                    FullName
-                                </th>
+                        <tr>
+                            <th class="sorting">
+                                User ID
+                            </th>
+                            <th class="sorting_asc">
+                                FullName
+                            </th>
+                            <th class="sorting">
+                                Email
+                            </th>
+                            <th class="sorting">
+                                Country
+                            </th>
+                            @if (this.Can(MVC.Employees.Name, "HourlyPrice"))
+                            {
                                 <th class="sorting">
-                                    SkypeName
+                                    HourlyPrice
                                 </th>
-                                <th class="sorting">
-                                    Email
-                                </th>
-                                <th class="sorting">
-                                    Country
-                                </th>
-                                @if (this.Can(MVC.Employees.Name, "HourlyPrice"))
-                                {
-                                    <th class="sorting">
-                                        HourlyPrice
-                                    </th>
-                                }
-                                <th class="sorting">
-                                    Positions
-                                </th>
-                                @if (this.Can(MVC.Employees.Edit()))
-                                {
-                                    <th></th>
-                                }
-                                @if (this.Can(MVC.Employees.Delete()))
-                                {
-                                    <th></th>
-                                }
-                            </tr>
+                            }
+                            @if (this.Can(MVC.Employees.Edit()))
+                            {
+                                <th></th>
+                            }
+                        </tr>
                         </thead>
                         <tbody>
                             @foreach (var employee in Model.Employees)
                             {
                                 <tr>
                                     <td>
-                                        @Html.ActionLink(employee.FullName, MVC.Employees.View(employee.EmployeeId))
+                                        @(employee.User == null ? "" : employee.User.Id)
                                     </td>
                                     <td>
-                                        <a href="skype:@employee.SkypeName">@employee.SkypeName</a>
+                                        @Html.ActionLink(employee.FullName, MVC.Employees.View(employee.EmployeeId))
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => employee.Email)
@@ -129,26 +122,10 @@
                                             @Html.DisplayFor(modelItem => employee.HourlyPrice)
                                         </td>
                                     }
-                                    <td>
-                                        @foreach (var position in employee.Positions)
-                                        {
-                                            <span class="label label-info">@position.Position</span>
-                                        }
-                                    </td>
                                     @if (this.Can(MVC.Employees.Edit()))
                                     {
                                         <td>
                                             @Html.ActionLink("Edit", MVC.Employees.Edit(employee.EmployeeId))
-                                        </td>
-                                    }
-                                    @if (this.Can(MVC.Employees.Delete()))
-                                    {
-                                        <td>
-                                            @Html.Partial(MVC.Shared.Views.BtnForm, BtnFormViewModel.Delete(x =>
-                                                        {
-                                                            x.Id = employee.EmployeeId;
-                                                            x.Action = MVC.Employees.Delete();
-                                                        }))
                                         </td>
                                     }
                                 </tr>

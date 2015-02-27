@@ -12,7 +12,6 @@ namespace Jarboo.Admin.BL.Models
         public int ProjectId { get; set; }
         [Required]
         public string Name { get; set; }
-        public string BoardName { get; set; }
         public int CustomerId { get; set; }
     }
 }

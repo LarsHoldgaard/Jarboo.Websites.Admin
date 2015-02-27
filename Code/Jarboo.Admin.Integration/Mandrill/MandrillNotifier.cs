@@ -7,24 +7,24 @@ namespace Jarboo.Admin.Integration.Mandrill
 {
     public class MandrillNotifierEmailer : INotifier, IEmailer
     {
-        private readonly Setting _setting;
-        private readonly IUrlConstructor _urlConstructor;
-        private readonly MandrillApi _api;
+        private readonly Setting setting;
+        private readonly IUrlConstructor urlConstructor;
+        private readonly MandrillApi api;
 
         public MandrillNotifierEmailer(IUrlConstructor urlConstructor, ISettingService settingService)
         {
-            _setting= settingService.GetCurrentSetting();
-            _urlConstructor = urlConstructor;
+            setting = settingService.GetCurrentSetting();
+            this.urlConstructor = urlConstructor;
 
-            if (_setting.UseMandrill)
+            if (setting.UseMandrill)
             {
-                _api = new MandrillApi(_setting.MandrillApiKey);
+                api = new MandrillApi(setting.MandrillApiKey);
             }
         }
 
         public void TaskResponsibleChanged(TaskResponsibleChangedData data)
         {
-            if (!_setting.UseMandrill)
+            if (!setting.UseMandrill)
             {
                 return;
             }
@@ -32,19 +32,19 @@ namespace Jarboo.Admin.Integration.Mandrill
             var message = new EmailMessage
             {
                 to = new[] { new EmailAddress(data.EmployeeEmail) },
-                from_email = _setting.MandrillFrom,
-                subject = _setting.MandrillTaskResponsibleChangedNotificationSubject
+                from_email = setting.MandrillFrom,
+                subject = setting.MandrillTaskResponsibleChangedNotificationSubject
             };
 
             message.AddGlobalVariable("TASKNAME", data.TaskTitle);
             message.AddGlobalVariable("TASKROLE", data.Role);
 
-            _api.SendMessage(message, _setting.MandrillTaskResponsibleNotificationTemplate, null);
+            api.SendMessage(message, setting.MandrillTaskResponsibleNotificationTemplate, null);
         }
 
         public void SendPasswordRecoveryEmail(string email, string link)
         {
-            if (!_setting.UseMandrill)
+            if (!setting.UseMandrill)
             {
                 return;
             }
@@ -52,26 +52,26 @@ namespace Jarboo.Admin.Integration.Mandrill
             var message = new EmailMessage
             {
                 to = new[] { new EmailAddress(email) },
-                from_email = _setting.MandrillFrom,
+                from_email = setting.MandrillFrom,
                 subject = "Jarbo password recovery"
             };
 
             message.AddGlobalVariable("QUESTIONLINK", link);
 
-            _api.SendMessage(message, _setting.MandrillPasswordRecoveryTemplate, null);
+            api.SendMessage(message, setting.MandrillPasswordRecoveryTemplate, null);
         }
 
         public void NewTask(NewTaskData data)
         {
-            if (!_setting.UseMandrill)
+            if (!setting.UseMandrill)
             {
                 return;
             }
 
             var message = new EmailMessage
             {
-                to = new[] { new EmailAddress(_setting.JarbooInfoEmail) },
-                from_email = _setting.MandrillFrom,
+                to = new[] { new EmailAddress(setting.JarbooInfoEmail) },
+                from_email = setting.MandrillFrom,
                 subject = "New task"
             };
 
@@ -79,9 +79,23 @@ namespace Jarboo.Admin.Integration.Mandrill
             message.AddGlobalVariable("TASKNAME", data.TaskTitle);
             message.AddGlobalVariable("PROJECTNAME", data.ProjectName);
             message.AddGlobalVariable("TASKDESCRIPTION", data.TaskDescription);
-            message.AddGlobalVariable("TASKLINK", _urlConstructor.TaskView(data.TaskId));
+            message.AddGlobalVariable("TASKLINK", urlConstructor.TaskView(data.TaskId));
 
-            _api.SendMessage(message, _setting.MandrillNewTaskTemplate, null);
+            api.SendMessage(message, setting.MandrillNewTaskTemplate, null);
+        }
+
+        public void NewEmployee(NewEmployeeData data)
+        {
+            var message = new EmailMessage
+            {
+                to = new EmailAddress[] { new EmailAddress(data.Email) },
+                from_email = setting.MandrillFrom,
+                subject = "Welcome to Jarboo",
+            };
+
+            message.AddGlobalVariable("FULLNAME", data.Email);
+
+            api.SendMessage(message, setting.MandrillNewEmployeeTemplate, null);
         }
     }
 }

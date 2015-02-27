@@ -20,6 +20,7 @@
         public string MandrillFrom { get; set; }
         public string MandrillPasswordRecoveryTemplate { get; set; }
         public string MandrillNewTaskTemplate { get; set; }
+        public string MandrillNewEmployeeTemplate { get; set; }
         public string MandrillTaskResponsibleChangedNotificationSubject { get; set; }
         public string MandrillTaskResponsibleNotificationTemplate { get; set; }
         #endregion
