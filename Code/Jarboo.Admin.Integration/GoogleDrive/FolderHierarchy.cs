@@ -17,8 +17,8 @@ namespace Jarboo.Admin.Integration.GoogleDrive
         {
             Root = new Folder
             {
-                                Id = rootFolderId
-                            };
+                Id = rootFolderId
+            };
         }
 
         private void CreateHierarchy(FileList files)

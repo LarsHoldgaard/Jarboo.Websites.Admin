@@ -36,9 +36,7 @@
 
     <div class="checkbox">
         <label>
-            <input type="checkbox" class="checkbox" name="@Html.NameFor(x => x.ShowDone)"
-                   @if (Model.ShowDone) { @: checked="checked"
-                                                      } />
+            @Html.CheckBoxFor(x => x.ShowDone, new { @class = "checkbox" })
             <span>Done</span>
         </label>
     </div>
