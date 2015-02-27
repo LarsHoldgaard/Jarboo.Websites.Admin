@@ -10,6 +10,7 @@ namespace Jarboo.Admin.DAL.Entities
         public Customer()
         {
             Projects = new List<Project>();
+            UserCustomers = new List<User>();
         }
 
         public int CustomerId { get; set; }
@@ -25,5 +26,6 @@ namespace Jarboo.Admin.DAL.Entities
         public User User { get; set; }
 
         public virtual List<Project> Projects { get; set; }
+        public virtual List<User> UserCustomers { get; set; }
     }
 }

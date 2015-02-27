@@ -22,149 +22,149 @@
 <!-- END RIBBON -->
 
 <div id="content">
+<!-- row -->
+<div class="row">
+    <!-- col -->
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-12">
+        <h1 class="page-title txt-color-blueDark">
+            <!-- PAGE HEADER -->
+            <i class="fa-fw fa fa-file-text-o"></i>
+            @Html.DisplayFor(x => x.Name)
+        </h1>
+    </div>
+    <!-- end col -->
+</div>
+<!-- end row -->
+<!-- widget grid -->
+<section id="widget-grid" class="">
     <!-- row -->
     <div class="row">
-        <!-- col -->
-        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-12">
-            <h1 class="page-title txt-color-blueDark">
-                <!-- PAGE HEADER -->
-                <i class="fa-fw fa fa-file-text-o"></i>
-                @Html.DisplayFor(x => x.Name)
-                @*<span>
-                        >
-                        Overview
-                    </span>*@
-            </h1>
-        </div>
-        <!-- end col -->
-    </div>
-    <!-- end row -->
-    <!-- widget grid -->
-    <section id="widget-grid" class="">
-        <!-- row -->
-        <div class="row">
-            <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                @*<div class="alert alert-info">
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            @*<div class="alert alert-info">
                         <strong>NOTE:</strong> All the data is loaded from a seperate JSON file
                     </div>*@
-                <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget well" id="wid-id-3">
-                    <!-- widget options:
-                        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget well" id="wid-id-3">
+                <!-- widget options:
+                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-                        data-widget-colorbutton="false"
-                        data-widget-editbutton="false"
-                        data-widget-togglebutton="false"
-                        data-widget-deletebutton="false"
-                        data-widget-fullscreenbutton="false"
-                        data-widget-custombutton="false"
-                        data-widget-collapsed="true"
-                        data-widget-sortable="false"
-                        -->
-                    <header>
-                        <span class="widget-icon"><i class="fa fa-comments"></i></span>
-                        <h2>Widget Title </h2>
-                    </header>
-                    <!-- widget div-->
-                    <div>
-                        <!-- widget edit box -->
-                        <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
-                            <input class="form-control" type="text">
-                        </div>
-                        <!-- end widget edit box -->
-                        <!-- widget content -->
-                        <div class="widget-body no-padding">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayNameFor(x => x.Name)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => x.Name)
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Customer
-                                            </td>
-                                            <td>
-                                                @Model.Customer.Name
-                                            </td>
-                                        </tr>
-                                        @if (this.Can(MVC.Projects.Edit()))
-                                        {
-                                            <tr>
-                                                <td colspan="2">
-                                                    <a class="btn btn-success" href="@Url.Action(MVC.Projects.Edit(Model.ProjectId))">
-                                                        <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>Edit
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- end widget content -->
+                data-widget-colorbutton="false"
+                data-widget-editbutton="false"
+                data-widget-togglebutton="false"
+                data-widget-deletebutton="false"
+                data-widget-fullscreenbutton="false"
+                data-widget-custombutton="false"
+                data-widget-collapsed="true"
+                data-widget-sortable="false"
+                -->
+                <header>
+                    <span class="widget-icon"><i class="fa fa-comments"></i></span>
+                    <h2>Widget Title </h2>
+                </header>
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                        <input class="form-control" type="text">
                     </div>
-                    <!-- end widget div -->
+                    <!-- end widget edit box -->
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(x => x.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(x => x.Name)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Customer
+                                    </td>
+                                    <td>
+                                        @Model.Customer.Name
+                                    </td>
+                                </tr>
+                                @if (this.Can(MVC.Projects.Edit()))
+                                {
+                                    <tr>
+                                        <td colspan="2">
+                                            <a class="btn btn-success" href="@Url.Action(MVC.Projects.Edit(Model.ProjectId))">
+                                                <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- end widget content -->
                 </div>
-                <!-- end widget -->
-            </article>
-            <!-- WIDGET END -->
-        </div>
-        <!-- end row -->
-        <!-- row -->
-        <div class="row">
-            <!-- a blank row to get started -->
-            <div class="col-sm-12">
-                <!-- your contents here -->
+                <!-- end widget div -->
             </div>
-        </div>
-        <!-- end row -->
-    </section>
-    <!-- end widget grid -->
-
+            <!-- end widget -->
+        </article>
+        <!-- WIDGET END -->
+    </div>
+    <!-- end row -->
+    <!-- row -->
     <div class="row">
-        <!-- col -->
-        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-            <h1 class="page-title txt-color-blueDark">
-                <!-- PAGE HEADER -->
-                <i class="fa-fw fa fa-file-text-o"></i>
-                Hours
-            </h1>
+        <!-- a blank row to get started -->
+        <div class="col-sm-12">
+            <!-- your contents here -->
         </div>
     </div>
+    <!-- end row -->
+</section>
+<!-- end widget grid -->
 
-    <div class="row">
-        <!-- col -->
-        <div class="col-sm-6">
-            <div class="well">
-                <h2 class="page-title txt-color-blueDark">Misc tasks
-                    @if (this.Can(MVC.Projects.AddHours()))
-                    {
-                        <a class="btn btn-success btn-xs" href="@Url.Action(MVC.Projects.AddHours(Model.ProjectId))">
-                            <i class="glyphicon glyphicon-plus-sign" aria-hidden="true"></i>Add
-                        </a>
-                    }
-                </h2>
+<div class="row">
+    <!-- col -->
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+        <h1 class="page-title txt-color-blueDark">
+            <!-- PAGE HEADER -->
+            <i class="fa-fw fa fa-file-text-o"></i>
+            Hours
+        </h1>
+    </div>
+</div>
 
-                @Html.Action(MVC.SpentTime.GroupedList(new SpentTimeFilter().ByProject(Model.ProjectId, true)))
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="well">
-                <h2 class="page-title txt-color-blueDark">Overall
-                </h2>
+<div class="row">
+    <!-- col -->
+    <div class="col-sm-6">
+        <div class="well">
+            <h2 class="page-title txt-color-blueDark">
+                Misc tasks
+                @if (this.Can(MVC.Projects.AddHours()))
+                {
+                    <a class="btn btn-success btn-xs" href="@Url.Action(MVC.Projects.AddHours(Model.ProjectId))">
+                        <i class="glyphicon glyphicon-plus-sign" aria-hidden="true"></i>Add
+                    </a>
+                }
+            </h2>
 
-                @Html.Action(MVC.SpentTime.GroupedList(new SpentTimeFilter().ByProject(Model.ProjectId)))
-            </div>
+            @Html.Action(MVC.SpentTime.GroupedList(new SpentTimeFilter().ByProject(Model.ProjectId, true)))
         </div>
     </div>
+    <div class="col-sm-6">
+        <div class="well">
+            <h2 class="page-title txt-color-blueDark">
+                Overall
+            </h2>
 
+            @Html.Action(MVC.SpentTime.GroupedList(new SpentTimeFilter().ByProject(Model.ProjectId)))
+        </div>
+    </div>
+</div>
+
+<div id="taskSection">
     <!-- row -->
     <div class="row">
         <!-- col -->
@@ -186,12 +186,14 @@
         </p>
     }
     @Html.Action(MVC.Tasks.List(new TasksListViewModel()
-                                             {
-                                                 TaskFilter = new TaskFilter().ByProjectId(Model.ProjectId)
-                                             }))
+    {
+        TaskFilter = new TaskFilter().ByProjectId(Model.ProjectId)
+    }))
 
     <!-- end row -->
+</div>
 
+<div id="documentationSection">
     <!-- row -->
     <div class="row">
         <!-- col -->
@@ -213,11 +215,14 @@
         </p>
     }
     @Html.Action(MVC.Documentations.ActionNames.List, MVC.Documentations.Name, new
-                                                                                   {
-                                                                                       documentationFilter = new DocumentationFilter().ByProjectId(Model.ProjectId)
-                                                                                   })
-    @if (this.Can(MVC.Quizzes.List()))
     {
+        documentationFilter = new DocumentationFilter().ByProjectId(Model.ProjectId)
+    })
+</div>
+
+@if (this.Can(MVC.Quizzes.List()))
+{
+    <div id="quizzSection">
         <!-- row -->
         <div class="row">
             <!-- col -->
@@ -230,14 +235,34 @@
 
             </div>
         </div>
-        if (this.Can(MVC.Quizzes.Create()))
-         {
-             <p>
-                 <a class="btn btn-success" href="@Url.Action(MVC.Quizzes.Create(Model.ProjectId))">
-                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>Add quiz
-                 </a>
-             </p>
-         }
-        @Html.Action(MVC.Quizzes.ActionNames.List, MVC.Quizzes.Name, new { quizFilter = new QuizFilter().ByProjectId(Model.ProjectId) })
-    }
+        @if (this.Can(MVC.Quizzes.Create()))
+        {
+        <p>
+            <a class="btn btn-success" href="@Url.Action(MVC.Quizzes.Create(Model.ProjectId))">
+                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>Add quiz
+            </a>
+        </p>
+        }
+        @Html.Action(MVC.Quizzes.ActionNames.List, MVC.Quizzes.Name, new {quizFilter = new QuizFilter().ByProjectId(Model.ProjectId)})
+    </div>
+}
 </div>
+
+@section pagespecific {
+    <script type="text/javascript">
+        $(function() {
+            if ($('#taskSection .dataTables_empty').length > 0) {
+                $('#taskSection').hide();
+            }
+
+            if ($('#documentationSection .dataTables_empty').length > 0) {
+                $('#documentationSection').hide();
+            }
+
+            if ($('#quizzSection .dataTables_empty').length > 0) {
+                $('#quizzSection').hide();
+            }
+        })
+    </script>
+}
+

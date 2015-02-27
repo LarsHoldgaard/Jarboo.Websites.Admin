@@ -7,6 +7,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using Microsoft.Ajax.Utilities;
+using System.Security.Cryptography;
+using System.Web.Routing;
+using Jarboo.Admin.Integration;
 
 #endregion
 
@@ -167,6 +170,25 @@ namespace SmartAdminMvc
 	        }
 
             return bc.Done();
+        }
+
+        /// <summary>
+        /// Creates HTML for an <c>img</c> element that presents a Gravatar icon.
+        /// </summary>
+        /// <param name="htmlHelper">HtmlHelper</param>
+        /// <param name="email">The email address used to identify the icon.</param>
+        /// <param name="size">An optional parameter that specifies the size of the square image in pixels.</param>
+        /// <param name="rating">An optional parameter that specifies the safety level of allowed images.</param>
+        /// <param name="defaultImage">An optional parameter that controls what image is displayed for email addresses that don't have associated Gravatar icons.</param>
+        /// <param name="htmlAttributes">An optional parameter holding additional attributes to be included on the <c>img</c> element.</param>
+        /// <returns>An HTML string of the <c>img</c> element that presents a Gravatar icon.</returns>
+        public static HtmlString Gravatar(this HtmlHelper htmlHelper, string email,
+            int? size = null,
+            GravatarRating rating = GravatarRating.Default,
+            GravatarDefaultImage defaultImage = GravatarDefaultImage.MysteryMan,
+            object htmlAttributes = null)
+        {
+            return new HtmlString(Jarboo.Admin.Integration.Gravatar.RenderGravatar(email, size, rating, defaultImage, htmlAttributes));
         }
     }
 }

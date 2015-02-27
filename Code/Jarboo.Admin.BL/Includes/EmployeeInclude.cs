@@ -14,7 +14,8 @@ namespace Jarboo.Admin.BL.Includes
         private bool positions;
         private bool taskSteps;
         private bool tasks;
-        
+        private bool user;
+
         public EmployeeInclude Positions()
         {
             positions = true;
@@ -30,7 +31,11 @@ namespace Jarboo.Admin.BL.Includes
             tasks = true;
             return this;
         }
-
+        public EmployeeInclude User()
+        {
+            user = true;
+            return this;
+        }
         public override IQueryable<Employee> Execute(IQueryable<Employee> query)
         {
             if (positions)
@@ -46,6 +51,11 @@ namespace Jarboo.Admin.BL.Includes
             if (tasks)
             {
                 query = query.Include(x => x.TaskSteps.Select(y => y.Task));
+            }
+
+            if (user)
+            {
+                query = query.Include(x => x.User);
             }
 
             return query;

@@ -17,32 +17,11 @@ namespace Jarboo.Admin.BL.Tests.Services
     [TestFixture]
     public class ProjectServiceTests
     {
-        [Test]
-        public void Create_WhenBoardNameMissing_CallsDefaultBoardName()
-        {
-            using (var context = ContextHelper.Create())
-            {
-                var customer = context.AddCustomer();
-                var model = ValidProjectEdit(context);
-                model.BoardName = null;
-
-                var mockTaskRegister = A.Fake<ITaskRegister>();
-                var service = Factory.CreateProjectService(context, taskRegister: mockTaskRegister);
-
-
-                Helper.Suppress(() => service.Save(model, null));
-
-
-                A.CallTo(() => mockTaskRegister.DefaultProjectName(customer.Name)).MustHaveHappened();
-            }
-        }
-
         private ProjectEdit ValidProjectEdit(DAL.IUnitOfWork context)
         {
             return new ProjectEdit()
                        {
                            Name = "Project",
-                           BoardName = "BoardName",
                            CustomerId = context.EnsureCustomer().CustomerId
                        };
         }

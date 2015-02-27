@@ -33,7 +33,7 @@ namespace Jarboo.Admin.Web.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                return RedirectToAction(MVC.Home.Landing());
+                return RedirectToAction(MVC.Accounts.Index());
             }
             else if (UserEmployeeId != null)
             {
