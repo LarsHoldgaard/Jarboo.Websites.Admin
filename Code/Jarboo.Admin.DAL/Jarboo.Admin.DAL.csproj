@@ -303,6 +303,12 @@
     <EmbeddedResource Include="Migrations\201502260722591_AddMandrillNewEmployeeTemplate.resx">
       <DependentUpon>201502260722591_AddMandrillNewEmployeeTemplate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502260941145_AddUsersToCustomer.resx">
+      <DependentUpon>201502260941145_AddUsersToCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502261430325_updated settings.resx">
+      <DependentUpon>201502261430325_updated settings.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
