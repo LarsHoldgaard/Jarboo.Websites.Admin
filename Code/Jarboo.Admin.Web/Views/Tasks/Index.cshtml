@@ -30,6 +30,15 @@
     </div>
     <!-- end row -->
 
+    @if (this.Can(MVC.Tasks.Create()))
+    {
+        <p>
+            <a class="btn btn-success" href="@Url.Action(MVC.Tasks.Create())">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add task
+            </a>
+        </p>
+    }
+    
     @Html.Action(MVC.Tasks.List(new TasksListViewModel()
                                              {
                                                  ShowProject = true

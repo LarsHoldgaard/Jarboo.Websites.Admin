@@ -191,14 +191,8 @@ namespace Jarboo.Admin.Web.Controllers
             ProjectName,
             Priority,
             Type,
-            Size,
-            Urgency,
-            Folder,
-            Step,
             Hours,
-            EstimatedPrice,
-            Deadline,
-            Delete
+            EstimatedPrice
         }
         private static TaskListColumns[] columnsWithClientSorting = new TaskListColumns[] { TaskListColumns.Priority, TaskListColumns.Hours };
         private static List<Column<TaskViewModel>> columns = new List<Column<TaskViewModel>>()
@@ -236,30 +230,6 @@ namespace Jarboo.Admin.Web.Controllers
                 },
             new Column<TaskViewModel>()
                 {
-                    Title = "Size",
-                    Orderable = true,
-                    Getter = (x) => x.Size.ToString()
-                },
-            new Column<TaskViewModel>()
-                {
-                    Title = "Urgency",
-                    Orderable = true,
-                    Getter = (x) => x.Urgency.ToString()
-                },
-            new Column<TaskViewModel>()
-                {
-                    Title = "Folder",
-                    Type = DataTableConfig.Column.ColumnSpecialType.ExternalLink,
-                    Getter = (x) => x.FolderLink
-                },
-            new Column<TaskViewModel>()
-                {
-                    Title = "Step",
-                    Type = DataTableConfig.Column.ColumnSpecialType.TaskStepLink,
-                    Getter = (x) => new object[] {x.TaskId, x.Step()}
-                },
-            new Column<TaskViewModel>()
-                {
                     Title = "Hours",
                     Orderable = true,
                     Getter = (x) => x.Hours().ToString()
@@ -269,19 +239,7 @@ namespace Jarboo.Admin.Web.Controllers
                     Title = "Estimated price",
                     Orderable = true,
                     Getter = (x) => x.EstimatedPrice.ToString()
-                },
-            new Column<TaskViewModel>()
-                {
-                    Title = "Deadline",
-                    Orderable = true,
-                    Getter = (x) => x.DeadlineStr()
-                },
-            new Column<TaskViewModel>()
-                {
-                    Title = "",
-                    Type = DataTableConfig.Column.ColumnSpecialType.DeleteBtn,
-                    Getter = (x) => new object[] {x.TaskId, new UrlHelper(Helper.GetRequestContext()).Action(MVC.Tasks.Delete())}
-                },
+                }
         };
 
         #endregion
@@ -289,11 +247,11 @@ namespace Jarboo.Admin.Web.Controllers
         {
             var config = new DataTableConfig();
             config.Searching = true;
+            config.Paging = true;
             config.PageLength = 25;
             config.SetupServerDataSource(Url.Action(MVC.Tasks.ListData()), FormMethod.Post);
             config.Columns = new List<DataTableConfig.Column>(columns);
             config.Columns[(int)TaskListColumns.ProjectName].Visible = showProject;
-            config.Columns[(int)TaskListColumns.Delete].Visible = this.Can(MVC.Tasks.Delete());
 
             switch (sorting)
             {
@@ -324,10 +282,10 @@ namespace Jarboo.Admin.Web.Controllers
 
         private PagedData<Task> GetTasks(IDataTablesRequest request, TaskFilter taskFilter)
         {
-            var filter = (taskFilter ?? new TaskFilter()).ByString(request.Search.Value);
-            //.WithPaging(request.Length, request.Start / request.Length);
+            var filter = taskFilter ?? new TaskFilter();
+                //.WithPaging(request.Length, request.Start / request.Length);
             var query = Query.ForTask(filter).Include(x => x.Project().TaskSteps().SpentTimes());
-
+            
             var pageSize = request.Length;
             var pageNumber = request.Start / request.Length;
 
@@ -398,24 +356,9 @@ namespace Jarboo.Admin.Web.Controllers
                         query.Sort(x => x.ByType(direction));
                         break;
                     }
-                case TaskListColumns.Size:
-                    {
-                        query.Sort(x => x.BySize(direction));
-                        break;
-                    }
-                case TaskListColumns.Urgency:
-                    {
-                        query.Sort(x => x.ByUrgency(direction));
-                        break;
-                    }
                 case TaskListColumns.EstimatedPrice:
                     {
                         query.Sort(x => x.ByEstimatedPrice(direction));
-                        break;
-                    }
-                case TaskListColumns.Deadline:
-                    {
-                        query.Sort(x => x.ByDeadline(direction));
                         break;
                     }
             }

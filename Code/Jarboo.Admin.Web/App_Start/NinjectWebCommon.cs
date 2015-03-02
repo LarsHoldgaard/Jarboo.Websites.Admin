@@ -78,7 +78,6 @@ namespace Jarboo.Admin.Web.App_Start
             kernel.Bind<ICacheService>().To<HttpCacheService>().InSingletonScope();
             kernel.Bind<ITaskRegister>().To<NoopTaskRegister>().InRequestScope();
 
-            kernel.Bind<IGoogleDriveConfiguration>().ToConstant(Configuration.Instance);
             kernel.Bind<IFolderCreator>().To<GoogleDriveFolderCreator>().InRequestScope();
 
             kernel.Bind<IUrlConstructor>().To<UrlConstructor>();

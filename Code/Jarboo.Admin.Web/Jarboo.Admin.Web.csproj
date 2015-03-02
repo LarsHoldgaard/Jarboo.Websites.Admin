@@ -566,14 +566,9 @@
     <Content Include="Scripts\plugin\ckeditor\README.md" />
     <Content Include="Scripts\plugin\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="Scripts\plugin\ckeditor\skins\moono\readme.md" />
-    <Content Include="Scripts\smartadmin.js">
-      <DependentUpon>smartadmin.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\smartadmin.js.bundle" />
-    <Content Include="Scripts\smartadmin.min.js.map">
-      <DependentUpon>smartadmin.min.js</DependentUpon>
-    </Content>
-    <None Include="T4MVC.tt.settings.xml" />
+    <None Include="T4MVC.tt.settings.xml">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Scripts\plugin\bootstrap-duallistbox\jquery.bootstrap-duallistbox.min.js" />
     <Content Include="Scripts\plugin\bootstrap-progressbar\bootstrap-progressbar.min.js" />
     <Content Include="Scripts\plugin\bootstrap-slider\bootstrap-slider.min.js" />
@@ -1008,9 +1003,6 @@
     <Content Include="Scripts\Site\validation.style.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.manager.min.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.ui.min.js" />
-    <Content Include="Scripts\smartadmin.min.js">
-      <DependentUpon>smartadmin.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\smartwidgets\jarvis.widget.min.js" />
     <Content Include="Scripts\speech\voicecommand.min.js" />
     <Content Include="Web.config">
@@ -1045,6 +1037,7 @@
     <Content Include="Views\Settings\Edit.cshtml" />
     <Content Include="Views\SpentTime\_ChangeStatusForm.cshtml" />
     <Content Include="Views\SpentTime\_AddPriceForm.cshtml" />
+    <Content Include="Views\Users\_UserList.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1099,6 +1092,7 @@
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SpentTimeController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="CustomersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1161,6 +1155,7 @@
     <Compile Include="Models\Task\TaskViewModel.cs" />
     <Compile Include="Models\Time\TimeListViewModel.cs" />
     <Compile Include="Models\Time\TimeViewModel.cs" />
+    <Compile Include="Models\User\UserListViewModel.cs" />
     <Compile Include="ProjectsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1189,6 +1184,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="TasksController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UsersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
   </ItemGroup>

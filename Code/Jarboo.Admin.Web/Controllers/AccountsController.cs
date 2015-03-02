@@ -36,7 +36,7 @@ namespace Jarboo.Admin.Web.Controllers
         public virtual ActionResult Login(string returnUrl = "")
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View(new LoginViewModel());
+            return View(new LoginViewModel() { Persist = true });
         }
 
         [HttpPost]

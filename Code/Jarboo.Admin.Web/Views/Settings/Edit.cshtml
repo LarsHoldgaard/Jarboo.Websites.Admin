@@ -71,6 +71,18 @@
                                     </label>
                                 </section>
                                 <section>
+                                    @Html.LabelFor(model => model.GoogleBasePath, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.GoogleBasePath, new { @placeholder = "Base folder path" })
+                                    </label>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(model => model.GoogleTemplatePath, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.TextBoxFor(x => x.GoogleTemplatePath, new { @placeholder = "Folder template path" })
+                                    </label>
+                                </section>
+                                <section>
                                     @Html.LabelFor(model => model.GoogleLocalUserId, new { @class = "label" })
                                     <label class="input">
                                         @Html.TextBoxFor(x => x.GoogleLocalUserId, new { @placeholder = "GoogleLocalUserId" })

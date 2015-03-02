@@ -10,7 +10,7 @@ using Jarboo.Admin.Integration.Mandrill;
 
 namespace Jarboo.Admin.Web.Infrastructure
 {
-    public class Configuration : IGoogleDriveConfiguration
+    public class Configuration
     {
         private Configuration()
         { }
@@ -43,32 +43,6 @@ namespace Jarboo.Admin.Web.Infrastructure
                     _predefinedCustomers = ConfigurationManager.AppSettings["PredefinedCustomers"].Split(';');
                 }
                 return _predefinedCustomers;
-            }
-        }
-
-        private string _googleDriveTemplatePath;
-        public string GoogleDriveTemplatePath
-        {
-            get
-            {
-                if (_googleDriveTemplatePath == null)
-                {
-                    _googleDriveTemplatePath = ConfigurationManager.AppSettings["GoogleDriveTemplatePath"];
-                }
-                return _googleDriveTemplatePath;
-            }
-        }
-
-        private string _googleDrivePath;
-        public string GoogleDrivePath
-        {
-            get
-            {
-                if (_googleDrivePath == null)
-                {
-                    _googleDrivePath = ConfigurationManager.AppSettings["GoogleDrivePath"];
-                }
-                return _googleDrivePath;
             }
         }
 
