@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Jarboo.Admin.DAL.Entities
 {
@@ -49,6 +46,7 @@ namespace Jarboo.Admin.DAL.Entities
         {
             return 0;
         }
+
         public static TaskStepEnum? Next(TaskStepEnum taskStep)
         {
             var nextVal = ((int)taskStep) + 1;

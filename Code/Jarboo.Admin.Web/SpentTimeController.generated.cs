@@ -398,18 +398,6 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void UpdateStatusTaskAsDoneOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int taskId);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult UpdateStatusTaskAsDone(int taskId)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateStatusTaskAsDone);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
-            UpdateStatusTaskAsDoneOverride(callInfo, taskId);
-            return callInfo;
-        }
-
-        [NonAction]
         partial void UpdateStatusTaskOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.TaskNextStep model);
 
         [NonAction]
@@ -418,6 +406,18 @@ namespace Jarboo.Admin.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateStatusTask);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             UpdateStatusTaskOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void UpdateStatusTaskAsDoneOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int taskId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult UpdateStatusTaskAsDone(int taskId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateStatusTaskAsDone);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
+            UpdateStatusTaskAsDoneOverride(callInfo, taskId);
             return callInfo;
         }
 

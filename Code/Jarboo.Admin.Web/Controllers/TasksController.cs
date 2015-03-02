@@ -10,6 +10,7 @@ using Jarboo.Admin.BL;
 using Jarboo.Admin.BL.Filters;
 using Jarboo.Admin.BL.Includes;
 using Jarboo.Admin.BL.Models;
+using Jarboo.Admin.BL.Other;
 using Jarboo.Admin.BL.Sorters;
 using Jarboo.Admin.DAL.Entities;
 using Jarboo.Admin.Web.Infrastructure;
@@ -36,7 +37,10 @@ namespace Jarboo.Admin.Web.Controllers
         public ICustomerService CustomerService { get; set; }
         [Inject]
         public ISpentTimeService SpentTimeService { get; set; }
+        [Inject]
+        public INotifier Notifier { get; set; }
 
+       
         // GET: /Tasks/
         public virtual ActionResult Index()
         {
@@ -165,6 +169,36 @@ namespace Jarboo.Admin.Web.Controllers
                 RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult EndTask(TaskNextStep model)
+        {
+            return Handle(
+                model,
+                TaskService.NextStep,
+                () => RedirectToAction(MVC.Tasks.NotifyCompletionTask(model.TaskId)),
+                RedirectToAction(MVC.Tasks.Steps(model.TaskId)));
+        }
+
+        public virtual ActionResult NotifyCompletionTask(int taskId)
+        {
+            var model = new TaskEdit { TaskId = taskId };
+            return View(MVC.Tasks.Views.CompletionTask, model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult NotifyCompletionTask(TaskEdit model)
+        {
+            Task task = TaskService.GetByIdEx(model.TaskId, new TaskInclude().Project().Customer());
+
+            Notifier.EndTask(new EndTaskData(task, model.DeliveryNote));
+
+            return Handle(model, TaskService.Save,
+                () => RedirectToAction(MVC.Tasks.Index()),
+                RedirectToAction(MVC.Tasks.NotifyCompletionTask(model.TaskId)));
+        }
+
         // POST: /Tasks/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -283,9 +317,9 @@ namespace Jarboo.Admin.Web.Controllers
         private PagedData<Task> GetTasks(IDataTablesRequest request, TaskFilter taskFilter)
         {
             var filter = taskFilter ?? new TaskFilter();
-                //.WithPaging(request.Length, request.Start / request.Length);
+            //.WithPaging(request.Length, request.Start / request.Length);
             var query = Query.ForTask(filter).Include(x => x.Project().TaskSteps().SpentTimes());
-            
+
             var pageSize = request.Length;
             var pageNumber = request.Start / request.Length;
 

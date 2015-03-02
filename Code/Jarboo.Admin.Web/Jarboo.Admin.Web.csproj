@@ -1038,6 +1038,7 @@
     <Content Include="Views\SpentTime\_ChangeStatusForm.cshtml" />
     <Content Include="Views\SpentTime\_AddPriceForm.cshtml" />
     <Content Include="Views\Users\_UserList.cshtml" />
+    <Content Include="Views\Tasks\CompletionTask.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

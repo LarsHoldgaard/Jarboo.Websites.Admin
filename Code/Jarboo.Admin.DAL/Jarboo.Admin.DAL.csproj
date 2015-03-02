@@ -217,6 +217,10 @@
     <Compile Include="Migrations\201503020907260_AddFieldsComissionPriceOvverideTotalSomeChange.Designer.cs">
       <DependentUpon>201503020907260_AddFieldsComissionPriceOvverideTotalSomeChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503021518364_AddFieldDeliveryNoteToTaskTable.cs" />
+    <Compile Include="Migrations\201503021518364_AddFieldDeliveryNoteToTaskTable.Designer.cs">
+      <DependentUpon>201503021518364_AddFieldDeliveryNoteToTaskTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManager.cs" />
@@ -322,6 +326,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503020907260_AddFieldsComissionPriceOvverideTotalSomeChange.resx">
       <DependentUpon>201503020907260_AddFieldsComissionPriceOvverideTotalSomeChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503021518364_AddFieldDeliveryNoteToTaskTable.resx">
+      <DependentUpon>201503021518364_AddFieldDeliveryNoteToTaskTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
