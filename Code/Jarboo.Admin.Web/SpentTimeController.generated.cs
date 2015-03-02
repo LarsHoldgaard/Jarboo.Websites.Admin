@@ -77,15 +77,33 @@ namespace Jarboo.Admin.Web.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Create()
+        public virtual System.Web.Mvc.ActionResult CreateTaskHours()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CreateTaskHours);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ActionResult Delete()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult UpdateStatusTask()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateStatusTask);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult UpdateStatusTaskAsDone()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateStatusTaskAsDone);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult AddEmployeePrice()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddEmployeePrice);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -109,8 +127,11 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Accept = "Accept";
             public readonly string Deny = "Deny";
             public readonly string TimeList = "TimeList";
-            public readonly string Create = "Create";
+            public readonly string CreateTaskHours = "CreateTaskHours";
             public readonly string Delete = "Delete";
+            public readonly string UpdateStatusTask = "UpdateStatusTask";
+            public readonly string UpdateStatusTaskAsDone = "UpdateStatusTaskAsDone";
+            public readonly string AddEmployeePrice = "AddEmployeePrice";
             public readonly string HoursPerDayChartData = "HoursPerDayChartData";
         }
 
@@ -123,8 +144,11 @@ namespace Jarboo.Admin.Web.Controllers
             public const string Accept = "Accept";
             public const string Deny = "Deny";
             public const string TimeList = "TimeList";
-            public const string Create = "Create";
+            public const string CreateTaskHours = "CreateTaskHours";
             public const string Delete = "Delete";
+            public const string UpdateStatusTask = "UpdateStatusTask";
+            public const string UpdateStatusTaskAsDone = "UpdateStatusTaskAsDone";
+            public const string AddEmployeePrice = "AddEmployeePrice";
             public const string HoursPerDayChartData = "HoursPerDayChartData";
         }
 
@@ -171,11 +195,11 @@ namespace Jarboo.Admin.Web.Controllers
         {
             public readonly string taskId = "taskId";
         }
-        static readonly ActionParamsClass_Create s_params_Create = new ActionParamsClass_Create();
+        static readonly ActionParamsClass_CreateTaskHours s_params_CreateTaskHours = new ActionParamsClass_CreateTaskHours();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Create CreateParams { get { return s_params_Create; } }
+        public ActionParamsClass_CreateTaskHours CreateTaskHoursParams { get { return s_params_CreateTaskHours; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Create
+        public class ActionParamsClass_CreateTaskHours
         {
             public readonly string taskId = "taskId";
             public readonly string projectId = "projectId";
@@ -190,6 +214,33 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string id = "id";
             public readonly string taskId = "taskId";
         }
+        static readonly ActionParamsClass_UpdateStatusTask s_params_UpdateStatusTask = new ActionParamsClass_UpdateStatusTask();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_UpdateStatusTask UpdateStatusTaskParams { get { return s_params_UpdateStatusTask; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_UpdateStatusTask
+        {
+            public readonly string taskId = "taskId";
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_UpdateStatusTaskAsDone s_params_UpdateStatusTaskAsDone = new ActionParamsClass_UpdateStatusTaskAsDone();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_UpdateStatusTaskAsDone UpdateStatusTaskAsDoneParams { get { return s_params_UpdateStatusTaskAsDone; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_UpdateStatusTaskAsDone
+        {
+            public readonly string taskId = "taskId";
+        }
+        static readonly ActionParamsClass_AddEmployeePrice s_params_AddEmployeePrice = new ActionParamsClass_AddEmployeePrice();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AddEmployeePrice AddEmployeePriceParams { get { return s_params_AddEmployeePrice; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AddEmployeePrice
+        {
+            public readonly string taskId = "taskId";
+            public readonly string projectId = "projectId";
+            public readonly string model = "model";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -200,13 +251,17 @@ namespace Jarboo.Admin.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _AddPriceForm = "_AddPriceForm";
                 public readonly string _AddTimeForm = "_AddTimeForm";
+                public readonly string _ChangeStatusForm = "_ChangeStatusForm";
                 public readonly string _ListTime = "_ListTime";
                 public readonly string GroupedList = "GroupedList";
                 public readonly string Index = "Index";
                 public readonly string List = "List";
             }
+            public readonly string _AddPriceForm = "~/Views/SpentTime/_AddPriceForm.cshtml";
             public readonly string _AddTimeForm = "~/Views/SpentTime/_AddTimeForm.cshtml";
+            public readonly string _ChangeStatusForm = "~/Views/SpentTime/_ChangeStatusForm.cshtml";
             public readonly string _ListTime = "~/Views/SpentTime/_ListTime.cshtml";
             public readonly string GroupedList = "~/Views/SpentTime/GroupedList.cshtml";
             public readonly string Index = "~/Views/SpentTime/Index.cshtml";
@@ -293,27 +348,27 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int taskId, int projectId);
+        partial void CreateTaskHoursOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int taskId, int projectId);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(int taskId, int projectId)
+        public override System.Web.Mvc.ActionResult CreateTaskHours(int taskId, int projectId)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CreateTaskHours);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "projectId", projectId);
-            CreateOverride(callInfo, taskId, projectId);
+            CreateTaskHoursOverride(callInfo, taskId, projectId);
             return callInfo;
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Time.TimeViewModel model);
+        partial void CreateTaskHoursOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Time.TimeViewModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(Jarboo.Admin.Web.Models.Time.TimeViewModel model)
+        public override System.Web.Mvc.ActionResult CreateTaskHours(Jarboo.Admin.Web.Models.Time.TimeViewModel model)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CreateTaskHours);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            CreateOverride(callInfo, model);
+            CreateTaskHoursOverride(callInfo, model);
             return callInfo;
         }
 
@@ -327,6 +382,67 @@ namespace Jarboo.Admin.Web.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
             DeleteOverride(callInfo, id, taskId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void UpdateStatusTaskOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int taskId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult UpdateStatusTask(int taskId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateStatusTask);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
+            UpdateStatusTaskOverride(callInfo, taskId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void UpdateStatusTaskAsDoneOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int taskId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult UpdateStatusTaskAsDone(int taskId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateStatusTaskAsDone);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
+            UpdateStatusTaskAsDoneOverride(callInfo, taskId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void UpdateStatusTaskOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.TaskNextStep model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult UpdateStatusTask(Jarboo.Admin.BL.Models.TaskNextStep model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateStatusTask);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            UpdateStatusTaskOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void AddEmployeePriceOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int taskId, int projectId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult AddEmployeePrice(int taskId, int projectId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddEmployeePrice);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "projectId", projectId);
+            AddEmployeePriceOverride(callInfo, taskId, projectId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void AddEmployeePriceOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.Web.Models.Time.TimeViewModel model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult AddEmployeePrice(Jarboo.Admin.Web.Models.Time.TimeViewModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddEmployeePrice);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            AddEmployeePriceOverride(callInfo, model);
             return callInfo;
         }
 

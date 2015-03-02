@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Models
 {
@@ -10,5 +6,6 @@ namespace Jarboo.Admin.BL.Models
     {
         public int TaskId { get; set; }
         public int? EmployeeId { get; set; }
+        public TaskStepEnum? Step { get; set; }
     }
 }

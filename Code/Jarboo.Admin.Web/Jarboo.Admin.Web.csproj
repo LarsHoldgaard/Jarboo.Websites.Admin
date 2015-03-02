@@ -1043,6 +1043,8 @@
     <Content Include="Views\Tasks\PendingTaskCreate.cshtml" />
     <Content Include="Views\Tasks\PendingTaskListEstimated.cshtml" />
     <Content Include="Views\Settings\Edit.cshtml" />
+    <Content Include="Views\SpentTime\_ChangeStatusForm.cshtml" />
+    <Content Include="Views\SpentTime\_AddPriceForm.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

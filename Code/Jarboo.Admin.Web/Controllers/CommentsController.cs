@@ -25,7 +25,7 @@ namespace Jarboo.Admin.Web.Controllers
         // GET: /Comment/Create
         public virtual ActionResult Create(int taskId)
         {
-            var commentsCreate = new CommentViewModel { TaskId = taskId, EmployeeId = UserEmployeeId ?? 1 };
+            var commentsCreate = new CommentViewModel { TaskId = taskId, EmployeeId = UserEmployeeId.GetValueOrDefault() };
 
             return PartialView(MVC.Comments.Views._AddCommentForm, commentsCreate);
         }

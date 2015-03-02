@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,6 +22,8 @@ namespace Jarboo.Admin.DAL.Entities
         public string Creator { get; set; }
 
         public User User { get; set; }
+
+        public decimal? Commission { get; set; }
 
         public virtual List<Project> Projects { get; set; }
     }

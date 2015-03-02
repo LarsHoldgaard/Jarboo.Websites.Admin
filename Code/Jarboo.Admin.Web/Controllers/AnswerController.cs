@@ -24,7 +24,7 @@ namespace Jarboo.Admin.Web.Controllers
 
             return View(model);
         }
-       
+
         // GET: /Answer/List
         [ChildActionOnly]
         public virtual ActionResult AnswerList(int questionId)
@@ -38,9 +38,9 @@ namespace Jarboo.Admin.Web.Controllers
         }
 
         // GET: /Answer/Create
-       public virtual ActionResult Create(int questionId, int taskId)
+        public virtual ActionResult Create(int questionId, int taskId)
         {
-            var answerCreate = new AnswerViewModel { QuestionId = questionId, TaskId = taskId, EmployeeId = UserEmployeeId ?? 1 };
+            var answerCreate = new AnswerViewModel { QuestionId = questionId, TaskId = taskId, EmployeeId = UserEmployeeId.GetValueOrDefault() };
             var questionUpdate = QuestionService.GetById(questionId);
 
             questionUpdate.IsRead = true;

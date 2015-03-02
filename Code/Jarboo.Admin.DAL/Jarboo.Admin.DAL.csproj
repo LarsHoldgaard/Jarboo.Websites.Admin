@@ -197,6 +197,10 @@
     <Compile Include="Migrations\201502251025581_SpentTimeDate.Designer.cs">
       <DependentUpon>201502251025581_SpentTimeDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502262131496_AddFieldsComissionPriceOvverideTotalSomeChange.cs" />
+    <Compile Include="Migrations\201502262131496_AddFieldsComissionPriceOvverideTotalSomeChange.Designer.cs">
+      <DependentUpon>201502262131496_AddFieldsComissionPriceOvverideTotalSomeChange.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManager.cs" />
@@ -287,6 +291,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502251025581_SpentTimeDate.resx">
       <DependentUpon>201502251025581_SpentTimeDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502262131496_AddFieldsComissionPriceOvverideTotalSomeChange.resx">
+      <DependentUpon>201502262131496_AddFieldsComissionPriceOvverideTotalSomeChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -64,7 +64,13 @@
                             <!-- widget content -->
                             <div class="widget-body no-padding">
 
-                                @Html.Action(MVC.SpentTime.ActionNames.Create, MVC.SpentTime.Name, new { taskId = Model.TaskId, projectId = Model.ProjectId })
+                                <header>
+                                    <p> Current status:<b> @Model.CurrentStatus </b></p>
+
+                                </header>
+                                @Html.Action(MVC.SpentTime.ActionNames.UpdateStatusTask, MVC.SpentTime.Name, new { taskId = Model.TaskId })
+                                @Html.Action(MVC.SpentTime.ActionNames.CreateTaskHours, MVC.SpentTime.Name, new { taskId = Model.TaskId, projectId = Model.ProjectId })
+                                @Html.Action(MVC.SpentTime.ActionNames.AddEmployeePrice, MVC.SpentTime.Name, new { taskId = Model.TaskId, projectId = Model.ProjectId })
                             </div><!-- end widget content -->
                         </div><!-- end widget div -->
                     </div>
@@ -76,11 +82,9 @@
 </section>
 
 <script type="text/javascript">
-
     $('#Taskview_dt_basic_times').dataTable({
         "order": [[1, "desc"]],
         "bDestroy": true
 
     });
-
 </script>

@@ -24,12 +24,14 @@ namespace Jarboo.Admin.Web.App_Start
             Mapper.CreateMap<DAL.Entities.Question, QuestionViewModel>();
             Mapper.CreateMap<DAL.Entities.SpentTime, TimeViewModel>();
             Mapper.CreateMap<DAL.Entities.Comment, CommentViewModel>();
-         
+
             Mapper.CreateMap<SpentTimeOnTask, DAL.Entities.SpentTime>();
             Mapper.CreateMap<SpentTime, SpentTimeOnTask>();
 
-            Mapper.CreateMap<SpentTimeOnTask, TimeViewModel>();
-            Mapper.CreateMap<TimeViewModel, SpentTimeOnTask>();
+            Mapper.CreateMap<SpentTimeOnTask, TimeViewModel>()
+                 .ForMember(x => x.Date, x => x.MapFrom(y => y.Date));
+            Mapper.CreateMap<TimeViewModel, SpentTimeOnTask>()
+                  .ForMember(x => x.Date, x => x.MapFrom(y => y.Date));
         }
     }
 }

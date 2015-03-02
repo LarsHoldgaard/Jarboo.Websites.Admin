@@ -85,8 +85,6 @@ namespace Jarboo.Admin.Web.Controllers
                     ProjectId = projectId.Value
                 };
             }
-
-
             return CreateEditView(model);
         }
 
@@ -113,7 +111,7 @@ namespace Jarboo.Admin.Web.Controllers
         {
 
             ActionResult result = null;
-            result = RedirectToAction(model.TaskId !=0 ? MVC.Tasks.Edit(model.TaskId) : MVC.Tasks.Create(model.ProjectId));
+            result = RedirectToAction(model.TaskId != 0 ? MVC.Tasks.Edit(model.TaskId) : MVC.Tasks.Create(model.ProjectId));
             return Handle(model, TaskService.Save,
                 () => RedirectToAction(MVC.Tasks.View(model.TaskId)),
                 () => model.ProjectId == 0 ?
@@ -487,7 +485,7 @@ namespace Jarboo.Admin.Web.Controllers
 
         public virtual ActionResult PendingTask()
         {
-            var projects = ProjectService.GetAll(Query.ForProject().Filter(x => x.ByCustomerId(UserCustomerId ?? 1)));
+            var projects = ProjectService.GetAll(Query.ForProject().Filter(x => x.ByCustomerId(UserCustomerId.GetValueOrDefault())));
 
             if (projects == null)
             {
