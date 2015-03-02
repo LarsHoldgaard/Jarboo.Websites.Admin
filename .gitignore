@@ -163,3 +163,5 @@ Code/Jarboo.Admin.Web/App_Data/errors/
 !tools/NUnit/*.exe
 !tools/NUnit/*.dll
 tools/NUnit/TestResult.xml
+Code/Jarboo.Admin.Web/App_Data/Jarboo.Admin.mdf
+Code/Jarboo.Admin.Web/App_Data/Jarboo.Admin_log.ldf

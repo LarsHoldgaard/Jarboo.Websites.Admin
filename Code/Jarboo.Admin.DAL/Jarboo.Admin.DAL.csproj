@@ -209,6 +209,10 @@
     <Compile Include="Migrations\201502261430325_updated settings.Designer.cs">
       <DependentUpon>201502261430325_updated settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503020731557_settings fix.cs" />
+    <Compile Include="Migrations\201503020731557_settings fix.Designer.cs">
+      <DependentUpon>201503020731557_settings fix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManager.cs" />
@@ -308,6 +312,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502261430325_updated settings.resx">
       <DependentUpon>201502261430325_updated settings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503020731557_settings fix.resx">
+      <DependentUpon>201503020731557_settings fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
