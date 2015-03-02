@@ -34,6 +34,30 @@ namespace Jarboo.Admin.Web.Controllers
             }
         }
 
+        public virtual ActionResult RevokeToken()
+        {
+            var result = new AuthorizationCodeMvcApp(this, new AppFlowMetadata(SettingService)).
+                AuthorizeAsync(new CancellationTokenSource().Token).WaitAndUnwrapException();
+
+
+            if (result.Credential != null)
+            {
+                if (!string.IsNullOrEmpty(result.Credential.Token.RefreshToken))
+                {
+                    return Content(result.Credential.Token.RefreshToken);
+                }
+                else
+                {
+                    return Content("Server didn't return refresh token. To reissue token you should disconnect app from google drive first.");
+                }
+            }
+            else
+            {
+                return new RedirectResult(result.RedirectUri);
+            }
+        }
+
+
         [HttpGet]
         public virtual ActionResult Settings()
         {
