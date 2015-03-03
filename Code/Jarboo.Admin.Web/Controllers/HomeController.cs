@@ -51,7 +51,7 @@ namespace Jarboo.Admin.Web.Controllers
                     .Filter(x => x.ByAccepted(true).ByFromDate(DateTime.Now.AddMonths(-1))))
                     .Data
                     .GroupBy(x => x.Date.Date).OrderBy(x => x.Key)
-                    .Select(x => x.Aggregate(0d, (a, y) => a + y.HourlyPrice * (double)y.Hours));
+                    .Select(x => x.Aggregate(0d, (a, y) => a + (double)(y.Price.GetValueOrDefault() * y.Hours.GetValueOrDefault())));
             }
 
             if (this.Can(MVC.Home.Name, "TaskStats"))

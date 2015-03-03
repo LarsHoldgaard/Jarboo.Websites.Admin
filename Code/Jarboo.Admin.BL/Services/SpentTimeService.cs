@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Jarboo.Admin.BL.Authorization;
@@ -21,7 +20,7 @@ namespace Jarboo.Admin.BL.Services
         public SpentTimeService(IUnitOfWork unitOfWork, IAuth auth, ICacheService cacheService)
             : base(unitOfWork, auth, cacheService)
         {
-            
+
         }
 
         protected override IDbSet<SpentTime> Table
@@ -58,7 +57,7 @@ namespace Jarboo.Admin.BL.Services
 
         protected override IQueryable<SpentTime> FilterCanView(IQueryable<SpentTime> query)
         {
-            return query.Where(x => (x.ProjectId.HasValue && x.Project.CustomerId == UserCustomerId) || 
+            return query.Where(x => (x.ProjectId.HasValue && x.Project.CustomerId == UserCustomerId) ||
                 (x.TaskId.HasValue && x.TaskStep.Task.Project.CustomerId == UserCustomerId) ||
                 x.EmployeeId == UserEmployeeId);
         }
@@ -76,7 +75,7 @@ namespace Jarboo.Admin.BL.Services
             {
                 return entity.EmployeeId == UserEmployeeId;
             }
-            else if(entity.ProjectId.HasValue && entity.ProjectId != 0)
+            else if (entity.ProjectId.HasValue && entity.ProjectId != 0)
             {
                 return UnitOfWork.Projects.Any(x => x.ProjectId == entity.ProjectId && x.CustomerId == UserCustomerId);
             }
@@ -92,10 +91,34 @@ namespace Jarboo.Admin.BL.Services
             }
         }
 
-        private void FillNewlyCreated(SpentTime entity, int employeeId)
+        private void FillNewlyCreated(SpentTime entity, int employeeId, SpentTimeOnTask model = null)
         {
             var employee = UnitOfWork.Employees.AsNoTracking().ByIdMust(employeeId);
-            entity.HourlyPrice = employee.HourlyPrice;
+
+            var task = UnitOfWork.Tasks.Include(x => x.Project.Customer).ByIdMust(model.TaskId);
+
+            entity.Price = model.Price.GetValueOrDefault() != 0 ? model.Price : employee.HourlyPrice;
+
+            decimal? resultingCommission;
+
+            if (task.Project.Commission.HasValue)
+            {
+                resultingCommission = task.Project.Commission.Value;
+            }
+            else if (task.Project.Customer.Commission.HasValue)
+            {
+                resultingCommission = task.Project.Customer.Commission.Value;
+            }
+            else
+            {
+                resultingCommission = decimal.Parse(ConfigurationManager.AppSettings["BaseCommission"]);
+            }
+
+            var total = model.Price.GetValueOrDefault() != 0 ? entity.Price * (1 + resultingCommission) : entity.Price * model.Hours * (1 + resultingCommission);
+
+            if (total.HasValue) entity.Total = (decimal)total;
+
+            entity.Commission = resultingCommission.Value;
 
             if (this.CanAccept())
             {
@@ -103,6 +126,7 @@ namespace Jarboo.Admin.BL.Services
                 entity.DateVerified = DateTime.Now;
             }
         }
+
         public void SpentTimeOnTask(SpentTimeOnTask model, IBusinessErrorCollection errors)
         {
             if (!model.Validate(errors))
@@ -111,7 +135,7 @@ namespace Jarboo.Admin.BL.Services
             }
 
             var entity = new SpentTime();
-            FillNewlyCreated(entity, model.EmployeeId);
+            FillNewlyCreated(entity, model.EmployeeId, model);
 
             Add(entity, model);
             ClearCache();
@@ -130,6 +154,7 @@ namespace Jarboo.Admin.BL.Services
             Add(entity, model);
             ClearCache();
         }
+
 
         public bool CanAccept()
         {
@@ -157,7 +182,7 @@ namespace Jarboo.Admin.BL.Services
             UnitOfWork.SaveChanges();
             ClearCache();
         }
-        
+
         public void CheckCanDeny()
         {
             if (this.Cannot(Rights.SpentTime.DenyAny))

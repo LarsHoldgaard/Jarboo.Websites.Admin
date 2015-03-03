@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Jarboo.Admin.DAL.Entities
 {
@@ -12,13 +8,14 @@ namespace Jarboo.Admin.DAL.Entities
     {
         public int SpentTimeId { get; set; }
         [Range(0.5, int.MaxValue, ErrorMessage = "Must be bigger than {1}")]
-        public decimal Hours { get; set; }
-        public double HourlyPrice { get; set; }
+        public decimal? Hours { get; set; }
+        public decimal? Price { get; set; }
         public DateTime? DateVerified { get; set; }
         public DateTime? DateDeleted { get; set; }
         public bool? Accepted { get; set; }
         public DateTime Date { get; set; }
-
+        public decimal Commission { get; set; }
+        public decimal Total { get; set; }
         public int EmployeeId { get; set; }
         public virtual Employee Employee { get; set; }
 

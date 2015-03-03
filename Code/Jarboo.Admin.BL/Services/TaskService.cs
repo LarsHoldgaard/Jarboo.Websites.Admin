@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-
 using Jarboo.Admin.BL.Authorization;
 using Jarboo.Admin.BL.Models;
 using Jarboo.Admin.BL.Other;
@@ -108,8 +104,8 @@ namespace Jarboo.Admin.BL.Services
             var project = UnitOfWork.Projects.AsNoTracking().Include(x => x.Customer).ByIdMust(model.ProjectId);
             var customer = project.Customer;
 
-            var employee = !model.EmployeeId.HasValue ? 
-                this.TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId) : 
+            var employee = !model.EmployeeId.HasValue ?
+                this.TaskStepEmployeeStrategy.SelectEmployee(TaskStep.First(), model.ProjectId) :
                 this.UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
             var taskIdentifier = model.Identifier();
@@ -154,6 +150,7 @@ namespace Jarboo.Admin.BL.Services
                     "Task was successfully created, but the error was raised during email sending", ex);
             }
         }
+
         private string RegisterTask(string boardName, string taskIdentifier, string folderLink)
         {
             try
@@ -247,8 +244,8 @@ namespace Jarboo.Admin.BL.Services
             var nextStep = TaskStep.Next(lastStep.Step);
             if (nextStep.HasValue)
             {
-                employee = !model.EmployeeId.HasValue ? 
-                    this.TaskStepEmployeeStrategy.SelectEmployee(nextStep.Value, task.ProjectId) : 
+                employee = !model.EmployeeId.HasValue ?
+                    this.TaskStepEmployeeStrategy.SelectEmployee(nextStep.Value, task.ProjectId) :
                     this.UnitOfWork.Employees.AsNoTracking().ByIdMust(model.EmployeeId.Value);
 
                 ChangeResponsible(task.Project.Name, task.Identifier(), employee.EmployeeId.ToString());
@@ -285,6 +282,25 @@ namespace Jarboo.Admin.BL.Services
                         "Task was successfully moved to the next step, but the error was raised during email sending", ex);
                 }
             }
+        }
+
+        public void UpdateTaskStep(TaskNextStep model, IBusinessErrorCollection errors)
+        {
+            var now = DateTime.Now;
+            if (!model.Validate(errors))
+            {
+                return;
+            }
+            var task = Table.Include(x => x.Project).ByIdMust(model.TaskId);
+            task.DateModified = now;
+
+            ChangeResponsible(task.Project.Name, task.Identifier(), model.EmployeeId.ToString());
+
+            task.Steps.Add(new TaskStep() { EmployeeId = model.EmployeeId.Value, Step = model.Step.Value, DateModified = now });
+
+            UnitOfWork.SaveChanges();
+
+            ClearCache();
         }
 
         public void Delete(int taskId, IBusinessErrorCollection errors)

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Linq;
 using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Filters
@@ -13,6 +8,7 @@ namespace Jarboo.Admin.BL.Filters
         public bool ShowDeleted { get; set; }
         public bool? Hired { get; set; }
         public string Query { get; set; }
+        public int? EmployeeId { get; set; }
 
         public EmployeeFilter WithDeleted()
         {
@@ -32,6 +28,12 @@ namespace Jarboo.Admin.BL.Filters
             return this;
         }
 
+        public EmployeeFilter ByEmployeeId(int employeeId)
+        {
+            this.EmployeeId = employeeId;
+            return this;
+        }
+
         public override IQueryable<Employee> Execute(IQueryable<Employee> query)
         {
             if (!ShowDeleted)
@@ -46,6 +48,11 @@ namespace Jarboo.Admin.BL.Filters
             {
                 query = query.Where(x => x.FullName.Contains(this.Query) || x.Email.Contains(this.Query));
             }
+            if (EmployeeId.HasValue)
+            {
+                query = query.Where(x => x.EmployeeId == EmployeeId.Value);
+            }
+
             return base.Execute(query);
         }
     }

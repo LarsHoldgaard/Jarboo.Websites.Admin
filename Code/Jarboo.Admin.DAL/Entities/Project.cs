@@ -16,6 +16,8 @@ namespace Jarboo.Admin.DAL.Entities
         public int ProjectId { get; set; }
         [Required]
         public string Name { get; set; }
+        public decimal? Commission { get; set; }
+        public decimal? PriceOverride { get; set; }
 
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }

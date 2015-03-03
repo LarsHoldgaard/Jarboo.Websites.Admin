@@ -8,6 +8,6 @@ namespace Jarboo.Admin.Web.Models.Time
         public int? ProjectId { get; set; }
         public int TaskId { get; set; }
         public decimal? TotalHours { get; set; }
-        
+        public string CurrentStatus { get; set; }
     }
 }

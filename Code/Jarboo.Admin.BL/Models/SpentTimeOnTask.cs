@@ -13,10 +13,13 @@ namespace Jarboo.Admin.BL.Models
 
         public int EmployeeId { get; set; }
         [Range(0.5, int.MaxValue, ErrorMessage = "Must be bigger than {1}")]
-        public decimal Hours { get; set; }       
+        public decimal? Hours { get; set; }
         public int TaskId { get; set; }
+        public string Roles { get; set; }
         public TaskStep TaskStep { get; set; }
-        public TaskStepEnum Step { get; set; }
         public DateTime Date { get; set; }
+        public decimal? Price { get; set; }
+        public TaskStepEnum Step { get; set; }
+
     }
 }

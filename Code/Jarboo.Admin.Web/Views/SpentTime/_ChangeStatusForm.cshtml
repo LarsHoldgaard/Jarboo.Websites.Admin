@@ -1,0 +1,30 @@
+﻿@model Jarboo.Admin.BL.Models.TaskNextStep
+
+@using (Ajax.BeginForm(MVC.SpentTime.ActionNames.UpdateStatusTask, MVC.SpentTime.Name, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "widget-grid-hours", OnSuccess = "updateTableTimes" }, new { @class = "form-inline well no-margin", @id = "form-change-status" }))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(x => x.TaskId)
+    @Html.HiddenFor(x => x.EmployeeId)
+
+    <header class="padding-bottom-5">
+        <b>Update task status</b>
+    </header>
+    <fieldset>
+        <div class="form-group">
+            <label for="statusId">Set status: </label>
+            @Html.EnumDropDownListFor(x => x.Step, "Select status", new { @class = "form-control", @id = "statusId" })
+        </div>
+
+
+        <button type="submit" class="btn btn-primary ">Update</button>
+
+    </fieldset>
+    <br>
+    @Html.ActionLink("Mark task as done", MVC.SpentTime.UpdateStatusTaskAsDone(Model.TaskId), new { @class = " margin-top-5 " })
+}
+
+
+
+

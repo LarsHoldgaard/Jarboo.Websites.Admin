@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Jarboo.Admin.DAL.Entities
 {
@@ -21,12 +18,13 @@ namespace Jarboo.Admin.DAL.Entities
         [Required]
         public string FullName { get; set; }
         public string SkypeName { get; set; }
-        [Required][EmailAddress]
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
         public string Country { get; set; }
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
-        public double HourlyPrice { get; set; }
+        public decimal HourlyPrice { get; set; }
         public DateTime? DateDeleted { get; set; }
 
         public User User { get; set; }
@@ -37,7 +35,7 @@ namespace Jarboo.Admin.DAL.Entities
 
         [DisplayName("Is Hired?")]
         public bool IsHired { get; set; }
-        
+
         public bool Deleted()
         {
             return DateDeleted.HasValue;
