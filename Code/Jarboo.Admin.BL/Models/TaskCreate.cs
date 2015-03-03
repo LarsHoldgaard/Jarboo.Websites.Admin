@@ -29,7 +29,8 @@ namespace Jarboo.Admin.BL.Models
         public bool Done { get; set; }
         public string FolderLink { get; set; }
         public double CurrentPrice { get; set; }
-
+        [DisplayName("Delivery Note")]
+        public string DeliveryNote { get; set; }
         public List<SelectListItem> Projects { get; set; }
 
         [DisplayName("Project")]

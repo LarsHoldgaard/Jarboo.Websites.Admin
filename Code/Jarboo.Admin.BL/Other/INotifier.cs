@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Jarboo.Admin.BL.Models;
+﻿using System.Linq;
 using Jarboo.Admin.DAL.Entities;
 
 namespace Jarboo.Admin.BL.Other
@@ -13,6 +8,7 @@ namespace Jarboo.Admin.BL.Other
         void TaskResponsibleChanged(TaskResponsibleChangedData data);
         void NewTask(NewTaskData data);
         void NewEmployee(NewEmployeeData data);
+        void EndTask(EndTaskData data);
     }
 
     public struct TaskResponsibleChangedData
@@ -47,6 +43,21 @@ namespace Jarboo.Admin.BL.Other
         public int TaskId;
     }
 
+    public struct EndTaskData
+    {
+        public EndTaskData(Task task, string deliveryNote)
+        {
+            CustomerName = task.Project.Customer.Name;
+            TaskTitle = task.Title;
+            DeliveryNote = deliveryNote;
+            TaskId = task.TaskId;
+        }
+
+        public string CustomerName;
+        public string TaskTitle;
+        public string DeliveryNote;
+        public int TaskId;
+    }
     public struct NewEmployeeData
     {
         public NewEmployeeData(Employee employee)

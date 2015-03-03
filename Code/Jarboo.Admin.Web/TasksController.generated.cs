@@ -89,6 +89,18 @@ namespace Jarboo.Admin.Web.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult EndTask()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EndTask);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult NotifyCompletionTask()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NotifyCompletionTask);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ActionResult Delete()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
@@ -157,6 +169,8 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string Edit = "Edit";
             public readonly string Steps = "Steps";
             public readonly string NextStep = "NextStep";
+            public readonly string EndTask = "EndTask";
+            public readonly string NotifyCompletionTask = "NotifyCompletionTask";
             public readonly string Delete = "Delete";
             public readonly string List = "List";
             public readonly string ListConfig = "ListConfig";
@@ -180,6 +194,8 @@ namespace Jarboo.Admin.Web.Controllers
             public const string Edit = "Edit";
             public const string Steps = "Steps";
             public const string NextStep = "NextStep";
+            public const string EndTask = "EndTask";
+            public const string NotifyCompletionTask = "NotifyCompletionTask";
             public const string Delete = "Delete";
             public const string List = "List";
             public const string ListConfig = "ListConfig";
@@ -234,6 +250,23 @@ namespace Jarboo.Admin.Web.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_NextStep
         {
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_EndTask s_params_EndTask = new ActionParamsClass_EndTask();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_EndTask EndTaskParams { get { return s_params_EndTask; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_EndTask
+        {
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_NotifyCompletionTask s_params_NotifyCompletionTask = new ActionParamsClass_NotifyCompletionTask();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_NotifyCompletionTask NotifyCompletionTaskParams { get { return s_params_NotifyCompletionTask; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_NotifyCompletionTask
+        {
+            public readonly string taskId = "taskId";
             public readonly string model = "model";
         }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
@@ -332,6 +365,7 @@ namespace Jarboo.Admin.Web.Controllers
                 public readonly string _AddHours = "_AddHours";
                 public readonly string _Form = "_Form";
                 public readonly string _NextStep = "_NextStep";
+                public readonly string CompletionTask = "CompletionTask";
                 public readonly string Create = "Create";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
@@ -347,6 +381,7 @@ namespace Jarboo.Admin.Web.Controllers
             public readonly string _AddHours = "~/Views/Tasks/_AddHours.cshtml";
             public readonly string _Form = "~/Views/Tasks/_Form.cshtml";
             public readonly string _NextStep = "~/Views/Tasks/_NextStep.cshtml";
+            public readonly string CompletionTask = "~/Views/Tasks/CompletionTask.cshtml";
             public readonly string Create = "~/Views/Tasks/Create.cshtml";
             public readonly string Edit = "~/Views/Tasks/Edit.cshtml";
             public readonly string Index = "~/Views/Tasks/Index.cshtml";
@@ -446,6 +481,42 @@ namespace Jarboo.Admin.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NextStep);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             NextStepOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EndTaskOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.TaskNextStep model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult EndTask(Jarboo.Admin.BL.Models.TaskNextStep model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EndTask);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            EndTaskOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void NotifyCompletionTaskOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int taskId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult NotifyCompletionTask(int taskId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NotifyCompletionTask);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "taskId", taskId);
+            NotifyCompletionTaskOverride(callInfo, taskId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void NotifyCompletionTaskOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Jarboo.Admin.BL.Models.TaskEdit model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult NotifyCompletionTask(Jarboo.Admin.BL.Models.TaskEdit model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.NotifyCompletionTask);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            NotifyCompletionTaskOverride(callInfo, model);
             return callInfo;
         }
 

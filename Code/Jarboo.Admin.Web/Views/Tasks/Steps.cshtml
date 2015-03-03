@@ -9,7 +9,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     HtmlHelper.ClientValidationEnabled = true;
-    
+
     var currentEmployee = (Employee)ViewBag.CurrentEmployee;
 }
 
@@ -66,7 +66,7 @@
                         <time>@step.DateCreated.ToString("yyyy-MM-dd hh:mm:ss")</time>
                     </p>
                 }
-                
+
                 @Html.Action(MVC.SpentTime.GroupedList(new SpentTimeFilter().ByTask(Model.TaskId).ByTaskStep(step.Step)))
 
                 @if (this.Can(MVC.Tasks.AddHours()))
@@ -74,7 +74,7 @@
                     <div>
                         @Html.Partial(MVC.Tasks.Views._AddHours, new SpentTimeOnTask()
                                                                      {
-                                                                         TaskId = Model.TaskId, 
+                                                                         TaskId = Model.TaskId,
                                                                          TaskStep = step,
                                                                          EmployeeId = currentEmployee == null ? 0 : currentEmployee.EmployeeId
                                                                      })
@@ -83,10 +83,31 @@
             </div>
             @if (!step.Done())
             {
-                <div class="panel-footer">
-                    @Html.Partial(MVC.Tasks.Views._NextStep, new TaskNextStep() { TaskId = Model.TaskId })
-                </div>
+                if (step.Step != TaskStepEnum.Test)
+                {
+                    <div class="panel-footer">
+                        @Html.Partial(MVC.Tasks.Views._NextStep, new TaskNextStep() { TaskId = Model.TaskId })
+                    </div>
+                }
+                else
+                {
+                    <div class="panel-footer">
+                        @using (Html.BeginForm(MVC.Tasks.EndTask()))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(x => x.TaskId)
+
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="submit">End Task</button>
+                                </span>
+
+                            </div>
+                        }
+                    </div>
+                }
             }
+
         </div>
     }
 </div>

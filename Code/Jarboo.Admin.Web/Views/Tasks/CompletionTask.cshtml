@@ -1,0 +1,71 @@
+﻿@using SmartAdminMvc @model   Jarboo.Admin.BL.Models.TaskEdit
+    @{
+        ViewBag.Title = "Completion Task";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <!-- RIBBON -->
+    <div id="ribbon">
+        @Html.Partial("_RibbonRefresh")
+        <!-- breadcrumb -->
+        <ol class="breadcrumb">
+            @Html.RenderBreadCrumbs(this, new BreadCrumbItem("Completion Task"))
+        </ol>
+        <!-- end breadcrumb -->
+    </div>
+    <!-- END RIBBON -->
+    <div id="content">
+        <!-- row -->
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-7">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2> Delivery Note </h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            @using (Html.BeginForm(MVC.Tasks.NotifyCompletionTask(), FormMethod.Post, new { @class = "smart-form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(x => x.TaskId)
+                                @Html.ValidationBootstrap()
+
+                                <header>
+                                    @Model.Title
+                                </header>
+                                <fieldset>
+                                    <section>
+                                        @Html.LabelFor(model => model.DeliveryNote, new { @class = "label" })
+                                        <div class="textarea-div">
+                                            <div class="typearea">
+                                                @Html.TextAreaFor(x => x.DeliveryNote, new { @placeholder = "Write a description where this can be tested...", @rows = 3, @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                    </section>
+                                </fieldset>
+                                <footer>
+                                    <button type="submit" class="btn btn-primary">
+                                        Save
+                                    </button>
+                                </footer>
+                            }
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+            </article>
+        </div>
+        <!-- end row -->
+    </div>

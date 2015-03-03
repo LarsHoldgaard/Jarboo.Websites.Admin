@@ -84,6 +84,28 @@ namespace Jarboo.Admin.Integration.Mandrill
             api.SendMessage(message, setting.MandrillNewTaskTemplate, null);
         }
 
+        public void EndTask(EndTaskData data)
+        {
+            if (!setting.UseMandrill)
+            {
+                return;
+            }
+
+            var message = new EmailMessage
+            {
+                to = new[] { new EmailAddress(setting.JarbooInfoEmail) },
+                from_email = setting.MandrillFrom,
+                subject = "Ending task"
+            };
+
+            message.AddGlobalVariable("CUSTOMERNAME", data.CustomerName);
+            message.AddGlobalVariable("TASKNAME", data.TaskTitle);
+            message.AddGlobalVariable("TASKDELIVERY", data.DeliveryNote);
+            message.AddGlobalVariable("TASKLINK", urlConstructor.TaskView(data.TaskId));
+
+            api.SendMessage(message, setting.MandrillNewTaskTemplate, null);
+        }
+
         public void NewEmployee(NewEmployeeData data)
         {
             var message = new EmailMessage
