@@ -1,6 +1,9 @@
 Jarboo.Websites.Admin
 =====================
 
+This was my internal admin system when I ran the consulting business, Jarboo.com. I had a lot of developers I used for outsourcing, and we used this tool to manage and update projects.
+
+
 Trello integration
 ------------
 
